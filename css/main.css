@@ -3,49 +3,29 @@ body {
     padding: 0;
 }
 
-
 /* 首頁 */
 header {
-    background-image: url("https://raw.githubusercontent.com/quanting56/personal_page/main/assets/???.jpeg");
-}
-
-#heading {
-    position: relative;
-    top: 5vh;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* 導言 */
-#introduction {
-    height: 250vh;
-    background-image: url("https://raw.githubusercontent.com/quanting56/KeelungMRT_Xizhi/main/assets/xizhi_landscape_temporary.jpeg");
-    background-position: center;
-    background-repeat: no-repeat;
+    background-image: url("../assets/Kodak_UltraMax_053.jpg");
     background-size: cover;
+}
+
+/* navigator */
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+    transition: background-color 0.5s;
+    font-size: 18px;
+}
+
+nav a:hover {
+    background-color: #555;
+    color: white;
+    text-decoration: none;    
 }
 
 /* 以下code勿碰 */
-
-#benefits_for_keelung div:first-child {
-    background-image: url("https://raw.githubusercontent.com/quanting56/KeelungMRT_Xizhi/main/assets/keelung_night_temporary.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-#benefits_for_xizhi div:first-child {
-    background-image: url("https://raw.githubusercontent.com/quanting56/KeelungMRT_Xizhi/main/assets/xizhi_night_temporary.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-#benefits_for_taipei_city div:first-child {
-    background-image: url("https://raw.githubusercontent.com/quanting56/KeelungMRT_Xizhi/main/assets/taipei_night_temporary.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
 div #img16 img {
     display: inline;
