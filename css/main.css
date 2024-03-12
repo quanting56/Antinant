@@ -1,12 +1,22 @@
+/* 環境 */
+body {
+    background-color: #fffafa;
+    padding: 0;
+    margin: 0;
+}
+
 dd {
     margin-left: 2em;
 }
+
 
 /* 首頁 */
 header {
     background-image: url("../assets/Kodak_UltraMax_053.jpg");
     background-size: cover;
+    background-attachment: fixed;
 }
+
 
 /* navigator */
 nav a {
@@ -24,15 +34,33 @@ nav a:hover {
     text-decoration: none;    
 }
 
-/* main */
-main {
-    background-color: #fffafa;
+
+/* Back to Top*/
+#BackToTop a {
+    text-decoration: none;
+    opacity: 0.5;
+    color: chocolate;
+    border-radius: 10px;
 }
+
+#BackToTop a:hover {
+    opacity: 0.8;
+}
+
+
+/* main */
+
+
+/* 測試區 */
+
 
 /* trip */
 #trip img {
-    display: inline;
     margin: 5px;
     width: 500px;
     border: 1px solid #ffffff;
+    box-shadow: 5px 5px 3px gray;
 }
+
+
+/* footer */
