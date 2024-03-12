@@ -52,7 +52,11 @@ nav a:hover {
 
 
 /* 測試區 */
-
+.Bootstrap_Test_col {
+    background-color: #ebdef0;
+    border: 0.5px solid purple;
+    text-align: center;
+}
 
 /* trip */
 #trip img {

@@ -3,7 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap_5.3.3_css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/main.css"/>
@@ -40,14 +40,44 @@
       </header>
       
       <!-- Navigator -->
-      <nav class="sticky-top" style="height: 50px; background-color: #333; text-align: left;">
+      <nav class="sticky-top" style="height: 50px; background-color: #333; text-align: left; opacity: 0.95;">
         <a href="#aboutMe">關於我</a>
-        <a href="#Penghu_trip">旅遊（澎湖之旅）</a>
-        <a>一些文章</a>
-        <a href="#TestTestTest">網頁練習/筆記（試驗場）</a>
+        <a href="#trip">旅遊</a>
+        <a href="#someArticle">一些文章</a>
+        <a href="#TestTestTest">網頁練習/筆記</a>
         <a>聯絡我</a>
-        
       </nav>
+
+      <!-- 輔助用Navigator（右下，快速到達用） -->
+      <div id="SupportingNavigator" style="right: 20px; bottom: 50px; position: fixed; background-color: azure; opacity: 0.65; border-radius: 8px;">
+        <p style="padding: 8px 0px 0px 8px;">工作用Navigator</p>
+        <ul>
+          <li><a href="#aboutMe">關於我</a></li>
+            <ol>
+              <li><a>基本資料</a></li>
+              <li><a>作品集</a></li>
+            </ol>
+          <li><a href="#trip">旅遊</a></li>
+            <ol>
+              <li><a href="#Penghu_trip">澎湖之旅</a></li>
+              <li><a>高屏行</a></li>
+              <li><a>二林實地考察</a></li>
+              <li><a>蘭嶼小旅行</a></li>
+            </ol>
+          <li><a href="#someArticle">一些文章</a></li>
+            <ol>
+              <li><a>攝影</a></li>
+              <li><a href="#NTUPHOTO_story_about_me">攝影社故事</a></li>
+              <li><a>公路</a></li>
+              <li><a>投資</a></li>
+            </ol>
+          <li><a href="#TestTestTest">網頁練習/筆記（試驗場）</a></li>
+            <ol>
+              <li><a href="#Bootstrap_Test">Bootstrap測試</a></li>
+            </ol>
+          <li><a>聯絡我</a></li>
+        </ul>
+      </div>
 
       <!-- Back to Top -->
       <div id="BackToTop" style="right: 20px; bottom: 20px; position: fixed;">
@@ -104,6 +134,17 @@
             </section>
           </article>
 
+        </div>
+
+        <br><br><br><hr><br>
+
+        <div id="someArticle">
+          <div id="NTUPHOTO_story_about_me">
+            <h3>攝影社故事</h3>
+            <hr>
+            <p style="font-size: 12px; color: gray;">那些在攝影社的時光，以及相遇的人事物</p>
+            <p>blablabla</p>
+          </div>
         </div>
 
         <br><br><br><hr><br>
@@ -360,6 +401,38 @@
             <p style="border: ridge; width: 120px; height: 48px; margin: 10px; text-align: center;">border: ridge</p>
             <p style="border: inset; width: 120px; height: 48px; margin: 10px; text-align: center;">border: inset</p>
             <p style="border: outset; width: 120px; height: 48px; margin: 10px; text-align: center;">border: outset</p>
+          </div>
+          <hr>
+          <div id="Bootstrap_Test" style="padding: 10px;">
+            <h3>Bootstrap測試</h3>
+            <div class="container">
+              <div class="row">
+                <div class="col-8 Bootstrap_Test_col">區塊1 class="container"</div>
+                <div class="col-4 Bootstrap_Test_col">區塊2 class="container"</div>
+              </div>
+            </div>
+            <div class="container-md">
+              <div class="row">
+                <div class="col-8 Bootstrap_Test_col">區塊3 class="container-md"</div>
+                <div class="col-4 Bootstrap_Test_col">區塊4 class="container-md"</div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-8 Bootstrap_Test_col">區塊5 class="container-fluid"</div>
+                <div class="col-4 Bootstrap_Test_col">區塊6 class="container-fluid"</div>
+              </div>
+            </div>
+            <hr>
+            <div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-12 col-md-8 col-lg-4 Bootstrap_Test_col">區塊1 class="col-12 col-md-8 col-lg-4"</div>
+                  <div class="col-12 col-md-4 col-lg-4 Bootstrap_Test_col">區塊2 class="col-12 col-md-4 col-lg-4"</div>
+                  <div class="col-12 col-md-12 col-lg-4 Bootstrap_Test_col">區塊3 class="col-12 col-md-12 col-lg-4"</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>        
         
