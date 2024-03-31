@@ -58,15 +58,13 @@ nav a:hover {
     text-align: center;
 }
 
-#Bootstrap_Test [class*="col"] {
-    background-color: #ebdef0;
-    border: 0.5px solid purple;
-    text-align: center;
+/* trip */
+#trip p {
+    text-indent: 32px;
 }
 
-/* trip */
 #trip img {
-    margin: 5px;
+    margin: 16px 5px 8px 5px;
     width: 100%;
     border: 1px solid #ffffff;
     box-shadow: 5px 5px 3px gray;
