@@ -58,6 +58,16 @@ nav a:hover {
     text-align: center;
 }
 
+pre:has(code) {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+}
+
+#bootstrap_form [class*="col"] {
+    background-color: #fffafa;
+    border: #fffafa;
+}
+
 /* trip */
 #trip p {
     text-indent: 32px;
@@ -72,3 +82,6 @@ nav a:hover {
 
 
 /* footer */
+#foot p {
+    color: #ffffff;
+}

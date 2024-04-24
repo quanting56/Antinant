@@ -74,10 +74,10 @@
             </ol>
           <li><a href="#someArticle">一些文章</a></li>
             <ol>
-              <li><a>攝影</a></li>
+              <!-- <li><a>攝影</a></li> -->
               <li><a href="#NTUPHOTO_story_about_me">攝影社故事</a></li>
-              <li><a>公路</a></li>
-              <li><a>投資</a></li>
+              <!-- <li><a>公路</a></li> -->
+              <!-- <li><a>投資</a></li> -->
             </ol>
           <li><a href="#TestTestTest">網頁練習/筆記（試驗場）</a></li>
             <ol>
@@ -149,12 +149,18 @@
                       <img src="assets/Kodak_UltraMax_032污點修正.jpg" title="向晚的奎壁山海景(Kodak Ultramax400)" alt="向晚的奎壁山海景">
                       <figcaption>▲ 向晚的奎壁山海景(Kodak Ultramax400)</figcaption>
                     </figure>
-                    <a><img src="assets/Kodak_UltraMax_045.jpg" title="後寮漁港(Kodak Ultramax400)"></a>
-                    <p>▲ 後寮漁港(Kodak Ultramax400)</p>
-                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)"></a>
-                    <p>▲ 小門嶼一隅(Kodak Ultramax400)</p>
-                    <a><img src="assets/Kodak_UltraMax_070.jpg" title="七美光電站(Kodak Ultramax400)"></a>
-                    <p>▲ 七美光電站(Kodak Ultramax400)</p>
+                    <figure>
+                      <img src="assets/Kodak_UltraMax_045.jpg" title="後寮漁港(Kodak Ultramax400)" alt="後寮漁港">
+                      <figcaption>▲ 後寮漁港(Kodak Ultramax400)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" alt="小門嶼的一個角落">
+                      <figcaption>▲ 小門嶼一隅(Kodak Ultramax400)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="assets/Kodak_UltraMax_070.jpg" title="七美光電站(Kodak Ultramax400)" alt="七美光電站">
+                      <figcaption>▲ 七美光電站(Kodak Ultramax400)</figcaption>
+                    </figure>
                   </div>
                 </div>
               </div>
@@ -162,18 +168,30 @@
               <div class="container" style="margin: 5px; padding: 5px; height: auto; width: auto; text-align: center;">
                 <div class="row justify-content-center">
                   <div class="col-xl-6 col-md-8">
-                    <a><img src="assets/QAO_5829.jpg" title="七美海邊"></a>
-                    <p>▲ 七美海邊</p>
-                    <a><img src="assets/QAO_5784.jpg" title="外垵之夜"></a>
-                    <p>▲ 外垵之夜</p>
-                    <a><img src="assets/QAO_5802.jpg" title="夜拍人生"></a>
-                    <p>▲ 夜拍人生</p>
-                    <a><img src="assets/QAO_5710修正(轉正).jpg" title="北寮 Beiliao"></a>
-                    <p>▲ 北寮 Beiliao</p>
-                    <a><img src="assets/QAO_5936.jpg" title="望夫石停車場銀河"></a>
-                    <p>▲ 望夫石停車場銀河</p>
-                    <a><img src="assets/QAO_5997.jpg" title="七美日出"></a>
-                    <p>▲ 七美日出</p>
+                    <figure>
+                      <img src="assets/QAO_5829.jpg" title="七美海邊" alt="七美的海邊">
+                      <figcaption>▲ 七美海邊</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="assets/QAO_5784.jpg" title="外垵之夜" alt="夜晚的外垵">
+                      <figcaption>▲ 外垵之夜</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="assets/QAO_5802.jpg" title="夜拍人生" alt="夜拍人生">
+                      <figcaption>▲ 夜拍人生</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="assets/QAO_5710修正(轉正).jpg" title="北寮 Beiliao" alt="北寮">
+                      <figcaption>▲ 北寮 Beiliao</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="assets/QAO_5936.jpg" title="望夫石停車場銀河" alt="在忘夫石停車場拍的銀河">
+                      <figcaption>▲ 望夫石停車場銀河</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="assets/QAO_5997.jpg" title="七美日出" alt="七美的日出">
+                      <figcaption>▲ 七美日出</figcaption>
+                    </figure>
                   </div>
                 </div>
               </div>
@@ -811,26 +829,154 @@
                 <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
                 <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
               </div>
-
             </ul>
+            <hr>
+            <h3>Bootstrap按鈕</h3>
+            <ul>
+              <li class="mb-3">按鈕有三種寫法：
+                <ol>
+                  <li><code>&lt;a class="btn" href="#" role="botton"&gt;</code>按鈕名稱<code>&lt;/a&gt;</code></li>
+                  <li><code>&lt;button class="btn" type="submit"&gt;</code>按鈕名稱<code>&lt;/button&gt;</code></li>
+                  <li><code>&lt;input class="btn" type="submit" value="按鈕名稱"&gt;</code></li>
+                </ol>
+              </li>
+              <li class="mb-4">一般紅色按鈕<br>class="btn btn-danger"<br>
+                <input class="btn btn-danger mt-2" type="button" value="測試按鈕1">
+              </li>
+              <li class="mb-4">預設啟用的一般紅色按鈕<br>class="btn btn-danger <b>active</b>"<br>
+                <input class="btn btn-danger active mt-2" type="button" value="測試按鈕2">
+              </li>
+              <li class="mb-4">停用的一般紅色按鈕<br>xclass="btn btn-danger <b>disabled</b>"<br>
+                <input class="btn btn-danger disabled mt-2" type="button" value="測試按鈕3">
+              </li>
+              <li class="mb-4">比較小的紅色按鈕<br>class="btn btn-danger <b>btn-sm</b>"<br>
+                <input class="btn btn-danger btn-sm mt-2" type="button" value="測試按鈕4">
+              </li>
+              <li class="mb-4">比較大的紅色按鈕<br>class="btn btn-danger <b>btn-lg</b>"<br>
+                <input class="btn btn-danger btn-lg mt-2" type="button" value="測試按鈕5">
+              </li>
+              <li class="mb-4">各種顏色的一般按鈕<br>class="btn （按鈕內）"<br>
+                <input class="btn btn-primary mt-2" type="button" value=".btn-primary">
+                <input class="btn btn-secondary mt-2" type="button" value=".btn-secondary">
+                <input class="btn btn-success mt-2" type="button" value=".btn-success">
+                <input class="btn btn-danger mt-2" type="button" value=".btn-danger">
+                <input class="btn btn-warning mt-2" type="button" value=".btn-warning">
+                <input class="btn btn-info mt-2" type="button" value=".btn-info">
+                <input class="btn btn-light mt-2" type="button" value=".btn-light">
+                <input class="btn btn-dark mt-2" type="button" value=".btn-dark">
+                <input class="btn btn-link mt-2" type="button" value=".btn-link">
+              </li>
+              <li class="mb-4">各種外框顏色的一般按鈕<br>class="btn （按鈕內）"<br>
+                <input class="btn btn-outline-primary mt-2" type="button" value=".btn-primary">
+                <input class="btn btn-outline-secondary mt-2" type="button" value=".btn-secondary">
+                <input class="btn btn-outline-success mt-2" type="button" value=".btn-success">
+                <input class="btn btn-outline-danger mt-2" type="button" value=".btn-danger">
+                <input class="btn btn-outline-warning mt-2" type="button" value=".btn-warning">
+                <input class="btn btn-outline-info mt-2" type="button" value=".btn-info">
+                <input class="btn btn-outline-light mt-2" type="button" value=".btn-light">
+                <input class="btn btn-outline-dark mt-2" type="button" value=".btn-dark">
+                <input class="btn btn-outline-link mt-2" type="button" value=".btn-link">
+              </li>
+            </ul>
+            <hr>
+            <h3>Bootstrap表單</h3>
+            <div id="bootstrap_form" style="padding: 10px;">
+              <h4>基本表單</h4>
+              <form>
+                <div class="mb-3">
+                  <label for="userEmail" class="form-label">電子郵件</label>
+                  <input type="email" class="form-control" id="userEmail">
+                  <div id="emailHelp" class="form-text">我們不會洩漏你的個資</div>
+                </div>
+                <div class="mb-3">
+                  <label for="userPWD" class="form-label">密碼</label>
+                  <input type="password" class="form-control" id="userPWD">
+                </div>
+                <button type="submit" class="btn btn-primary">提交</button>
+              </form>
+              <div class="mt-3">本段code：
+                <pre>
+  <code>
+    &lt;form&gt;
+      &lt;div class="mb-3"&gt;
+        &lt;label for="userEmail" class=<span style="color: #c5937c;">"form-label"</span>&gt;電子郵件&lt;/label&gt;
+        &lt;input type="email" class=<span style="color: #c5937c;">"form-control"</span> id="userEmail"&gt;
+        &lt;div id="emailHelp" class=<span style="color: #c5937c;">"form-text"</span>&gt;我們不會洩漏你的個資&gt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="mb-3"&gt;
+        &lt;label for="userPWD" class=<span style="color: #c5937c;">"form-label"</span>&gt;密碼&lt;/label&gt;
+        &lt;input type="password" class=<span style="color: #c5937c;">"form-control"</span> id="userPWD"&gt;
+      &lt;/div&gt;
+      &lt;button type="submit" class="btn btn-primary"&gt;提交&lt;/button&gt;
+    &lt;/form&gt;
+  </code>
+                </pre>
+              </div>
+              <hr>
+              <h4>有addon的表單</h4>
+              <form class="row g-2">
+                <div class="col-md-6">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="addon1">@</span>
+                    <input type="text" class="form-control" placeholder="請輸入拍攝地點">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="addon2">與</span>
+                    <input type="text" class="form-control" placeholder="誰">
+                    <span class="input-group-text" id="addon3">一起的行程</span>
+                  </div>
+                </div>
+              </form>
+              <div class="mt-3">本段code：
+                <pre>
+  <code>
+    &lt;form class="row g-2"&gt;
+      &lt;div class="col-md-6"&gt;
+        &lt;div class=<span style="color: #c5937c">"input-group mb-3"</span>&gt;
+          &lt;span class=<span style="color: #c5937c">"input-group-text"</span> id="addon1"&gt;@&lt;/span&gt;
+          &lt;input type="text" class="form-control" placeholder="請輸入拍攝地點"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="col-md-6"&gt;
+        &lt;div class=<span style="color: #c5937c">"input-group mb-3"</span>&gt;
+          &lt;span class=<span style="color: #c5937c">"input-group-text"</span> id="addon2"&gt;與&lt;/span&gt;
+          &lt;input type="text" class="form-control" placeholder="誰"&gt;
+          &lt;span class=<span style="color: #c5937c">"input-group-text"</span> id="addon3"&gt;一起的行程&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  </code>
+                </pre>
+              </div>
+            </div>
+            <hr>
+            <div>
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">首頁</a></li>
+                <li class="breadcrumb-item"><a href="#">甜點</a></li>
+                <li class="breadcrumb-item active">馬卡龍</li>
+              </ul>
+            </div>
+            <hr>
           </div>
         </div>
       </main>
 
       <footer id="foot" style="background-color: #000000;padding: 15px;padding-left: 30px;">
-        <p style="color:#ffffff;">內文撰寫｜董冠霆</p>
-        <p style="color:#ffffff;">製&emsp;&emsp;圖｜董冠霆</p>
-        <p style="color:#ffffff;">網&emsp;&emsp;頁｜董冠霆</p>
-        <p style="color:#ffffff;">-----------------------------------------</p>
-        <p style="color:#ffffff;">聯絡方式：LineID @310956585</p>
-        <p style="color:#ffffff;">資料最後更新時間：2024/03/29 00:06</p>
-        <p style="color:#ffffff;">© 2023 Copyright</p>
+        <p>內文撰寫｜董冠霆</p>
+        <p>製&emsp;&emsp;圖｜董冠霆</p>
+        <p>網&emsp;&emsp;頁｜董冠霆</p>
+        <p>攝&emsp;&emsp;影｜董冠霆</p>
+        <hr style="color: #ffffff;">
+        <p>聯絡方式：LineID @310956585</p>
+        <p>資料最後更新時間：2024/04/24 18:26</p>
+        <p>&copy; 2024 Copyright</p>
       </footer>
-
     </div>
 
     <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
   </body>
-
 </html>
