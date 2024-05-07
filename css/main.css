@@ -50,9 +50,14 @@ nav a:hover {
 
 
 /* main */
+main {
+    padding: 30px;
+    font-family: serif;
+}
 
 /* 測試區 */
-#TestTestTest [class*="col"] {
+#exercise5 [class*="col"], 
+#Bootstrap_Test_1 [class*="col"] {
     background-color: #ebdef0;
     border: 0.5px solid purple;
     text-align: center;

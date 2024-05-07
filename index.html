@@ -49,8 +49,10 @@
       </nav>
 
       <!-- 輔助用Navigator（右下，快速到達用） -->
-      <div id="SupportingNavigator" style="right: 20px; bottom: 50px; position: fixed; background-color: azure; opacity: 0.65; border-radius: 8px; font-size: 12px;">
-        <h6 style="padding: 8px 0px 0px 8px;">工作用Navigator</h6>
+      <div id="SupportingNavigator" class="alert" style="right: 20px; bottom: 50px; position: fixed; background-color: azure; opacity: 0.65; border-radius: 8px; font-size: 12px;" role="alert">
+        <h6 style="padding: 8px 0px 0px 8px;">工作用Navigator
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </h6>
         <div style="padding: 0px 0px 0px 16px; font-weight: 800;">
           <p class="d-block d-sm-none" style="color: orange;">現在寬度是 <span style="color: red;">xs</span></p>
           <p class="d-none d-sm-block d-md-none" style="color: orange;">現在寬度是 <span style="color: red;">sm</span></p>
@@ -82,7 +84,8 @@
           <li><a href="#TestTestTest">網頁練習/筆記（試驗場）</a></li>
             <ol>
               <li><a href="#Float_Test">文繞圖Float測試</a></li>
-              <li><a href="#Bootstrap_Test">Bootstrap測試</a></li>
+              <li><a href="#Bootstrap_Test_1">Bootstrap測試1</a></li>
+              <li><a href="#Bootstrap_Test_2">Bootstrap測試2</a></li>
             </ol>
           <li><a>聯絡我</a></li>
           <li><a href="#foot" style="text-decoration: none; color: tomato;">to the botton</a></li>
@@ -95,7 +98,7 @@
       </div>
 
       <!-- 主頁內容 -->
-      <main style="padding: 30px; font-family: serif;">
+      <main>
         
         <!-- 關於我 -->
         <div id="aboutMe">
@@ -401,7 +404,7 @@
           <hr>
           <div>
             <p>練習五</p>
-            <div class="container">
+            <div id="exercise5" class="container">
               <div class="row">
                 <div class="col-12">
                   <div>頁首 Banner</div>
@@ -522,8 +525,9 @@
           </div>
           <hr>
           <!-- Bootstrap網格測試 -->
-          <div id="Bootstrap_Test" style="padding: 10px;">
-            <h2>Bootstrap測試</h2>
+          <div id="Bootstrap_Test_1" style="padding: 10px;">
+            <h2 class="bg-warning">Bootstrap網格與內容樣式測試</h2>
+            <hr>
             <h3>Bootstrap Container 斷點測試</h3>
             <div class="container">
               <div class="row">
@@ -830,6 +834,10 @@
                 <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
               </div>
             </ul>
+          </div>
+          <hr>
+          <div id="Bootstrap_Test_2" style="padding: 10px;">
+            <h2 class="bg-warning">Bootstrap公用類別與元件測試</h2>
             <hr>
             <h3>Bootstrap按鈕</h3>
             <ul>
@@ -867,15 +875,15 @@
                 <input class="btn btn-link mt-2" type="button" value=".btn-link">
               </li>
               <li class="mb-4">各種外框顏色的一般按鈕<br>class="btn （按鈕內）"<br>
-                <input class="btn btn-outline-primary mt-2" type="button" value=".btn-primary">
-                <input class="btn btn-outline-secondary mt-2" type="button" value=".btn-secondary">
-                <input class="btn btn-outline-success mt-2" type="button" value=".btn-success">
-                <input class="btn btn-outline-danger mt-2" type="button" value=".btn-danger">
-                <input class="btn btn-outline-warning mt-2" type="button" value=".btn-warning">
-                <input class="btn btn-outline-info mt-2" type="button" value=".btn-info">
-                <input class="btn btn-outline-light mt-2" type="button" value=".btn-light">
-                <input class="btn btn-outline-dark mt-2" type="button" value=".btn-dark">
-                <input class="btn btn-outline-link mt-2" type="button" value=".btn-link">
+                <input class="btn btn-outline-primary mt-2" type="button" value=".btn-outline-primary">
+                <input class="btn btn-outline-secondary mt-2" type="button" value=".btn-outline-secondary">
+                <input class="btn btn-outline-success mt-2" type="button" value=".btn-outline-success">
+                <input class="btn btn-outline-danger mt-2" type="button" value=".btn-outline-danger">
+                <input class="btn btn-outline-warning mt-2" type="button" value=".btn-outline-warning">
+                <input class="btn btn-outline-info mt-2" type="button" value=".btn-outline-info">
+                <input class="btn btn-outline-light mt-2" type="button" value=".btn-outline-light">
+                <input class="btn btn-outline-dark mt-2" type="button" value=".btn-outline-dark">
+                <input class="btn btn-outline-link mt-2" type="button" value=".btn-outline-link">
               </li>
             </ul>
             <hr>
@@ -899,13 +907,13 @@
   <code>
     &lt;form&gt;
       &lt;div class="mb-3"&gt;
-        &lt;label for="userEmail" class=<span style="color: #c5937c;">"form-label"</span>&gt;電子郵件&lt;/label&gt;
-        &lt;input type="email" class=<span style="color: #c5937c;">"form-control"</span> id="userEmail"&gt;
-        &lt;div id="emailHelp" class=<span style="color: #c5937c;">"form-text"</span>&gt;我們不會洩漏你的個資&gt;/div&gt;
+        &lt;label for="userEmail" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"form-label"</span>&gt;電子郵件&lt;/label&gt;
+        &lt;input type="email" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"form-control"</span> id="userEmail"&gt;
+        &lt;div id="emailHelp" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"form-text"</span>&gt;我們不會洩漏你的個資&gt;/div&gt;
       &lt;/div&gt;
       &lt;div class="mb-3"&gt;
-        &lt;label for="userPWD" class=<span style="color: #c5937c;">"form-label"</span>&gt;密碼&lt;/label&gt;
-        &lt;input type="password" class=<span style="color: #c5937c;">"form-control"</span> id="userPWD"&gt;
+        &lt;label for="userPWD" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"form-label"</span>&gt;密碼&lt;/label&gt;
+        &lt;input type="password" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"form-control"</span> id="userPWD"&gt;
       &lt;/div&gt;
       &lt;button type="submit" class="btn btn-primary"&gt;提交&lt;/button&gt;
     &lt;/form&gt;
@@ -934,16 +942,16 @@
   <code>
     &lt;form class="row g-2"&gt;
       &lt;div class="col-md-6"&gt;
-        &lt;div class=<span style="color: #c5937c">"input-group mb-3"</span>&gt;
-          &lt;span class=<span style="color: #c5937c">"input-group-text"</span> id="addon1"&gt;@&lt;/span&gt;
+        &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"input-group mb-3"</span>&gt;
+          &lt;span <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"input-group-text"</span> id="addon1"&gt;@&lt;/span&gt;
           &lt;input type="text" class="form-control" placeholder="請輸入拍攝地點"&gt;
         &lt;/div&gt;
       &lt;/div&gt;
       &lt;div class="col-md-6"&gt;
-        &lt;div class=<span style="color: #c5937c">"input-group mb-3"</span>&gt;
-          &lt;span class=<span style="color: #c5937c">"input-group-text"</span> id="addon2"&gt;與&lt;/span&gt;
+        &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"input-group mb-3"</span>&gt;
+          &lt;span <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"input-group-text"</span> id="addon2"&gt;與&lt;/span&gt;
           &lt;input type="text" class="form-control" placeholder="誰"&gt;
-          &lt;span class=<span style="color: #c5937c">"input-group-text"</span> id="addon3"&gt;一起的行程&lt;/span&gt;
+          &lt;span <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"input-group-text"</span> id="addon3"&gt;一起的行程&lt;/span&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/form&gt;
@@ -952,14 +960,330 @@
               </div>
             </div>
             <hr>
-            <div>
+            <section>
+              <h3>麵包屑（Breadcrumb）</h4>
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">首頁</a></li>
                 <li class="breadcrumb-item"><a href="#">甜點</a></li>
                 <li class="breadcrumb-item active">馬卡龍</li>
               </ul>
-            </div>
+            </section>
             <hr>
+            <section>
+              <h3>警報效果（Alert）</h3>
+              <div class="alert alert-success" role="alert">
+                <strong>年終特惠！</strong>雙十連假出國馬上報名一人限折3000元！
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+              <div class="alert alert-info" role="alert">
+                <strong>賞楓一起Go！</strong>日本賞楓團享四人同行一人免費！
+              </div>
+              <div class="alert alert-warning" role="alert">
+                <strong>東澳特賣會！</strong>雪梨煙火秀再送免費擁抱無尾熊！
+              </div>
+              <div class="alert alert-danger" role="alert">
+                <strong>一起扮鬼趣！</strong>香港迪士尼歡度萬聖節9,888元起！
+              </div>
+            </section>
+            <hr>
+            <section>
+              <h3>下拉式清單（Dropdown）</h3>
+              <section style="padding: 10px;">
+                <h4>單一按鈕下拉式清單</h4>
+                <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">旅遊</button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">澎湖之旅</a></li>
+                    <li><a class="dropdown-item" href="#">高屏行</a></li>
+                    <li><a class="dropdown-item" href="#">二林實地考察</a></li>
+                    <li><a class="dropdown-item" href="#">蘭嶼小旅行</a></li>
+                  </ul>
+                  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">一些文章</button>
+                  <ul class="dropdown-menu">
+                    <li><h3 class="dropdown-header">攝影相關</h3></li>
+                    <li><a class="dropdown-item" href="#">攝影</a></li>
+                    <li><a class="dropdown-item" href="#">攝影社故事</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">公路</a></li>
+                    <li><a class="dropdown-item" href="#">投資</a></li>
+                  </ul>
+                </div>
+                <div class="mt-3">本段code：
+                  <pre>
+  <code>
+    &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown"</span>&gt;
+      &lt;button <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary dropdown-toggle"</span> <span style="color: #a9dbfb;">type</span>=<span style="color: #c5937c;">"button"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"dropdown"</span>&gt;旅遊&lt;/button&gt;
+      &lt;ul <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-menu"</span>&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;澎湖之旅&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;高屏行&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;二林實地考察&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;蘭嶼小旅行&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;button <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary dropdown-toggle"</span> <span style="color: #a9dbfb;">type</span>=<span style="color: #c5937c;">"button"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"dropdown"</span>&gt;一些文章&lt;/button&gt;
+      &lt;ul <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-menu"</span>&gt;
+        &lt;li&gt;&lt;h3 <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-header"</span>&gt;攝影相關&lt;/h3&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;攝影&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;攝影社故事&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;hr <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-divider"</span>&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;公路&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;投資&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  </code>
+                  </pre>
+                </div>
+              </section>
+              <hr>
+              <section style="padding: 10px;">
+                <h4>分離按鈕下拉式清單</h4>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary">旅遊</button>
+                  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">澎湖之旅</a></li>
+                    <li><a class="dropdown-item" href="#">高屏行</a></li>
+                    <li><a class="dropdown-item" href="#">二林實地考察</a></li>
+                    <li><a class="dropdown-item" href="#">蘭嶼小旅行</a></li>
+                  </ul>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary">一些文章</button>
+                  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><h3 class="dropdown-header">攝影相關</h3></li>
+                    <li><a class="dropdown-item" href="#">攝影</a></li>
+                    <li><a class="dropdown-item" href="#">攝影社故事</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">公路</a></li>
+                    <li><a class="dropdown-item" href="#">投資</a></li>
+                  </ul>
+                </div>
+                <div class="mt-3">本段code：
+                  <pre>
+  <code>
+    &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn-group"</span>&gt;
+      &lt;button <span style="color: #a9dbfb;">type</span>=<span style="color: #c5937c;">"button"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary"</span>&gt;旅遊&lt;/button&gt;
+      &lt;button <span style="color: #a9dbfb;">type</span>=<span style="color: #c5937c;">"button"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary dropdown-toggle dropdown-toggle-split"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"dropdown"</span>&gt;
+        &lt;span <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"visually-hidden"</span>&gt;Toggle Dropdown&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;ul <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-menu"</span>&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;澎湖之旅&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;高屏行&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;二林實地考察&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;蘭嶼小旅行&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn-group"</span>&gt;
+      &lt;button <span style="color: #a9dbfb;">type</span>=<span style="color: #c5937c;">"button"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary"</span>&gt;一些文章&lt;/button&gt;
+      &lt;button <span style="color: #a9dbfb;">type</span>=<span style="color: #c5937c;">"button"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary dropdown-toggle dropdown-toggle-split"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"dropdown"</span>&gt;
+        &lt;span <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"visually-hidden"</span>&gt;Toggle Dropdown&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;ul <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-menu"</span>&gt;
+        &lt;li&gt;&lt;h3 <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-header"</span>&gt;攝影相關&lt;/h3&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;攝影&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;攝影社故事&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;hr <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-divider"</span>&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;公路&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;投資&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  </code>
+                  </pre>
+                </div>
+              </section>
+            </section>
+            <hr>
+            <section>
+              <h4>巢狀按鈕群組</h4>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-warning">首頁</button>
+                <button type="button" class="btn btn-warning">票券</button>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown">訂房</button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">國外訂房</a></li>
+                    <li><a class="dropdown-item" href="#">國內訂房</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="mt-3">本段code：
+                <pre>
+  <code>
+    &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn-group"</span> <span style="color: #a9dbfb;">role</span>=<span style="color: #c5937c;">"group"</span>&gt;
+      &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-warning"</span>&gt;首頁&lt;/button&gt;
+      &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-warning"</span>&gt;票券&lt;/button&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn-group"</span> <span style="color: #a9dbfb;">role</span>=<span style="color: #c5937c;">"group"</span>&gt;
+        &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-warning dropdown-toggle"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"dropdown"</span>&gt;訂房&lt;/button&gt;
+        &lt;ul <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-menu"</span>&gt;
+          &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;國外訂房&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"dropdown-item"</span> href="#"&gt;國內訂房&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                </pre>
+              </div>
+            </section>
+          </div>
+          <hr>
+          <div id="Bootstrap_Test_3" style="padding: 10px;">
+            <section>
+              <h3>導覽（Navs）與標籤頁（Tabs）</h3>
+              <section>
+                <h4>標籤式的導覽元件</h4>
+                <!-- 導覽元件 -->
+                <ul id="myTab" class="nav nav-tabs">
+                  <li class="nav-items"><a class="nav-link active" data-bs-toggle="tab" href="#tab1">澎湖本島</a></li>
+                  <li class="nav-items"><a class="nav-link" data-bs-toggle="tab" href="#tab2">白沙島</a></li>
+                  <li class="nav-items"><a class="nav-link" data-bs-toggle="tab" href="#tab3">西嶼</a></li>
+                </ul>
+                <!-- 標籤頁內容 -->
+                <div id="myTabContent" class="tab-content">
+                  <div id="tab1" class="tab-pane fade show active"><p style="text-indent: 32px;">澎湖本島，又稱菊島，舊名大山嶼。是位於臺灣澎湖縣的一個島嶼，也是澎湖群島中面積最大，人口最多的島嶼，土地面積65.4132平方公里，和白沙島相鄰。</p></div>
+                  <div id="tab2" class="tab-pane fade">
+                    <p style="text-indent: 32px;">白沙島，面積13.8763平方公里，是澎湖縣白沙鄉之中最大的島嶼，地形全島由南傾斜至北逐漸平坦，與北海的離島分開，和西嶼連接。產有嘉寶瓜、澎湖絲瓜、哈密瓜，也被稱作是瓜果的故鄉。</p>
+                    <p style="text-indent: 32px;">島嶼北岸因佈滿珊瑚碎屑細沙，經過長期時間的堆積，便形成一大片的白色沙灘，因而被命名為「白沙」。根據澎湖縣民政局2008年八月統計人口資料共有5384人，白沙島可分為中屯、講美、城前、鎮海、港子、歧頭、赤崁、瓦硐、後寮、通梁等村落。</p>
+                  </div>
+                  <div id="tab3" class="tab-pane fade"><p style="text-indent: 32px;">西嶼，西方文獻稱為漁翁島（Pescadores），是位於臺灣澎湖群島中的第二大島，總面積約為18.7148平方公里，西嶼鄉的橫礁村和白沙鄉的通樑村以跨海大橋相連接。</p></div>
+                </div>
+                <div class="mt-3">本段code：
+                  <pre>
+  <code>
+    <span style="color: #74975d;">&lt;!-- 導覽元件 --&gt;</span>
+    &lt;ul <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"myTab"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav nav-tabs"</span>&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-items"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link active"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"tab"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#tab1"</span>&gt;澎湖本島&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-items"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"tab"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#tab2"</span>&gt;白沙島&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-items"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"tab"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#tab3"</span>&gt;西嶼&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    <span style="color: #74975d;">&lt;!-- 標籤頁內容 --&gt;</span>
+    &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"myTabContent"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-content"</span>&gt;
+      &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"tab1"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade show active"</span>&gt;&lt;p style="text-indent: 32px;"&gt;澎湖本島，又稱...和白沙島相鄰。&lt;/p&gt;&lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"tab2"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade"</span>&gt;
+        &lt;p style="text-indent: 32px;"&gt;白沙島，面積...瓜果的故鄉。&lt;/p&gt;
+        &lt;p style="text-indent: 32px;"&gt;島嶼北岸因佈滿...等村落。&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"tab3"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade"</span>&gt;&lt;p style="text-indent: 32px;"&gt;西嶼，西方文獻...以跨海大橋相連接。&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                  </pre>
+                </div>
+              </section>
+              <hr>
+              <section>
+                <h4>按鈕式的導覽元件</h4>
+                <!-- 導覽元件 -->
+                <ul id="myTab" class="nav nav-pills">
+                  <li class="nav-items"><a class="nav-link active" data-bs-toggle="pill" href="#tab4">澎湖本島</a></li>
+                  <li class="nav-items"><a class="nav-link" data-bs-toggle="pill" href="#tab5">白沙島</a></li>
+                  <li class="nav-items"><a class="nav-link" data-bs-toggle="pill" href="#tab6">西嶼</a></li>
+                </ul>
+                <!-- 標籤頁內容 -->
+                <div id="myTabContent" class="tab-content">
+                  <div id="tab4" class="tab-pane fade show active"><p style="text-indent: 32px;">澎湖本島，又稱菊島，舊名大山嶼。是位於臺灣澎湖縣的一個島嶼，也是澎湖群島中面積最大，人口最多的島嶼，土地面積65.4132平方公里，和白沙島相鄰。</p></div>
+                  <div id="tab5" class="tab-pane fade">
+                    <p style="text-indent: 32px;">白沙島，面積13.8763平方公里，是澎湖縣白沙鄉之中最大的島嶼，地形全島由南傾斜至北逐漸平坦，與北海的離島分開，和西嶼連接。產有嘉寶瓜、澎湖絲瓜、哈密瓜，也被稱作是瓜果的故鄉。</p>
+                    <p style="text-indent: 32px;">島嶼北岸因佈滿珊瑚碎屑細沙，經過長期時間的堆積，便形成一大片的白色沙灘，因而被命名為「白沙」。根據澎湖縣民政局2008年八月統計人口資料共有5384人，白沙島可分為中屯、講美、城前、鎮海、港子、歧頭、赤崁、瓦硐、後寮、通梁等村落。</p>
+                  </div>
+                  <div id="tab6" class="tab-pane fade"><p style="text-indent: 32px;">西嶼，西方文獻稱為漁翁島（Pescadores），是位於臺灣澎湖群島中的第二大島，總面積約為18.7148平方公里，西嶼鄉的橫礁村和白沙鄉的通樑村以跨海大橋相連接。</p></div>
+                </div>
+                <div class="mt-3">本段code：
+                  <pre>
+  <code>
+    <span style="color: #74975d;">&lt;!-- 將「標籤式的導覽元件」code裡的 <b>.nav-tabs</b> 改成 <b>.nav-pills</b> 、 data-bs-toggle=<b>"tab"</b> 改成 data-bs-toggle=<b>"pill"</b> --&gt;</span>
+
+    <span style="color: #74975d;">&lt;!-- 導覽元件 --&gt;</span>
+    &lt;ul <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"myTab"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav nav-pills"</span>&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-items"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link active"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"pill"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#tab4"</span>&gt;澎湖本島&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-items"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"pill"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#tab5"</span>&gt;白沙島&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-items"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"pill"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#tab6"</span>&gt;西嶼&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    <span style="color: #74975d;">&lt;!-- 標籤頁內容 --&gt;</span>
+    &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"myTabContent"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-content"</span>&gt;
+      &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"tab4"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade show active"</span>&gt;&lt;p style="text-indent: 32px;"&gt;澎湖本島，又稱...和白沙島相鄰。&lt;/p&gt;&lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"tab5"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade"</span>&gt;
+        &lt;p style="text-indent: 32px;"&gt;白沙島，面積...瓜果的故鄉。&lt;/p&gt;
+        &lt;p style="text-indent: 32px;"&gt;島嶼北岸因佈滿...等村落。&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"tab6"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade"</span>&gt;&lt;p style="text-indent: 32px;"&gt;西嶼，西方文獻...以跨海大橋相連接。&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                  </pre>
+                </div>
+              </section>
+              <hr>
+              <section>
+                <h4>垂直排列的按鈕式導覽元件</h4>
+                <!-- 導覽元件 -->
+                <ul id="myTab" class="nav nav-pills flex-column">
+                  <li class="nav-items"><a class="nav-link active" data-bs-toggle="pill" href="#tab7">澎湖本島</a></li>
+                  <li class="nav-items"><a class="nav-link" data-bs-toggle="pill" href="#tab8">白沙島</a></li>
+                  <li class="nav-items"><a class="nav-link" data-bs-toggle="pill" href="#tab9">西嶼</a></li>
+                </ul>
+                <!-- 標籤頁內容 -->
+                <div id="myTabContent" class="tab-content">
+                  <div id="tab7" class="tab-pane fade show active"><p style="text-indent: 32px;">澎湖本島，又稱菊島，舊名大山嶼。是位於臺灣澎湖縣的一個島嶼，也是澎湖群島中面積最大，人口最多的島嶼，土地面積65.4132平方公里，和白沙島相鄰。</p></div>
+                  <div id="tab8" class="tab-pane fade">
+                    <p style="text-indent: 32px;">白沙島，面積13.8763平方公里，是澎湖縣白沙鄉之中最大的島嶼，地形全島由南傾斜至北逐漸平坦，與北海的離島分開，和西嶼連接。產有嘉寶瓜、澎湖絲瓜、哈密瓜，也被稱作是瓜果的故鄉。</p>
+                    <p style="text-indent: 32px;">島嶼北岸因佈滿珊瑚碎屑細沙，經過長期時間的堆積，便形成一大片的白色沙灘，因而被命名為「白沙」。根據澎湖縣民政局2008年八月統計人口資料共有5384人，白沙島可分為中屯、講美、城前、鎮海、港子、歧頭、赤崁、瓦硐、後寮、通梁等村落。</p>
+                  </div>
+                  <div id="tab9" class="tab-pane fade"><p style="text-indent: 32px;">西嶼，西方文獻稱為漁翁島（Pescadores），是位於臺灣澎湖群島中的第二大島，總面積約為18.7148平方公里，西嶼鄉的橫礁村和白沙鄉的通樑村以跨海大橋相連接。</p></div>
+                </div>
+                <div class="mt-3">本段code：
+                  <pre>
+  <code>
+    <span style="color: #74975d;">&lt;!-- 在&lt;ul&gt;裡面加上 <b>.flex-column</b> --&gt;</span>
+
+    <span style="color: #74975d;">&lt;!-- 導覽元件 --&gt;</span>
+    &lt;ul <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"myTab"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav nav-pills flex-column"</span>&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-items"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link active"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"pill"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#tab7"</span>&gt;澎湖本島&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-items"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"pill"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#tab8"</span>&gt;白沙島&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-items"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"pill"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#tab9"</span>&gt;西嶼&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    <span style="color: #74975d;">&lt;!-- 標籤頁內容 --&gt;</span>
+    &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"myTabContent"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-content"</span>&gt;
+      &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"tab7"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade show active"</span>&gt;&lt;p style="text-indent: 32px;"&gt;澎湖本島，又稱...和白沙島相鄰。&lt;/p&gt;&lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"tab8"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade"</span>&gt;
+        &lt;p style="text-indent: 32px;"&gt;白沙島，面積...瓜果的故鄉。&lt;/p&gt;
+        &lt;p style="text-indent: 32px;"&gt;島嶼北岸因佈滿...等村落。&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"tab9"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade"</span>&gt;&lt;p style="text-indent: 32px;"&gt;西嶼，西方文獻...以跨海大橋相連接。&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                  </pre>
+                </div>
+              </section>
+              <hr>
+              <section>
+                <h4>用Bootstrap網格調整至左右排列</h4>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-3">
+                      <!-- 導覽元件 -->
+                      <ul id="myTab" class="nav nav-pills flex-column">
+                        <li class="nav-items"><a class="nav-link active" data-bs-toggle="pill" href="#tab10">澎湖本島</a></li>
+                        <li class="nav-items"><a class="nav-link" data-bs-toggle="pill" href="#tab11">白沙島</a></li>
+                        <li class="nav-items"><a class="nav-link" data-bs-toggle="pill" href="#tab12">西嶼</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-9">
+                      <!-- 標籤頁內容 -->
+                      <div id="myTabContent" class="tab-content col-9">
+                        <div id="tab10" class="tab-pane fade show active"><p style="text-indent: 32px;">澎湖本島，又稱菊島，舊名大山嶼。是位於臺灣澎湖縣的一個島嶼，也是澎湖群島中面積最大，人口最多的島嶼，土地面積65.4132平方公里，和白沙島相鄰。</p></div>
+                        <div id="tab11" class="tab-pane fade">
+                          <p style="text-indent: 32px;">白沙島，面積13.8763平方公里，是澎湖縣白沙鄉之中最大的島嶼，地形全島由南傾斜至北逐漸平坦，與北海的離島分開，和西嶼連接。產有嘉寶瓜、澎湖絲瓜、哈密瓜，也被稱作是瓜果的故鄉。</p>
+                          <p style="text-indent: 32px;">島嶼北岸因佈滿珊瑚碎屑細沙，經過長期時間的堆積，便形成一大片的白色沙灘，因而被命名為「白沙」。根據澎湖縣民政局2008年八月統計人口資料共有5384人，白沙島可分為中屯、講美、城前、鎮海、港子、歧頭、赤崁、瓦硐、後寮、通梁等村落。</p>
+                        </div>
+                        <div id="tab12" class="tab-pane fade"><p style="text-indent: 32px;">西嶼，西方文獻稱為漁翁島（Pescadores），是位於臺灣澎湖群島中的第二大島，總面積約為18.7148平方公里，西嶼鄉的橫礁村和白沙鄉的通樑村以跨海大橋相連接。</p></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </section>
           </div>
         </div>
       </main>
@@ -971,7 +1295,7 @@
         <p>攝&emsp;&emsp;影｜董冠霆</p>
         <hr style="color: #ffffff;">
         <p>聯絡方式：LineID @310956585</p>
-        <p>資料最後更新時間：2024/04/24 18:26</p>
+        <p>資料最後更新時間：2024/05/07 16:24</p>
         <p>&copy; 2024 Copyright</p>
       </footer>
     </div>
