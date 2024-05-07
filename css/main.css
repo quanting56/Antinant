@@ -21,18 +21,11 @@ header {
 
 /* navigator */
 nav a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 20px;
-    display: inline-block;
     transition: background-color 0.5s;
-    font-size: 18px;
 }
 
 nav a:hover {
-    background-color: #555;
-    color: white;
-    text-decoration: none;    
+    background-color: #555555;
 }
 
 
