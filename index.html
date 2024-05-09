@@ -961,6 +961,17 @@
                         <li class="breadcrumb-item"><a href="#">甜點</a></li>
                         <li class="breadcrumb-item active">馬卡龍</li>
                       </ul>
+                      <div class="mt-3">本段code：
+                        <pre>
+  <code>
+    &lt;ul <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"breadcrumb"</span>&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"breadcrumb-item"</span>&gt;&lt;a href="#"&gt;首頁&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"breadcrumb-item"</span>&gt;&lt;a href="#"&gt;甜點&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"breadcrumb-item active"</span>&gt;馬卡龍&lt;/li&gt;
+    &lt;/ul&gt;
+  </code>
+                        </pre>
+                      </div>
                     </div>
                     <div id="noteAlert" class="tab-pane fade">
                       <h3>警報效果（Alert）</h3>
@@ -972,7 +983,7 @@
                         <strong>賞楓一起Go！</strong>日本賞楓團享四人同行一人免費！
                       </div>
                       <div class="alert alert-warning" role="alert">
-                        <strong>東澳特賣會！</strong>雪梨煙火秀再送免費擁抱無尾熊！
+                        <a class="alert-link" href="#"><strong>東澳特賣會！</strong></a>雪梨煙火秀再送免費擁抱無尾熊！
                       </div>
                       <div class="alert alert-danger" role="alert">
                         <strong>一起扮鬼趣！</strong>香港迪士尼歡度萬聖節9,888元起！
@@ -1315,13 +1326,28 @@
                       <h3>分頁導覽（Pagination）</h3>
                       <ul class="pagination">
                         <li class="page-item"><a class="page-link"><span>&laquo;</span></a></li>
-                        <li class="page-item active"><a class="page-link" href="#Pagination">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#Pagination">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#Pagination">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#Pagination">4</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
                         <li class="page-item disabled"><a class="page-link" href="#">5</a></li>
                         <li class="page-item"><a class="page-link"><span>&raquo;</span></a></li>
                       </ul>
+                      <div class="mt-3">本段code：
+                        <pre>
+  <code>
+    &lt;ul <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"pagination"</span>&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-item"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-link"</span>&gt;&lt;<span style="color: #669bd1;">span</span>&gt;&laquo;&lt;<span style="color: #669bd1;">/span</span>&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-item active"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-link"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span>&gt;1&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-item"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-link"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span>&gt;2&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-item"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-link"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span>&gt;3&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-item"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-link"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span>&gt;4&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-item disabled"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-link"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span>&gt;5&lt;/a&gt;&lt;/li&gt;
+      &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-item"</span>&gt;&lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"page-link"</span>&gt;&lt;<span style="color: #669bd1;">span</span>&gt;&raquo;&lt;<span style="color: #669bd1;">/span</span>&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  </code>
+                        </pre>
+                      </div>
                     </div>
                     <div id="noteModal" class="tab-pane fade">
                       <h3>互動視窗（Modal）</h3>
@@ -1535,6 +1561,166 @@
                     </div>
                     <div id="noteAccordion" class="tab-pane fade">
                       <h3>手風琴效果（Accordion）</h3>
+                      <div id="myAccordion" class="accordion">
+                        <div class="accordion-item">
+                          <h2 id="heading1" class="accordion-header">
+                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse1">大一的課</button>
+                          </h2>
+                          <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#myAccordion">
+                            <div class="accordion-body">
+                              <h5>大一上<small>（109-1）</small></h5>
+                              <p>音樂作品中的愛、個體經濟學原理與實習、現代農業體驗一、園藝學原理、社會學、營養教育與傳播</p>
+                              <hr>
+                              <h5>大一下<small>（109-2）</small></h5>
+                              <p>音樂作品欣賞二、總體經濟學原理與實習、造園學、媒介概論、農業發展與政策、茶與茶業、商業攝影</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 id="heading2" class="accordion-header">
+                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse2">大二的課</button>
+                          </h2>
+                          <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+                            <div class="accordion-body">
+                              <h5>大二上<small>（110-1）</small></h5>
+                              <p>全民國防教育軍事訓練課程-全民國防、全民國防教育軍事訓練課程-國防政策（<span style="color: red;">F</span>）、視覺傳播、行銷學、全球化與區域發展、統計學一上、<i style="color: gray"><s>地圖學</s>（停修）</i>、基礎攝影</p>
+                              <hr>
+                              <h5>大二下<small></small></h5>
+                              <p>全民國防教育軍事訓練課程-國防科技、服務學習乙校內服務、日文一下（<span style="color: red;">F</span>）、臺灣區域海洋學、社區營造與區域規劃、整合行銷傳播、<i style="color: gray"><s>計量導論</s>（停修）</i>、商事法</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 id="heading3" class="accordion-header">
+                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse3">大三的課</button>
+                          </h2>
+                          <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+                            <div class="accordion-body">
+                              <h5>大三上<small>（111-1）</small></h5>
+                              <p>運動與體重管理（選修體育）、<i style="color: gray"><s>政黨與選舉制度</s>（停修）</i>、傳播學、數位行銷、統計學與實習上、消費者行為</p>
+                              <hr>
+                              <h5>大三下<small>（111-2）</small></h5>
+                              <p>全民國防教育軍事訓練課程-國防科技、貨幣金融專題、現代農業體驗二、社會科學研究方法、傳播企劃、農業組織與管理、專題研究二、蔬菜各論、<i style="color: gray"><s>Python計算機程式設計</s>（停修）</i>、書法（隸書）、養生醫學</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 id="heading4" class="accordion-header">
+                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse4">大四的課</button>
+                          </h2>
+                          <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+                            <div class="accordion-body">
+                              <h5>大四上<small>（112-1）</small></h5>
+                              <p>壁球初級、音樂作品欣賞一、網頁設計與敘事、專題研究一、社區資源調查、德語入門</p>
+                              <hr>
+                              <h5>大四下<small>（112-2）</small></h5>
+                              <p>（待補）</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-3">本段code：
+                        <pre>
+  <code>
+    &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"myAccordion"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion"</span>&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-item"</span>&gt;
+        &lt;h2 <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"heading1"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-header"</span>&gt;
+          &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-button"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"collapse"</span> <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#collapse1"</span>&gt;大一的課&lt;/button&gt;
+        &lt;/h2&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"collapse1"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-collapse collapse show"</span> <span style="color: #a9dbfb;">data-bs-parent</span>=<span style="color: #c5937c;">"#myAccordion"</span>&gt;
+          &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-body"</span>&gt;
+            &lt;h5&gt;大一上&lt;small&gt;（109-1）&lt;/small&gt;&lt;/h5&gt;
+            &lt;p&gt;音樂作品中的愛、...、營養教育與傳播&lt;/p&gt;
+            &lt;hr&gt;
+            &lt;h5&gt;大一下&lt;small&gt;（109-2）&lt;/small&gt;&lt;/h5&gt;
+            &lt;p&gt;音樂作品欣賞二、...、商業攝影&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-item"</span>&gt;
+        &lt;h2 <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"heading2"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-header"</span>&gt;
+          &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-button collapsed"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"collapse"</span> <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#collapse2"</span>&gt;大二的課&lt;/button&gt;
+        &lt;/h2&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"collapse2"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-collapse collapse"</span> <span style="color: #a9dbfb;">data-bs-parent</span>=<span style="color: #c5937c;">"#myAccordion"</span>&gt;
+          &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-body"</span>&gt;
+            &lt;h5&gt;大二上&lt;small&gt;（110-1）&lt;/small&gt;&lt;/h5&gt;
+            &lt;p&gt;全民國防教育軍事訓練課程-全民國防、...、基礎攝影&lt;/p&gt;
+            &lt;hr&gt;
+            &lt;h5&gt;大二下&lt;small&gt;&lt;/small&gt;&lt;/h5&gt;
+            &lt;p&gt;全民國防教育軍事訓練課程-國防科技、...、商事法&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-item"</span>&gt;
+        &lt;h2 <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"heading3"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-header"</span>&gt;
+          &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-button collapsed"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"collapse"</span> <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#collapse3"</span>&gt;大三的課&lt;/button&gt;
+        &lt;/h2&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"collapse3"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-collapse collapse"</span> <span style="color: #a9dbfb;">data-bs-parent</span>=<span style="color: #c5937c;">"#myAccordion"</span>&gt;
+          &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-body"</span>&gt;
+            &lt;h5&gt;大三上&lt;small&gt;（111-1）&lt;/small&gt;&lt;/h5&gt;
+            &lt;p&gt;運動與體重管理（選修體育）、...、消費者行為&lt;/p&gt;
+            &lt;hr&gt;
+            &lt;h5&gt;大三下&lt;small&gt;（111-2）&lt;/small&gt;&lt;/h5&gt;
+            &lt;p&gt;全民國防教育軍事訓練課程-國防科技、...、養生醫學&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-item"</span>&gt;
+        &lt;h2 <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"heading4"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-header"</span>&gt;
+          &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-button collapsed"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"collapse"</span> <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#collapse4"</span>&gt;大四的課&lt;/button&gt;
+        &lt;/h2&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"collapse4"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-collapse collapse"</span> <span style="color: #a9dbfb;">data-bs-parent</span>=<span style="color: #c5937c;">"#myAccordion"</span>&gt;
+          &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-body"</span>&gt;
+            &lt;h5&gt;大四上&lt;small&gt;（112-1）&lt;/small&gt;&lt;/h5&gt;
+            &lt;p&gt;壁球初級、...、德語入門&lt;/p&gt;
+            &lt;hr&gt;
+            &lt;h5&gt;大四下&lt;small&gt;（112-2）&lt;/small&gt;&lt;/h5&gt;
+            &lt;p&gt;（待補）&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                        </pre>
+                      </div>
+                      <div class="mt-3">若要使用，請複製這邊的code：
+                        <pre>
+  <code>
+    &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"myAccordion"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion"</span>&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-item"</span>&gt;
+        &lt;h2 <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"heading1"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-header"</span>&gt;
+          &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-button"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"collapse"</span> <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#collapse1"</span>&gt;大一的課&lt;/button&gt;
+        &lt;/h2&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"collapse1"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-collapse collapse show"</span> <span style="color: #a9dbfb;">data-bs-parent</span>=<span style="color: #c5937c;">"#myAccordion"</span>&gt;
+          &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-body"</span>&gt;
+            &lt;p&gt;音樂作品中的愛、...、營養教育與傳播&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-item"</span>&gt;
+        &lt;h2 <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"heading2"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-header"</span>&gt;
+          &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-button collapsed"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"collapse"</span> <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#collapse2"</span>&gt;大二的課&lt;/button&gt;
+        &lt;/h2&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"collapse2"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-collapse collapse"</span> <span style="color: #a9dbfb;">data-bs-parent</span>=<span style="color: #c5937c;">"#myAccordion"</span>&gt;
+          &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-body"</span>&gt;
+            &lt;p&gt;全民國防教育軍事訓練課程-國防科技、...、商事法&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-item"</span>&gt;
+        &lt;h2 <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"heading3"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-header"</span>&gt;
+          &lt;button type="button" <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-button collapsed"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"collapse"</span> <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#collapse3"</span>&gt;大三的課&lt;/button&gt;
+        &lt;/h2&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"collapse3"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-collapse collapse"</span> <span style="color: #a9dbfb;">data-bs-parent</span>=<span style="color: #c5937c;">"#myAccordion"</span>&gt;
+          &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"accordion-body"</span>&gt;
+            &lt;p&gt;全民國防教育軍事訓練課程-國防科技、...、養生醫學&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                        </pre>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1551,7 +1737,7 @@
         <p>攝&emsp;&emsp;影｜董冠霆</p>
         <hr style="color: #ffffff;">
         <p>聯絡方式：LineID @310956585</p>
-        <p>資料最後更新時間：2024/05/09 14:36</p>
+        <p>資料最後更新時間：2024/05/09 20:16</p>
         <p>&copy; 2024 Copyright</p>
       </footer>
     </div>
