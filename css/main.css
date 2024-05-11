@@ -15,6 +15,8 @@ header {
     background-image: url("../assets/Kodak_UltraMax_053.jpg");
     background-size: cover;
     background-attachment: fixed;
+    max-width: 100%;
+    height: auto;
     /* opacity: 0.5; */
 }
 
@@ -49,8 +51,18 @@ main {
 }
 
 /* 測試區 */
-#exercise5 [class*="col"], 
-#Bootstrap_Test_1 [class*="col"] {
+#exercise5 [class*="col"] {
+    background-color: #ebdef0;
+    border: 0.5px solid purple;
+    text-align: center;
+}
+
+.bootstrapNote_col_bg {
+    background-color: #eeeeee;
+    border: 0.5px solid gray;
+}
+
+.bootstrapNote_col {
     background-color: #ebdef0;
     border: 0.5px solid purple;
     text-align: center;
@@ -59,11 +71,6 @@ main {
 pre:has(code) {
     background-color: #1e1e1e;
     color: #d4d4d4;
-}
-
-#bootstrap_form [class*="col"] {
-    background-color: #fffafa;
-    border: #fffafa;
 }
 
 /* trip */

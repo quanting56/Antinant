@@ -70,8 +70,8 @@
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">網頁練習/筆記</a>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="#TestTestTest">試驗場</a>
-                  <a class="dropdown-item" href="#Bootstrap_Test_1">Bootstrap測試1</a>
-                  <a class="dropdown-item" href="#bootstrapNote">Bootstrap筆記</a>
+                  <a class="dropdown-item" href="#bootstrapNote">Bootstrap測試1</a>
+                  <a class="dropdown-item" href="#usefulBootstrapComponent">Bootstrap筆記</a>
                 </div>
               </li>
               <li class="nav-item"><a class="nav-link" href="#">聯絡我</a></li>
@@ -115,8 +115,8 @@
             </ol>
           <li><a href="#TestTestTest">網頁練習/筆記（試驗場）</a></li>
             <ol>
-              <li><a href="#Bootstrap_Test_1">Bootstrap網格與內容樣式測試</a></li>
-              <li><a href="#bootstrapNote">一些好用的Bootstrap元件</a></li>
+              <li><a href="#bootstrapNote">Bootstrap網格與內容樣式測試</a></li>
+              <li><a href="#usefulBootstrapComponent">一些好用的Bootstrap元件</a></li>
             </ol>
           <li><a>聯絡我</a></li>
           <li><a href="#foot" style="text-decoration: none; color: tomato;">to the botton</a></li>
@@ -133,7 +133,7 @@
         
         <!-- 關於我 -->
         <div id="aboutMe">
-          <h2 id="PersonalInformation">基本資料</h2>
+          <h2 id="PersonalInformation">基本資料</h2>     
           <hr>
           <div style="padding: 10px;">
             <h3>教育程度</h3><hr>
@@ -457,63 +457,67 @@
         </div>
         <hr>
         <!-- Bootstrap網格測試 -->
-        <div id="Bootstrap_Test_1">
+        <div id="bootstrapNote">
           <h2 class="bg-warning">Bootstrap網格與內容樣式測試</h2>
+          <!-- "bootstrapNote_col_bg"與"bootstrapNote_col"為自訂樣式，非Bootstrap -->
           <hr>
+          <div style="padding: 10px;">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-2">
+                  <!-- 導覽元件 -->
+                  <ul id="usefulBootstrapComponent_Tab" class="nav nav-pills flex-column">
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#noteButton">按鈕（Button）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteForm">表單（Form）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteBreadcrumb">麵包屑（Breadcrumb）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteAlert">警報效果（Alert）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteDropdown">下拉式清單（Dropdown）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteNavsTabs">導覽（Navs）與標籤頁（Tabs）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#notePagination">分頁導覽（Pagination）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteModal">互動視窗（Modal）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteTooltips">工具提示（Tooltips）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#notePopers">彈出提示（Popers）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteCard">卡片（Card）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteCollapse">折疊元件（Collapse）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteCarousel">輪播（Carousel）</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteAccordion">手風琴效果（Accordion）</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-10">
+                  <!-- 標籤頁內容 -->
+                  <div id="usefulBootstrapComponent_TabContent" class="tab-content">
+                    <div id="noteButton" class="tab-pane fade show active">
+                      <h3>第一個元素</h3>
+                    </div>
+                    <div id="noteForm" class="tab-pane fade">
+                      <h3>第二個元素</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
           <div style="padding: 10px;">
             <div>
               <h3>Bootstrap Container 斷點測試</h3>
-              <div class="container">
-                <div class="row">
-                  <div class="col-8">區塊01 class="container"</div>
-                  <div class="col-4">區塊02 class="container"</div>
-                </div>
-              </div>
-              <div class="container-sm">
-                <div class="row">
-                  <div class="col-8">區塊03 class="container-sm"</div>
-                  <div class="col-4">區塊04 class="container-sm"</div>
-                </div>
-              </div>
-              <div class="container-md">
-                <div class="row">
-                  <div class="col-8">區塊05 class="container-md"</div>
-                  <div class="col-4">區塊06 class="container-md"</div>
-                </div>
-              </div>
-              <div class="container-lg">
-                <div class="row">
-                  <div class="col-8">區塊07 class="container-lg"</div>
-                  <div class="col-4">區塊08 class="container-lg"</div>
-                </div>
-              </div>
-              <div class="container-xl">
-                <div class="row">
-                  <div class="col-8">區塊09 class="container-xl"</div>
-                  <div class="col-4">區塊10 class="container-xl"</div>
-                </div>
-              </div>
-              <div class="container-xxl">
-                <div class="row">
-                  <div class="col-8">區塊11 class="container-xxl"</div>
-                  <div class="col-4">區塊12 class="container-xxl"</div>
-                </div>
-              </div>
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-8">區塊13 class="container-fluid"</div>
-                  <div class="col-4">區塊14 class="container-fluid"</div>
-                </div>
-              </div>
+              <div class="container bootstrapNote_col_bg text-center">區塊01 class="container"</div>
+              <div class="container-sm bootstrapNote_col_bg text-center">區塊02 class="container-sm"</div>
+              <div class="container-md bootstrapNote_col_bg text-center">區塊03 class="container-md"</div>
+              <div class="container-lg bootstrapNote_col_bg text-center">區塊04 class="container-lg"</div>
+              <div class="container-xl bootstrapNote_col_bg text-center">區塊05 class="container-xl"</div>
+              <div class="container-xxl bootstrapNote_col_bg text-center">區塊06 class="container-xxl"</div>
+              <div class="container-fluid bootstrapNote_col_bg text-center">區塊07 class="container-fluid"</div>
             </div>
             <hr>
             <div>
               <h3>Bootstrap Container裡欄位位置 斷點測試</h3>
               <div class="container">
-                <div class="row">
-                  <div class="col-12 col-md-8 col-lg-4 Bootstrap_Test_col">區塊1 class="col-12 col-md-8 col-lg-4"</div>
-                  <div class="col-12 col-md-4 col-lg-4 Bootstrap_Test_col">區塊2 class="col-12 col-md-4 col-lg-4"</div>
-                  <div class="col-12 col-md-12 col-lg-4 Bootstrap_Test_col">區塊3 class="col-12 col-md-12 col-lg-4"</div>
+                <div class="row bootstrapNote_col_bg">
+                  <div class="col-md-8 col-lg-4 bootstrapNote_col">區塊1 class="(col-12) col-md-8 col-lg-4"</div>
+                  <div class="col-md-4 col-lg-4 bootstrapNote_col">區塊2 class="(col-12) col-md-4 col-lg-4"</div>
+                  <div class="col-md-12 col-lg-4 bootstrapNote_col">區塊3 class="(col-12) col-md-12 col-lg-4"</div>
                 </div>
               </div>
             </div>
@@ -521,47 +525,56 @@
             <div>
               <h3>row垂直對齊方式</h3>
               <div class="container">
-                <div class="row align-items-start" style="height: 100px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col">區塊1 class="align-items-start"<br>垂直向上對齊</div>
-                  <div class="col">區塊2 class="align-items-start"<br>垂直向上對齊</div>
+                <div class="row bootstrapNote_col_bg mb-3" style="height: 100px;">
+                  <div class="col bootstrapNote_col">區塊1 class=""<br>未於class輸入垂直對齊方式</div>
+                  <div class="col bootstrapNote_col">區塊2 class=""<br>未於class輸入垂直對齊方式</div>
                 </div>
-                <div class="row align-items-center" style="height: 100px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col">區塊3 class="align-items-center"<br>垂直置中對齊</div>
-                  <div class="col">區塊4 class="align-items-center"<br>垂直置中對齊</div>
+                <div class="row align-items-start bootstrapNote_col_bg mb-3" style="height: 100px;">
+                  <div class="col bootstrapNote_col">區塊3 class="align-items-start"<br>垂直向上對齊</div>
+                  <div class="col bootstrapNote_col">區塊4 class="align-items-start"<br>垂直向上對齊</div>
                 </div>
-                <div class="row align-items-end" style="height: 100px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col">區塊5 class="align-items-end"<br>垂直向下對齊</div>
-                  <div class="col">區塊6 class="align-items-end"<br>垂直向下對齊</div>
+                <div class="row align-items-center bootstrapNote_col_bg mb-3" style="height: 100px;">
+                  <div class="col bootstrapNote_col">區塊5 class="align-items-center"<br>垂直置中對齊</div>
+                  <div class="col bootstrapNote_col">區塊6 class="align-items-center"<br>垂直置中對齊</div>
                 </div>
+                <div class="row align-items-end bootstrapNote_col_bg mb-3" style="height: 100px;">
+                  <div class="col bootstrapNote_col">區塊7 class="align-items-end"<br>垂直向下對齊</div>
+                  <div class="col bootstrapNote_col">區塊8 class="align-items-end"<br>垂直向下對齊</div>
+                </div>
+
               </div>
             </div>
             <hr>
             <div>
               <h3>column水平對齊方式</h3>
               <div class="container">
-                <div class="row align-items-center justify-content-start" style="height: 75px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-3">區塊01 class="col-3"<br>row的class="justify-content-start"</div>
-                  <div class="col-3">區塊02 class="col-3"<br>row的class="justify-content-start"</div>
+                <div class="row align-items-center bootstrapNote_col_bg mb-3">
+                  <div class="col-3 bootstrapNote_col">區塊01 class="col-3"<br>row的class=""</div>
+                  <div class="col-3 bootstrapNote_col">區塊02 class="col-3"<br>row的class=""</div>
                 </div>
-                <div class="row align-items-center justify-content-center" style="height: 75px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-3">區塊03 class="col-3"<br>row的class="justify-content-center"</div>
-                  <div class="col-3">區塊04 class="col-3"<br>row的class="justify-content-center"</div>
+                <div class="row align-items-center justify-content-start bootstrapNote_col_bg mb-3">
+                  <div class="col-3 bootstrapNote_col">區塊03 class="col-3"<br>row的class="justify-content-start"</div>
+                  <div class="col-3 bootstrapNote_col">區塊04 class="col-3"<br>row的class="justify-content-start"</div>
                 </div>
-                <div class="row align-items-center justify-content-end" style="height: 75px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-3">區塊05 class="col-3"<br>row的class="justify-content-end"</div>
-                  <div class="col-3">區塊06 class="col-3"<br>row的class="justify-content-end"</div>
+                <div class="row align-items-center justify-content-center bootstrapNote_col_bg mb-3">
+                  <div class="col-3 bootstrapNote_col">區塊05 class="col-3"<br>row的class="justify-content-center"</div>
+                  <div class="col-3 bootstrapNote_col">區塊06 class="col-3"<br>row的class="justify-content-center"</div>
                 </div>
-                <div class="row align-items-center justify-content-around" style="height: 75px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-3">區塊07 class="col-3"<br>row的class="justify-content-around"</div>
-                  <div class="col-3">區塊08 class="col-3"<br>row的class="justify-content-around"</div>
+                <div class="row align-items-center justify-content-end bootstrapNote_col_bg mb-3">
+                  <div class="col-3 bootstrapNote_col">區塊07 class="col-3"<br>row的class="justify-content-end"</div>
+                  <div class="col-3 bootstrapNote_col">區塊08 class="col-3"<br>row的class="justify-content-end"</div>
                 </div>
-                <div class="row align-items-center justify-content-between" style="height: 75px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-3">區塊09 class="col-3"<br>row的class="justify-content-between"</div>
-                  <div class="col-3">區塊10 class="col-3"<br>row的class="justify-content-between"</div>
+                <div class="row align-items-center justify-content-around bootstrapNote_col_bg mb-3">
+                  <div class="col-3 bootstrapNote_col">區塊09 class="col-3"<br>row的class="justify-content-around"</div>
+                  <div class="col-3 bootstrapNote_col">區塊10 class="col-3"<br>row的class="justify-content-around"</div>
                 </div>
-                <div class="row align-items-center justify-content-evenly" style="height: 75px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-3">區塊11 class="col-3"<br>row的class="justify-content-evenly"</div>
-                  <div class="col-3">區塊12 class="col-3"<br>row的class="justify-content-evenly"</div>
+                <div class="row align-items-center justify-content-between bootstrapNote_col_bg mb-3">
+                  <div class="col-3 bootstrapNote_col">區塊11 class="col-3"<br>row的class="justify-content-between"</div>
+                  <div class="col-3 bootstrapNote_col">區塊12 class="col-3"<br>row的class="justify-content-between"</div>
+                </div>
+                <div class="row align-items-center justify-content-evenly bootstrapNote_col_bg mb-3">
+                  <div class="col-3 bootstrapNote_col">區塊13 class="col-3"<br>row的class="justify-content-evenly"</div>
+                  <div class="col-3 bootstrapNote_col">區塊14 class="col-3"<br>row的class="justify-content-evenly"</div>
                 </div>
               </div>
             </div>
@@ -569,42 +582,62 @@
             <div>
               <h3>column的位移</h3>
               <div class="container">
-                <div class="row" style="height: 50px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-3">區塊01 class="col-3"</div>
-                  <div class="offset-3 col-3">區塊02 class="offset-3 col-3"</div>
+                <div class="row bootstrapNote_col_bg mb-3">
+                  <div class="col-3 bootstrapNote_col py-2">區塊01 class="col-3"</div>
+                  <div class="offset-3 col-3 bootstrapNote_col py-2">區塊02 class="offset-3 col-3"</div>
                 </div>
-                <div class="row" style="height: 50px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-3">區塊03 class="col-3"</div>
-                  <div class="offset-4 col-3">區塊04 class="offset-4 col-3"</div>
+                <div class="row bootstrapNote_col_bg mb-3">
+                  <div class="col-3 bootstrapNote_col py-2">區塊03 class="col-3"</div>
+                  <div class="offset-4 col-3 bootstrapNote_col py-2">區塊04 class="offset-4 col-3"</div>
                 </div>
-                <div class="row" style="height: 50px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-4">區塊05 class="col-4"</div>
-                  <div class="offset-3 col-4">區塊06 class="offset-3 col-4"</div>
+                <div class="row bootstrapNote_col_bg mb-3">
+                  <div class="col-4 bootstrapNote_col py-2">區塊05 class="col-4"</div>
+                  <div class="offset-3 col-4 bootstrapNote_col py-2">區塊06 class="offset-3 col-4"</div>
                 </div>
-                <div class="row" style="height: 50px; background-color: #eeeeee; border: 0.5px solid gray;">
-                  <div class="col-2">區塊07 class="col-2"</div>
-                  <div class="offset-1 col-3">區塊08 class="offset-1 col-3"</div>
-                  <div class="offset-2 col-4">區塊09 class="offset-2 col-4"</div>
+                <div class="row bootstrapNote_col_bg mb-3">
+                  <div class="col-2 bootstrapNote_col py-2">區塊07 class="col-2"</div>
+                  <div class="offset-1 col-3 bootstrapNote_col py-2">區塊08 class="offset-1 col-3"</div>
+                  <div class="offset-2 col-4 bootstrapNote_col py-2">區塊09 class="offset-2 col-4"</div>
                 </div>
               </div>
             </div>
             <hr>
             <div>
               <h3>透過Bootstrap把圖片裁成形狀</h3>
-              <div class="container">
+              <div class="container-fluid mt-3">
                 <div class="row">
-                  <section class="col-md-4" style="padding-top: 3%; background-color: #eeeeee; border: 0.5px solid gray;">
-                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="60%" class="border rounded" style="margin: 1%;"></a>
-                    <p style="text-align: center;">class="border rounded"</p>
-                  </section>
-                  <section class="col-md-4" style="padding-top: 3%; background-color: #eeeeee; border: 0.5px solid gray;">
-                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="60%" class="border rounded-pill" style="margin: 1%;"></a>
-                    <p style="text-align: center;">class="border rounded-pill"</p>
-                  </section>
-                  <section class="col-md-4" style="padding-top: 3%; background-color: #eeeeee; border: 0.5px solid gray;">
-                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="60%" class="border rounded-circle" style="margin: 1%;"></a>
-                    <p style="text-align: center;">class="border rounded-circle"</p>
-                  </section>
+                  <div class="col-md-4 bootstrapNote_col_bg" style="padding-top: 3%;">
+                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="60%" class="border rounded mx-auto d-block"></a>
+                    <p class="text-center">class="border rounded"</p>
+                  </div>
+                  <div class="col-md-4 bootstrapNote_col_bg" style="padding-top: 3%;">
+                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="60%" class="border rounded-pill mx-auto d-block"></a>
+                    <p class="text-center">class="border rounded-pill"</p>
+                  </div>
+                  <div class="col-md-4 bootstrapNote_col_bg" style="padding-top: 3%;">
+                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="60%" class="border rounded-circle mx-auto d-block"></a>
+                    <p class="text-center">class="border rounded-circle"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div>
+              <h3>Bootstrap圖片對齊方式</h3>
+              <div class="container-fluid mt-3">
+                <div class="row">
+                  <div class="col-md-4 bootstrapNote_col_bg" style="padding-top: 3%;">
+                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="60%" class="border float-start"></a>
+                    <p class="text-center" style="clear: both;">class="border float-start"</p>
+                  </div>
+                  <div class="col-md-4 bootstrapNote_col_bg" style="padding-top: 3%;">
+                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="60%" class="border mx-auto d-block"></a>
+                    <p class="text-center" style="clear: both;">class="border mx-auto d-block"</p>
+                  </div>
+                  <div class="col-md-4 bootstrapNote_col_bg" style="padding-top: 3%;">
+                    <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="60%" class="border float-end"></a>
+                    <p class="text-center" style="clear: both;">class="border float-end"</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -682,23 +715,23 @@
               <h3>圖片垂直對齊</h3>
               <div class="container">
                 <div class="row">
-                  <div class="col-lg-6" style="padding: 5px; background-color: #fffafa; border: 0.5px solid gray; text-align: left;">
+                  <div class="col-lg-6" style="padding: 5px; border: 0.5px solid gray; text-align: left;">
                     <img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="40%" class="align-baseline p-1"> class="align-baseline" 對齊基底
                   </div>
-                  <div class="col-lg-6" style="padding: 5px; background-color: #fffafa; border: 0.5px solid gray; text-align: left;">
+                  <div class="col-lg-6" style="padding: 5px; border: 0.5px solid gray; text-align: left;">
                     <img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="40%" class="align-top p-1"> class="align-top" 整行頂端
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-6" style="padding: 5px; background-color: #fffafa; border: 0.5px solid gray; text-align: left;">
+                  <div class="col-lg-6" style="padding: 5px; border: 0.5px solid gray; text-align: left;">
                     <img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="40%" class="align-bottom p-1"> class="align-bottom" 整行底部
                   </div>
-                  <div class="col-lg-6" style="padding: 5px; background-color: #fffafa; border: 0.5px solid gray; text-align: left;">
+                  <div class="col-lg-6" style="padding: 5px; border: 0.5px solid gray; text-align: left;">
                     <img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="40%" class="align-text-top p-1"> class="align-text-top" 文字頂端
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-6" style="padding: 5px; background-color: #fffafa; border: 0.5px solid gray; text-align: left;">
+                  <div class="col-lg-6" style="padding: 5px; border: 0.5px solid gray; text-align: left;">
                     <img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" width="40%" class="align-text-bottom p-1"> class="align-text-bottom" 文字底部
                   </div>
                 </div>
@@ -710,37 +743,37 @@
               <div class="container">
                 <div class="row">
                   <!-- 水平排列 -->
-                  <div class="col-md-6" style="background-color: #fffafa; border: 0;">
+                  <div class="col-md-6">
                     <ul style="text-align: left;"><li>水平排列</li></ul>
-                    <div class="d-flex flex-row mb-5" style="background-color: #eeeeee; border: 0.5px solid gray;">
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                    <div class="d-flex flex-row mb-5 bootstrapNote_col_bg">
+                      <div class="bootstrapNote_col p-2">Flex item 1</div>
+                      <div class="bootstrapNote_col p-2">Flex item 2</div>
+                      <div class="bootstrapNote_col p-2">Flex item 3</div>
                       <div class="pt-3 ps-2">class="d-flex flex-row"</div>
                     </div>
-                    <div class="d-flex flex-row-reverse mb-3" style="background-color: #eeeeee; border: 0.5px solid gray;">
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                    <div class="d-flex flex-row-reverse mb-3 bootstrapNote_col_bg">
+                      <div class="bootstrapNote_col p-2">Flex item 1</div>
+                      <div class="bootstrapNote_col p-2">Flex item 2</div>
+                      <div class="bootstrapNote_col p-2">Flex item 3</div>
                       <div class="pt-3 pe-2">class="d-flex flex-row-reverse"</div>
                     </div>
                   </div>
                   <!-- 垂直排列 -->
-                  <div class="offset-md-1 col-md-2 mb-3" style="background-color: #fffafa; border: 0;">
+                  <div class="offset-md-1 col-md-2 mb-3">
                     <ul style="text-align: left;"><li>垂直排列</li></ul>
-                    <div class="d-flex flex-column" style="background-color: #eeeeee; border: 0.5px solid gray;">
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                    <div class="d-flex flex-column bootstrapNote_col_bg">
+                      <div class="bootstrapNote_col p-2">Flex item 1</div>
+                      <div class="bootstrapNote_col p-2">Flex item 2</div>
+                      <div class="bootstrapNote_col p-2">Flex item 3</div>
                       <p style="text-align: center;">class="d-flex flex-column"</p>
                     </div>
                   </div>
-                  <div class="offset-md-1 col-md-2 mb-3" style="background-color: #fffafa; border: 0; padding-top: 36px;">
-                    <div class="d-flex flex-column-reverse" style="background-color: #eeeeee; border: 0.5px solid gray;">
+                  <div class="offset-md-1 col-md-2 mb-3" style="padding-top: 36px;">
+                    <div class="d-flex flex-column-reverse bootstrapNote_col_bg">
                       <p style="text-align: center;">class="d-flex flex-column-reverse"</p>
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                      <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                      <div class="bootstrapNote_col p-2">Flex item 1</div>
+                      <div class="bootstrapNote_col p-2">Flex item 2</div>
+                      <div class="bootstrapNote_col p-2">Flex item 3</div>
                     </div>
                   </div>
                 </div>
@@ -753,40 +786,40 @@
                 <h4 class="mt-3">水平對齊</h4>
                 <ul>
                   <li>靠左（起始端）對齊<br>class="d-flex <b>justify-content-start</b>"</li>
-                  <div class="d-flex justify-content-start mt-2 mb-4" style="background-color: #eeeeee; border: 0.5px solid gray;">
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                  <div class="d-flex justify-content-start mt-2 mb-4 bootstrapNote_col_bg">
+                    <div class="bootstrapNote_col p-2">Flex item 1</div>
+                    <div class="bootstrapNote_col p-2">Flex item 2</div>
+                    <div class="bootstrapNote_col p-2">Flex item 3</div>
                   </div>
                   <li>靠右（結尾端）對齊<br>class="d-flex <b>justify-content-end</b>"</li>
-                  <div class="d-flex justify-content-end mt-2 mb-4" style="background-color: #eeeeee; border: 0.5px solid gray;">
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                  <div class="d-flex justify-content-end mt-2 mb-4 bootstrapNote_col_bg">
+                    <div class="bootstrapNote_col p-2">Flex item 1</div>
+                    <div class="bootstrapNote_col p-2">Flex item 2</div>
+                    <div class="bootstrapNote_col p-2">Flex item 3</div>
                   </div>
                   <li>水平置中<br>class="d-flex <b>justify-content-center</b>"</li>
-                  <div class="d-flex justify-content-center mt-2 mb-4" style="background-color: #eeeeee; border: 0.5px solid gray;">
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                  <div class="d-flex justify-content-center mt-2 mb-4 bootstrapNote_col_bg">
+                    <div class="bootstrapNote_col p-2">Flex item 1</div>
+                    <div class="bootstrapNote_col p-2">Flex item 2</div>
+                    <div class="bootstrapNote_col p-2">Flex item 3</div>
                   </div>
                   <li>平均分配容器寬度且左中右元素各自對齊左中右<br>class="d-flex <b>justify-content-between</b>"</li>
-                  <div class="d-flex justify-content-between mt-2 mb-4" style="background-color: #eeeeee; border: 0.5px solid gray;">
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                  <div class="d-flex justify-content-between mt-2 mb-4 bootstrapNote_col_bg">
+                    <div class="bootstrapNote_col p-2">Flex item 1</div>
+                    <div class="bootstrapNote_col p-2">Flex item 2</div>
+                    <div class="bootstrapNote_col p-2">Flex item 3</div>
                   </div>
                   <li>平均分配容器寬度且平均分配間距<br>class="d-flex <b>justify-content-around</b>"</li>
-                  <div class="d-flex justify-content-around mt-2 mb-4" style="background-color: #eeeeee; border: 0.5px solid gray;">
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                  <div class="d-flex justify-content-around mt-2 mb-4 bootstrapNote_col_bg">
+                    <div class="bootstrapNote_col p-2">Flex item 1</div>
+                    <div class="bootstrapNote_col p-2">Flex item 2</div>
+                    <div class="bootstrapNote_col p-2">Flex item 3</div>
                   </div>
                   <li>平均分配容器寬度且間隔對齊<br>class="d-flex <b>justify-content-evenly</b>"</li>
-                  <div class="d-flex justify-content-evenly mt-2 mb-4" style="background-color: #eeeeee; border: 0.5px solid gray;">
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 1</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 2</div>
-                    <div class="p-2" style="background-color: #ebdef0; border: 0.5px solid purple;">Flex item 3</div>
+                  <div class="d-flex justify-content-evenly mt-2 mb-4 bootstrapNote_col_bg">
+                    <div class="bootstrapNote_col p-2">Flex item 1</div>
+                    <div class="bootstrapNote_col p-2">Flex item 2</div>
+                    <div class="bootstrapNote_col p-2">Flex item 3</div>
                   </div>
                 </ul>
               </div>
@@ -794,15 +827,15 @@
           </div>
         </div>
         <hr>
-        <div id="bootstrapNote">
+        <div id="usefulBootstrapComponent">
           <h2 class="bg-warning">一些好用的Bootstrap元件</h2>
           <hr>
           <div style="padding: 10px;">
             <div class="container-fluid">
               <div class="row">
-                <div class="col-12 col-md-2">
+                <div class="col-md-2">
                   <!-- 導覽元件 -->
-                  <ul id="bootstrapNote_Tab" class="nav nav-pills flex-column">
+                  <ul id="usefulBootstrapComponent_Tab" class="nav nav-pills flex-column">
                     <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#noteButton">按鈕（Button）</a></li>
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteForm">表單（Form）</a></li>
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteBreadcrumb">麵包屑（Breadcrumb）</a></li>
@@ -819,9 +852,9 @@
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteAccordion">手風琴效果（Accordion）</a></li>
                   </ul>
                 </div>
-                <div class="col-12 col-md-10">
+                <div class="col-md-10">
                   <!-- 標籤頁內容 -->
-                  <div id="bootstrapNote_TabContent" class="tab-content">
+                  <div id="usefulBootstrapComponent_TabContent" class="tab-content">
                     <div id="noteButton" class="tab-pane fade show active">
                       <h3>Bootstrap按鈕</h3>
                       <ul>
@@ -1737,7 +1770,7 @@
         <p>攝&emsp;&emsp;影｜董冠霆</p>
         <hr style="color: #ffffff;">
         <p>聯絡方式：LineID @310956585</p>
-        <p>資料最後更新時間：2024/05/09 20:16</p>
+        <p>資料最後更新時間：2024/05/12 00:10</p>
         <p>&copy; 2024 Copyright</p>
       </footer>
     </div>
