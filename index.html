@@ -51,7 +51,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">旅遊</a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#Penghu_trip">澎湖之旅</a>
+                  <a class="dropdown-item" href="#Penghu_trip_2019">澎湖之旅</a>
                   <a class="dropdown-item">高屏行</a>
                   <a class="dropdown-item">二林實地考察</a>
                   <a class="dropdown-item">蘭嶼小旅行</a>
@@ -70,6 +70,8 @@
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">網頁練習/筆記</a>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="#TestTestTest">試驗場</a>
+                  <hr class="dropdown-divider">
+                  <h3 class="dropdown-header">Bootstrap相關</h3>
                   <a class="dropdown-item" href="#bootstrapNote">Bootstrap網格與內容樣式筆記</a>
                   <a class="dropdown-item" href="#usefulBootstrapComponent">一些好用的Bootstrap元件</a>
                 </div>
@@ -101,7 +103,7 @@
             </ol>
           <li><a href="#trip">旅遊</a></li>
             <ol>
-              <li><a href="#Penghu_trip">澎湖之旅</a></li>
+              <li><a href="#Penghu_trip_2019">澎湖之旅</a></li>
               <li><a>高屏行</a></li>
               <li><a>二林實地考察</a></li>
               <li><a>蘭嶼小旅行</a></li>
@@ -130,7 +132,6 @@
 
       <!-- 主頁內容 -->
       <main>
-        
         <!-- 關於我 -->
         <div id="aboutMe">
           <h2 id="PersonalInformation">基本資料</h2>     
@@ -155,8 +156,129 @@
         <br><br><br>
 
         <div id="trip">
+          <div id="trip_menu">
+            <!-- 旅遊總覽 -->
+            <div class="container">
+              <h1 class="text-center mt-5">2019旅遊</h1>
+              <hr>
+              <!-- 澎湖之旅 -->
+              <div class="row">
+                <div class="col-md-7">
+                  <h2>澎湖幹部遊<i style="font-family: Georgia; color: #aaaaaa; font-size: 18px;"> 2019.08.31 - 09.04</i></h2>
+                  <p class="lead">那年仲夏，與攝影社幹部一起到澎湖沐浴陽光的那些日子</p>
+                  <p>出發那天是個晴朗的好日子，用完午餐，我們下午才搭上立榮航空的飛機從松山機場出發。這是我第一次坐70人左右的小飛機，過往只有搭乘輕航機的經驗，原本以為這類往返臺灣本島與澎湖的小飛機會穩很多，然而因為炎炎夏日地面炎熱，午後上升氣流強烈，這架班機依然搖搖晃晃。降落到馬公機場後...<a href="#">（see more）</a></p>
+                </div>
+                <div class="col-md-5">
+                  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <!-- 輪播指示 -->
+                    <ol class="carousel-indicators">
+                      <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+                      <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+                      <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
+                    </ol>
+                    <!-- 輪播內容 -->
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="assets/2021_Erlin_暫01.jpg" class="d-block w-100" alt="二林臺灣酒窖">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>臺灣酒窖</h5>
+                        </div>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="assets/DSC_5360.jpg" class="d-block w-100" alt="芳苑夕景與離岸風電">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>芳苑夕陽與離岸風電</h5>
+                        </div>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="assets/DSC_5434.jpg" class="d-block w-100" alt="芳苑夕景剪影">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>芳苑夕景</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 輪播控制 -->
+                    <a class="carousel-control-prev" href="#myCarousel" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel" data-bs-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                      <span class="visually-hidden">Next</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <!-- 蘭嶼行 -->
+              <div class="row">
+                <div class="col-md-7 order-md-5">
+                  <h2>蘭嶼行<i style="font-family: Georgia; color: #aaaaaa; font-size: 18px;"> 2020.08.22 - 08.27</i></h2>
+                  <p class="lead">雖然是叫做蘭嶼行，但其實是完全沒有到蘭嶼的一次旅行</p>
+                  <p>測試中測試中測試中</p>
+                </div>
+                <div class="col-md-5 order-md-1">
+                  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <!-- 輪播指示 -->
+                    <ol class="carousel-indicators">
+                      <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+                      <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+                      <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
+                    </ol>
+                    <!-- 輪播內容 -->
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="assets/2021_Erlin_暫01.jpg" class="d-block w-100" alt="二林臺灣酒窖">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>臺灣酒窖</h5>
+                        </div>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="assets/DSC_5360.jpg" class="d-block w-100" alt="芳苑夕景與離岸風電">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>芳苑夕陽與離岸風電</h5>
+                        </div>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="assets/DSC_5434.jpg" class="d-block w-100" alt="芳苑夕景剪影">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>芳苑夕景</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 輪播控制 -->
+                    <a class="carousel-control-prev" href="#myCarousel" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel" data-bs-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                      <span class="visually-hidden">Next</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <!-- 中彰投中部遊 -->
+              <div class="row">
+                <div class="col-md-7">
+                  <h2>中彰投中部遊<i style="font-family: Georgia; color: #aaaaaa; font-size: 18px;"> 2021.02.06 - 02.08</i></h2>
+                  <p class="lead">剛考到機車駕照就出發騎200公里的一次公路之旅</p>
+                  <p>測試中測試中測試中</p>
+                </div>
+                <div class="col-md-5">
+                  <img src="assets/DSC_5360.jpg" class="img-fluid" alt="芳苑夕景與離岸風電">
+                </div>
+              </div>
+              <hr>
+            </div>
+          </div>
+
+          <!-- 分隔用，之後刪 -->
+          <div style="height: 30vh;"></div>
+
           <!-- 澎湖之旅 -->
-          <article id="Penghu_trip">
+          <article id="Penghu_trip_2019">
             <h2>澎湖之旅（暫）</h2>
             <hr>
             <p style="font-size: 12px; color: gray; text-indent: 0;">那年仲夏，與攝影社幹部一起到澎湖沐浴陽光的那些日子</p>
@@ -1808,7 +1930,7 @@
         <p>攝&emsp;&emsp;影｜董冠霆</p>
         <hr style="color: #ffffff;">
         <p>聯絡方式：LineID @310956585</p>
-        <p>資料最後更新時間：2024/05/12 21:07</p>
+        <p>資料最後更新時間：2024/05/12 21:52</p>
         <p>&copy; 2024 Copyright</p>
       </footer>
     </div>
