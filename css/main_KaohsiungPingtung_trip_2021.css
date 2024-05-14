@@ -1,0 +1,71 @@
+body {
+    background-color: #fffafa;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    background-image: url("../assets/KaohsiungPingtung_trip_2021/_DSC4740.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    font-family: serif;
+}
+
+.mpt2w {
+    text-indent: 32px;
+}
+
+.writing-table {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 60px;
+}
+
+figure img {
+    width: 100%;
+    border: 1px solid #dddddd;
+    height: auto;
+    padding: 5px;
+}
+
+figcaption {
+    text-shadow: 3px 3px 3px gray;
+    font-family: serif;
+    letter-spacing: 2px;
+}
+
+#Day1_1 {
+    background-image: url("../assets/KaohsiungPingtung_trip_2021/_DSC4367.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#Day2_1 {
+    background-image: url("../assets/KaohsiungPingtung_trip_2021/_DSC4506.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#Day2_1_1 {
+    background-image: url("../assets/KaohsiungPingtung_trip_2021/_DSC4383.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#Day2_1_2 {
+    background-image: url("../assets/KaohsiungPingtung_trip_2021/_DSC4427.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#Day2_1_3 {
+    background-image: url("../assets/KaohsiungPingtung_trip_2021/_DSC4458.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}

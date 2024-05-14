@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <title>測試區</title>
+  </head>
+  <body>
+    <h2>歡迎來到測試場</h2>
+    <hr>
+    <div style="padding: 10px;">
+      <div>
+        <h3>表格測試</h3>
+        <table frame="border" rules="rows" class="caption-top">
+          <caption>統一發票對獎號碼</caption>
+          <thead>
+            <tr>
+              <th width="160px" style="text-align: center;">月份</th>
+              <th style="text-align: left;">七~八月</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="2" style="text-align: center;">特獎</td>
+              <td>88888888</td>
+            </tr>
+            <tr>
+              <td>同期統一發票收執聯八位數號碼與上列號碼相同者獎金二百萬元整</td>
+            </tr>
+            <tr>
+              <td rowspan="4" style="text-align: center;">頭獎</td>
+              <td>11111111</td>
+            </tr>
+            <tr>
+              <td>22222222</td>
+            </tr>
+            <tr>
+              <td>33333333</td>
+            </tr>
+            <tr>
+              <td>同期統一發票收執聯八位數號碼與上列號碼相同者獎金二十萬元整</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">二獎</td>
+              <td>同期統一發票收執聯七位數號碼與上列號碼與頭獎中獎號碼末七位相同者各得獎金四萬元整</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">三獎</td>
+              <td>同期統一發票收執聯六位數號碼與上列號碼與頭獎中獎號碼末六位相同者各得獎金一萬元整</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">四獎</td>
+              <td>同期統一發票收執聯五位數號碼與上列號碼與頭獎中獎號碼末五位相同者各得獎金四千元整</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">五獎</td>
+              <td>同期統一發票收執聯四位數號碼與上列號碼與頭獎中獎號碼末四位相同者各得獎金一千元整</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">六獎</td>
+              <td>同期統一發票收執聯三位數號碼與上列號碼與頭獎中獎號碼末三位相同者各得獎金二百元整</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <div>
+        <h3>表單測試</h3>
+        <form>
+          <p>姓名：<input type="text" size="20"></p>
+          <p>年齡：
+            <input type="radio" name="how_old" value="ho1">未滿20歲
+            <input type="radio" name="how_old" value="ho2" checked>20~29
+            <input type="radio" name="how_old" value="ho3">30歲或以上
+          </p>
+          <p>您使用過哪些業者的門號？（可複選）
+            <input type="checkbox" name="survice_provider[]" value="Chunghwa_Telecom" checked>中華電信
+            <input type="checkbox" name="survice_provider[]" value="Taiwan_Mobile">台灣大哥大
+            <input type="checkbox" name="survice_provider[]" value="Far_EasTone_Telecommunications">遠傳
+            <input type="checkbox" name="survice_provider[]" value="Taiwan_Star_Telecom_Corporation">台灣之星
+          </p>
+          <p>您使用過哪些廠牌的手機？（可複選）
+            <select name="cellphone">
+              <option value="ASUS">ASUS
+              <option value="Apple">Apple
+              <option value="hTC">hTC
+              <option value="SONY">SONY
+            </select>
+          </p>
+          <input type="submit" value="提交">
+          <input type="reset" value="重新輸入">
+        </form>
+      </div>
+      <hr>
+      <div>
+        <h3>Bootstrap RWD網格佈局測試</h3>
+        <div id="exercise5" class="container">
+          <div class="row">
+            <div class="col-12">
+              <div>頁首 Banner</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-2">
+              <div>導覽列 Navigator</div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-6">
+              <div>內容區 content</div>
+            </div>
+            <div class="col=col-xs-12 col-sm-4 col-md-4">
+              <div>側邊欄 Supporter</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div>頁尾 Footer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      
+    </div>
+
+
+
+    <style>
+      /* 預設隱藏文字 */
+      .fixed-text {
+        display: none;
+        position: fixed;
+        top: 50%; /* 調整垂直位置 */
+        left: 50%; /* 調整水平位置 */
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+    <div style="height: 2000px;">
+      <!-- 長度為 2000px 的內容，模擬滾動頁面 -->
+    </div>
+    
+    <div class="fixed-text" id="fixedText">
+      This text will be fixed on the screen when scrolled to a certain point.
+    </div>
+    
+    <script>
+    window.addEventListener('scroll', function() {
+      var fixedText = document.getElementById('fixedText');
+      var scrollPosition = window.scrollY;
+    
+      // 設置一個閾值，當滾動位置超過這個閾值時顯示文字
+      var threshold = 500;
+    
+      if (scrollPosition > threshold) {
+        fixedText.style.display = 'block';
+      } else {
+        fixedText.style.display = 'none';
+      }
+    });
+    </script>    
+  </body>
+</html>
