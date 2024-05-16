@@ -19,9 +19,6 @@ body {
 /* 高屏行 */
 header {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4740.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
     font-family: serif;
 }
 
@@ -33,6 +30,14 @@ header {
     position: relative;
     background-color: rgba(255, 255, 255, 0.8);
     padding: 60px;
+}
+
+.bgWithImage {
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    width: auto;
 }
 
 figure img {
@@ -50,70 +55,44 @@ figcaption {
 
 #Day1_1 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4367.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 #Day2_1 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4506.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 #Day2_1_1 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4383.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 #Day2_1_2 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4427.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 #Day2_1_3 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4458.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 #Day2_2 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4460.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 #Day2_2_1 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4428.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 #Day2_2_2 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4481.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 #Day2_3 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4541.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 #Day2_3_1 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4580.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
+}
+
+#Day3_1 {
+    background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4761.jpg");
 }
