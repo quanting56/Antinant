@@ -18,7 +18,7 @@ body {
 
 /* 高屏行 */
 header {
-    background-image: url("../assets/KaohsiungPingtung_trip_2021/_DSC4740.jpg");
+    background-image: url("../assets/KaohsiungPingtung_trip_2021/DSC4740.jpg");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -113,13 +113,6 @@ figcaption {
 
 #Day2_3_1 {
     background-image: url("../assets/KaohsiungPingtung_trip_2021/_DSC4580.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-}
-
-#Day2_3_2 {
-    background-image: url("../assets/KaohsiungPingtung_trip_2021/_DSC4585.jpg");
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
