@@ -56,6 +56,17 @@ section {
     color: #000000;
 }
 
+.trip_menu_header:hover {
+    text-decoration: none;
+    color: #555555;
+}
+
+.tripSubtitle {
+    color: gray;
+    padding: 0 0 8px 0;
+    font-size: 14px;
+}
+
 #Penghu_trip_2019 p {
     text-indent: 32px;
 }
