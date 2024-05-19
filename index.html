@@ -826,7 +826,7 @@
                               <a href="#" class="btn btn-primary">我是按鈕</a>
                             </div>
                           </div>
-                          <div class="card w-25 mt-3">
+                          <div class="card w-25 mt-3" style="float: left;">
                             <div class="card-body">
                               <h3 class="card-title">class="w-25"</h3>
                               <p class="card-text">這是一張寬度為<code>w-50</code>的卡片</p>
@@ -834,31 +834,121 @@
                             </div>
                           </div>
                         </div>
-                        <div id="cardNoteTab2" class="tap-pane fade mt-3">
+                        <div id="cardNoteTab2" class="tab-pane fade mt-3">
                           <h4>加上導覽</h4>
                           <div class="card text-center">
                             <div class="card-header">
                               <ul class="nav nav-tabs card-header-tabs">
                                 <li class="nav-item">
-                                  <a class="nav-link active" aria-current="true" href="#">Active</a>
+                                  <a class="nav-link active" data-bs-toggle="tab" aria-current="true" href="#cardNoteTab2_1">Active</a>
                                 </li>
                                 <li class="nav-item">
-                                  <a class="nav-link" href="#">Link</a>
+                                  <a class="nav-link" data-bs-toggle="tab" href="#cardNoteTab2_2">一般按鈕1</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" data-bs-toggle="tab" href="#cardNoteTab2_3">一般按鈕2</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="https://zh.wikipedia.org/wiki/中華民國臺灣地區島嶼列表" target="_blank">直接前往超連結</a>
                                 </li>
                                 <li class="nav-item">
                                   <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                                 </li>
                               </ul>
                             </div>
-                            <div class="card-body">
-                              <h5 class="card-title">Special title treatment</h5>
-                              <p class="card-text">內容內容內容</p>
-                              <a href="#" class="btn btn-primary">Go somewhere!</a>
+                            <div class="tab-content">
+                              <div id="cardNoteTab2_1" class="tab-pane fade show active card-body">
+                                <h5 class="card-title">小琉球</h5>
+                                <img src="assets/KaohsiungPingtung_trip_2021/DSC4460.jpg" title="小琉球" alt="小琉球" class="w-50">
+                                <p class="card-text"><strong><u>琉球嶼</u></strong><br>俗稱小琉球<br>是臺灣島西南方的一座外島<br>全境屬屏東縣琉球鄉管轄<br>為珊瑚礁石灰岩島嶼<br>面積6.802平方公里<br>位於屏東縣東港、高屏溪出海口西南方海面約15公里處<br>島上有許多石灰岩洞穴<br>全島在大鵬灣國家風景區範圍之內。</p>
+                                <a href="#" class="btn btn-primary">出發Go!</a>
+                                <a href="#" class="btn btn-primary">我不要這個</a>
+                              </div>
+                              <div id="cardNoteTab2_2" class="tab-pane fade card-body">
+                                <h5 class="card-title">綠島</h5>
+                                <img src="assets/KaohsiungPingtung_trip_2021/DSC4876.jpg" title="綠島" alt="綠島" class="w-50">
+                                <p class="card-text"><strong><u>綠島</u></strong><br>位於臺灣臺東縣東南方外海、太平洋之上<br>面積約為15平方公里<br>綠島是由輝石安山岩所形成之火山島<br>為全國第四大附屬島嶼<br>族群結構上主要為清領時期自琉球嶼與東港移民而來的閩南人<br>在戒嚴時期曾是關押政治犯的著名監獄</p>
+                                <a href="#" class="btn btn-primary">出發Go!</a>
+                                <a href="#" class="btn btn-primary">我不要這個</a>
+                              </div>
+                              <div id="cardNoteTab2_3" class="tab-pane fade card-body">
+                                <h5 class="card-title">蘭嶼</h5>
+                                <img src="assets/KaohsiungPingtung_trip_2021/DSC4746.jpg" title="蘭嶼" alt="蘭嶼" class="w-50">
+                                <p class="card-text"><strong><u>蘭嶼</u>（達悟語：Pongso no Tao）</strong><br>舊稱紅頭嶼<br>位於臺灣東南方外海上<br>行政區劃上為臺東縣蘭嶼鄉所管轄<br>四面環海，因其島上獨有的達悟族地土風俗與自然景點，遠近馳名<br>「蘭嶼聚落與自然景觀」為文化部遴選之臺灣世界遺產潛力點之一</p>
+                                <a href="#" class="btn btn-primary">出發Go!</a>
+                                <a href="#" class="btn btn-primary">我不要這個</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-3">本段code：
+                            <pre>
+  <code>
+    &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card text-center"</span>&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-header"</span>&gt;
+        &lt;ul <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav nav-tabs card-header-tabs"</span>&gt;
+          &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-item"</span>&gt;
+            &lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link active"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"tab"</span> <span style="color: #a9dbfb;">aria-current</span>=<span style="color: #c5937c;">"true"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#cardNoteTab2_1"</span>&gt;Active&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-item"</span>&gt;
+            &lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"tab"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#cardNoteTab2_2"</span>&gt;一般按鈕1&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-item"</span>&gt;
+            &lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link"</span> <span style="color: #a9dbfb;">data-bs-toggle</span>=<span style="color: #c5937c;">"tab"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#cardNoteTab2_3"</span>&gt;一般按鈕2&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-item"</span>&gt;
+            &lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"https://zh.wikipedia.org/wiki/中華民國臺灣地區島嶼列表"</span> <span style="color: #a9dbfb;">target</span>=<span style="color: #c5937c;">"_blank"</span>&gt;直接前往超連結&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-item"</span>&gt;
+            &lt;a <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"nav-link disabled"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span> <span style="color: #a9dbfb;">tabindex</span>=<span style="color: #c5937c;">"-1"</span> <span style="color: #a9dbfb;">aria-disabled</span>=<span style="color: #c5937c;">"true"</span>&gt;Disabled&lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-content"</span>&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"cardNoteTab2_1"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade show active card-body"</span>&gt;
+          &lt;h5 <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-<span style="color: #a9dbfb;">title</span>"</span>&gt;小琉球&lt;/h5&gt;
+          &lt;img <span style="color: #a9dbfb;">src</span>=<span style="color: #c5937c;">"assets/KaohsiungPingtung_trip_2021/DSC4460.jpg"</span> <span style="color: #a9dbfb;">title</span>=<span style="color: #c5937c;">"小琉球"</span> <span style="color: #a9dbfb;">alt</span>=<span style="color: #c5937c;">"小琉球"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"w-50"</span>&gt;
+          &lt;p <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-text"</span>&gt;&lt;strong&gt;&lt;u&gt;琉球嶼&lt;/u&gt;&lt;/strong&gt;&lt;br&gt;俗稱小琉球&lt;br&gt;...&lt;br&gt;全島在大鵬灣國家風景區範圍之內。&lt;/p&gt;
+          &lt;a <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary"</span>&gt;出發Go!&lt;/a&gt;
+          &lt;a <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary"</span>&gt;我不要這個&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"cardNoteTab2_2"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade card-body"</span>&gt;
+          &lt;h5 <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-<span style="color: #a9dbfb;">title</span>"</span>&gt;綠島&lt;/h5&gt;
+          &lt;img <span style="color: #a9dbfb;">src</span>=<span style="color: #c5937c;">"assets/KaohsiungPingtung_trip_2021/DSC4876.jpg"</span> <span style="color: #a9dbfb;">title</span>=<span style="color: #c5937c;">"綠島"</span> <span style="color: #a9dbfb;">alt</span>=<span style="color: #c5937c;">"綠島"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"w-50"</span>&gt;
+          &lt;p <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-text"</span>&gt;&lt;strong&gt;&lt;u&gt;綠島&lt;/u&gt;&lt;/strong&gt;&lt;br&gt;位於臺灣臺東縣東南方外海、太平洋之上&lt;br&gt;...&lt;br&gt;在戒嚴時期曾是關押政治犯的著名監獄&lt;/p&gt;
+          &lt;a <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary"</span>&gt;出發Go!&lt;/a&gt;
+          &lt;a <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary"</span>&gt;我不要這個&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"cardNoteTab2_3"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"tab-pane fade card-body"</span>&gt;
+          &lt;h5 <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-<span style="color: #a9dbfb;">title</span>"</span>&gt;蘭嶼&lt;/h5&gt;
+          &lt;img <span style="color: #a9dbfb;">src</span>=<span style="color: #c5937c;">"assets/KaohsiungPingtung_trip_2021/DSC4746.jpg"</span> <span style="color: #a9dbfb;">title</span>=<span style="color: #c5937c;">"蘭嶼"</span> <span style="color: #a9dbfb;">alt</span>=<span style="color: #c5937c;">"蘭嶼"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"w-50"</span>&gt;
+          &lt;p <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-text"</span>&gt;&lt;strong&gt;&lt;u&gt;蘭嶼&lt;/u&gt;（達悟語：Pongso no Tao）&lt;/strong&gt;&lt;br&gt;舊稱紅頭嶼&lt;br&gt;...&lt;br&gt;「蘭嶼聚落與自然景觀」為文化部遴選之臺灣世界遺產潛力點之一&lt;/p&gt;
+          &lt;a <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary"</span>&gt;出發Go!&lt;/a&gt;
+          &lt;a <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"#"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"btn btn-primary"</span>&gt;我不要這個&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                            </pre>
+                          </div>
+                        </div>
+                        <div id="cardNoteTab3" class="tab-pane fade mt-3">
+                          <h4>將圖片設為卡片背景</h4>
+                          <div class="card bg-dark text-white">
+                            <img src="assets/facebook_banner_2024.jpg" class="card-img" title="那些我們一起在九份的日子" alt="跟芸綺、亭儀、士豪、瑋宸、旻倫一起走在九份輕便路的照片" style="height: 300px; width: auto; object-fit: cover; object-position: bottom center;">
+                            <div class="card-img-overlay">
+                              <h5 class="card-title">那些我們一起在九份的日子</h5>
+                              <p>待補充待補充待補充</p>
                             </div>
                           </div>
                         </div>
-                        <div id="cardNoteTab3" class="tap-pane fade mt-3">
-                          <h4>將圖片設為卡片背景</h4>
+                        <div id="cardNoteTab4" class="tab-pane fade mt-3">
+                          <h4>水平卡片</h4>
+                        </div>
+                        <div id="cardNoteTab5" class="tab-pane fade mt-3">
+                          <h4>卡片顏色</h4>
+                        </div>
+                        <div id="cardNoteTab6" class="tab-pane fade mt-3">
+                          <h4>卡片群組</h4>
                         </div>
                       </div>
                     </div>
@@ -1907,7 +1997,7 @@
         <p>攝&emsp;&emsp;影｜董冠霆</p>
         <hr style="color: #ffffff;">
         <p>聯絡方式：LineID @310956585</p>
-        <p>資料最後更新時間：<time datetime="2024-05-19T02:48">2024/05/19 02:48</time></p>
+        <p>資料最後更新時間：<time datetime="2024-05-19T15:56">2024/05/19 15:56</time></p>
         <p>&copy; 2024 Copyright</p>
       </footer>
     </div>
