@@ -394,7 +394,7 @@
         <hr>
 
         <!-- Bootstrap網格測試 -->
-        <section id="bootstrapNote">
+        <section id="bootstrapNote" style="min-height: 100vh;">
           <h2 class="bg-warning">Bootstrap網格與內容樣式筆記</h2>
           <!-- "bootstrapNote_col_bg"與"bootstrapNote_col"為自訂樣式，非Bootstrap -->
           <hr>
@@ -937,15 +937,121 @@
                             <img src="assets/facebook_banner_2024.jpg" class="card-img" title="那些我們一起在九份的日子" alt="跟芸綺、亭儀、士豪、瑋宸、旻倫一起走在九份輕便路的照片" style="height: 300px; width: auto; object-fit: cover; object-position: bottom center;">
                             <div class="card-img-overlay">
                               <h5 class="card-title">那些我們一起在九份的日子</h5>
-                              <p>待補充待補充待補充</p>
+                              <p class="card-text">pc: 王士豪</p>
                             </div>
+                          </div>
+                          <div class="mt-3">本段code：
+                            <pre>
+  <code>
+    &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card bg-dark text-white"</span>&gt;
+      &lt;img <span style="color: #a9dbfb;">src</span>=<span style="color: #c5937c;">"assets/facebook_banner_2024.jpg"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-img"</span> <span style="color: #a9dbfb;">title</span>=<span style="color: #c5937c;">"那些我們一起在九份的日子"</span> <span style="color: #a9dbfb;">alt</span>=<span style="color: #c5937c;">"跟芸綺、亭儀、士豪、瑋宸、旻倫一起走在九份輕便路的照片"</span> <span style="color: #a9dbfb;">style</span>=<span style="color: #c5937c;">"height: 300px; width: auto; object-fit: cover; object-position: bottom center;"</span>&gt;
+      &lt;div <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-img-overlay"</span>&gt;
+        &lt;h5 <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-<span style="color: #a9dbfb;">title</span>"</span>&gt;那些我們一起在九份的日子&lt;/h5&gt;
+        &lt;p <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"card-text"</span>&gt;pc: 王士豪&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                            </pre>
                           </div>
                         </div>
                         <div id="cardNoteTab4" class="tab-pane fade mt-3">
                           <h4>水平卡片</h4>
+                          <div class="card" style="max-width: 540px;">
+                            <div class="row g-0">
+                              <div class="col-md-4">
+                                <img src="assets/facebook_img_2024.jpg" class="img-fluid rounder-start" title="大頭貼" alt="臉書上的大頭貼">
+                              </div>
+                              <div class="col-md-8">
+                                <div class="card-body">
+                                  <h3 class="card-title">董冠霆</h3>
+                                  <p class="card-text">我是這個網站的架設者，歡迎來到這個網站。</p>
+                                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-3">本段code：
+                            <pre>
+  <code>
+    &lt;div class="card" style="max-width: 540px;"&gt;
+      &lt;div class="row g-0"&gt;
+        &lt;div class="col-md-4"&gt;
+          &lt;img src="assets/facebook_img_2024.jpg" class="img-fluid rounder-start" title="大頭貼" alt="臉書上的大頭貼"&gt;
+        &lt;/div&gt;
+        &lt;div class="col-md-8"&gt;
+          &lt;div class="card-body"&gt;
+            &lt;h3 class="card-title"&gt;董冠霆&lt;/h3&gt;
+            &lt;p class="card-text"&gt;我是這個網站的架設者，歡迎來到這個網站。&lt;/p&gt;
+            &lt;p class="card-text"&gt;&lt;small class="text-muted"&gt;Last updated 3 mins ago&lt;/small&gt;&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                            </pre>
+                          </div>
                         </div>
                         <div id="cardNoteTab5" class="tab-pane fade mt-3">
                           <h4>卡片顏色</h4>
+                          <div>
+                            <div class="card text-white bg-primary m-2" style="max-width: 18rem; float: left;">
+                              <div class="card-header">Header</div>
+                              <div class="card-body">
+                                <h5 class="card-title">Primary card title</h5>
+                                <p class="card-text">
+                                  <pre style="font-size: 11px;">
+  <code>
+    &lt;div class="card text-white bg-primary" style="max-width: 18rem;"&gt;
+      &lt;div class="card-header"&gt;Header&lt;/div&gt;
+      &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Primary card title&lt;/h5&gt;
+        &lt;p class="card-text"&gt;...&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                                  </pre>
+                                </p>
+                              </div>
+                            </div>
+                            <div class="card text-white bg-secondary m-2" style="max-width: 18rem; float: left;">
+                              <div class="card-header">Header</div>
+                              <div class="card-body">
+                                <h5 class="card-title">Secondary card title</h5>
+                                <p class="card-text">
+                                  <pre style="font-size: 11px;">
+  <code>
+    &lt;div class="card text-white bg-secondary" style="max-width: 18rem; float: right;"&gt;
+      &lt;div class="card-header"&gt;Header&lt;/div&gt;
+      &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Secondary card title&lt;/h5&gt;
+        &lt;p class="card-text"&gt;...&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                                  </pre>
+                                </p>
+                              </div>
+                            </div>
+                            <div class="card text-white bg-success m-2" style="max-width: 18rem; float: left;">
+                              <div class="card-header">Header</div>
+                              <div class="card-body">
+                                <h5 class="card-title">Success card title</h5>
+                                <p class="card-text">
+                                  <pre style="font-size: 11px;">
+  <code>
+    &lt;div class="card text-white bg-success" style="max-width: 18rem;"&gt;
+      &lt;div class="card-header"&gt;Header&lt;/div&gt;
+      &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Success card title&lt;/h5&gt;
+        &lt;p class="card-text"&gt;...&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  </code>
+                                  </pre>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <div id="cardNoteTab6" class="tab-pane fade mt-3">
                           <h4>卡片群組</h4>
@@ -961,7 +1067,7 @@
 
         <hr>
 
-        <section id="usefulBootstrapComponent">
+        <section id="usefulBootstrapComponent" style="min-height: 100vh;">
           <h2 class="bg-warning">一些好用的Bootstrap元件</h2>
           <hr>
           <div style="padding: 10px;">
@@ -1997,7 +2103,7 @@
         <p>攝&emsp;&emsp;影｜董冠霆</p>
         <hr style="color: #ffffff;">
         <p>聯絡方式：LineID @310956585</p>
-        <p>資料最後更新時間：<time datetime="2024-05-19T15:56">2024/05/19 15:56</time></p>
+        <p>資料最後更新時間：<time datetime="2024-05-20T00:57">2024/05/20 00:57</time></p>
         <p>&copy; 2024 Copyright</p>
       </footer>
     </div>
