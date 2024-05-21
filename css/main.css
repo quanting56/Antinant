@@ -50,6 +50,12 @@ section {
     padding-top: 80px;
 }
 
+/* 自我介紹 */
+#aboutMe .year {
+    font-family: georgia;
+    padding-left: 0.5rem;
+}
+
 /* trip */
 .trip_menu_header {
     text-decoration: none;
