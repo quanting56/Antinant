@@ -17,7 +17,7 @@
       <div class="fixed-top" style="display: none; height: 1.5vh; background-color: dimgray;">
         <div id="statusbar" style="position: absolute; height: 1.5vh; width: 1.5vh; left: 0px; background-color: red"></div>
         <script>
-          $(function(){
+          $(function() {
             var doch = $(document).height();
             var winw = $(window).width();
             var winh = $(window).height();
@@ -84,7 +84,9 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">其他網頁</a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="old_index.html">舊版網頁（0508版本）</a>
+                  <a class="dropdown-item" href="old_index.html" target="_blank">舊版網頁（0508版本）</a>
+                  <a class="dropdown-item" href="statistics_note.html" target="_blank">統計學筆記</a>
+                  <a class="dropdown-item" href="degitalMedia_class.html" target="_blank">多媒體影像創作社</a>
                 </div>
               </li>
               <li class="nav-item"><a class="nav-link" href="#">聯絡我</a></li>
@@ -234,6 +236,7 @@
           <div class="mt-5" style="padding: 10px;">
             <h2 id="Portfolio">時間軸</h2>
             <hr>
+            <p>（可參考這個<a href="https://medium.com/twreporter/twreporter-lab-timeline-news-tool-4fe8db1035f2" target="_blank">《報導者》新聞小工具上線公測part 2：「大事記」圖表產生器</a>）</p>
           
           </div>
 
@@ -419,11 +422,13 @@
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteTextShadow">文字陰影</a></li>
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteBorderTest">Border Test</a></li>
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteFloat">文繞圖Float測試</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteDropDownHref">下拉式超連結</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#noteMoveToChangeImg">移動游標換照片</a></li>
                   </ul>
                 </div>
                 <div class="col-md-10">
                   <!-- 標籤頁內容 -->
-                  <div id="usefulBootstrapComponent_TabContent" class="tab-content">
+                  <div id="webNote_TabContent" class="tab-content">
                     <div id="noteSpacing" class="tab-pane fade show active">
                       <h3>字間距測試</h3>
                       <hr>
@@ -478,6 +483,17 @@
                         <a><img src="assets/Kodak_UltraMax_053.jpg" title="小門嶼一隅(Kodak Ultramax400)" style="width: 50%; padding: 15px;"></a>
                         <p style="padding: 20px; float: right;">測試文繞圖<br>（文字style="float: right;"）</p>
                       </div>
+                    </div>
+                    <div id="noteDropDownHref" class="tab-pane fade">
+                      <h3>透過超連結下拉式清單到新網頁</h3>
+                      <hr>
+                      <p>（書p14-53練習題）</p>
+                    </div>
+                    <div id="noteMoveToChangeImg" class="tab-pane fade">
+                      <h3>移動游標改變顯示圖標</h3>
+                      <hr>
+                      <p>（書p14-53練習題）</p>
+                      <p>（書p15-28練習題）</p>
                     </div>
                   </div>
                 </div>
@@ -2461,6 +2477,7 @@
     </div>
 
     <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

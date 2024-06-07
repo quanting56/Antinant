@@ -8,9 +8,17 @@
     <link rel="stylesheet" href="css/bootstrap_5.3.3_css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/main.css"/>
     <title>測試區</title>
+    <script>
+      function showMsg() {
+
+      }
+      
+    </script>
   </head>
   <body>
     <h2>歡迎來到測試場</h2>
+    <hr>
+    <a href="javascript:window.close();">關閉目前視窗</a>
     <hr>
     <div style="padding: 10px;">
       <div>
@@ -123,47 +131,45 @@
         </div>
       </div>
       <hr>
-      
-    </div>
+      <div class="background-container">
+        <div class="content">
+            <p>這裡是你的內容...</p>
+        </div>
+      </div>
+      <style>
+        .background-container {
+            position: relative;
+            overflow: hidden;
+            height: 100vh; /* 讓容器填滿整個視窗 */
+        }
 
+        .background-container::before {
+            content: "TestContent";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../assets/2019_Cimei_thetiger.jpg');
+            background-size: cover;
+            z-index: -1; /* 將背景設置在最底層 */
+        }
 
+        .content {
+            position: relative;
+            z-index: 1; /* 將內容設置在背景之上 */
+        }
 
-    <style>
-      /* 預設隱藏文字 */
-      .fixed-text {
-        display: none;
-        position: fixed;
-        top: 50%; /* 調整垂直位置 */
-        left: 50%; /* 調整水平位置 */
-        transform: translate(-50%, -50%);
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 10px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      }
-    </style>
-    <div style="height: 2000px;">
-      <!-- 長度為 2000px 的內容，模擬滾動頁面 -->
-    </div>
-    
-    <div class="fixed-text" id="fixedText">
-      This text will be fixed on the screen when scrolled to a certain point.
-    </div>
-    
-    <script>
-    window.addEventListener('scroll', function() {
-      var fixedText = document.getElementById('fixedText');
-      var scrollPosition = window.scrollY;
-    
-      // 設置一個閾值，當滾動位置超過這個閾值時顯示文字
-      var threshold = 500;
-    
-      if (scrollPosition > threshold) {
-        fixedText.style.display = 'block';
-      } else {
-        fixedText.style.display = 'none';
-      }
-    });
-    </script>    
+        /* 調整內容的樣式和位置 */
+      </style>
+      <script>
+        var x = prompt("請在此輸入分數", "");
+        if (x >= 60) {
+          alert("及格！");
+        } else {
+          alert("不及格！");
+        }
+      </script>
+    </div>    
   </body>
 </html>
