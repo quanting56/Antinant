@@ -488,13 +488,80 @@
                     <div id="noteDropDownHref" class="tab-pane fade">
                       <h3>透過超連結下拉式清單到新網頁</h3>
                       <hr>
-                      <p>（書p14-53練習題）</p>
+                      <div style="padding: 15px;">
+                        <select id="searchEngine">
+                          <option value="Google">Google</option>
+                          <option value="Yahoo">Yahoo!奇摩</option>
+                          <option value="Bing">Bing</option>
+                        </select>
+                        <button onclick="toSearchEngine();">Go!</button>
+                      </div>
+                      <div class="mt-4">本段code：
+                        <pre>
+  <code>
+    &lt;select id="searchEngine"&gt;
+      &lt;option value="Google"&gt;Google&lt;/option&gt;
+      &lt;option value="Yahoo"&gt;Yahoo!奇摩&lt;/option&gt;
+      &lt;option value="Bing"&gt;Bing&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;button onclick="toSearchEngine();"&gt;Go!&lt;/button&gt;
+
+    &lt;script&gt;
+      function toSearchEngine() {
+        var searchEngine = document.getElementById("searchEngine");
+        var selectedValue = searchEngine.value;
+
+        if (selectedValue === "Google") {
+          window.open("https://www.google.com.tw", "_blank");
+        } else if (selectedValue === "Yahoo") {
+          window.open("https://tw.yahoo.com", "");
+        } else if (selectedValue === "Bing") {
+          window.open("https://www.bing.com", "");
+        }  
+      }
+    </script>
+  </code>
+                        </pre>
+                      </div>
                     </div>
                     <div id="noteMoveToChangeImg" class="tab-pane fade">
-                      <h3>移動游標改變顯示圖標</h3>
+                      <h3>移動游標改變顯示圖標（JavaScript／jQuery）</h3>
                       <hr>
-                      <p>（書p14-53練習題）</p>
-                      <p>（書p15-28練習題）</p>
+                      <ul>
+                        <li>
+                          <h5>JavaScript</h5>
+                          <div class="py-3">
+                            <div onmouseover="ntubicdImage()" onmouseout="ntubicdSabImage()" style="height: 250px; width: 250px;">
+                              <img id="changeImage" src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;">
+                            </div>
+                          </div>
+                          <div class="mt-3">本段code：
+                            <pre>
+  <code>
+    &lt;div onmouseover="ntubicdImage()" onmouseout="ntubicdSabImage()" style="height: 250px; width: 250px;"&gt;&lt;img id="changeImage" src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;"&gt;&lt;/div&gt;
+    
+    &lt;script&gt;
+      function ntubicdImage() {
+        var changeImage = document.getElementById("changeImage");
+        changeImage.src = "assets/ntubicd_trademark.png";
+      }
+
+      function ntubicdSabImage() {
+        var changeBackImage = document.getElementById("changeImage");
+        changeBackImage.src = "assets/ntubicdsab_trademark.JPG";
+      }
+    &lt;/script&gt;
+  </code>
+                            </pre>
+                          </div>
+                        </li>
+                      </ul>
+                      <hr class="mt-5">
+                      <ul>
+                        <li>
+                          <h5>jQuery</h5>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>

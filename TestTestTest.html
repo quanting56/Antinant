@@ -10,16 +10,56 @@
     <link rel="stylesheet" href="css/main.css"/>
     <title>測試區</title>
     <script>
-      function showMsg() {
+      // function heightCaculator(x) {
+      //   var x = Math.round(x);
+      //   var y = x * (16 / 9);
+      //   y = parseFloat(y.toFixed(1));
+      //   var z = x + (y - x) / 2;
+      //   z = z.toFixed(1);
+        
+      //   if (x !== NaN) {
+      //     alert("這張圖長邊 " + y + " px，短邊 " + x + " px\n\n有 " + (x*y/10000).toFixed(1) + " 萬像素\n加黑框後的短邊為 " + z + " px");
+      //   } else {
+      //     alert("非可計算數值");
+      //   }
+        
+      // }
 
+      // var h = prompt("請輸入短邊長（較小的數字）", "");
+      // heightCaculator(h);
+
+
+      function openDocument() {
+        var newWin = window.open("", "newWin");
+        newWin.document.open("text/html");
+        newWin.document.write("這是新的HTML文件");
+        newWin.document.close();
       }
-      
     </script>
   </head>
   <body>
     <h2>歡迎來到測試場</h2>
     <hr>
     <a href="javascript:window.close();">關閉目前視窗</a>
+    <hr>
+    <button onclick="javascript:openDocument();">開新文件</button>
+    <hr>
+    <div>
+      <div id="msg">cool</div>
+      <button onclick="updateMessage1()">Update Message 1</button>
+      <button onclick="updateMessage2()">Update Message 2</button>
+        
+      <script>
+        function updateMessage1() {
+          document.getElementById('msg').innerHTML = "<i>Happy</i>";
+        }
+
+        function updateMessage2() {
+          document.getElementById('msg').innerHTML = "<i>unHappy</i>";
+        }
+
+      </script>
+    </div>
     <hr>
     <div style="padding: 10px;">
       <div>
@@ -105,115 +145,10 @@
         </form>
       </div>
       <hr>
-      <div>
-        <h3>Bootstrap RWD網格佈局測試</h3>
-        <div id="exercise5" class="container">
-          <div class="row">
-            <div class="col-12">
-              <div>頁首 Banner</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-2">
-              <div>導覽列 Navigator</div>
-            </div>
-            <div class="col-xs-12 col-sm-8 col-md-6">
-              <div>內容區 content</div>
-            </div>
-            <div class="col=col-xs-12 col-sm-4 col-md-4">
-              <div>側邊欄 Supporter</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div>頁尾 Footer</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <div class="background-container">
-        <div class="content">
-            <p>這裡是你的內容...</p>
-        </div>
-      </div>
-      <style>
-        .background-container {
-            position: relative;
-            overflow: hidden;
-            height: 100vh; /* 讓容器填滿整個視窗 */
-        }
-
-        .background-container::before {
-            content: "TestContent";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('../assets/2019_Cimei_thetiger.jpg');
-            background-size: cover;
-            z-index: -1; /* 將背景設置在最底層 */
-        }
-
-        .content {
-            position: relative;
-            z-index: 1; /* 將內容設置在背景之上 */
-        }
-
-        /* 調整內容的樣式和位置 */
-      </style>
-      <div>
-        <div class="icon-text-container">
-          <div class="icon-container">
-            <i class="bi bi-tablet-landscape" style="font-size: 24px;"></i>
-          </div>
-          <div class="ms-2">
-            <p class="mb-0"><span class="text-muted fw-light" style="font-size: 14px;">流水號</span><br>79700</p>
-          </div>
-        </div>
-        <div class="icon-text-container">
-          <div class="icon-container">
-            <i class="bi bi-tablet-landscape" style="font-size: 24px;"></i>
-          </div>
-          <div class="ms-2">
-            <p class="mb-0"><span class="text-muted fw-light" style="font-size: 14px;">流水號</span><br>79700</p>
-          </div>
-        </div>
-        <div class="icon-text-container">
-          <div class="icon-container">
-            <i class="bi bi-tablet-landscape" style="font-size: 24px;"></i>
-          </div>
-          <div class="ms-2">
-            <p class="mb-0"><span class="text-muted fw-light" style="font-size: 14px;">流水號</span><br>79700</p>
-          </div>
-        </div>
-        <style>
-          .icon-container {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          .icon-text-container {
-            display: flex;
-            align-items: center;
-          }
-          .icon-text-container p {
-            margin-bottom: 0;
-          }
-        </style>
-      </div>
       
-      <script>
-        var x = prompt("請在此輸入分數", "");
-        if (x >= 60) {
-          alert("及格！");
-        } else {
-          alert("不及格！");
-        }
-      </script>
-    </div>    
+    </div>  
+    <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/script.js"></script>  
   </body>
 </html>

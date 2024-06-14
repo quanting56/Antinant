@@ -4,18 +4,6 @@ body {
 
 
 /* 右側文字大小 */
-.accordion-body p {
-    font-size: 14px;
-}
-
-.accordion-body li {
-    font-size: 14px;
-}
-
-.accordion-body th {
-    font-size: 14px;
-}
-
-.accordion-body td {
+.accordion-body p, li, th, td {
     font-size: 14px;
 }
