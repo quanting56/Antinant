@@ -4,11 +4,20 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Title -->
+    <title>阿蛤ㄉ窩</title>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap_5.3.3_css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/bootstrap_icons-main/font/bootstrap-icons.css"/>
     <link rel="stylesheet" href="css/main.css"/>
-    <title>阿蛤ㄉ窩</title>
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
   </head>
 
   <body>
@@ -532,22 +541,24 @@
                           <h5>JavaScript</h5>
                           <div class="py-3">
                             <div onmouseover="ntubicdImage()" onmouseout="ntubicdSabImage()" style="height: 250px; width: 250px;">
-                              <img id="changeImage" src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;">
+                              <img id="changeImage1" src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;">
                             </div>
                           </div>
                           <div class="mt-3">本段code：
                             <pre>
   <code>
-    &lt;div onmouseover="ntubicdImage()" onmouseout="ntubicdSabImage()" style="height: 250px; width: 250px;"&gt;&lt;img id="changeImage" src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;"&gt;&lt;/div&gt;
+    &lt;div onmouseover="ntubicdImage()" onmouseout="ntubicdSabImage()" style="height: 250px; width: 250px;"&gt;
+      &lt;img id=<span style="color: #c5937c;">"changeImage1"</span> src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;"&gt;
+    &lt;/div&gt;
     
     &lt;script&gt;
       function ntubicdImage() {
-        var changeImage = document.getElementById("changeImage");
+        var changeImage = document.getElementById("changeImage1");
         changeImage.src = "assets/ntubicd_trademark.png";
       }
 
       function ntubicdSabImage() {
-        var changeBackImage = document.getElementById("changeImage");
+        var changeBackImage = document.getElementById("changeImage1");
         changeBackImage.src = "assets/ntubicdsab_trademark.JPG";
       }
     &lt;/script&gt;
@@ -560,6 +571,39 @@
                       <ul>
                         <li>
                           <h5>jQuery</h5>
+                          <div class="py-3">
+                            <div style="height: 250px; width: 250px;">
+                              <img id="changeImage2" src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;">
+                            </div>
+                            <script>
+                              $("#changeImage2").on("mouseover", function(){
+                                $(this).attr("src", "assets/ntubicd_trademark.png");
+                              });
+                              
+                              $("#changeImage2").on("mouseout", function(){
+                                $(this).attr("src", "assets/ntubicdsab_trademark.JPG");
+                              });
+                            </script>
+                          </div>
+                          <div class="mt-3">本段code：
+                            <pre>
+  <code>
+    &lt;div style="height: 250px; width: 250px;"&gt;
+      &lt;img id=<span style="color: #c5937c;">"changeImage2"</span> src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;"&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+      $("#changeImage2").on("mouseover", function(){
+        $(this).attr("src", "assets/ntubicd_trademark.png");
+      });
+      
+      $("#changeImage2").on("mouseout", function(){
+        $(this).attr("src", "assets/ntubicdsab_trademark.JPG");
+      });
+    &lt;/script&gt;
+  </code>
+                            </pre>
+                          </div>
                         </li>
                       </ul>
                     </div>
@@ -2630,13 +2674,9 @@
         <p>攝&emsp;&emsp;影｜董冠霆</p>
         <hr style="color: #ffffff;">
         <p>聯絡方式：LineID @310956585</p>
-        <p>資料最後更新時間：<time datetime="2024-06-10T18:31">2024/06/10 18:31</time></p>
+        <p>資料最後更新時間：<time datetime="2024-06-14T23:27">2024/06/14 23:27</time></p>
         <p>&copy; 2024 Copyright</p>
       </footer>
     </div>
-
-    <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/script.js"></script>
   </body>
 </html>

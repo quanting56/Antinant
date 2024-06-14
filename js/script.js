@@ -15,13 +15,16 @@ function toSearchEngine() {
   }  
 }
 
-// 移動游標改變顯示圖標
+// 移動游標改變顯示圖標_JavaScript
 function ntubicdImage() {
-  var changeImage = document.getElementById("changeImage");
+  var changeImage = document.getElementById("changeImage1");
   changeImage.src = "assets/ntubicd_trademark.png";
 }
 
 function ntubicdSabImage() {
-  var changeBackImage = document.getElementById("changeImage");
+  var changeBackImage = document.getElementById("changeImage1");
   changeBackImage.src = "assets/ntubicdsab_trademark.JPG";
 }
+
+// 移動游標改變顯示圖標_jQuery
+// 寫在html裡

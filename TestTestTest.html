@@ -4,11 +4,20 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Title -->
+    <title>測試區</title>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap_5.3.3_css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/bootstrap_icons-main/font/bootstrap-icons.css"/>
     <link rel="stylesheet" href="css/main.css"/>
-    <title>測試區</title>
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
     <script>
       // function heightCaculator(x) {
       //   var x = Math.round(x);
@@ -36,6 +45,11 @@
         newWin.document.close();
       }
     </script>
+    <style>
+      body {
+        padding: 30px;
+      }
+    </style>
   </head>
   <body>
     <h2>歡迎來到測試場</h2>
@@ -146,9 +160,53 @@
       </div>
       <hr>
       
+      <div>
+        <button id="showMsg1">顯示</button>
+        <button id="hideMsg1">隱藏</button>
+        <h1 id="Msg1">Hello World!</h1>
+        <script>
+          $("#showMsg1").on("click", function() {
+            $("#Msg1").show(600);
+          });
+
+          $("#hideMsg1").on("click" ,function() {
+            $("#Msg1").hide(600);
+          });
+        </script>
+      </div>
+      <hr>
+      <div>
+        <button id="showMsg2">顯示</button>
+        <button id="hideMsg2">隱藏</button>
+        <h1 id="Msg2">Hellooo World!</h1>
+        <script>
+          $("#showMsg2").on("click", function() {
+            $("#Msg2").fadeIn(600);
+          });
+
+          $("#hideMsg2").on("click" ,function() {
+            $("#Msg2").fadeOut(600);
+          });
+        </script>
+      </div>
+      <hr>
+      <div>
+        <button id="showMsg3">顯示</button>
+        <button id="hideMsg3">隱藏</button>
+        <h1 id="Msg3">Hahahahahallo World!</h1>
+        <script>
+          $("#showMsg3").on("click", function() {
+            $("#Msg3").slideDown(600);
+          });
+
+          $("#hideMsg3").on("click" ,function() {
+            $("#Msg3").slideUp(600);
+          });
+        </script>
+      </div>
+      <hr>
+
     </div>  
-    <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/script.js"></script>  
+      
   </body>
 </html>
