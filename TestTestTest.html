@@ -204,8 +204,54 @@
           });
         </script>
       </div>
-      <hr>
+      <hr><hr><hr>
+      <div>
+        <div style="background:deepskyblue;height:100vh;"></div>
+        <div style="height:300vh">
+        	<div id="outer" class="sticky-top">
+        		<div id="statusbar" style="height:100vh"></div>
+        	</div>
+        </div>
+        <div style="height:100vh;background:grey"></div>
+        <style>
+          #outer {
+          	background-image: url(https://p4css.github.io/webScroll/images/Linpen2006.jpg);
+          	background-size: cover;
+          	background-repeat: none;
+          	background-attachment: fixed;
+          }
 
+          #statusbar {
+          	/* 	position: relative; */
+          	/* 	left: 0; */
+          	width: 0;
+          	background-image: url(https://p4css.github.io/webScroll/images/Linpen2019.jpg);
+          	background-size: cover;
+          	background-repeat: none;
+          	background-attachment: fixed;
+          }
+        </style>
+        <script>
+          $(document).ready(function () {
+          	var max_scroll = $("#outer").parent().height() - $(window).height();
+          	var win_w = $(window).width();
+          	var out_pos = $("#outer").parent().offset().top;
+                    
+          	$(window).scroll(function () {
+          		var scrolled = $(window).scrollTop();
+          		console.log(scrolled + "/" + out_pos);
+            
+          		if (scrolled > out_pos && scrolled < out_pos + max_scroll) {
+          			var new_width = (win_w * (scrolled - out_pos)) / max_scroll;
+          			$("#statusbar").css({
+          				width: new_width
+          			});
+          		}
+          	});
+          });
+
+        </script>
+      </div>
     </div>  
       
   </body>

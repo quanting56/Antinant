@@ -7,6 +7,7 @@
 
     <!-- Title -->
     <title>阿蛤ㄉ窩</title>
+    <link rel="icon" href="favicon/favicon-v1.0.png" type="images/png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap_5.3.3_css/bootstrap.min.css"/>
@@ -27,7 +28,7 @@
       <div class="fixed-top" style="display: none; height: 1.5vh; background-color: dimgray;">
         <div id="statusbar" style="position: absolute; height: 1.5vh; width: 1.5vh; left: 0px; background-color: red"></div>
         <script>
-          $(function() {
+          function statusbar() {
             var doch = $(document).height();
             var winw = $(window).width();
             var winh = $(window).height();
@@ -38,17 +39,10 @@
               var new_left = current_pos / max_scroll * winw;
               $("#statusbar").css("left", new_left);
             });
-          });
+          };
         </script>
       </div>
       
-      <!-- Banner -->
-      <header style="height: 100vh;">
-        <div style="position: relative; text-align: center; font-weight: bold;">
-          <p style="color: #ffffff; position: relative; top: 42vh; font-size: 30px; font-weight: bold; font-family: serif;">阿蛤<a href="#foot" style="text-decoration: none; color: #ffffff;">ㄉ</a>窩<br><span style="color: #eeeeee; font-size: 14px;">一場奇幻之旅</span></p>
-        </div>
-      </header>
-
       <!-- Navigator -->
       <nav class="sticky-top navbar navbar-dark navbar-expand-md" style="padding: 4px 1px; background-color: #333333; opacity: 0.95;">
         <div class="container-fluid">
@@ -97,6 +91,7 @@
                   <a class="dropdown-item" href="old_index.html" target="_blank">舊版網頁（0508版本）</a>
                   <a class="dropdown-item" href="statistics_note.html" target="_blank">統計學筆記</a>
                   <a class="dropdown-item" href="degitalMedia_class.html" target="_blank">多媒體影像創作社</a>
+                  <a class="dropdown-item" href="road/highway109.html" target="_blank">市道109號</a>
                 </div>
               </li>
               <li class="nav-item"><a class="nav-link" href="#">聯絡我</a></li>
@@ -105,53 +100,65 @@
         </div>
       </nav>
 
+      <!-- Banner -->
+      <header>
+        <div id="banner" style="height: 70vh; position: relative; text-align: center; font-weight: bold;">
+          <p style="color: #ffffff; position: relative; top: 30vh; font-size: 30px; font-weight: bold; font-family: serif;">阿蛤ㄉ窩<br><span style="color: #eeeeee; font-size: 14px;">一場奇幻之旅</span></p>
+        </div>
+        <div class="countainer p-5" style="background-color: #ffffff;">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">攝影</div>
+            <div class="col">旅遊</div>
+            <div class="col">公路</div>
+            <div class="col">網頁</div>
+            <div class="col">學習</div>
+            <div class="col">其他</div>
+          </div>
+        </div>
+      </header>
+
       <!-- 輔助用Navigator（右下，快速到達用） -->
       <div id="SupportingNavigator" class="alert" style="right: 20px; bottom: 50px; position: fixed; background-color: azure; opacity: 0.65; border-radius: 8px; font-size: 12px;" role="alert">
         <h6 style="padding: 8px 0px 0px 8px;">工作用Navigator
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </h6>
-        <div style="padding: 0px 0px 0px 16px; font-weight: 800;">
-          <p class="d-block d-sm-none" style="color: orange;">現在寬度是 <span style="color: red;">xs</span></p>
-          <p class="d-none d-sm-block d-md-none" style="color: orange;">現在寬度是 <span style="color: red;">sm</span></p>
-          <p class="d-none d-md-block d-lg-none" style="color: orange;">現在寬度是 <span style="color: red;">md</span></p>
-          <p class="d-none d-lg-block d-xl-none" style="color: orange;">現在寬度是 <span style="color: red;">lg</span></p>
-          <p class="d-none d-xl-block d-xxl-none" style="color: orange;">現在寬度是 <span style="color: red;">xl</span></p>
-          <p class="d-none d-xxl-block" style="color: orange;">現在寬度是 <span style="color: red;">xxl</span></p>
-        </div>
+        </h6>   
         <ul>
-          <li><a href="#aboutMe">關於我</a></li>
-            <ol>
-              <li><a href="#PersonalInformation">基本資料</a></li>
-              <li><a href="#Portfolio">作品集</a></li>
-            </ol>
-          <li><a href="#trip_menu">旅遊</a></li>
-            <ol>
-              <li><a href="Penghu_trip_2019.html" target="_blank">澎湖之旅</a></li>
-              <li><a href="KaohsiungPingtung_trip_2021.html" target="_blank">高屏行</a></li>
-              <li><a>二林實地考察</a></li>
-              <li><a>蘭嶼小旅行</a></li>
-            </ol>
-          <li>一些文章</li>
-            <ol>
-              <!-- <li><a>攝影</a></li> -->
-              <li><a href="#NTUPHOTO_story_about_me">攝影社故事</a></li>
-              <!-- <li><a>公路</a></li> -->
-              <!-- <li><a>投資</a></li> -->
-            </ol>
-          <li><a href="TestTestTest.html" target="_blank">試驗場</a></li>
-          <li><a href="#webNote">網頁筆記</a></li>
-            <ol>
-              <li><a href="#usefulBootstrapComponent">一些好用的Bootstrap元件</a></li>
-              <li><a href="#bootstrapNote">Bootstrap網格與內容樣式測試</a></li>
-            </ol>
-          <li><a>聯絡我</a></li>
-          <li><a href="#foot" style="text-decoration: none; color: tomato;">to the botton</a></li>
+          <li>
+            <p>
+              <span class="d-block d-sm-none">現在寬度是 <span style="color: red; font-weight: 800;">xs</span></span>
+              <span class="d-none d-sm-block d-md-none">現在寬度是 <span style="color: red; font-weight: 800;">sm</span></span>
+              <span class="d-none d-md-block d-lg-none">現在寬度是 <span style="color: red; font-weight: 800;">md</span></span>
+              <span class="d-none d-lg-block d-xl-none">現在寬度是 <span style="color: red; font-weight: 800;">lg</span></span>
+              <span class="d-none d-xl-block d-xxl-none">現在寬度是 <span style="color: red; font-weight: 800;">xl</span></span>
+              <span class="d-none d-xxl-block">現在寬度是 <span style="color: red; font-weight: 800;">xxl</span></span>
+              現在視窗寬度：<span id="winWidth" style="color: red;"></span> px<br>
+              現在視窗高度：<span id="winHeight" style="color: red;"></span> px
+            </p>
+            <script>
+              function updateWindowWidth() {
+                var winWidth = window.innerWidth;
+                document.getElementById("winWidth").innerText = winWidth;
+              };
+              
+              function updateWindowHeight() {
+                var winHeight = window.innerHeight;
+                document.getElementById("winHeight").innerText = winHeight;
+              };
+    
+              updateWindowWidth();
+              updateWindowHeight();
+    
+              window.addEventListener('resize', updateWindowWidth);
+              window.addEventListener('resize', updateWindowHeight);
+            </script>
+          </li>
+          <li><a href="foot" style="text-decoration: none; color: tomato;">to the botton</a></li>
         </ul>
       </div>
 
       <!-- Back to Top -->
-      <div id="BackToTop" style="right: 20px; bottom: 20px; position: fixed;">
-        <a href="#myPage">Back to Top</a>
+      <div id="BackToTop">
+        <a href="#myPage"><i class="bi bi-arrow-up-circle-fill"></i></a>
       </div>
 
       <!-- 主頁內容 -->
@@ -166,19 +173,23 @@
               <div class="col-sm-12 offset-md-1 col-md-6 offset-lg-1 col-lg-7">
                 <h1>董冠霆 Kuan-Ting Tung</h1>
                 <hr>
-                <dl style="padding-top: 15px;">
+                <dl class="d-flex align-items-center" style="padding-top: 15px;">
                   <a href="https://rx.mc.ntu.edu.tw" target="_blank">
-                    <img src="assets/nturx_mark.jpg" title="臺大藥學系" width="50px" height="auto" class="rounded-circle" style="float: left; margin-right: 20px;">
+                    <img src="assets/nturx_mark.jpg" title="臺大藥學系" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
                   </a>
-                  <dt>國立臺灣大學 藥學系 (2016 - 2020)</dt>
-                  <dd>學習基礎醫藥課程、醫病人際互動。</dd>
+                  <div>
+                    <dt>國立臺灣大學 藥學系 (2016 - 2020)</dt>
+                    <dd>學習基礎醫藥課程、醫病人際互動。</dd>
+                  </div>
                 </dl>
-                <dl style="padding-top: 15px;">
+                <dl class="d-flex align-items-center" style="padding-top: 15px;">
                   <a href="http://www.bicd.ntu.edu.tw" target="_blank">
-                    <img src="assets/ntubicd_trademark.png" title="臺大生傳系" width="50px" height="auto" class="rounded-circle" style="float: left; margin-right: 20px;">
+                    <img src="assets/ntubicd_trademark.png" title="臺大生傳系" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
                   </a>
-                  <dt>國立臺灣大學 生物產業傳播暨發展學系 (2020 - )</dt>
-                  <dd>學習行銷與傳播，並理解臺灣農業的發展。</dd  >
+                  <div>
+                    <dt>國立臺灣大學 生物產業傳播暨發展學系 (2020 - )</dt>
+                    <dd>學習行銷與傳播，並理解臺灣農業的發展。</dd>
+                  </div>
                 </dl>
               </div>
             </div>
@@ -189,47 +200,59 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-8 col-lg-6 col-xl-5">
-                  <dl style="padding-top: 15px;">
+                  <dl class="d-flex align-items-center" style="padding-top: 15px;">
                     <a href="https://www.facebook.com/ntuphoto/" target="_blank">
-                      <img src="assets/ntuphoto_trademark.JPG" title="臺大攝影研究社" width="50px" height="auto" class="rounded-circle" style="float: left; margin-right: 20px;">
+                      <img src="assets/ntuphoto_trademark.JPG" title="臺大攝影研究社" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
                     </a>
-                    <dt>臺大攝影社 活動部長<i><sub class="year">2019.02 - 2019.07</sub></i></dt>
-                    <dd>籌辦活動、管理出團狀況</dd  >
+                    <div>
+                      <dt>臺大攝影社 活動部長<i><sub class="year">2019.02 - 2019.07</sub></i></dt>
+                      <dd>籌辦活動、管理出團狀況</dd>
+                    </div>
                   </dl>
-                  <dl style="padding-top: 15px;">
+                  <dl class="d-flex align-items-center" style="padding-top: 15px;">
                     <a href="https://www.facebook.com/ntuphoto/" target="_blank">
-                      <img src="assets/ntuphoto_trademark.JPG" title="臺大攝影研究社" width="50px" height="auto" class="rounded-circle" style="float: left; margin-right: 20px;">
+                      <img src="assets/ntuphoto_trademark.JPG" title="臺大攝影研究社" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
                     </a>
-                    <dt>臺大攝影社 暗房部長<i><sub class="year">2019.08 - 2020.01</sub></i></dt>
-                    <dd>規劃課程、擔任教學、管理社團內化學藥品</dd  >
+                    <div>
+                      <dt>臺大攝影社 暗房部長<i><sub class="year">2019.08 - 2020.01</sub></i></dt>
+                      <dd>規劃課程、擔任教學、管理社團內化學藥品</dd>
+                    </div>
                   </dl>
-                  <dl style="padding-top: 15px;">
+                  <dl class="d-flex align-items-center" style="padding-top: 15px;">
                     <a href="https://www.facebook.com/ntuphoto/" target="_blank">
-                      <img src="assets/ntuphoto_trademark.JPG" title="臺大攝影研究社" width="50px" height="auto" class="rounded-circle" style="float: left; margin-right: 20px;">
+                      <img src="assets/ntuphoto_trademark.JPG" title="臺大攝影研究社" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
                     </a>
-                    <dt>臺大攝影社 數暗部長<i><sub class="year">2020.01 - 2020.07</sub></i></dt>
-                    <dd>規劃課程、擔任教學、協助管理社團器材</dd  >
+                    <div>
+                      <dt>臺大攝影社 數暗部長<i><sub class="year">2020.01 - 2020.07</sub></i></dt>
+                      <dd>規劃課程、擔任教學、協助管理社團器材</dd>
+                    </div>
                   </dl>
-                  <dl style="padding-top: 30px;">
+                  <dl class="d-flex align-items-center" style="padding-top: 30px;">
                     <a href="https://www.facebook.com/NTUBICDSA/" target="_blank">
-                      <img src="assets/ntubicdsab_trademark.JPG" title="臺大生傳系學會" width="50px" height="auto" class="rounded-circle" style="float: left; margin-right: 20px;">
+                      <img src="assets/ntubicdsab_trademark.JPG" title="臺大生傳系學會" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
                     </a>
-                    <dt>臺大生傳系學會 影視部部員<i><sub class="year">2021.10 - 2022.02</sub></i></dt>
-                    <dd>（待補待補待補）</dd  >
+                    <div>
+                      <dt>臺大生傳系學會 影視部部員<i><sub class="year">2021.10 - 2022.02</sub></i></dt>
+                      <dd>製作劇情短片、劇組分工完成影片拍攝</dd>
+                    </div>
                   </dl>
-                  <dl style="padding-top: 30px;">
+                  <dl class="d-flex align-items-center" style="padding-top: 30px;">
                     <a href="https://www.facebook.com/voiceofntu.2022/" target="_blank">
-                      <img src="assets/voiceOfNtu_tardemark.JPG" title="臺大數位廣播社/台大之聲" width="50px" height="auto" class="rounded-circle" style="float: left; margin-right: 20px;">
+                      <img src="assets/voiceOfNtu_tardemark.JPG" title="臺大數位廣播社/台大之聲" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
                     </a>
-                    <dt>臺大數位廣播社 社長<i><sub class="year">2022.08 - 2023.07</sub></i></dt>
-                    <dd>（待補待補待補）</dd  >
+                    <div>
+                      <dt>臺大數位廣播社 社長<i><sub class="year">2022.08 - 2023.07</sub></i></dt>
+                      <dd>規劃社團活動、協調幹部工作、掌控社團氛圍</dd>
+                    </div>
                   </dl>
-                  <dl style="padding-top: 15px;">
+                  <dl class="d-flex align-items-center" style="padding-top: 15px;">
                     <a href="https://www.facebook.com/voiceofntu.2022/" target="_blank">
-                      <img src="assets/voiceOfNtu_tardemark.JPG" title="臺大數位廣播社/台大之聲" width="50px" height="auto" class="rounded-circle" style="float: left; margin-right: 20px;">
+                      <img src="assets/voiceOfNtu_tardemark.JPG" title="臺大數位廣播社/台大之聲" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
                     </a>
-                    <dt>數位廣播社 節目負責人<i><sub class="year">2022.09 - 2023.07</sub></i></dt>
-                    <dd>（待補待補待補）</dd  >
+                    <div>
+                      <dt>數位廣播社 節目負責人<i><sub class="year">2022.09 - 2023.07</sub></i></dt>
+                      <dd>節目策劃與安排、協調主持人、技術協助</dd>
+                    </div>
                   </dl>
                 </div>
                 <div class="col-md-4 col-lg-6 offset-xl-1 col-xl-6 mt-3"><h1>放圖片</h1></div>
@@ -2667,15 +2690,26 @@
         </section>
       </main>
 
-      <footer id="foot" style="background-color: #000000;padding: 15px;padding-left: 30px;">
-        <p>內文撰寫｜董冠霆</p>
-        <p>製&emsp;&emsp;圖｜董冠霆</p>
-        <p>網&emsp;&emsp;頁｜董冠霆</p>
-        <p>攝&emsp;&emsp;影｜董冠霆</p>
-        <hr style="color: #ffffff;">
-        <p>聯絡方式：LineID @310956585</p>
-        <p>資料最後更新時間：<time datetime="2024-06-14T23:27">2024/06/14 23:27</time></p>
-        <p>&copy; 2024 Copyright</p>
+      <footer class="container-fluid" style="background-color: #3c3c3c; padding: 25px; padding-left: 35px;">
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="fw-light">
+              內文撰寫｜董冠霆<br>
+              製&emsp;&emsp;圖｜董冠霆<br>
+              網&emsp;&emsp;頁｜董冠霆<br>
+              攝&emsp;&emsp;影｜董冠霆<br>
+            </p>
+            <p class="fw-light">
+              聯絡方式：LineID @310956585<br>
+              資料最後更新時間：<time datetime="2024-06-17T23:59">2024/06/17 23:59</time></p>
+            <p class="fw-light">&copy; 2024 Copyright</p>
+          </div>
+          <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">
+            <a href="https://www.instagram.com/ting.d_927" class="d-inline-block me-3" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.facebook.com/guanting.dong" class="d-inline-block me-3" target="_blank"><i class="bi bi-facebook"></i></a>
+            <a href="https://line.me/ti/p/fOtvr_KEbv" class="d-inline-block me-5" target="_blank"><i class="bi bi-line"></i></a>
+          </div>
+        </div>
       </footer>
     </div>
   </body>

@@ -6,17 +6,6 @@ body {
 }
 
 
-/* 首頁 */
-header {
-    background-image: url("../assets/Kodak_UltraMax_053.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center center;
-    max-width: 100%;
-    height: auto;
-}
-
-
 /* navigator */
 nav a {
     transition: background-color 0.5s;
@@ -27,12 +16,24 @@ nav a:hover {
 }
 
 
+/* 首頁 */
+#banner {
+    background-image: url("../assets/Kodak_UltraMax_053.jpg");
+    background-size: cover;
+    background-position: center center;
+    max-width: 100%;
+    height: auto;
+}
+
+
 /* Back to Top*/
 #BackToTop a {
-    text-decoration: none;
-    opacity: 0.5;
+    right: 24px;
+    bottom: 20px;
+    position: fixed;
+    opacity: 0.25;
     color: chocolate;
-    border-radius: 10px;
+    font-size: 32px;
 }
 
 #BackToTop a:hover {
@@ -110,6 +111,16 @@ pre:has(code) {
 
 
 /* footer */
-#foot p {
+footer h5 {
     color: #ffffff;
+}
+
+footer p {
+    font-size: 14px;
+    color: #eeeeee;
+}
+
+footer a {
+    font-size: 24px;
+    color: #eeeeee;
 }
