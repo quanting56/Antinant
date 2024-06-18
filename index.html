@@ -115,6 +115,73 @@
             <div class="col">其他</div>
           </div>
         </div>
+        <div>
+          <h1>加黑框短邊計算器</h1>
+          <div>
+            <label for="longSideLength">長邊：</label>
+            <input type="text" id="longSideLength"><br>
+            <label for="shortSideLength">短邊：</label>
+            <input type="text" id="shortSideLength"><br>
+            <button onclick="calculateNewSideLength()">計算加黑框後的新短邊</button>
+          </div>
+          <h2>計算加黑框後的新短邊</h2>
+          <table class="table table-hover">
+            <tr>
+              <th></th>
+              <th><b>本次計算</b></th>
+              <th style="color: #999999;">常用值（Nikon Z6ii）</th>
+              <th style="color: #999999;">常用值（Nikon Z50）</th>
+              <th style="color: #999999;">常用值（Nikon Df）</th>
+              <th style="color: #999999;">常用值（iPhone 8 plus）</th>
+            </tr>
+            <tr>
+              <td>長邊</td>
+              <td id="longSideLengthOutput"></td>
+              <td style="color: #999999;">6048</td>
+              <td style="color: #999999;">5568</td>
+              <td style="color: #999999;">4928</td>
+              <td style="color: #999999;">4032</td>
+            </tr>
+            <tr>
+              <td>短邊</td>
+              <td id="shortSideLengthOutput"></td>
+              <td style="color: #999999;">3402</td>
+              <td style="color: #999999;">3132</td>
+              <td style="color: #999999;">2772</td>
+              <td style="color: #999999;">2268</td>
+            </tr>
+            <tr>
+              <td>新短邊</td>
+              <td><u><b id="newSideLengthResult"></b></u></td>
+              <td style="color: #999999;">4725.00</td>
+              <td style="color: #999999;">4350.00</td>
+              <td style="color: #999999;">3850.00</td>
+              <td style="color: #999999;">3150.00</td>
+            </tr>
+            <tr>
+              <td>這張16:9有多少像素<br>（單位：萬像素）</td>
+              <td id="picturePixelsResult"></td>
+              <td style="color: #999999;">2057.5296</td>
+              <td style="color: #999999;">1743.8976</td>
+              <td style="color: #999999;">1366.0416</td>
+              <td style="color: #999999;">914.4576</td>
+            </tr>
+          </table>
+          <script>
+            function calculateNewSideLength() {
+              const longSideLength = Number(document.getElementById('longSideLength').value);
+              const shortSideLength = Number(document.getElementById('shortSideLength').value);
+            
+              const newSideLength = shortSideLength + (longSideLength - shortSideLength) / 2;
+              const picturePixels = shortSideLength * longSideLength / 10000;
+              
+              document.getElementById('longSideLengthOutput').innerText = longSideLength;
+              document.getElementById('shortSideLengthOutput').innerText = shortSideLength;
+              document.getElementById('newSideLengthResult').innerText = newSideLength.toFixed(2);
+              document.getElementById('picturePixelsResult').innerText = picturePixels.toFixed(4);
+            }
+          </script>
+        </div>
       </header>
 
       <!-- 輔助用Navigator（右下，快速到達用） -->
@@ -173,24 +240,30 @@
               <div class="col-sm-12 offset-md-1 col-md-6 offset-lg-1 col-lg-7">
                 <h1>董冠霆 Kuan-Ting Tung</h1>
                 <hr>
-                <dl class="d-flex align-items-center" style="padding-top: 15px;">
-                  <a href="https://rx.mc.ntu.edu.tw" target="_blank">
-                    <img src="assets/nturx_mark.jpg" title="臺大藥學系" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
-                  </a>
-                  <div>
-                    <dt>國立臺灣大學 藥學系 (2016 - 2020)</dt>
-                    <dd>學習基礎醫藥課程、醫病人際互動。</dd>
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-12">
+                      <dl class="d-flex align-items-center" style="padding-top: 15px;">
+                        <a href="https://rx.mc.ntu.edu.tw" target="_blank">
+                          <img src="assets/nturx_mark.jpg" title="臺大藥學系" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
+                        </a>
+                        <div>
+                          <dt>國立臺灣大學 藥學系 (2016 - 2020)</dt>
+                          <dd>學習基礎醫藥課程、醫病人際互動。</dd>
+                        </div>
+                      </dl>
+                      <dl class="d-flex align-items-center" style="padding-top: 15px;">
+                        <a href="http://www.bicd.ntu.edu.tw" target="_blank">
+                          <img src="assets/ntubicd_trademark.png" title="臺大生傳系" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
+                        </a>
+                        <div>
+                          <dt>國立臺灣大學 生物產業傳播暨發展學系 (2020 - )</dt>
+                          <dd>學習行銷與傳播，並理解臺灣農業的發展。</dd>
+                        </div>
+                      </dl>
+                    </div>
                   </div>
-                </dl>
-                <dl class="d-flex align-items-center" style="padding-top: 15px;">
-                  <a href="http://www.bicd.ntu.edu.tw" target="_blank">
-                    <img src="assets/ntubicd_trademark.png" title="臺大生傳系" width="50px" height="auto" class="rounded-circle" style="margin-right: 20px;">
-                  </a>
-                  <div>
-                    <dt>國立臺灣大學 生物產業傳播暨發展學系 (2020 - )</dt>
-                    <dd>學習行銷與傳播，並理解臺灣農業的發展。</dd>
-                  </div>
-                </dl>
+                </div>
               </div>
             </div>
           </div>
@@ -242,7 +315,7 @@
                     </a>
                     <div>
                       <dt>臺大數位廣播社 社長<i><sub class="year">2022.08 - 2023.07</sub></i></dt>
-                      <dd>規劃社團活動、協調幹部工作、掌控社團氛圍</dd>
+                      <dd>統領社團、規劃社團活動、協調幹部工作、掌控社團氛圍</dd>
                     </div>
                   </dl>
                   <dl class="d-flex align-items-center" style="padding-top: 15px;">
@@ -260,14 +333,20 @@
             </div>
           </div>
 
-
           <div class="mt-5" style="padding: 10px;">
-            <h2 id="Portfolio">作品集</h2>
+            <h2 id="portfolio">作品集</h2>
             <hr>
           
           </div>
+
           <div class="mt-5" style="padding: 10px;">
-            <h2 id="Portfolio">時間軸</h2>
+            <h2 id="jobExperience">其他工作經驗</h2>
+            <hr>
+          
+          </div>
+
+          <div class="mt-5" style="padding: 10px;">
+            <h2 id="personalTimeLine">時間軸</h2>
             <hr>
             <p>（可參考這個<a href="https://medium.com/twreporter/twreporter-lab-timeline-news-tool-4fe8db1035f2" target="_blank">《報導者》新聞小工具上線公測part 2：「大事記」圖表產生器</a>）</p>
           
@@ -2701,7 +2780,7 @@
             </p>
             <p class="fw-light">
               聯絡方式：LineID @310956585<br>
-              資料最後更新時間：<time datetime="2024-06-17T23:59">2024/06/17 23:59</time></p>
+              資料最後更新時間：<time datetime="2024-06-18T11:24">2024/06/18 11:24</time></p>
             <p class="fw-light">&copy; 2024 Copyright</p>
           </div>
           <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">
