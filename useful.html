@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Title -->
+    <title>加黑框短邊計算器</title>
+    <link rel="icon" href="favicon/favicon-v1.0.png" type="images/png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap_icons-main/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+  </head>
+
+  <body>
+    <div class="p-5">
+      <h1>加黑框短邊計算器</h1>
+      <hr>
+      <div>
+        <label for="longSideLength" class="form-label">長邊：</label>
+        <input type="text" id="longSideLength" placeholder="請輸入長邊"><br>
+        <label for="shortSideLength" class="form-label">短邊：</label>
+        <input type="text" id="shortSideLength" placeholder="請輸入短邊"><br>
+        <button onclick="calculateNewSideLength()" class="btn btn-primary btn-sm">計算加黑框後的新短邊</button>
+      </div>
+      <h2 class="mt-4">計算加黑框後的新短邊</h2>
+      <table class="table table-hover">
+        <tr>
+          <th></th>
+          <th><b>本次計算</b></th>
+          <th style="color: #999999;">常用值（Nikon Z6ii）</th>
+          <th style="color: #999999;">常用值（Nikon Z50）</th>
+          <th style="color: #999999;">常用值（Nikon Df）</th>
+          <th style="color: #999999;">常用值（iPhone 8 plus）</th>
+        </tr>
+        <tr>
+          <td>長邊</td>
+          <td id="longSideLengthOutput"></td>
+          <td style="color: #999999;">6048</td>
+          <td style="color: #999999;">5568</td>
+          <td style="color: #999999;">4928</td>
+          <td style="color: #999999;">4032</td>
+        </tr>
+        <tr>
+          <td>短邊</td>
+          <td id="shortSideLengthOutput"></td>
+          <td style="color: #999999;">3402</td>
+          <td style="color: #999999;">3132</td>
+          <td style="color: #999999;">2772</td>
+          <td style="color: #999999;">2268</td>
+        </tr>
+        <tr>
+          <td>新短邊</td>
+          <td><u><b id="newSideLengthResult"></b></u></td>
+          <td style="color: #999999;">4725.00</td>
+          <td style="color: #999999;">4350.00</td>
+          <td style="color: #999999;">3850.00</td>
+          <td style="color: #999999;">3150.00</td>
+        </tr>
+        <tr>
+          <td>這張16:9有多少像素<br>（單位：萬像素）</td>
+          <td id="picturePixelsResult"></td>
+          <td style="color: #999999;">2057.5296</td>
+          <td style="color: #999999;">1743.8976</td>
+          <td style="color: #999999;">1366.0416</td>
+          <td style="color: #999999;">914.4576</td>
+        </tr>
+      </table>
+      <script>
+        function calculateNewSideLength() {
+          const longSideLength = Number(document.getElementById('longSideLength').value);
+          const shortSideLength = Number(document.getElementById('shortSideLength').value);
+        
+          const newSideLength = shortSideLength + (longSideLength - shortSideLength) / 2;
+          const picturePixels = shortSideLength * longSideLength / 10000;
+          
+          document.getElementById('longSideLengthOutput').innerText = longSideLength;
+          document.getElementById('shortSideLengthOutput').innerText = shortSideLength;
+          document.getElementById('newSideLengthResult').innerText = newSideLength.toFixed(2);
+          document.getElementById('picturePixelsResult').innerText = picturePixels.toFixed(4);
+        }
+      </script>
+    </div>
+  </body>
+</html>

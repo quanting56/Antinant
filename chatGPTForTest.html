@@ -1,316 +1,97 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
-
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台24線的興與衰</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        .section {
-            padding: 60px 0;
-        }
-
-        .section-heading {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .map-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-        }
-
-        .map-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .carousel-inner img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-        }
-
-        .info-box {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .info-box:hover {
-            transform: translateY(-10px);
-        }
-
-        #commentsList li {
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-        }
-
-        .timeline {
-            position: relative;
-            padding: 0;
-            list-style: none;
-        }
-
-        .timeline:before {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            content: ' ';
-            width: 2px;
-            height: 100%;
-            background-color: #e9ecef;
-        }
-
-        .timeline-item {
-            position: relative;
-            width: 50%;
-            padding: 20px 40px;
-            box-sizing: border-box;
-        }
-
-        .timeline-item:after {
-            content: '';
-            display: block;
-            clear: both;
-        }
-
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
-
-        .timeline-panel {
-            position: relative;
-            float: right;
-            width: 86%;
-            padding: 20px;
-            border: 1px solid #e9ecef;
-            border-radius: 2px;
-            background-color: white;
-            -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
-        }
-
-        .timeline-badge {
-            color: #fff;
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-            font-size: 1.4em;
-            text-align: center;
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            margin-left: -25px;
-            background-color: #6c757d;
-            border-radius: 50%;
-            z-index: 100;
-        }
-
-        .timeline-title {
-            margin-top: 0;
-            color: inherit;
-        }
-    </style>
-</head>
-
-<body>
-    <header class="bg-dark text-white text-center py-5">
-        <h1 class="animate__animated animate__fadeInDown">台24線的興與衰</h1>
-        <p class="animate__animated animate__fadeInUp">了解這條重要道路的歷史和發展</p>
-    </header>
-
-    <section class="section bg-light">
-        <div class="container">
-            <div class="section-heading">
-                <h2 class="animate__animated animate__fadeInLeft">關於台24線</h2>
-                <p class="animate__animated animate__fadeInRight">台24線是臺灣省的一條省道，貫穿南北，連接多個重要城市。</p>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="info-box animate__animated animate__zoomIn">
-                        <h4>歷史背景</h4>
-                        <p>台24線建於1960年代，當時是為了連接南北的主要交通動脈。這條道路的建設促進了沿線地區的經濟發展和人口流動。</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="info-box animate__animated animate__zoomIn animate__delay-1s">
-                        <h4>發展巔峰</h4>
-                        <p>在1980年代，台24線達到了發展的巔峰。沿線的工業區和商業中心如雨後春筍般冒起，吸引了大量的投資和就業機會。</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="info-box animate__animated animate__zoomIn animate__delay-2s">
-                        <h4>衰退原因</h4>
-                        <p>進入2000年代，隨著高鐵和高速公路的發展，台24線的重要性逐漸下降。交通流量減少，沿線的商業活動也逐漸冷清。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section bg-light">
-        <div class="container">
-            <div class="section-heading">
-                <h2 class="animate__animated animate__fadeInLeft">歷史沿革</h2>
-                <p class="animate__animated animate__fadeInRight">台24線的主要歷史事件和發展階段。</p>
-            </div>
-            <ul class="timeline">
-                <li class="timeline-item">
-                    <div class="timeline-badge"><i class="fas fa-road"></i></div>
-                    <div class="timeline-panel animate__animated animate__fadeInLeft">
-                        <h4 class="timeline-title">1960年代</h4>
-                        <p>台24線的建設開始，目的是連接台灣南北的重要交通線。</p>
-                    </div>
-                </li>
-                <li class="timeline-item">
-                    <div class="timeline-badge"><i class="fas fa-industry"></i></div>
-                    <div class="timeline-panel animate__animated animate__fadeInRight">
-                        <h4 class="timeline-title">1980年代</h4>
-                        <p>台24線達到發展巔峰，沿線工業區和商業中心迅速崛起。</p>
-                    </div>
-                </li>
-                <li class="timeline-item">
-                    <div class="timeline-badge"><i class="fas fa-train"></i></div>
-                    <div class="timeline-panel animate__animated animate__fadeInLeft">
-                        <h4 class="timeline-title">2000年代</h4>
-                        <p>高鐵和高速公路的發展導致台24線的重要性逐漸減少。</p>
-                    </div>
-                </li>
-                <li class="timeline-item">
-                    <div class="timeline-badge"><i class="fas fa-refresh"></i></div>
-                    <div class="timeline-panel animate__animated animate__fadeInRight">
-                        <h4 class="timeline-title">2020年代</h4>
-                        <p>隨著政府政策和交通規劃的調整，台24線迎來新的發展契機。</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <div class="section-heading">
-                <h2 class="animate__animated animate__fadeInLeft">沿途景點</h2>
-                <p class="animate__animated animate__fadeInRight">台24線沿線有許多值得一遊的景點。</p>
-            </div>
-            <div id="sceneryCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://example.com/image1.jpg" class="d-block w-100" alt="景點1">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>景點1</h5>
-                            <p>景點1的描述</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://example.com/image2.jpg" class="d-block w-100" alt="景點2">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>景點2</h5>
-                            <p>景點2的描述</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://example.com/image3.jpg" class="d-block w-100" alt="景點3">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>景點3</h5>
-                            <p>景點3的描述</p>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#sceneryCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#sceneryCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <section class="section bg-light">
-        <div class="container">
-            <div class="section-heading">
-                <h2 class="animate__animated animate__fadeInLeft">地圖</h2>
-                <p class="animate__animated animate__fadeInRight">查看台24線的地理位置和沿途景點。</p>
-            </div>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3154.971809576349!2d121.5654!3d24.9681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0:0x7f8b4f7c89e2a9!2z5qOu5a-v5qOu!5e0!3m2!1szh-TW!2stw!4v1632242289672!5m2!1szh-TW!2stw" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-            </div>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <div class="section-heading">
-                <h2 class="animate__animated animate__fadeInLeft">互動討論</h2>
-                <p class="animate__animated animate__fadeInRight">分享您對台24線的看法和建議。</p>
-            </div>
-            <div class="mb-3">
-                <label for="comment" class="form-label">您的評論</label>
-                <textarea class="form-control" id="comment" rows="3"></textarea>
-            </div>
-            <button class="btn btn-primary" onclick="submitComment()">提交評論</button>
-            <div id="commentSection" class="mt-4">
-                <h4>評論區</h4>
-                <ul id="commentsList" class="list-unstyled">
-                    <!-- 評論會顯示在這裡 -->
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-dark text-white text-center py-4">
-        <p>&copy; 2024 台24線的興與衰. 版權所有.</p>
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <title>ANOVA 計算器</title>
     <script>
-        new WOW().init();
-
-        function submitComment() {
-            var comment = document.getElementById('comment').value;
-            if (comment) {
-                var commentList = document.getElementById('commentsList');
-                var newComment = document.createElement('li');
-                newComment.innerHTML = comment;
-                commentList.appendChild(newComment);
-                document.getElementById('comment').value = '';
-            }
+        function calculateANOVA(groups) {
+            const groupSizes = groups.map(group => group.length);
+            const totalSamples = groupSizes.reduce((acc, size) => acc + size, 0);
+            const grandMean = groups.reduce((acc, group) => acc + group.reduce((sum, value) => sum + value, 0), 0) / totalSamples;
+            const sst = groups.reduce((acc, group) => acc + group.reduce((sum, value) => sum + Math.pow(value - grandMean, 2), 0), 0);
+            const ssw = groups.reduce((acc, group, index) => {
+                const groupMean = group.reduce((sum, value) => sum + value, 0) / groupSizes[index];
+                return acc + group.reduce((sum, value) => sum + Math.pow(value - groupMean, 2), 0);
+            }, 0);
+            const ssb = groups.reduce((acc, group, index) => {
+                const groupMean = group.reduce((sum, value) => sum + value, 0) / groupSizes[index];
+                return acc + group.length * Math.pow(groupMean - grandMean, 2);
+            }, 0);
+            const dfBetween = groups.length - 1;
+            const dfWithin = totalSamples - groups.length;
+            const msb = ssb / dfBetween;
+            const msw = ssw / dfWithin;
+            const fValue = msb / msw;
+            return {
+                dfBetween: dfBetween,
+                dfWithin: dfWithin,
+                ssb: ssb,
+                ssw: ssw,
+                sst: sst,
+                msb: msb,
+                msw: msw,
+                fValue: fValue
+            };
         }
 
-        $(window).on('resize', function () {
-            var winw = $(window).width();
-            $("#winw").html(winw);
-        });
+        function runANOVA() {
+            const group1 = document.getElementById('group1').value.split(',').map(Number);
+            const group2 = document.getElementById('group2').value.split(',').map(Number);
+            const group3 = document.getElementById('group3').value.split(',').map(Number);
 
-        $(document).ready(function () {
-            var winw = $(window).width();
-            $("#winw").html(winw);
-        });
+            const result = calculateANOVA([group1, group2, group3]);
+
+            document.getElementById('dfBetween').innerText = result.dfBetween;
+            document.getElementById('dfWithin').innerText = result.dfWithin;
+            document.getElementById('ssb').innerText = result.ssb.toFixed(2);
+            document.getElementById('ssw').innerText = result.ssw.toFixed(2);
+            document.getElementById('sst').innerText = result.sst.toFixed(2);
+            document.getElementById('msb').innerText = result.msb.toFixed(2);
+            document.getElementById('msw').innerText = result.msw.toFixed(2);
+            document.getElementById('fValue').innerText = result.fValue.toFixed(2);
+        }
     </script>
+</head>
+<body>
+    <h1>ANOVA 計算器</h1>
+    <div>
+        <label for="group1">組別1數據 (以逗號分隔):</label>
+        <input type="text" id="group1" value="10,12,13,14,15"><br>
+        <label for="group2">組別2數據 (以逗號分隔):</label>
+        <input type="text" id="group2" value="8,9,11,12,14"><br>
+        <label for="group3">組別3數據 (以逗號分隔):</label>
+        <input type="text" id="group3" value="7,8,9,10,11"><br>
+        <button onclick="runANOVA()">計算ANOVA</button>
+    </div>
+    <h2>ANOVA 結果</h2>
+    <table border="1">
+        <tr>
+            <th></th>
+            <th>自由度</th>
+            <th>平方和</th>
+            <th>均方</th>
+            <th>F 值</th>
+        </tr>
+        <tr>
+            <td>組間</td>
+            <td id="dfBetween"></td>
+            <td id="ssb"></td>
+            <td id="msb"></td>
+            <td id="fValue" rowspan="2"></td>
+        </tr>
+        <tr>
+            <td>組內</td>
+            <td id="dfWithin"></td>
+            <td id="ssw"></td>
+            <td id="msw"></td>
+        </tr>
+        <tr>
+            <td>總和</td>
+            <td id="totalDF"></td>
+            <td id="sst"></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
 </body>
-
 </html>
