@@ -1,4 +1,25 @@
-/* trip */
+/* Back to Top*/
+#BackToTop a {
+    right: 24px;
+    bottom: 20px;
+    position: fixed;
+    opacity: 0.25;
+    color: chocolate;
+    font-size: 32px;
+    z-index: 99;
+}
+
+#BackToTop a:hover {
+    opacity: 0.8;
+}
+
+
+/* main */
+main {
+    padding: 40px;
+    font-family: serif;
+}
+
 .trip_menu_header {
     text-decoration: none;
     color: #000000;
@@ -25,4 +46,25 @@
     border: 1px solid #ffffff;
     box-shadow: 5px 5px 3px gray;
     height: auto;
+}
+
+
+/* footer */
+footer h5 {
+    color: #ffffff;
+}
+
+footer p {
+    font-size: 14px;
+    color: #eeeeee;
+}
+
+footer a {
+    font-size: 24px;
+    color: #eeeeee;
+}
+
+footer a:hover {
+    transform: translateY(-1.5px);
+    transition: transform 0.2s ease-in-out;
 }

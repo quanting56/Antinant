@@ -39,7 +39,9 @@ nav a:hover {
 .semi-nav-button:hover {
     background-color: #dedede;
     text-shadow: 0px 0px 2px #ffffff;
+    transform: translateY(-3px);
     transition: background-color 0.25s;
+    transition: transform 0.25s ease-in-out;
 }
 
 
@@ -442,4 +444,9 @@ footer p {
 footer a {
     font-size: 24px;
     color: #eeeeee;
+}
+
+footer a:hover {
+    transform: translateY(-1.5px);
+    transition: transform 0.2s ease-in-out;
 }
