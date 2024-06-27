@@ -19,6 +19,7 @@
     <script src="../js/jquery_v3.7.1_min.js"></script>
     <!-- Bootstrap Bundle JS -->
     <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="../js/d3_v7.9.0_min.js"></script>
     <script src="../js/wow_v1.1.3_min.js"></script>
     <script src="../js/script.js"></script>
     <script>
@@ -212,9 +213,20 @@
 
     <br><br><br><br><br>
 
+    <svg width="500" height="200" style="border: 1px solid rgb(96, 96, 96)">
+      <rect x="40" y="40" width="300" height="100" style="fill: rgb(248, 204, 61); stroke-width: 3; stroke: rgb(0, 0, 0);"/>
+    </svg>
 
-    <div>
+    <svg width="500" height="200" style="border: 1px solid rgb(96, 96, 96)">
+      <polygon points="200,10 250,190 160,180" style="fill: rgb(248, 117, 61); stroke: rgb(248, 204, 61); stroke-width: 3" transform="rotate(-10 50 100) translate(-36 45.5) skewX(60) scale(1 0.6)"></polygon>
+    </svg>
 
+    <div id="d3js">
+      <script>
+        d3.select('#d3js')
+          .append('h1')
+          .text('Hello D3js');
+      </script>
     </div>
   </body>
 </html>

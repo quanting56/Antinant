@@ -20,6 +20,7 @@
     <script src="js/jquery_v3.7.1_min.js"></script>
     <!-- Bootstrap Bundle JS -->
     <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="js/d3_v7.9.0_min.js"></script>
     <script src="js/wow_v1.1.3_min.js"></script>
     <script src="js/script.js"></script>
   </head>
@@ -37,10 +38,10 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">旅遊</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#trip_menu">旅遊總覽</a>
+                <a class="dropdown-item" href="trip.html">旅遊總覽</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" href="Penghu_trip_2019.html" target="_blank">澎湖之旅</a>
-                <a class="dropdown-item" href="KaohsiungPingtung_trip_2021.html" target="_blank">高屏行</a>
+                <a class="dropdown-item" href="trip/Penghu_trip_2019.html" target="_blank">澎湖之旅</a>
+                <a class="dropdown-item" href="trip/KaohsiungPingtung_trip_2021.html" target="_blank">高屏行</a>
                 <a class="dropdown-item">二林實地考察</a>
                 <a class="dropdown-item">蘭嶼小旅行</a>
               </div>
@@ -57,20 +58,27 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">網頁練習/筆記</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="TestTestTest.html" target="_blank">試驗場</a>
+                <a class="dropdown-item" href="web_note/TestTestTest.html" target="_blank">試驗場</a>
                 <hr class="dropdown-divider">
                 <h3 class="dropdown-header">非Bootsrap相關筆記</h3>
-                <a class="dropdown-item" href="#webNote">網頁練習筆記區</a>
+                <a class="dropdown-item" href="web_note.html#webNote">網頁練習筆記區</a>
                 <hr class="dropdown-divider">
                 <h3 class="dropdown-header">Bootstrap相關筆記</h3>
-                <a class="dropdown-item" href="#usefulBootstrapComponent">一些好用的Bootstrap元件</a>
-                <a class="dropdown-item" href="#bootstrapNote">Bootstrap網格與內容樣式筆記</a>
+                <a class="dropdown-item" href="web_note.html#usefulBootstrapComponent">一些好用的Bootstrap元件</a>
+                <a class="dropdown-item" href="web_note.html#bootstrapNote">Bootstrap網格與內容樣式筆記</a>
+                <hr class="dropdown-divider">
+                <h3 class="dropdown-header">CSS函式庫相關筆記</h3>
+                <a class="dropdown-item" href="web_note.html#cssFunctionNote">一些CSS函式庫</a>
+                <hr class="dropdown-divider">
+                <h3 class="dropdown-header">D3.js相關筆記</h3>
+                <a class="dropdown-item" href="web_note.html#D3jsNote">D3.js資料視覺化筆記</a>
               </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">其他網頁</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="old_index.html" target="_blank">舊版網頁（0508版本）</a>
+                <a class="dropdown-item" href="old_index_20240508.html" target="_blank">舊版網頁（0508版本）</a>
+                <a class="dropdown-item" href="old_index_20240620.html" target="_blank">舊版網頁（0620版本）</a>
                 <a class="dropdown-item" href="statistics_note.html" target="_blank">統計學筆記</a>
                 <a class="dropdown-item" href="degitalMedia_class.html" target="_blank">多媒體影像創作社</a>
                 <a class="dropdown-item" href="road/highway109.html" target="_blank">市道109號</a>
@@ -1067,7 +1075,7 @@
                     <h3>輪播（Carousel）</h3>
                     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
                       <!-- 輪播指示 -->
-                      <ol class="carousel-indicators">
+                      <ol class="carousel-indicators" style="list-style: none;">
                         <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
                         <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
                         <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
@@ -1109,7 +1117,7 @@
   <code>
     &lt;div <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"myCarousel"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"carousel slide"</span> <span style="color: #a9dbfb;">data-bs-ride</span>=<span style="color: #c5937c;">"carousel"</span>&gt;
       <span style="color: #74975d;">&lt;!-- 輪播指示 --&gt;</span>
-      &lt;ol <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"carousel-indicators"</span>&gt;
+      &lt;ol <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"carousel-indicators"</span> <span style="color: #a9dbfb;">style</span>=<span style="color: #c5937c;">"list-style: none;"</span>&gt;
         &lt;li <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#myCarousel"</span> <span style="color: #a9dbfb;">data-bs-slide-to</span>=<span style="color: #c5937c;">"0"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"active"</span>&gt;&lt;/li&gt;
         &lt;li <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#myCarousel"</span> <span style="color: #a9dbfb;">data-bs-slide-to</span>=<span style="color: #c5937c;">"1"</span>&gt;&lt;/li&gt;
         &lt;li <span style="color: #a9dbfb;">data-bs-target</span>=<span style="color: #c5937c;">"#myCarousel"</span> <span style="color: #a9dbfb;">data-bs-slide-to</span>=<span style="color: #c5937c;">"2"</span>&gt;&lt;/li&gt;
@@ -2298,7 +2306,7 @@
       <hr>
 
       <!-- 一些CSS函式庫 -->
-      <section id="bootstrapNote" class="segmentation" style="min-height: 100vh;">
+      <section id="cssFunctionNote" class="segmentation" style="min-height: 100vh;">
         <h2 class="bg-warning">一些CSS函式庫</h2>
         <hr>
         <div style="padding: 10px;">
@@ -2306,14 +2314,14 @@
             <div class="row">
               <div class="col-md-2">
                 <!-- 導覽元件 -->
-                <ul id="bootstrapNote_Tab" class="nav nav-pills flex-column">
+                <ul id="cssFunctionNote_Tab" class="nav nav-pills flex-column">
                   <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#iconNote">icon相關</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#animateNote">animate相關</a></li>
                 </ul>
               </div>
               <div class="col-md-10">
                 <!-- 標籤頁內容 -->
-                <div id="bootstrapNote_TabContent" class="tab-content">
+                <div id="cssFunctionNote_TabContent" class="tab-content">
                   <div id="iconNote" class="tab-pane fade show active">
                     <h3>icon相關</h3>
                     <hr>
@@ -2392,6 +2400,91 @@
           </div>
         </div>
       </section>
+
+      <hr>
+
+      <!-- D3.js相關筆記 -->
+      <section id="D3jsNote" class="segmentation" style="min-height: 100vh;">
+        <h2 class="bg-warning">D3.js資料視覺化筆記</h2>
+        <hr>
+        <div style="padding: 10px;">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-2">
+                <!-- 導覽元件 -->
+                <ul id="D3jsNote_Tab" class="nav nav-pills flex-column">
+                  <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#d3jsStart">開始使用 D3.js</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#animateNote">animate相關</a></li>
+                </ul>
+              </div>
+              <div class="col-md-10">
+                <!-- 標籤頁內容 -->
+                <div id="D3jsNote_TabContent" class="tab-content">
+                  <div id="d3jsStart" class="tab-pane fade show active">
+                    <h3>開始使用 D3.js</h3>
+                    <hr>
+                    <p><a href="https://d3js.org" target="_blank">D3.js 官網</a></p>
+                    <p><a href="https://github.com/d3/d3/releases" target="_blank">D3.js 各版本程式碼</a></p>
+                    <p><a href="https://observablehq.com/@d3/gallery" target="_blank">D3.js 圖表範例庫</a></p>
+                    <p><a href="https://d3-graph-gallery.com" target="_blank">D3.js Graph Gallery</a></p>
+                    <div class="mt-5">將js文件引用到&lt;head&gt;裡：
+                      <pre>
+  <code>
+    &lt;<span style="color: #669bd1;">head</span>&gt;
+      ...
+      &lt;<span style="color: #669bd1;">script</span> <span style="color: #a9dbfb;">src</span>=<span style="color: #c5937c;">"js/d3_v7.9.0_min.js"</span>&gt;&lt;/<span style="color: #669bd1;">script</span>&gt;
+      ...
+    &lt;/<span style="color: #669bd1;">head</span>&gt;
+  </code>
+                      </pre>
+                    </div>
+                    <div class="mt-5">或是以CDN連結的方式引用到&lt;head&gt;裡：
+                      <pre>
+  <code>
+    &lt;<span style="color: #669bd1;">head</span>&gt;
+      ...
+      &lt;<span style="color: #669bd1;">script</span> <span style="color: #a9dbfb;">src</span>=<span style="color: #c5937c;">"https://d3js.org/d3.v7.min.js"</span>&gt;&lt;/<span style="color: #669bd1;">script</span>&gt;
+      ...
+    &lt;/<span style="color: #669bd1;">head</span>&gt;
+  </code>
+                      </pre>
+                    </div>
+                  </div>
+                  <div id="animateNote" class="tab-pane fade">
+                    <h3>animate相關</h3>
+                    <hr>
+                    <p><a href="https://animate.style" target="_blank">Animate.css動畫庫</a></p>
+                    <ul>
+                      <li>
+                        <p>使用範例如下：</p>
+                        <h4 class="animate__animated animate__rubberBand animate__infinite">rubberBand動畫效果</h4>
+                        <div class="mt-5">本段code：
+                          <pre>
+  <code>
+    &lt;<span style="color: #669bd1;">head</span>&gt;
+      ...
+      &lt;<span style="color: #669bd1;">link</span> <span style="color: #a9dbfb;">rel</span>=<span style="color: #c5937c;">"stylesheet"</span> <span style="color: #a9dbfb;">href</span>=<span style="color: #c5937c;">"css/animate_v4.1.1_min.css"</span>/&gt;
+      ...
+    &lt;/<span style="color: #669bd1;">head</span>&gt;
+      
+    ...
+
+    &lt;<span style="color: #669bd1;">body</span>&gt;
+      &lt;h4 <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"animate__animated animate__rubberBand animate__infinite"</span>&gt;rubberBand動畫效果&lt;/h4&gt;
+    &lt;/<span style="color: #669bd1;">body</span>&gt;
+  </code>
+                          </pre>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
     </main>
 
     <footer class="container-fluid" style="background-color: #3c3c3c; padding: 25px; padding-left: 35px;">
@@ -2405,7 +2498,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-06-25T16:23">2024/06/25 16:23</time></p>
+            資料最後更新時間：<time datetime="2024-06-28T01:15">2024/06/28 01:15</time></p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>
         <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">

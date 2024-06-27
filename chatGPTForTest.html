@@ -1,97 +1,407 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>ANOVA 計算器</title>
-    <script>
-        function calculateANOVA(groups) {
-            const groupSizes = groups.map(group => group.length);
-            const totalSamples = groupSizes.reduce((acc, size) => acc + size, 0);
-            const grandMean = groups.reduce((acc, group) => acc + group.reduce((sum, value) => sum + value, 0), 0) / totalSamples;
-            const sst = groups.reduce((acc, group) => acc + group.reduce((sum, value) => sum + Math.pow(value - grandMean, 2), 0), 0);
-            const ssw = groups.reduce((acc, group, index) => {
-                const groupMean = group.reduce((sum, value) => sum + value, 0) / groupSizes[index];
-                return acc + group.reduce((sum, value) => sum + Math.pow(value - groupMean, 2), 0);
-            }, 0);
-            const ssb = groups.reduce((acc, group, index) => {
-                const groupMean = group.reduce((sum, value) => sum + value, 0) / groupSizes[index];
-                return acc + group.length * Math.pow(groupMean - grandMean, 2);
-            }, 0);
-            const dfBetween = groups.length - 1;
-            const dfWithin = totalSamples - groups.length;
-            const msb = ssb / dfBetween;
-            const msw = ssw / dfWithin;
-            const fValue = msb / msw;
-            return {
-                dfBetween: dfBetween,
-                dfWithin: dfWithin,
-                ssb: ssb,
-                ssw: ssw,
-                sst: sst,
-                msb: msb,
-                msw: msw,
-                fValue: fValue
-            };
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人網站</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            line-height: 1.6;
         }
-
-        function runANOVA() {
-            const group1 = document.getElementById('group1').value.split(',').map(Number);
-            const group2 = document.getElementById('group2').value.split(',').map(Number);
-            const group3 = document.getElementById('group3').value.split(',').map(Number);
-
-            const result = calculateANOVA([group1, group2, group3]);
-
-            document.getElementById('dfBetween').innerText = result.dfBetween;
-            document.getElementById('dfWithin').innerText = result.dfWithin;
-            document.getElementById('ssb').innerText = result.ssb.toFixed(2);
-            document.getElementById('ssw').innerText = result.ssw.toFixed(2);
-            document.getElementById('sst').innerText = result.sst.toFixed(2);
-            document.getElementById('msb').innerText = result.msb.toFixed(2);
-            document.getElementById('msw').innerText = result.msw.toFixed(2);
-            document.getElementById('fValue').innerText = result.fValue.toFixed(2);
+        header {
+            background: linear-gradient(to right, #333, #555);
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-    </script>
+        header h1 {
+            margin: 0;
+            font-size: 3.5em;
+            letter-spacing: 2px;
+        }
+        header p {
+            font-size: 1.5em;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #444;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 1.1em;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        nav a:hover {
+            background: #555;
+            color: #ddd;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .section-title {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 2em;
+            position: relative;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 60px;
+            height: 2px;
+            background: #333;
+        }
+        .about, .resume, .portfolio, .contact, .blog, .timeline {
+            margin-bottom: 50px;
+        }
+        .about p, .resume p, .contact p, .blog p, .timeline p {
+            margin-bottom: 20px;
+        }
+        .resume h3, .portfolio h3 {
+            margin-top: 20px;
+            font-size: 1.6em;
+            color: #555;
+        }
+        .resume ul, .portfolio ul {
+            list-style: none;
+            padding: 0;
+        }
+        .resume li, .portfolio li {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 4px solid #333;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .timeline ul {
+            list-style: none;
+            padding: 0;
+            position: relative;
+        }
+        .timeline ul::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #333;
+        }
+        .timeline li {
+            padding-left: 40px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .timeline li::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #333;
+        }
+        .portfolio-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .portfolio-item img {
+            max-width: 300px;
+            border-right: 1px solid #ddd;
+            height: 100%;
+            object-fit: cover;
+        }
+        .portfolio-item div {
+            padding: 20px;
+            flex: 1;
+        }
+        .portfolio-item h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #444;
+        }
+        .portfolio-item p {
+            font-size: 1em;
+            color: #666;
+        }
+        .social-media {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .social-media li {
+            margin: 0 10px;
+        }
+        .social-media a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+        .social-media a:hover {
+            color: #555;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+        footer p {
+            margin: 0;
+        }
+        .contact form {
+            display: flex;
+            flex-direction: column;
+        }
+        .contact form label {
+            margin-bottom: 5px;
+        }
+        .contact form input, .contact form textarea {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .contact form input[type="submit"] {
+            background: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            padding: 15px;
+            font-size: 1.1em;
+            border-radius: 5px;
+        }
+        .contact form input[type="submit"]:hover {
+            background: #555;
+        }
+        .blog article {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .blog article h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        .blog article p {
+            font-size: 1em;
+            color: #666;
+        }
+        .blog article a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+        }
+        .blog article a:hover {
+            text-decoration: underline;
+        }
+        .timeline ul {
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+        .timeline ul::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #333;
+        }
+        .timeline li {
+            padding-left: 40px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .timeline li::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #333;
+        }
+        .timeline li p {
+            margin: 5px 0 0;
+        }
+        .timeline li .date {
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-    <h1>ANOVA 計算器</h1>
-    <div>
-        <label for="group1">組別1數據 (以逗號分隔):</label>
-        <input type="text" id="group1" value="10,12,13,14,15"><br>
-        <label for="group2">組別2數據 (以逗號分隔):</label>
-        <input type="text" id="group2" value="8,9,11,12,14"><br>
-        <label for="group3">組別3數據 (以逗號分隔):</label>
-        <input type="text" id="group3" value="7,8,9,10,11"><br>
-        <button onclick="runANOVA()">計算ANOVA</button>
+    <header>
+        <h1>你的名字</h1>
+        <p>簡短的自我介紹或標語</p>
+    </header>
+
+    <nav>
+        <a href="#about">關於我</a>
+        <a href="#resume">履歷</a>
+        <a href="#portfolio">作品集</a>
+        <a href="#contact">聯繫方式</a>
+        <a href="#blog">博客</a>
+        <a href="#timeline">時間軸</a>
+    </nav>
+
+    <div class="container">
+        <section id="about" class="about">
+            <h2 class="section-title">關於我</h2>
+            <p>這裡是你的自我介紹內容。你可以描述你的背景、興趣、技能和目標。</p>
+            <p>例如：我是一名軟件工程師，專注於前端開發和用戶體驗設計。我熱愛學習新技術，並且喜歡在業餘時間寫技術博客。</p>
+            <p>我擁有多年的工作經驗，參與過各種項目，並且擁有出色的團隊合作能力。</p>
+        </section>
+
+        <section id="resume" class="resume">
+            <h2 class="section-title">履歷/工作經歷</h2>
+            <h3>工作經歷</h3>
+            <ul>
+                <li>
+                    <strong>公司名稱</strong> - 職位 (年份 - 現在)
+                    <p>描述你的主要工作內容和成就。</p>
+                </li>
+                <li>
+                    <strong>公司名稱</strong> - 職位 (年份 - 年份)
+                    <p>描述你的主要工作內容和成就。</p>
+                </li>
+            </ul>
+            <h3>教育背景</h3>
+            <ul>
+                <li>
+                    <strong>學校名稱</strong> - 學位 (年份 - 年份)
+                    <p>描述你的主要學術成就和專業。</p>
+                </li>
+            </ul>
+            <h3>技能</h3>
+            <ul>
+                <li>技能 1</li>
+                <li>技能 2</li>
+                <li>技能 3</li>
+            </ul>
+        </section>
+
+        <section id="portfolio" class="portfolio">
+            <h2 class="section-title">作品集</h2>
+            <div class="portfolio-item">
+                <img src="your-image-url.jpg" alt="作品名稱">
+                <div>
+                    <h3>作品名稱</h3>
+                    <p>作品描述，詳細介紹這個作品的背景、目標、技術細節和成就。</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="your-image-url.jpg" alt="作品名稱">
+                <div>
+                    <h3>作品名稱</h3>
+                    <p>作品描述，詳細介紹這個作品的背景、目標、技術細節和成就。</p>
+                </div>
+            </div>
+            <!-- 可以複製以上 div 塊添加更多作品 -->
+        </section>
+
+        <section id="contact" class="contact">
+            <h2 class="section-title">聯繫方式</h2>
+            <p>這裡是你的聯繫資訊。例如：電子郵件地址、電話號碼等。</p>
+            <form>
+                <label for="name">姓名:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="email">電子郵件:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="message">訊息:</label><br>
+                <textarea id="message" name="message" rows="4" required></textarea><br><br>
+                <input type="submit" value="發送">
+            </form>
+        </section>
+
+        <section id="blog" class="blog">
+            <h2 class="section-title">博客/新聞更新</h2>
+            <article>
+                <h3>博客標題</h3>
+                <p>博客內容摘要...</p>
+                <a href="#">閱讀更多</a>
+            </article>
+            <article>
+                <h3>博客標題</h3>
+                <p>博客內容摘要...</p>
+                <a href="#">閱讀更多</a>
+            </article>
+            <!-- 可以複製以上 article 塊添加更多博客 -->
+        </section>
+
+        <section id="timeline" class="timeline">
+            <h2 class="section-title">時間軸</h2>
+            <ul>
+                <li>
+                    <span class="date">年份</span> - 重要事件 1
+                    <p>事件描述</p>
+                </li>
+                <li>
+                    <span class="date">年份</span> - 重要事件 2
+                    <p>事件描述</p>
+                </li>
+                <li>
+                    <span class="date">年份</span> - 重要事件 3
+                    <p>事件描述</p>
+                </li>
+            </ul>
+        </section>
     </div>
-    <h2>ANOVA 結果</h2>
-    <table border="1">
-        <tr>
-            <th></th>
-            <th>自由度</th>
-            <th>平方和</th>
-            <th>均方</th>
-            <th>F 值</th>
-        </tr>
-        <tr>
-            <td>組間</td>
-            <td id="dfBetween"></td>
-            <td id="ssb"></td>
-            <td id="msb"></td>
-            <td id="fValue" rowspan="2"></td>
-        </tr>
-        <tr>
-            <td>組內</td>
-            <td id="dfWithin"></td>
-            <td id="ssw"></td>
-            <td id="msw"></td>
-        </tr>
-        <tr>
-            <td>總和</td>
-            <td id="totalDF"></td>
-            <td id="sst"></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
+
+    <footer>
+        <ul class="social-media">
+            <li><a href="your-facebook-url" target="_blank">Facebook</a></li>
+            <li><a href="your-twitter-url" target="_blank">Twitter</a></li>
+            <li><a href="your-linkedin-url" target="_blank">LinkedIn</a></li>
+            <li><a href="your-instagram-url" target="_blank">Instagram</a></li>
+        </ul>
+        <p>&copy; 2024 你的名字. 版權所有.</p>
+    </footer>
 </body>
 </html>

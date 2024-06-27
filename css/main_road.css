@@ -26,12 +26,29 @@ body {
     color: #9c9c9c;
 }
 
-.section {
-    padding: 60px;
+.road-article-text {
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 
-.carousel-indicators {
-    list-style: none;
+.road-article-text a,
+.road-article-text a:link,
+.road-article-text a:visited,
+.road-article-text a:active {
+  color: #a67a44;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-bottom: 1px solid #d8d8d8;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.road-article-text a:hover {
+  border-bottom: 1px solid #a67a44;
+}
+
+.section {
+    padding: 60px;
 }
 
 .map-container {
