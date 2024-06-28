@@ -47,10 +47,6 @@ body {
   border-bottom: 1px solid #a67a44;
 }
 
-.section {
-    padding: 60px;
-}
-
 .map-container {
     position: relative;
     padding-bottom: 56.25%;
