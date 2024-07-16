@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js 圓圈連續動和滑過恢復示例</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* 簡單的 CSS 用於設置滑鼠滑過時的效果 */
+        circle {
+            transition: fill 0.3s ease;
+        }
+
+        circle:hover {
+            fill: orange;
+            filter: blur(20px); /* 模糊效果 */
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <svg width="2000" height="1000"></svg>
+    </div>
+
+    <script>
+        // 使用 D3.js 創建一個 SVG 畫布
+        var svg = d3.select("svg");
+
+        // 設置畫布的寬度和高度
+        var svgWidth = parseInt(svg.attr("width"));
+        var svgHeight = parseInt(svg.attr("height"));
+
+        // 設置要創建的圓圈數量
+        var circleCount = 80;
+
+        // 創建圓圈
+        var circles = svg.selectAll("circle")
+                         .data(d3.range(circleCount)) // 使用 d3.range() 來生成數字範圍
+                         .enter()
+                         .append("circle")
+                         .attr("cx", function(d) {
+                             return Math.random() * svgWidth; // 隨機 X 座標
+                         })
+                         .attr("cy", function(d) {
+                             return Math.random() * svgHeight; // 隨機 Y 座標
+                         })
+                         .attr("r", function(d) {
+                             return Math.random() * 30 + 30; // 隨機半徑，範圍為 30 到 ??
+                         })
+                         .style("fill", "steelblue");
+
+        // 設置動畫函數，使圓圈連續移動
+        function animateCircles() {
+            circles.transition()
+                   .duration(1000) // 動畫持續時間
+                   .attr("cx", function(d) {
+                       return Math.random() * svgWidth; // 新的隨機 X 座標
+                   })
+                   .attr("cy", function(d) {
+                       return Math.random() * svgHeight; // 新的隨機 Y 座標
+                   })
+                   .on("end", animateCircles); // 結束後繼續調用自身，實現連續動畫
+        }
+
+        // 啟動連續動畫
+        animateCircles();
+
+        // 添加滑鼠滑過效果
+        circles.on("mouseover", function(d) {
+            var circle = d3.select(this);
+            circle.transition()
+                  .duration(300) // 動畫持續時間
+                  .attr("r", function(d) {
+                      return d * 2; // 將半徑放大為原來的2倍
+                  })
+                  .style("fill", "orange")
+                  .style("filter", "blur(1px)"); // 正確設置模糊效果
+
+            // 設置計時器，在5秒後恢復原來的樣式
+            setTimeout(function() {
+                circle.transition()
+                      .duration(300) // 動畫持續時間
+                      .attr("r", function(d) {
+                          return d; // 恢復原來的半徑
+                      })
+                      .style("fill", "steelblue")
+                      .style("filter", null); // 移除模糊效果
+            }, 1000); // 1000 毫秒（1秒）
+        });
+
+    </script>
+</body>
+</html>

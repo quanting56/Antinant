@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Title -->
+    <title>兩張疊圖接替出現</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/bootstrap_icons-main/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="../css/font_awesome_v6.5.2_all.css" type="text/css" />
+    <link rel="stylesheet" href="../css/animate_v4.1.1_min.css">
+    <link rel="stylesheet" href="../css/main.css"/>
+
+    <!-- jQuery -->
+    <script src="../js/jquery_v3.7.1_min.js"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="../js/d3_v7.9.0_min.js"></script>
+    <script src="../js/wow_v1.1.3_min.js"></script>
+    <script src="../js/script.js"></script>
+  </head>
+
+  <body>
+    <!-- 兩張疊圖 -->
+    <section>
+      <div class="d-flex justify-content-center align-items-center" style="background: deepskyblue; height: 100vh;">
+        <h1>兩張疊圖接替出現</h1>
+      </div>
+      <div id="outer" style="height: 300vh;">
+        <div id="outer-image" class="sticky-top" style="height: 100vh;">
+          <div id="inner-image" style="height: 100vh;"></div>
+        </div>
+      </div>
+      <div style="height: 100vh; background: grey"></div>
+      <style>
+        #outer-image {
+        	  background-image: url(../assets/DSC_5360.jpg);
+        	  background-size: cover;
+        	  background-repeat: no-repeat;
+        	  background-attachment: fixed;
+            max-width: 100%;
+        }
+      
+        #inner-image {
+        	  width: 0;
+        	  background-image: url(../assets/DSC_5434.jpg);
+        	  background-size: cover;
+        	  background-repeat: no-repeat;
+        	  background-attachment: fixed;
+            max-width: 100%;
+        }
+      </style>
+      <script>
+        $(document).ready(function () {
+        	var max_scroll = $('#outer').height() - $(window).height() * 2;
+        	var win_w = $(window).width();
+        
+          $(window).scroll(function () {
+        	  var scrolled = $(window).scrollTop();
+            
+            if (scrolled > $('#outer-image').height()) {
+        	    var new_width = win_w * ((scrolled - $('#outer-image').height()) / max_scroll);
+
+        	    $('#inner-image').css({
+        	    	width: new_width
+        	  	});
+            } else {
+              $('#inner-image').css({
+                width: 0
+              })
+            };
+          });
+        });
+      </script>
+    </section>
+  </body>
+</html>

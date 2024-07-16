@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Title -->
+    <title>p4css 測試區</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/bootstrap_icons-main/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="../css/font_awesome_v6.5.2_all.css" type="text/css" />
+    <link rel="stylesheet" href="../css/animate_v4.1.1_min.css">
+    <link rel="stylesheet" href="../css/main.css"/>
+
+    <!-- jQuery -->
+    <script src="../js/jquery_v3.7.1_min.js"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="../js/d3_v7.9.0_min.js"></script>
+    <script src="../js/wow_v1.1.3_min.js"></script>
+    <script src="../js/script.js"></script>
+  </head>
+
+  <body>
+    <!-- 三張疊圖 -->
+    <!-- <section>
+      <section>
+        <div class="d-flex justify-content-center align-items-center" style="background: deepskyblue; height: 100vh;">
+          <h1>三張疊圖接替出現</h1>
+        </div>
+        <div id="outer-1" style="height: 300vh;">
+          <div id="image1" class="sticky-top" style="height: 100vh;">
+            <div id="image2-1" style="height: 100vh;"></div>
+          </div>
+        </div>
+        <div id="outer-2" style="height: 300vh;">
+          <div id="image2-2" class="sticky-top" style="height: 100vh;">
+            <div id="image3" style="height: 100vh;"></div>
+          </div>
+        </div>
+        <style>
+          #image1 {
+              background-image: url(../assets/DSC_5360.jpg);
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              max-width: 100%;
+          }
+        
+          #image2-1 {
+              width: 0;
+              background-image: url(../assets/DSC_5434.jpg);
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              max-width: 100%;
+          }
+          #image2-2 {
+              width: 0;
+              background-image: url(../assets/DSC_5434.jpg);
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              max-width: 100%;
+          }
+
+          #image3 {
+              width: 0;
+              background-image: url(../assets/IMG_2073.jpg);
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              max-width: 100%;
+          }
+        </style>
+        <script>
+          $(document).ready(function () {
+            var win_w = $(window).width();
+            var max_scroll_1 = $('#outer-1').height() - $(window).height() * 2;
+          
+            $(window).scroll(function () {
+              var scrolled = $(window).scrollTop();
+              
+              if (scrolled > $('#image1').height()) {
+                var new_width_2 = win_w * ((scrolled - $('#image1').height()) / max_scroll_1);
+  
+                $('#image2-1').css({
+                  width: new_width_2
+                });
+              } else {
+                $('#image2-1').css({
+                  width: 0
+                })
+              };
+            });
+
+
+            var max_scroll_2 = $('#outer-2').height() - $(window).height() * 2;
+          
+            $(window).scroll(function () {
+              var scrolled = $(window).scrollTop();
+              
+              if (scrolled > $('#image2-2').height()) {
+                var new_width_3 = win_w * ((scrolled - $('#image2-2').height()) / max_scroll_2);
+  
+                $('#image3').css({
+                  width: new_width
+                });
+              } else {
+                $('#image3').css({
+                  width: 0
+                })
+              };
+            });
+          });
+        </script>
+         <script>
+          $(document).ready(function () {
+            var max_scroll_1 = $('#outer-1').height() - $(window).height();
+            var max_scroll_2 = $('#outer-2').height() - $(window).height();
+            var win_w = $(window).width();
+          
+            $(window).scroll(function () {
+              var scrolled = $(window).scrollTop();
+              var new_width_2 = win_w * ((scrolled - $('#image1').height()) / max_scroll_1);
+              var new_width_3 = win_w * ((scrolled - $('#outer-1').height() - $('#image2-2').position().top) / max_scroll_2);
+              // 哪張圖就"width_多少"，即'#imagex'就'new_width_x'
+  
+              if (scrolled > $('#image1').height()) {
+                $('#image2-1').css({
+                  width: new_width_2
+                });
+              } else {
+                $('#image2-1').css({
+                  width: 0
+                })
+              };
+
+              if (scrolled > ( $('#image2-2').height() + $('#outer-1').height() )) {
+                $('#image3').css({
+                  width: new_width_3
+                });
+              } else {
+                $('#image3').css({
+                  width: 0
+                })
+              };
+            });
+          });
+        </script> 
+      </section>
+
+    </section> 
+    <section>
+      <div class="d-flex justify-content-center align-items-center" style="background: deepskyblue; height: 100vh;">
+        <h1>三張疊圖</h1>
+      </div>
+      <div id="outer" style="height: 400vh">
+        <div class="sticky-top" style="height: 100vh;">
+          <div id="image1" class="image-layer"></div>
+          <div id="image2" class="image-layer"></div>
+          <div id="image3" class="image-layer"></div>
+        </div>
+      </div>
+      <div style="height: 100vh; background: grey"></div>
+      <style>
+        .image-layer {
+            position: absolute;
+            height: 100vh;
+            top: 0;
+            width: 0;
+            max-width: 100%;
+            background-size: cover;
+        	  background-repeat: no-repeat;
+        	  background-attachment: fixed;
+        }
+
+        #image1 {
+        	  background-image: url(https://p4css.github.io/webScroll/images/Linpen2006.jpg);
+            width: 100%;
+        }
+      
+        #image2 {
+            background-image: url(https://p4css.github.io/webScroll/images/Linpen2019.jpg);
+        }
+
+        #image3 {
+        	  background-image: url(../assets/DSC_5360.jpg);
+        }
+      </style>
+      <script>
+        $(document).ready(function () {
+        	var max_scroll = $('#outer').height() - $(window).height() * 3;
+        	var win_w = $(window).width();
+        
+          $(window).scroll(function () {
+        	  var scrolled = $(window).scrollTop();
+            var phase = scrolled / (max_scroll + 100);
+            
+            if (phase <= 1/3) {
+        	    $('#image1').css({
+        	    	width: '100%'
+        	  	});
+              $('#image2').css({
+                width: win_w * (phase * 3)
+              });
+              $('#image3').css({
+                width: 0
+              })
+            } else if (phase <= 2/3) {
+              $('#image1').css({
+                width: '100%'
+              })
+              $('#image3').css({
+                width: win_w * ((phase - 1/3) * 3)
+              })
+              $('#image4').css({
+                width: win_w * ((phase - 1/3) * 3)
+              })
+            };
+            //  else {
+            //   $('#image1').css({
+            //     width: win_w
+            //   })
+            //   $('#image2').css({
+            //     width: win_w
+            //   })
+            //   $('#image3').css({
+            //     width: win_w * ((phase - 2/3) * 3)
+            //   })
+            // };
+          });
+        });
+      </script>
+    </section> -->
+
+
+    <section>
+      <div style="height:100vh;background:deepskyblue"></div>
+        <div class="sticky-top" style="z-index:-1">
+          <svg id="svgobj" style="transition:all ease-in 1s;" height="200vh" viewBox="0 0 7200 4005" version="1.1"
+              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+              xmlns:serif="http://www.serif.com/"
+              style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+            <g transform="matrix(1.5,0,0,1.5,0,0)">
+              <!-- <use xlink:href="Linpen2019_lg.jpg" x="0" y="0" width="4800px" height="2670px"/> -->
+              <image href="../assets/temporary_for_p4cssTest_Linpen2019_lg.jpg" x="0" y="0" width="4800px" height="2670px" />
+              <g id="fill1">
+                <path d="M1220,1460L1420,1460L1480,1560L1430,1560L1300,1760L1260,1820L1130,1800L1220,1460Z"
+                    style="fill:none;fill-opacity:0.5;" />
+                <path d="M940,1500L1160,1570L1120,1720L850,1670L940,1500Z" style="fill:none;fill-opacity:0.5;" />
+              </g>
+
+              <path id="path1" d="M970,2230L1171,1574.38"
+                  style="fill:none;stroke:blue;stroke-width:10px;stroke-opacity:0;" />
+
+              <g id="fill2">
+                <path
+                    d="M1360,1010.57L1500,960L1620,920L1660,967.454L1611.38,1020L1560,1020L1540,1060L1420,1080L1291.73,1220L1340,1020L1360,1010.57Z"
+                    style="fill:none;fill-opacity:0.49;" />
+              </g>
+              <path id="path2" d="M1171,1584.38L1330,1010"
+                  style="fill:none;stroke:rgb(255,0,181);stroke-width:10px;stroke-opacity:0;" />
+
+              <path id="path3_1" d="M1330,1010L1540,190L1650,30"
+                  style="fill:none;stroke:LIME;stroke-width:10px;stroke-opacity:0;" />
+              <path id="path3_2" d="M1650,30L1820,120L2405,335"
+                  style="fill:none;stroke:LIME;stroke-width:10px;stroke-opacity:0;" />
+              <path id="path3_3" d="M2405,335L2990,550L3800,1070"
+                  style="fill:none;stroke:LIME;stroke-width:10px;stroke-opacity:0;" />
+              <g id="fill3">
+                <path d="M3560,1300L3680,1120L3780,1080L3840,1120L3680,1380L3560,1300Z"
+                    style="fill:none;fill-opacity:0.36;" />
+                <path d="M3500,720L3560,640L3660,720L3600,800L3500,720Z" style="fill:none;fill-opacity:0.36;" />
+              </g>
+              <circle r="20" cy="0" cx="0" id="dot" style="fill:white" />
+            </g>
+          </svg>
+        </div>
+        <div class="row">
+          <div class="col-6"></div>
+          <div class="col-6">
+            <div data-x="-10%" data-y="-50%" data-scale="1" data-fill="#fill1" data-path="#path1" class="maploc"
+                style="height:100vh;background:rgba(0,0,0,0.3)">
+                <h1 style="width:30vw;background:rgba(255,255,255,0.7);">Section 1</h1>
+            </div>
+            <div data-x="-10%" data-y="-30%" data-scale="1" data-fill="#fill2" data-path="#path2" class="maploc"
+                style="height:100vh;background:rgba(0,0,0,0.2)">
+                <h1 style="width:30vw;background:rgba(255,255,255,0.7);">Section 2</h1>
+            </div>
+            <div data-x="-10%" data-y="-0%" data-scale="1" data-fill="#fill3" data-path="#path3_1" class="maploc"
+                style="height:200vh;background:rgba(0,0,0,0.1)">
+                <h1 style="width:30vw;background:rgba(255,255,255,0.7);">Section 3_1</h1>
+            </div>
+            <div data-x="-20%" data-y="-0%" data-scale="1.2" data-fill="#fill3" data-path="#path3_2" class="maploc"
+                style="height:200vh;background:rgba(0,0,0,0.1)">
+                <h1 style="width:30vw;background:rgba(255,255,255,0.7);">Section 3_2</h1>
+            </div>
+            <div data-x="-60%" data-y="-4%" data-scale="1.4" data-fill="#fill3" data-path="#path3_3" class="maploc"
+                style="height:200vh;background:rgba(0,0,0,0.1)">
+                <h1 style="width:30vw;background:rgba(255,255,255,0.7);">Section 3_2</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height:100vh;"></div>
+      <div style="height:100vh;background:grey"></div>
+      <style>
+        .earth-img {
+            position: fixed;
+            height: 100%;
+            object-fit: cover;
+            /* object-position: right; */
+            opacity: 1;
+        }
+  
+        .transit-effect1 {
+            transition: bottom 1s;
+        }
+      </style>
+      <script>
+        $(window).scroll(function () {
+          var scrolled = $(document).scrollTop();
+          var winh = $(window).height();
+
+          $(".maploc").each(function () {
+            var thispos = $(this).offset().top;
+            var thish = $(this).height();
+          
+        		// code to display polygon
+            if (scrolled >= thispos && scrolled < thispos + thish){
+                var fill_id = $(this).data("fill");
+                $(fill_id + " path").css("fill", "green");
+            }
+
+            if (scrolled >= thispos - winh / 2 && scrolled < thispos + thish - winh / 2) {
+
+        			// code to transform position of  background svg
+              $("#svgobj").css({
+                  "transform": "translate(" + $(this).data("x") + ", " + $(this).data(
+                      "y") + ") scale(" + $(this).data("scale") + ")"
+              });
+            
+        			// code to change svg path percentage by scrolled percentage
+              var path = $($(this).data("path"))[0];
+              $($(this).data("path")).css("stroke-opacity", "1");
+              var length = path.getTotalLength();
+              path.style.strokeDasharray = length;
+              path.style.strokeDashoffset = length;
+              var scrollpercent = (scrolled - thispos + winh / 2) / thish;
+              var draw = length * scrollpercent;
+              path.style.strokeDashoffset = length - draw;
+            
+        			// Code to attaching dot on the path
+        			var p = path.getPointAtLength(draw);
+              var dot = document.getElementById('dot');
+              dot.setAttribute("transform", `translate(${p.x}, ${p.y})`);
+            }
+          });
+        });
+      </script>
+    </section>
+  </body>
+</html>

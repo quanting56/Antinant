@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>0050股票報價</title>
+  <style>
+    /* 添加你的CSS樣式 */
+    .stock-info {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 300px;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="stock-info">
+    <h2>0050股票報價</h2>
+    <p><strong>價格：</strong> <span id="price"></span></p>
+    <p><strong>變動：</strong> <span id="change"></span></p>
+    <p><strong>% 變動：</strong> <span id="percent-change"></span></p>
+    <p><strong>成交量：</strong> <span id="volume"></span></p>
+    <p><em>最後更新時間： <span id="last-updated"></span></em></p>
+  </div>
+
+  <script>
+    // 函數用於獲取和更新股票數據
+    function fetchStockData() {
+      fetch('http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_0050.tw') // 替換為實際的API端點
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('price').textContent = data.price;
+          document.getElementById('change').textContent = data.change;
+          document.getElementById('percent-change').textContent = data.percentChange;
+          document.getElementById('volume').textContent = data.volume;
+          document.getElementById('last-updated').textContent = new Date().toLocaleString();
+        })
+        .catch(error => console.error('獲取數據時出錯：', error));
+    }
+
+    // 首次獲取數據，然後每30秒更新一次（根據需要調整）
+    fetchStockData();
+    setInterval(fetchStockData, 30000); // 每30秒刷新一次
+  </script>
+</body>
+</html>
