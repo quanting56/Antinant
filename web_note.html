@@ -2508,6 +2508,7 @@
                 <ul id="D3jsNote_Tab" class="nav nav-pills flex-column">
                   <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#d3jsStart">開始使用 D3.js</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsDataBinding">資料綁定</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAPIForDataImporting">匯入資料的API</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsPractice">小工具練習</a></li>
                 </ul>
               </div>
@@ -2802,6 +2803,82 @@
                       </div>
                     </div>
                   </div>
+                  <div id="d3jsAPIForDataImporting" class="tab-pane fade">
+                    <h3>匯入資料的API（ JSON / CSV ）</h3>
+                    <hr>
+                    <div>
+                      <ul>
+                        <li><h4>以JSON的方式匯入</h4></li>
+                          <ol>
+                            <li class="mt-3">沒有CORS錯誤問題（例如JSON資料在本地端）
+                              <div class="mt-3">
+                                <pre>
+  <code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">url</span> = <span style="color: #c5937c;">"<i class="px-1">串接網址</i>or<i class="px-1">檔案路徑</i>"</span>;
+    <span style="color: #669bd1;">const</span> getJSONData = <span style="color: #669bd1;">async</span> () => {
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">resData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.json(<span style="color: #06bafb">url</span>);
+      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"d3.json()"</span>, <span style="color: #06bafb">resData</span>);
+    };
+
+    getJSONData();
+  </code>
+                                </pre>
+                              </div>
+                            </li>
+                            <li class="mt-5">有CORS錯誤問題（此例用AllOrigins API來繞過CORS（跨來源資源共享）限制的基本URL）
+                              <div class="mt-3">
+                                <pre>
+  <code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">cors</span> = <span style="color: #c5937c;">"https://api.allorigins.win/get?url="</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">url</span> = <span style="color: #c5937c;">"<i class="px-1">目標 JSON 資料的 URL</i>"</span>;
+    <span style="color: #669bd1;">const</span> getCorsData = <span style="color: #669bd1;">async</span> () => {
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">dataGet</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.json(<span style="color: #c5937c;">`</span><span style="color: #669bd1;">${</span><span style="color: #06bafb">cors</span><span style="color: #669bd1;">}${</span><span style="color: #06bafb">url</span><span style="color: #669bd1;">}</span><span style="color: #c5937c;">`</span>); <span style="color: #5a8d51;">// 串接網址</span>
+      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"d3.json()"</span>, <span style="color: #06bafb">dataGet</span>);
+    };
+
+    getCorsData();
+  </code>
+                                </pre>
+                              </div>
+                            </li>
+                          </ol>
+                        </li>
+                        <li class="mt-5"><h4>以CSV的方式匯入</h4></li>
+                          <ol>
+                            <li class="mt-3">取得csv資料
+                              <div class="mt-3">
+                                <pre>
+  <code>
+    <span style="color: #669bd1;">const</span> getCsvData = <span style="color: #06bafb">async</span> () => {
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">csvData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.csv(<span style="color: #c5937c;">"<i class="px-1">檔案路徑</i>"</span>);
+      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"csvData"</span>, <span style="color: #06bafb">csvData</span>);
+    };
+
+    getCsvData();
+  </code>
+                                </pre>
+                              </div>
+                            </li>
+                            <li class="mt-5">只取得csv資料中所有特定類別的資料（類似R中<code class="px-1">food$vegetable</code>的用法）
+                              <div class="mt-3">
+                                <pre>
+  <code>
+    <span style="color: #669bd1;">const</span> getCsvSpecificData = <span style="color: #06bafb">async</span> () => {
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">csvData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.csv(<span style="color: #c5937c;">"<i class="px-1">檔案路徑</i>"</span>, <span style="color: #06bafb">(</span><span style="color: #a9dbfb;">d</span><span style="color: #06bafb">)</span> => <span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">特定類別名</span>);
+      <span style="color: #5a8d51;">// 例：const csvData = await d3.csv("data/food.csv", (d) => d.vegetable);</span>
+      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"csvData"</span>, <span style="color: #06bafb">csvData</span>);
+    };
+
+    getCsvSpecificData();
+  </code>
+                                </pre>
+                              </div>
+                            </li>
+                          </ol>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                   <div id="d3jsPractice" class="tab-pane fade">
                     <h3>小工具練習</h3>
                     <hr>
@@ -2848,51 +2925,30 @@
                                                   .attr('height', 300)
                                                   .style('border', '1px solid rgb(96, 96, 96)');
                             
-                            // const drawDiagram = () => {
-                            //   // 綁定update資料
-                            //   let rects = rangeSelect.selectAll('rect')
-                            //                          .data(randomData);
+                            const drawDiagram = () => {
+                              // 綁定update資料
+                              let rects = rangeSelect.selectAll('rect')
+                                                     .data(randomData);
                                                      
-                            //   rects.enter()
-                            //        .append('rect')
-                            //        .attr('width', 0) // 初始化寬度為0
-                            //        .attr('height', 40)
-                            //        .style('fill', '#967259')
-                            //        .attr('x', (d, index) => 0)
-                            //        .attr('y', (d, index) => index * 60)
-                            //        .transition()
-                            //        .duration(500)
-                            //        .attr('width', (d) => d * 60);
+                              rects.enter()
+                                   .append('rect')
+                                   .attr('width', 0) // 初始化寬度為0
+                                   .attr('height', 40)
+                                   .style('fill', '#967259')
+                                   .attr('x', (d, index) => 0)
+                                   .attr('y', (d, index) => index * 60)
+                                   .transition()
+                                   .duration(500)
+                                   .attr('width', (d) => d * 60);
                                    
                               
-                            //   // 更新資料，重新設定長條圖的寬度
-                            //   rects.transition()
-                            //        .duration(500)
-                            //        .attr('width', (d) => d * 60);
+                              // 更新資料，重新設定長條圖的寬度
+                              rects.transition()
+                                   .duration(500)
+                                   .attr('width', (d) => d * 60);
                               
-                            //   // 移除多的DOM元素
-                            //   rects.exit().remove();
-                            // };
-
-                            const drawDiagram = () => {
-                              // 透過join()綁定資料
-                              let rects = rangeSelect.selectAll('rect')
-                                                     .data(randomData)
-                                                     .join(
-                                                       (enter) => enter.append('rect')
-                                                                       .attr('width', 0) // 初始化寬度為0
-                                                                       .attr('height', 40)
-                                                                       .style('fill', '#967259')
-                                                                       .attr('x', (d, index) => 0)
-                                                                       .attr('y', (d, index) => index * 60)
-                                                                       .transition()
-                                                                       .duration(500)
-                                                                       .attr('width', (d) => d * 60),
-                                                       (update) => update.transition()
-                                                                         .duration(500)
-                                                                         .attr('width', (d) => d * 60),
-                                                       (exit) => exit.remove()
-                                                     );
+                              // 移除多的DOM元素
+                              rects.exit().remove();
                             };
                           </script>
                         </div>
@@ -3009,20 +3065,19 @@
                                .data(<span style="color: #a9dbfb;">randomData</span>)
                                .join(
                                  (<span style="color: #a9dbfb;">enter</span>) => <span style="color: #a9dbfb;">enter</span>.append(<span style="color: #c5937c;">'rect'</span>)
-                                                   .attr(<span style="color: #c5937c;">'width'</span>, 0) <span style="color: #5a8d51;">// 初始化寬度為0</span>
-                                                   .attr(<span style="color: #c5937c;">'height'</span>, 40)
-                                                   .style(<span style="color: #c5937c;">'fill'</span>, <span style="color: #c5937c;">'#967259'</span>)
-                                                   .attr(<span style="color: #c5937c;">'x'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; 0)
-                                                   .attr(<span style="color: #c5937c;">'y'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; <span style="color: #a9dbfb;">index</span> * 60)
-                                                   .transition()
-                                                   .duration(500)
-                                                   .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60),
+                                                 .attr(<span style="color: #c5937c;">'width'</span>, 0) <span style="color: #5a8d51;">// 初始化寬度為0</span>
+                                                 .attr(<span style="color: #c5937c;">'height'</span>, 40)
+                                                 .style(<span style="color: #c5937c;">'fill'</span>, <span style="color: #c5937c;">'#967259'</span>)
+                                                 .attr(<span style="color: #c5937c;">'x'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; 0)
+                                                 .attr(<span style="color: #c5937c;">'y'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; <span style="color: #a9dbfb;">index</span> * 60)
+                                                 .transition()
+                                                 .duration(500)
+                                                 .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60),
                                  (<span style="color: #a9dbfb;">update</span>) => <span style="color: #a9dbfb;">update</span>.transition()
                                                    .duration(500)
                                                    .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60),
-                                 (<span style="color: #a9dbfb;">exit</span>) => <span style="color: #a9dbfb;">exit</span>.remove();
+                                 (<span style="color: #a9dbfb;">exit</span>) => <span style="color: #a9dbfb;">exit</span>.remove()
                                );
-
       };
   </code>
                         </pre>
@@ -3049,7 +3104,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-07-17T00:52">2024/07/17 00:52</time></p>
+            資料最後更新時間：<time datetime="2024-07-19T17:08">2024/07/19 17:08</time></p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>
         <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">

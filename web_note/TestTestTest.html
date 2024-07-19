@@ -51,72 +51,44 @@
     <h2>歡迎來到測試場</h2>
     <hr>
     <section>
-      <div>
-        <label>資料數量</label>
-        <input type="number" class="dataLength">
-        <button type="button" class="getRandomData">點擊產生隨機資料</button>
-      </div>
-      <div>data資料集：<span class="showData"></span></div>
-      <div class="chartWrap"></div>
+      <div class="selectionOn">HiHi</div>
       <script>
-        const getRandomData = document.querySelector('.getRandomData');
-        const dataLength = document.querySelector('input');
-        const showData = document.querySelector('.showData');
-        let randomData = [];
-
-        getRandomData.addEventListener("click", (e) => {
-          randomData.length = 0;
-
-          for (i = 0; i < dataLength.value; i++) {
-            // 產生並塞入隨機亂數資料
-            let random = Math.floor(Math.random() * 5);
-            randomData.push(random);
-          }
-
-          // 畫面呈現目前資料集
-          showData.innerHTML = randomData;
-          
-          // 繪製圖表
-          drawDiagram();
-        });
-
-        // 建立SVG畫布
-        const rangeSelect = d3.select('.chartWrap')
-                              .append('svg')
-                              .attr('width', 400)
-                              .attr('height', 300)
-                              .style('border', '1px solid rgb(96, 96, 96)');
-        
-        const drawDiagram = () => {
-          // 綁定update資料
-          let rects = rangeSelect.selectAll('rect')
-                                 .data(randomData)
-                                 .join(
-                                   (enter) => enter.append('rect')
-                                                   .attr('width', (d) => d * 60)
-                                                   .attr('height', 40)
-                                                   .style('fill', 'blue')
-                                                   .attr('x', (d, index) => 0)
-                                                   .attr('y', (d, index) => index * 60),
-                                   (update) => update.attr('width', (d) => d * 60),
-                                   (exit) => exit.remove()
-                                 );
-                                 
-          // rects.enter()
-          //      .append('rect')
-          //      .attr('width', (d) => d * 60)
-          //      .attr('height', 40)
-          //      .style('fill', 'blue')
-          //      .attr('x', (d, index) => 0)
-          //      .attr('y', (d, index) => index * 60);
-
-          // rects.attr('width', (d) => d * 60);
-               
-          // rects.exit().remove();
+        const textToRed = (e) => {
+          e.target.classList.add('fw-bold');
+          e.target.style.color = "red";
         };
-
+        d3.select(".selectionOn").on("click", textToRed);
       </script>
-    </section>    
+    </section>
+    <section>
+      <div>
+        金金永遠 <span class="fw-bold selectionCall"></span> 歲
+      </div>
+      <script>
+        const setAge = (seletion, age) => {
+          seletion.text(age);
+        };
+        d3.select(".selectionCall").call(setAge, "19");
+      </script>
+    </section>
+    <!-- <section>
+      <script>
+        const getCsvData = async () => {
+          const csvData = await d3.csv("testData.csv", (d) => d.區域別);
+          console.log("csvData", csvData);
+        }
+        getCsvData();
+      </script>
+    </section> -->
+    <script>
+       const getCsvSpecificData = async () => {
+      const csvData = await d3.csv("testData.csv", (d) => d.年齡別);
+      // 例：const csvData = await d3.csv("data/food.csv", (d) => d.vegetable);
+      console.log("csvData", csvData);
+    };
 
+    getCsvSpecificData();
+  
+    </script>
   </body>
 </html>
