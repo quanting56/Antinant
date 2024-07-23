@@ -51,44 +51,73 @@
     <h2>歡迎來到測試場</h2>
     <hr>
     <section>
-      <div class="selectionOn">HiHi</div>
+      <!-- <img src="../assets/DSC_5360.jpg" width="600px"> -->
+      <p id="minMileageData"></p>
+      <p id="maxMileageData"></p>
+      <p id="sortMileageData"></p>
       <script>
-        const textToRed = (e) => {
-          e.target.classList.add('fw-bold');
-          e.target.style.color = "red";
+        const getCsvSpecificData = async () => {
+          const csvData = await d3.csv("../assets/testAssets/CountyRoad_1021003.csv", (d) => +d["里程_單位公里"]);
+
+          const minNumber = d3.min(csvData);
+          const maxNumber = d3.max(csvData);
+          const filter = d3.filter(csvData, (d) => d > 0 && d < 200);
+          const sort = d3.sort(filter);
+
+          document.getElementById("minMileageData").innerHTML = "臺灣縣市道最短公里數｜<b>" + minNumber + "</b> 公里";
+          document.getElementById("maxMileageData").innerHTML = "臺灣縣市道最長公里數｜<b>" + maxNumber + "</b> 公里";
+          document.getElementById("sortMileageData").innerHTML = "臺灣縣市道公里數從小排到大" + sort;
         };
-        d3.select(".selectionOn").on("click", textToRed);
+
+        getCsvSpecificData();
+
+
+        const numberData = [5, 1, 35, 13, 15, 18, 21, 31, 29];
+        const minNumber = d3.min(numberData);
+        const maxNumber = d3.max(numberData);
+        const extent = d3.extent(numberData);
+        const sum = d3.sum(numberData);
+        const isAllIntegerBiggerThanTwenty = d3.every(numberData, (d) => d > 20);
+        const isAnyIntegerBiggerThanTwenty = d3.some(numberData, (d) => d > 20);
+        const filter = d3.filter(numberData, (d) => d > 20);
+        const sort = d3.sort(numberData);
+        
+        console.log("min mileageData", minNumber, "max mileageData", maxNumber);
+        console.log("extent", extent);
+        console.log("sum", sum);
+        console.log("every > 20", isAllIntegerBiggerThanTwenty);
+        console.log("any > 20", isAnyIntegerBiggerThanTwenty);
+        console.log("sort", sort);
+
       </script>
     </section>
     <section>
-      <div>
-        金金永遠 <span class="fw-bold selectionCall"></span> 歲
-      </div>
+      <!-- 格式化時間 Time Formats 分類 -->
       <script>
-        const setAge = (seletion, age) => {
-          seletion.text(age);
-        };
-        d3.select(".selectionCall").call(setAge, "19");
+        const timeParse = d3.timeParse("%y-%m-%d")("96-09-27");
+        console.log("d3標準格式時間", timeParse);
+
+        const timeFormat = d3.timeFormat("%Y/%m/%d");
+        console.log("我們在看的時間", timeFormat(timeParse));
       </script>
     </section>
-    <!-- <section>
+    <section>
+      <!-- 格式化數字 Number Formats 分類 -->
       <script>
-        const getCsvData = async () => {
-          const csvData = await d3.csv("testData.csv", (d) => d.區域別);
-          console.log("csvData", csvData);
-        }
-        getCsvData();
+        const numberFormat = d3.format("b");
+        const binaryNumber = numberFormat(1e1);
+        console.log("format", binaryNumber);
       </script>
-    </section> -->
-    <script>
-       const getCsvSpecificData = async () => {
-      const csvData = await d3.csv("testData.csv", (d) => d.年齡別);
-      // 例：const csvData = await d3.csv("data/food.csv", (d) => d.vegetable);
-      console.log("csvData", csvData);
-    };
+    </section>
+    <section>
+      <!-- 隨機亂數 Random Numbers 分類 -->
+      <script>
+        const randomNum1 = d3.randomInt(50)();
+        const randomNum2 = d3.randomInt(50, 100)();
+        console.log("隨機亂數（有上下界）", randomNum1);
+        console.log("隨機亂數（未設定下界，預設下界為0）", randomNum2);
+      </script>
+    </section>
 
-    getCsvSpecificData();
-  
-    </script>
   </body>
 </html>
