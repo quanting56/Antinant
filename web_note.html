@@ -2509,6 +2509,7 @@
                   <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#d3jsStart">開始使用 D3.js</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsDataBinding">資料綁定</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAPIForDataImporting">匯入資料的API</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAPIForDataOrganization">資料整理</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsPractice">小工具練習</a></li>
                 </ul>
               </div>
@@ -2596,9 +2597,6 @@
                                                         .append('p')
                                                         .text(d => d)
                                                         .attr('class', 'text-danger fw-bold');
-                                
-                                  // 此處console.log資訊要由開發者工具的console來看
-                                  console.log('d3DataEnter', d3DataEnter);
                                 </script>
                                 <div class="mt-5">本段code：
                                   <pre>
@@ -2652,9 +2650,6 @@
                                                        .text(d => d)
                                                        .exit()
                                                        .remove();
-                                
-                                  // 此處console.log資訊要由開發者工具的console來看
-                                  console.log('d3DataExit', d3DataExit);
                                 </script>
                                 <div class="mt-5">本段code：
                                   <pre>
@@ -2708,9 +2703,6 @@
                                                         .join('p')
                                                         .text(d => d)
                                                         .attr('class', 'text-danger fw-bold');
-
-                                  // 此處console.log資訊要由開發者工具的console來看
-                                  console.log('d3DataJoin1', d3DataJoin1);
                                 </script>
                                 <div class="mt-5">本段code：
                                   <pre>
@@ -2764,9 +2756,6 @@
                                                            exit => exit.remove()
                                                         )
                                                         .text(d => d);
-
-                                  // 此處console.log資訊要由開發者工具的console來看
-                                  console.log('d3DataJoin2', d3DataJoin2);
                                 </script>
                                 <div class="mt-5">本段code：
                                   <pre>
@@ -2874,10 +2863,298 @@
                                 </pre>
                               </div>
                             </li>
+                            <li class="mt-5">一個匯入的範例（匯入包含各種縣市道資訊的csv檔，其中有一欄為的row name為"里程_單位公里"）
+                              <div class="container-fluid p-3" style="border: 0.1px solid #efefef;">
+                                <div class="row">
+                                  <div class="col-xxl-4 mb-3">
+                                    <p id="minMileageData"></p>
+                                    <p id="maxMileageData"></p>
+                                    <p class="mb-0">臺灣縣市道公里數從小排到大</p>
+                                    <p id="ascendingMileageData" class="mt-0" style="height: 300px; width: 300px; overflow: auto; background-color: #f6f6f6;"></p>
+                                    <script>
+                                      const countyHighwayMileage = async () => {
+                                        // "(d) => +d["里程_單位公里"]"用於取出"里程_單位公里"列的資料並將其numeric化
+                                        const countyHighwayMileageData = await d3.csv("../assets/testAssets/CountyRoad_1021003.csv", (d) => +d["里程_單位公里"]);
+                                      
+                                        // 先用filter()排除空格與非數字之數據
+                                        const countyHighwayMileageDataFilter = d3.filter(countyHighwayMileageData, (d) => d > 0 && d < 200);
+                                        // 再用sort()將數據從小排到大
+                                        const countyHighwayMileageDataSort = d3.sort(countyHighwayMileageDataFilter);
+                                        // 用join()在每個數據間加上"<br>"，以換行形式呈現數據
+                                        const formattedCountyHighwayMileageDataSort = countyHighwayMileageDataSort.join("<br>");
+                                        // 找出最短及最長縣市道的長度
+                                        const minMileage = d3.min(countyHighwayMileageDataFilter);
+                                        const maxMileage = d3.max(countyHighwayMileageDataFilter);
+                                      
+                                        document.getElementById("minMileageData").innerHTML = "臺灣縣市道最短公里數｜<b>" + minMileage + "</b> 公里";
+                                        document.getElementById("maxMileageData").innerHTML = "臺灣縣市道最長公里數｜<b>" + maxMileage + "</b> 公里";
+                                        document.getElementById("ascendingMileageData").innerHTML = formattedCountyHighwayMileageDataSort;
+                                      };
+                                    
+                                      countyHighwayMileage();
+                                    </script>
+                                  </div>
+                                  <div class="col-xxl-8">本段code：
+                                    <pre>
+  <code>
+    &lt;<span style="color: #669bd1;">p</span> <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"minMileageData"</span>&gt;&lt;/<span style="color: #669bd1;">p</span>&gt;
+    &lt;<span style="color: #669bd1;">p</span> <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"maxMileageData"</span>&gt;&lt;/<span style="color: #669bd1;">p</span>&gt;
+    &lt;<span style="color: #669bd1;">p</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"mb-0"</span>&gt;臺灣縣市道公里數從小排到大&lt;/<span style="color: #669bd1;">p</span>&gt;
+    &lt;<span style="color: #669bd1;">p</span> <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"ascendingMileageData"</span> <span style="color: #a9dbfb;">class</span>=<span style="color: #c5937c;">"mt-0"</span> <span style="color: #a9dbfb;">style</span>=<span style="color: #c5937c;">"height: 300px; width: 300px; overflow: auto; background-color: #f6f6f6;"</span>&gt;&lt;/<span style="color: #669bd1;">p</span>&gt;
+    &lt;<span style="color: #669bd1;">script</span>&gt;
+      <span style="color: #669bd1;">const</span> countyHighwayMileage = <span style="color: #669bd1;">async</span> <span style="color: #fecf35;">()</span> =&gt; {
+        <span style="color: #5a8d51;">// "(d) =&gt; +d["里程_單位公里"]"用於取出"里程_單位公里"列的資料並將其numeric化</span>
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">countyHighwayMileageData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.csv(<span style="color: #c5937c;">"../assets/testAssets/CountyRoad_1021003.csv"</span>, <span style="color: #06bafb">(</span><span style="color: #a9dbfb;">d</span><span style="color: #06bafb">)</span> =&gt; +<span style="color: #a9dbfb;">d</span><span style="color: #06bafb">[</span><span style="color: #c5937c;">"里程_單位公里"</span><span style="color: #06bafb">]</span>);
+      
+        <span style="color: #5a8d51;">// 先用filter()排除空格與非數字之數據</span>
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">countyHighwayMileageDataFilter</span> = <span style="color: #a9dbfb;">d3</span>.filter(<span style="color: #06bafb">countyHighwayMileageData</span>, <span style="color: #06bafb">(</span><span style="color: #a9dbfb;">d</span><span style="color: #06bafb">)</span> =&gt; <span style="color: #a9dbfb;">d</span> &gt; 0 && <span style="color: #a9dbfb;">d</span> &lt; 200);
+        <span style="color: #5a8d51;">// 再用sort()將數據從小排到大</span>
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">countyHighwayMileageDataSort</span> = <span style="color: #a9dbfb;">d3</span>.sort(<span style="color: #06bafb">countyHighwayMileageDataFilter</span>);
+        <span style="color: #5a8d51;">// 用join()在每個數據間加上"&lt;br&gt;"，以換行形式呈現數據</span>
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">formattedCountyHighwayMileageDataSort</span> = <span style="color: #06bafb">countyHighwayMileageDataSort</span>.join("&lt;br&gt;");
+        <span style="color: #5a8d51;">// 找出最短及最長縣市道的長度</span>
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">minMileage</span> = <span style="color: #a9dbfb;">d3</span>.min(<span style="color: #06bafb">countyHighwayMileageDataFilter</span>);
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">maxMileage</span> = <span style="color: #a9dbfb;">d3</span>.max(<span style="color: #06bafb">countyHighwayMileageDataFilter</span>);
+      
+        <span style="color: #a9dbfb;">document</span>.getElementById(<span style="color: #c5937c;">"minMileageData"</span>).<span style="color: #a9dbfb;">innerHTML</span> = <span style="color: #c5937c;">"臺灣縣市道最短公里數｜&lt;b&gt;"</span> + minMileage + "&lt;/b&gt; 公里";
+        <span style="color: #a9dbfb;">document</span>.getElementById(<span style="color: #c5937c;">"maxMileageData"</span>).<span style="color: #a9dbfb;">innerHTML</span> = <span style="color: #c5937c;">"臺灣縣市道最長公里數｜&lt;b&gt;"</span> + maxMileage + "&lt;/b&gt; 公里";
+        <span style="color: #a9dbfb;">document</span>.getElementById(<span style="color: #c5937c;">"ascendingMileageData"</span>).<span style="color: #a9dbfb;">innerHTML</span> = formattedCountyHighwayMileageDataSort;
+      };
+    
+      countyHighwayMileage<span style="color: #fecf35;">()</span>;
+    &lt;/<span style="color: #669bd1;">script</span>&gt;
+  </code>
+                                    </pre>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="mt-3">各種縣市道資訊的csv檔前幾列如下：
+                                    <table id="mileageDataTable" style="width: 100%;">
+                                      <tr>
+                                        <td colspan="8" style="color: #cccccc;"><s>縣道101線 三芝－淡水 里程表</s>（csv檔不包含此列）</td>
+                                      </tr>
+                                      <tr>
+                                        <td>項次</td>
+                                        <td>地名</td>
+                                        <td>里程_單位公里</td>
+                                        <td>備註</td>
+                                        <td>項次</td>
+                                        <td>地名</td>
+                                        <td>里程_單位公里</td>
+                                        <td>備註</td>
+                                      </tr>
+                                      <tr>
+                                        <td>001</td>
+                                        <td>三芝</td>
+                                        <td>0</td>
+                                        <td>起點，接省道台2線</td>
+                                        <td>003</td>
+                                        <td>瀾尾埔</td>
+                                        <td>15.45</td>
+                                        <td>終點，接省道台2線</td>
+                                      </tr>
+                                      <tr>
+                                        <td>002</td>
+                                        <td>北新莊</td>
+                                        <td>8.175</td>
+                                        <td>接縣道101甲線</td>
+                                        <td>004</td>
+                                        <td>淡水</td>
+                                        <td>17.173</td>
+                                        <td>終點，短鏈0.464公里，接省道台2乙線</td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="8">縣道101甲線 北新莊－北市界 里程表</td>
+                                      </tr>
+                                      <tr>
+                                        <td>項次</td>
+                                        <td>地名</td>
+                                        <td>里程_單位公里</td>
+                                        <td>備註</td>
+                                        <td>項次</td>
+                                        <td>地名</td>
+                                        <td>里程_單位公里</td>
+                                        <td>備註</td>
+                                      </tr>
+                                      <tr>
+                                        <td>001</td>
+                                        <td>三芝北新莊</td>
+                                        <td>0</td>
+                                        <td>起點，接縣道101線</td>
+                                        <td>002</td>
+                                        <td>新北臺北市界</td>
+                                        <td>10.74</td>
+                                        <td>終點，短鏈0.010公里，續往東行，可接省道台2甲線</td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="8">縣道102線 基隆－福隆 里程表</td>
+                                      </tr>
+                                      <tr>
+                                        <td>項次</td>
+                                        <td>地名</td>
+                                        <td>里程_單位公里</td>
+                                        <td>備註</td>
+                                        <td>項次</td>
+                                        <td>地名</td>
+                                        <td>里程_單位公里</td>
+                                        <td>備註</td>
+                                      </tr>
+                                      <tr>
+                                        <td>001</td>
+                                        <td>基隆市政府</td>
+                                        <td>0</td>
+                                        <td>起點，接省道台2線</td>
+                                        <td>007</td>
+                                        <td>雙溪</td>
+                                        <td>32.92</td>
+                                        <td>接省道台2丙線</td>
+                                      </tr>
+                                      <tr>
+                                        <td>002</td>
+                                        <td>基隆新北市界</td>
+                                        <td>7.762</td>
+                                        <td></td>
+                                        <td>008</td>
+                                        <td>貢寮</td>
+                                        <td>37</td>
+                                        <td></td>
+                                      </tr>
+                                      <tr>
+                                        <td>003</td>
+                                        <td>九份</td>
+                                        <td>15</td>
+                                        <td></td>
+                                        <td>009</td>
+                                        <td>草嶺古道</td>
+                                        <td>39.8</td>
+                                        <td></td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="8">（以下省略）</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
                           </ol>
                         </li>
                       </ul>
                     </div>
+                  </div>
+                  <div id="d3jsAPIForDataOrganization" class="tab-pane fade">
+                    <h3>資料整理</h3>
+                    <hr>
+                    <h4>Array分類</h4>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Array分類</th>
+                          <th>常用的API</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Statistics（統計數據）</td>
+                          <td><code>d3.min</code>、<code>d3.max</code>、<code>d3.extent</code>、<code>d3.sum</code></td>
+                        </tr>
+                        <tr>
+                          <td>Search（尋找）</td>
+                          <td>d3.ascending、d3.descending</td>
+                        </tr>
+                        <tr>
+                          <td>Transformations（改變結構）</td>
+                          <td>d3.merge、d3.range</td>
+                        </tr>
+                        <tr>
+                          <td>Iterables（迭代）</td>
+                          <td><code>d3.every</code>、<code>d3.some</code>、d3.map、<code>d3.filter</code>、<code>d3.sort</code></td>
+                        </tr>
+                        <tr>
+                          <td>Sets（數組）</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td>Histograms（直條圖）</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td>Interning</td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <ul>
+                      <li class="mt-3">
+                        <h5>Arrays分類的常用API</h5>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.min()</code>尋找最小值
+                            <pre><code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">minNumber</span> = <span style="color: #a9dbfb;">d3</span>.min<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"minimum"</span>, <span style="color: #06bafb">minNumber</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.max()</code>尋找最大值
+                            <pre><code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">maxNumber</span> = <span style="color: #a9dbfb;">d3</span>.max<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"maximum"</span>, <span style="color: #06bafb">maxNumber</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.extent()</code>同時找出最小值與最大值
+                            <pre><code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">extent</span> = <span style="color: #a9dbfb;">d3</span>.extent<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"minimum and maximum"</span>, <span style="color: #06bafb">extent</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.sum()</code>加總
+                            <pre><code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">sum</span> = <span style="color: #a9dbfb;">d3</span>.sum<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"sum"</span>, <span style="color: #06bafb">sum</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.every(<i class="px-1">資料, 方法</i>)</code>遍歷資料陣列，確認陣列內的值是否都符合條件
+                            <pre><code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">isAllIntegerBiggerThanTwenty</span> = <span style="color: #a9dbfb;">d3</span>.every<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span>, <span style="color: #dd67cc;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #dd67cc;">)</span> <span style="color: #669bd1;">=></span> <span style="color: #a9dbfb;">d</span> > 20<span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"every > 20"</span>, <span style="color: #06bafb">isAllIntegerBiggerThanTwenty</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.some(<i class="px-1">資料, 方法</i>)</code>遍歷資料陣列，確認陣列內的值是否至少有一項符合條件
+                            <pre><code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">isAnyIntegerBiggerThanTwenty</span> = <span style="color: #a9dbfb;">d3</span>.some<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span>, <span style="color: #dd67cc;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #dd67cc;">)</span> <span style="color: #669bd1;">=></span> <span style="color: #a9dbfb;">d</span> > 20<span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"any > 20"</span>, <span style="color: #06bafb">isAnyIntegerBiggerThanTwenty</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.filter(<i class="px-1">資料, 方法</i>)</code>遍歷資料陣列，回傳所有符合條件的資料
+                            <pre><code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">filter</span> = <span style="color: #a9dbfb;">d3</span>.filter<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span>, <span style="color: #dd67cc;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #dd67cc;">)</span> <span style="color: #669bd1;">=></span> <span style="color: #a9dbfb;">d</span> > 20<span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"filter"</span>, <span style="color: #06bafb">filter</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.sort(<i class="px-1">資料[, 方法]</i>)</code>整理並排序陣列中的資料，預設是由小到大排序陣列
+                            <pre><code>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">sort</span> = <span style="color: #a9dbfb;">d3</span>.sort<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"sort"</span>, <span style="color: #06bafb">sort</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                        </ol>
+                      </li>
+                    </ul>
                   </div>
                   <div id="d3jsPractice" class="tab-pane fade">
                     <h3>小工具練習</h3>
