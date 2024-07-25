@@ -2803,10 +2803,10 @@
                               <div class="mt-3">
                                 <pre>
   <code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">url</span> = <span style="color: #c5937c;">"<i class="px-1">串接網址</i>or<i class="px-1">檔案路徑</i>"</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">url</span> = <span style="color: #c5937c;">"<i class="px-1">串接網址</i>or<i class="px-1">檔案路徑</i>"</span>;
     <span style="color: #669bd1;">const</span> getJSONData = <span style="color: #669bd1;">async</span> () => {
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">resData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.json(<span style="color: #06bafb">url</span>);
-      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"d3.json()"</span>, <span style="color: #06bafb">resData</span>);
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">resData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.json(<span style="color: #06bafb;">url</span>);
+      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"d3.json()"</span>, <span style="color: #06bafb;">resData</span>);
     };
 
     getJSONData();
@@ -2818,11 +2818,11 @@
                               <div class="mt-3">
                                 <pre>
   <code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">cors</span> = <span style="color: #c5937c;">"https://api.allorigins.win/get?url="</span>;
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">url</span> = <span style="color: #c5937c;">"<i class="px-1">目標 JSON 資料的 URL</i>"</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">cors</span> = <span style="color: #c5937c;">"https://api.allorigins.win/get?url="</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">url</span> = <span style="color: #c5937c;">"<i class="px-1">目標 JSON 資料的 URL</i>"</span>;
     <span style="color: #669bd1;">const</span> getCorsData = <span style="color: #669bd1;">async</span> () => {
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">dataGet</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.json(<span style="color: #c5937c;">`</span><span style="color: #669bd1;">${</span><span style="color: #06bafb">cors</span><span style="color: #669bd1;">}${</span><span style="color: #06bafb">url</span><span style="color: #669bd1;">}</span><span style="color: #c5937c;">`</span>); <span style="color: #5a8d51;">// 串接網址</span>
-      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"d3.json()"</span>, <span style="color: #06bafb">dataGet</span>);
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">dataGet</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.json(<span style="color: #c5937c;">`</span><span style="color: #669bd1;">${</span><span style="color: #06bafb;">cors</span><span style="color: #669bd1;">}${</span><span style="color: #06bafb;">url</span><span style="color: #669bd1;">}</span><span style="color: #c5937c;">`</span>); <span style="color: #5a8d51;">// 串接網址</span>
+      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"d3.json()"</span>, <span style="color: #06bafb;">dataGet</span>);
     };
 
     getCorsData();
@@ -2838,9 +2838,9 @@
                               <div class="mt-3">
                                 <pre>
   <code>
-    <span style="color: #669bd1;">const</span> getCsvData = <span style="color: #06bafb">async</span> () => {
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">csvData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.csv(<span style="color: #c5937c;">"<i class="px-1">檔案路徑</i>"</span>);
-      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"csvData"</span>, <span style="color: #06bafb">csvData</span>);
+    <span style="color: #669bd1;">const</span> getCsvData = <span style="color: #06bafb;">async</span> () => {
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">csvData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.csv(<span style="color: #c5937c;">"<i class="px-1">檔案路徑</i>"</span>);
+      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"csvData"</span>, <span style="color: #06bafb;">csvData</span>);
     };
 
     getCsvData();
@@ -2852,10 +2852,10 @@
                               <div class="mt-3">
                                 <pre>
   <code>
-    <span style="color: #669bd1;">const</span> getCsvSpecificData = <span style="color: #06bafb">async</span> () => {
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">csvData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.csv(<span style="color: #c5937c;">"<i class="px-1">檔案路徑</i>"</span>, <span style="color: #06bafb">(</span><span style="color: #a9dbfb;">d</span><span style="color: #06bafb">)</span> => <span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">特定類別名</span>);
+    <span style="color: #669bd1;">const</span> getCsvSpecificData = <span style="color: #06bafb;">async</span> () => {
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">csvData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.csv(<span style="color: #c5937c;">"<i class="px-1">檔案路徑</i>"</span>, <span style="color: #06bafb;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #06bafb;">)</span> => <span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">特定類別名</span>);
       <span style="color: #5a8d51;">// 例：const csvData = await d3.csv("data/food.csv", (d) => d.vegetable);</span>
-      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"csvData"</span>, <span style="color: #06bafb">csvData</span>);
+      <span style="color: #a9dbfb;">console</span>.log(<span style="color: #c5937c;">"csvData"</span>, <span style="color: #06bafb;">csvData</span>);
     };
 
     getCsvSpecificData();
@@ -2904,17 +2904,17 @@
     &lt;<span style="color: #669bd1;">script</span>&gt;
       <span style="color: #669bd1;">const</span> countyHighwayMileage = <span style="color: #669bd1;">async</span> <span style="color: #fecf35;">()</span> =&gt; {
         <span style="color: #5a8d51;">// "(d) =&gt; +d["里程_單位公里"]"用於取出"里程_單位公里"列的資料並將其numeric化</span>
-        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">countyHighwayMileageData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.csv(<span style="color: #c5937c;">"../assets/testAssets/CountyRoad_1021003.csv"</span>, <span style="color: #06bafb">(</span><span style="color: #a9dbfb;">d</span><span style="color: #06bafb">)</span> =&gt; +<span style="color: #a9dbfb;">d</span><span style="color: #06bafb">[</span><span style="color: #c5937c;">"里程_單位公里"</span><span style="color: #06bafb">]</span>);
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">countyHighwayMileageData</span> = <span style="color: #bc8abd;">await</span> <span style="color: #a9dbfb;">d3</span>.csv(<span style="color: #c5937c;">"../assets/testAssets/CountyRoad_1021003.csv"</span>, <span style="color: #06bafb;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #06bafb;">)</span> =&gt; +<span style="color: #a9dbfb;">d</span><span style="color: #06bafb;">[</span><span style="color: #c5937c;">"里程_單位公里"</span><span style="color: #06bafb;">]</span>);
       
         <span style="color: #5a8d51;">// 先用filter()排除空格與非數字之數據</span>
-        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">countyHighwayMileageDataFilter</span> = <span style="color: #a9dbfb;">d3</span>.filter(<span style="color: #06bafb">countyHighwayMileageData</span>, <span style="color: #06bafb">(</span><span style="color: #a9dbfb;">d</span><span style="color: #06bafb">)</span> =&gt; <span style="color: #a9dbfb;">d</span> &gt; 0 && <span style="color: #a9dbfb;">d</span> &lt; 200);
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">countyHighwayMileageDataFilter</span> = <span style="color: #a9dbfb;">d3</span>.filter(<span style="color: #06bafb;">countyHighwayMileageData</span>, <span style="color: #06bafb;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #06bafb;">)</span> =&gt; <span style="color: #a9dbfb;">d</span> &gt; 0 && <span style="color: #a9dbfb;">d</span> &lt; 200);
         <span style="color: #5a8d51;">// 再用sort()將數據從小排到大</span>
-        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">countyHighwayMileageDataSort</span> = <span style="color: #a9dbfb;">d3</span>.sort(<span style="color: #06bafb">countyHighwayMileageDataFilter</span>);
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">countyHighwayMileageDataSort</span> = <span style="color: #a9dbfb;">d3</span>.sort(<span style="color: #06bafb;">countyHighwayMileageDataFilter</span>);
         <span style="color: #5a8d51;">// 用join()在每個數據間加上"&lt;br&gt;"，以換行形式呈現數據</span>
-        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">formattedCountyHighwayMileageDataSort</span> = <span style="color: #06bafb">countyHighwayMileageDataSort</span>.join("&lt;br&gt;");
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">formattedCountyHighwayMileageDataSort</span> = <span style="color: #06bafb;">countyHighwayMileageDataSort</span>.join("&lt;br&gt;");
         <span style="color: #5a8d51;">// 找出最短及最長縣市道的長度</span>
-        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">minMileage</span> = <span style="color: #a9dbfb;">d3</span>.min(<span style="color: #06bafb">countyHighwayMileageDataFilter</span>);
-        <span style="color: #669bd1;">const</span> <span style="color: #06bafb">maxMileage</span> = <span style="color: #a9dbfb;">d3</span>.max(<span style="color: #06bafb">countyHighwayMileageDataFilter</span>);
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">minMileage</span> = <span style="color: #a9dbfb;">d3</span>.min(<span style="color: #06bafb;">countyHighwayMileageDataFilter</span>);
+        <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">maxMileage</span> = <span style="color: #a9dbfb;">d3</span>.max(<span style="color: #06bafb;">countyHighwayMileageDataFilter</span>);
       
         <span style="color: #a9dbfb;">document</span>.getElementById(<span style="color: #c5937c;">"minMileageData"</span>).<span style="color: #a9dbfb;">innerHTML</span> = <span style="color: #c5937c;">"臺灣縣市道最短公里數｜&lt;b&gt;"</span> + minMileage + "&lt;/b&gt; 公里";
         <span style="color: #a9dbfb;">document</span>.getElementById(<span style="color: #c5937c;">"maxMileageData"</span>).<span style="color: #a9dbfb;">innerHTML</span> = <span style="color: #c5937c;">"臺灣縣市道最長公里數｜&lt;b&gt;"</span> + maxMileage + "&lt;/b&gt; 公里";
@@ -3085,71 +3085,192 @@
                       </tbody>
                     </table>
                     <ul>
-                      <li class="mt-3">
+                      <li class="mt-4">
                         <h5>Arrays分類的常用API</h5>
                         <ol>
                           <li>
                             <code class="me-2">d3.min()</code>尋找最小值
                             <pre><code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">minNumber</span> = <span style="color: #a9dbfb;">d3</span>.min<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
-    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"minimum"</span>, <span style="color: #06bafb">minNumber</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">minNumber</span> = <span style="color: #a9dbfb;">d3</span>.min<span style="color: #fecf35;">(</span><span style="color: #06bafb;">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"minimum"</span>, <span style="color: #06bafb;">minNumber</span><span style="color: #fecf35;">)</span>;
   </code></pre>
                           </li>
                           <li>
                             <code class="me-2">d3.max()</code>尋找最大值
                             <pre><code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">maxNumber</span> = <span style="color: #a9dbfb;">d3</span>.max<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
-    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"maximum"</span>, <span style="color: #06bafb">maxNumber</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">maxNumber</span> = <span style="color: #a9dbfb;">d3</span>.max<span style="color: #fecf35;">(</span><span style="color: #06bafb;">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"maximum"</span>, <span style="color: #06bafb;">maxNumber</span><span style="color: #fecf35;">)</span>;
   </code></pre>
                           </li>
                           <li>
                             <code class="me-2">d3.extent()</code>同時找出最小值與最大值
                             <pre><code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">extent</span> = <span style="color: #a9dbfb;">d3</span>.extent<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
-    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"minimum and maximum"</span>, <span style="color: #06bafb">extent</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">extent</span> = <span style="color: #a9dbfb;">d3</span>.extent<span style="color: #fecf35;">(</span><span style="color: #06bafb;">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"minimum and maximum"</span>, <span style="color: #06bafb;">extent</span><span style="color: #fecf35;">)</span>;
   </code></pre>
                           </li>
                           <li>
                             <code class="me-2">d3.sum()</code>加總
                             <pre><code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">sum</span> = <span style="color: #a9dbfb;">d3</span>.sum<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
-    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"sum"</span>, <span style="color: #06bafb">sum</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">sum</span> = <span style="color: #a9dbfb;">d3</span>.sum<span style="color: #fecf35;">(</span><span style="color: #06bafb;">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"sum"</span>, <span style="color: #06bafb;">sum</span><span style="color: #fecf35;">)</span>;
   </code></pre>
                           </li>
                           <li>
                             <code class="me-2">d3.every(<i class="px-1">資料, 方法</i>)</code>遍歷資料陣列，確認陣列內的值是否都符合條件
                             <pre><code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">isAllIntegerBiggerThanTwenty</span> = <span style="color: #a9dbfb;">d3</span>.every<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span>, <span style="color: #dd67cc;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #dd67cc;">)</span> <span style="color: #669bd1;">=></span> <span style="color: #a9dbfb;">d</span> > 20<span style="color: #fecf35;">)</span>;
-    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"every > 20"</span>, <span style="color: #06bafb">isAllIntegerBiggerThanTwenty</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">isAllIntegerBiggerThanTwenty</span> = <span style="color: #a9dbfb;">d3</span>.every<span style="color: #fecf35;">(</span><span style="color: #06bafb;">numberData</span>, <span style="color: #dd67cc;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #dd67cc;">)</span> <span style="color: #669bd1;">=></span> <span style="color: #a9dbfb;">d</span> > 20<span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"every > 20"</span>, <span style="color: #06bafb;">isAllIntegerBiggerThanTwenty</span><span style="color: #fecf35;">)</span>;
   </code></pre>
                           </li>
                           <li>
                             <code class="me-2">d3.some(<i class="px-1">資料, 方法</i>)</code>遍歷資料陣列，確認陣列內的值是否至少有一項符合條件
                             <pre><code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">isAnyIntegerBiggerThanTwenty</span> = <span style="color: #a9dbfb;">d3</span>.some<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span>, <span style="color: #dd67cc;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #dd67cc;">)</span> <span style="color: #669bd1;">=></span> <span style="color: #a9dbfb;">d</span> > 20<span style="color: #fecf35;">)</span>;
-    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"any > 20"</span>, <span style="color: #06bafb">isAnyIntegerBiggerThanTwenty</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">isAnyIntegerBiggerThanTwenty</span> = <span style="color: #a9dbfb;">d3</span>.some<span style="color: #fecf35;">(</span><span style="color: #06bafb;">numberData</span>, <span style="color: #dd67cc;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #dd67cc;">)</span> <span style="color: #669bd1;">=></span> <span style="color: #a9dbfb;">d</span> > 20<span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"any > 20"</span>, <span style="color: #06bafb;">isAnyIntegerBiggerThanTwenty</span><span style="color: #fecf35;">)</span>;
   </code></pre>
                           </li>
                           <li>
                             <code class="me-2">d3.filter(<i class="px-1">資料, 方法</i>)</code>遍歷資料陣列，回傳所有符合條件的資料
                             <pre><code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">filter</span> = <span style="color: #a9dbfb;">d3</span>.filter<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span>, <span style="color: #dd67cc;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #dd67cc;">)</span> <span style="color: #669bd1;">=></span> <span style="color: #a9dbfb;">d</span> > 20<span style="color: #fecf35;">)</span>;
-    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"filter"</span>, <span style="color: #06bafb">filter</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">filter</span> = <span style="color: #a9dbfb;">d3</span>.filter<span style="color: #fecf35;">(</span><span style="color: #06bafb;">numberData</span>, <span style="color: #dd67cc;">(</span><span style="color: #a9dbfb;">d</span><span style="color: #dd67cc;">)</span> <span style="color: #669bd1;">=></span> <span style="color: #a9dbfb;">d</span> > 20<span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"filter"</span>, <span style="color: #06bafb;">filter</span><span style="color: #fecf35;">)</span>;
   </code></pre>
                           </li>
                           <li>
                             <code class="me-2">d3.sort(<i class="px-1">資料[, 方法]</i>)</code>整理並排序陣列中的資料，預設是由小到大排序陣列
                             <pre><code>
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
-    <span style="color: #669bd1;">const</span> <span style="color: #06bafb">sort</span> = <span style="color: #a9dbfb;">d3</span>.sort<span style="color: #fecf35;">(</span><span style="color: #06bafb">numberData</span><span style="color: #fecf35;">)</span>;
-    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"sort"</span>, <span style="color: #06bafb">sort</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberData</span> = <span style="color: #fecf35;">[</span>5, 1, 35, 13, 15, 18, 21, 31, 29<span style="color: #fecf35;">]</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">sort</span> = <span style="color: #a9dbfb;">d3</span>.sort<span style="color: #fecf35;">(</span><span style="color: #06bafb;">numberData</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"sort"</span>, <span style="color: #06bafb;">sort</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="mt-4">
+                        <h5>Time Formats分類的常用API</h5>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.timeParse(<i class="px-1">說明字符</i>)</code>將日期資訊轉換成d3.js能夠看得懂的數值
+                            <pre><code>
+    <span style="color: #5a8d51;">// 其中一種寫法</span>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">timeData</span> = <span style="color: #c5937c;">"2024-07-25"</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">timeParse</span> = <span style="color: #a9dbfb;">d3</span>.timeParse<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"%Y-%m-%d"</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"d3標準格式時間"</span>, timeParse<span style="color: #dd67cc;">(</span><span style="color: #06bafb;">timeData</span><span style="color: #dd67cc;">)</span><span style="color: #fecf35;">)</span>;
+    
+    <span style="color: #5a8d51;">// 另外一種寫法</span>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">timeParse</span> = <span style="color: #a9dbfb;">d3</span>.timeParse<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"%Y-%m-%d"</span><span style="color: #fecf35;">)(</span><span style="color: #c5937c;">"2024-07-25"</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"d3標準格式時間"</span>, <span style="color: #06bafb;">timeParse</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.timeFormat(<i class="px-1">轉換出來的方式</i>)</code>將d3.js能夠看得懂的數值轉換成我們要的日期格式
+                            <pre><code>
+    <span style="color: #5a8d51;">// 若已有d3標準格式時間，可以直接套入以下code</span>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">timeFormat</span> = <span style="color: #a9dbfb;">d3</span>.timeFormat<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"%Y.%m.%d"</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"我們要的時間格式"</span>, timeFormat<span style="color: #dd67cc;">(</span><i class="px-1">d3標準格式時間</i><span style="color: #dd67cc;">)</span><span style="color: #fecf35;">)</span>;
+    
+
+    <span style="color: #5a8d51;">// 也可用於先將一般格式轉換成d3標準格式時間</span>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">timeParse</span> = <span style="color: #a9dbfb;">d3</span>.timeParse<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"%Y-%m-%d"</span><span style="color: #fecf35;">)(</span><span style="color: #c5937c;">"2024-07-25"</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"d3標準格式時間"</span>, <span style="color: #06bafb;">timeParse</span><span style="color: #fecf35;">)</span>;
+
+    <span style="color: #5a8d51;">// 再套入函式轉換為我們要的時間格式</span>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">timeFormat</span> = <span style="color: #a9dbfb;">d3</span>.timeFormat<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"%Y.%m.%d"</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"我們要的時間格式"</span>, timeFormat<span style="color: #dd67cc;">(</span><span style="color: #06bafb;">timeParse</span><span style="color: #dd67cc;">)</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                          <div>
+                            <h6>Time Formats常用說明字符如下：</h6>
+                            <table id="timeFormatsTable" style="width: 100%;">
+                              <thead>
+                                <tr>
+                                  <th>參數</th>
+                                  <th>說明</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td><code>%Y</code></td>
+                                  <td>西元年。</td>
+                                </tr>
+                                <tr>
+                                  <td><code>%y</code></td>
+                                  <td>西元年最末的兩位數。</td>
+                                </tr>
+                                <tr>
+                                  <td><code>%m</code></td>
+                                  <td>一年的某一個月（01~12）。</td>
+                                </tr>
+                                <tr>
+                                  <td><code>%d</code></td>
+                                  <td>一月的某一天（01~31）。</td>
+                                </tr>
+                                <tr>
+                                  <td><code>%j</code></td>
+                                  <td>一年的某一天（001~366）。</td>
+                                </tr>
+                                <tr>
+                                  <td><code>%B</code></td>
+                                  <td>月份。</td>
+                                </tr>
+                                <tr>
+                                  <td><code>%b</code></td>
+                                  <td>月份的縮寫。</td>
+                                </tr>
+                                <tr>
+                                  <td><code>%A</code></td>
+                                  <td>星期幾。</td>
+                                </tr>
+                                <tr>
+                                  <td><code>%a</code></td>
+                                  <td>星期幾的縮寫。</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </ol>
+                      </li>
+                      <li class="mt-4">
+                        <h5>Number Formats分類的常用API</h5>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.format(<i class="px-1">說明字符</i>)</code>處理數字，說明字符填入數字格式的方法。以下舉例兩種常見用法。
+                            <pre><code>
+    <span style="color: #5a8d51;">// 將數字四捨五入到某位（此處以取至第四位做舉例）</span>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberFormat</span> = <span style="color: #a9dbfb;">d3</span>.format<span style="color: #fecf35;">(</span><span style="color: #c5937c;">".4f"</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">roundFormat</span> = numberFormat<span style="color: #fecf35;">(</span><span style="color: #a9dbfb;">Math.PI</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"四捨五入至小數點後第四位"</span>, <span style="color: #06bafb;">roundFormat</span><span style="color: #fecf35;">)</span>;
+    
+    
+    <span style="color: #5a8d51;">// 將數字轉換成二進位數字</span>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">numberFormat</span> = <span style="color: #a9dbfb;">d3</span>.format<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"b"</span><span style="color: #fecf35;">)</span>;
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">binaryFormat</span> = numberFormat<span style="color: #fecf35;">(</span>2024<span style="color: #fecf35;">)</span>;
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"二進位數字"</span>, <span style="color: #06bafb;">binaryFormat</span><span style="color: #fecf35;">)</span>;
+  </code></pre>
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="mt-4">
+                        <h5>Random Numbers分類的常用API</h5>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.randomInt(<i class="px-1">[最小值, ]最大值</i>)</code>產生隨機整數。若未設定最小值，最小值預設為0。
+                            <pre><code>
+    <span style="color: #5a8d51;">// 沒有設定最小值</span>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">randomNum</span> = <span style="color: #a9dbfb;">d3</span>.randomInt<span style="color: #fecf35;">(</span>100<span style="color: #fecf35;">)()</span>;
+    
+    <span style="color: #5a8d51;">// 有設定最大值</span>
+    <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">randomNum</span> = <span style="color: #a9dbfb;">d3</span>.randomInt<span style="color: #fecf35;">(</span>50, 100<span style="color: #fecf35;">)()</span>;
+
+    <span style="color: #a9dbfb;">console</span>.log<span style="color: #fecf35;">(</span><span style="color: #c5937c;">"隨機變數"</span>, <span style="color: #06bafb;">randomNum</span><span style="color: #fecf35;">)</span>;
   </code></pre>
                           </li>
                         </ol>
@@ -3240,29 +3361,29 @@
     &lt;div class="my-2"&gt;data資料集：&lt;span id=<span style="color: #c5937c;">"d3jsPractice_showData"</span>&gt;&lt;/span&gt;&lt;/div&gt;
     &lt;div id=<span style="color: #c5937c;">"d3jsPractice_chartWrap"</span>&gt;&lt;/div&gt;
     &lt;<span style="color: #669bd1;">script</span>&gt;
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">getRandomData</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_getRandomData'</span>);
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">dataLength</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_dataLength'</span>);
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">showData</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_showData'</span>);
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">getRandomData</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_getRandomData'</span>);
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">dataLength</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_dataLength'</span>);
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">showData</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_showData'</span>);
       <span style="color: #669bd1;">let</span> <span style="color: #a9dbfb;">randomData</span> = <span style="color: #fecf35;">[]</span>;
 
-      <span style="color: #06bafb">getRandomData</span>.addEventListener(<span style="color: #c5937c;">"click"</span>, (<span style="color: #a9dbfb;">e</span>) =&gt; {
+      <span style="color: #06bafb;">getRandomData</span>.addEventListener(<span style="color: #c5937c;">"click"</span>, (<span style="color: #a9dbfb;">e</span>) =&gt; {
         <span style="color: #a9dbfb;">randomData</span>.<span style="color: #a9dbfb;">length</span> = 0;
 
-        for (<span style="color: #a9dbfb;">i</span> = 0; <span style="color: #a9dbfb;">i</span> &lt; <span style="color: #06bafb">dataLength</span>.<span style="color: #a9dbfb;">value</span>; <span style="color: #a9dbfb;">i</span>++) {
+        for (<span style="color: #a9dbfb;">i</span> = 0; <span style="color: #a9dbfb;">i</span> &lt; <span style="color: #06bafb;">dataLength</span>.<span style="color: #a9dbfb;">value</span>; <span style="color: #a9dbfb;">i</span>++) {
           <span style="color: #5a8d51;">// 產生並塞入隨機亂數資料</span>
           let <span style="color: #a9dbfb;">random</span> = <span style="color: #a9dbfb;">Math</span>.floor(<span style="color: #a9dbfb;">Math</span>.random() * 5);
           <span style="color: #a9dbfb;">randomData</span>.push(<span style="color: #a9dbfb;">random</span>);
         };
 
         <span style="color: #5a8d51;">// 畫面呈現目前資料集</span>
-        <span style="color: #06bafb">showData</span>.<span style="color: #a9dbfb;">innerHTML</span> = <span style="color: #a9dbfb;">randomData</span>;
+        <span style="color: #06bafb;">showData</span>.<span style="color: #a9dbfb;">innerHTML</span> = <span style="color: #a9dbfb;">randomData</span>;
         
         <span style="color: #5a8d51;">// 繪製圖表</span>
         drawDiagram();
       });
 
       <span style="color: #5a8d51;">// 建立SVG畫布</span>
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb">rangeSelect</span> = <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">'#d3jsPractice_chartWrap'</span>)
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">rangeSelect</span> = <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">'#d3jsPractice_chartWrap'</span>)
                             .append(<span style="color: #c5937c;">'svg'</span>)
                             .attr(<span style="color: #c5937c;">'width'</span>, 400)
                             .attr(<span style="color: #c5937c;">'height'</span>, 300)
@@ -3270,7 +3391,7 @@
       
       <span style="color: #669bd1;">const</span> drawDiagram = () =&gt; {
         <span style="color: #5a8d51;">// 綁定update資料</span>
-        let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
+        let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb;">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
                                .data(<span style="color: #a9dbfb;">randomData</span>);
                                
         <span style="color: #a9dbfb;">rects</span>.enter()
@@ -3308,7 +3429,7 @@
 
       <span style="color: #669bd1;">const</span> drawDiagram = () =&gt; {
         <span style="color: #5a8d51;">// 綁定update資料</span>
-        let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
+        let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb;">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
                                .data(<span style="color: #a9dbfb;">randomData</span>);
 
         <span style="color: #a9dbfb;">rects</span>.enter()
@@ -3338,7 +3459,7 @@
 
       <span style="color: #669bd1;">const</span> drawDiagram = () =&gt; {
         <span style="color: #5a8d51;">// 綁定update資料</span>
-        let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
+        let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb;">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
                                .data(<span style="color: #a9dbfb;">randomData</span>)
                                .join(
                                  (<span style="color: #a9dbfb;">enter</span>) => <span style="color: #a9dbfb;">enter</span>.append(<span style="color: #c5937c;">'rect'</span>)
@@ -3381,7 +3502,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-07-19T17:08">2024/07/19 17:08</time></p>
+            資料最後更新時間：<time datetime="2024-07-26T00:42">2024/07/26 00:42</time></p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>
         <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">

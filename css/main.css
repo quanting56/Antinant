@@ -440,6 +440,12 @@ pre:has(code) {
     border-collapse: collapse;
 }
 
+#timeFormatsTable th,
+#timeFormatsTable td {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 /* footer */
 footer h5 {
     color: #ffffff;

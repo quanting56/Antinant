@@ -50,33 +50,11 @@
   <body>
     <h2>歡迎來到測試場</h2>
     <hr>
-    <section>
-      <!-- 格式化時間 Time Formats 分類 -->
-      <script>
-        const timeParse = d3.timeParse("%y-%m-%d")("96-09-27");
-        console.log("d3標準格式時間", timeParse);
-
-        const timeFormat = d3.timeFormat("%Y/%m/%d");
-        console.log("我們在看的時間", timeFormat(timeParse));
-      </script>
-    </section>
-    <section>
-      <!-- 格式化數字 Number Formats 分類 -->
-      <script>
-        const numberFormat = d3.format("b");
-        const binaryNumber = numberFormat(1e1);
-        console.log("format", binaryNumber);
-      </script>
-    </section>
-    <section>
-      <!-- 隨機亂數 Random Numbers 分類 -->
-      <script>
-        const randomNum1 = d3.randomInt(50)();
-        const randomNum2 = d3.randomInt(50, 100)();
-        console.log("隨機亂數（有上下界）", randomNum1);
-        console.log("隨機亂數（未設定下界，預設下界為0）", randomNum2);
-      </script>
-    </section>
-
+    <script>
+      // 將數字四捨五入到某位（此處以取至第四位做舉例）
+    const numberFormat = d3.format(".4f");
+    const roundFormat = numberFormat(Math.PI);
+    console.log("四捨五入至小數點後第四位", roundFormat);
+    </script>
   </body>
 </html>

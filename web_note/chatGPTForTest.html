@@ -1,49 +1,78 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>0050股票報價</title>
-  <style>
-    /* 添加你的CSS樣式 */
-    .stock-info {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      width: 300px;
-      margin: 20px auto;
-    }
-  </style>
-</head>
-<body>
-  <div class="stock-info">
-    <h2>0050股票報價</h2>
-    <p><strong>價格：</strong> <span id="price"></span></p>
-    <p><strong>變動：</strong> <span id="change"></span></p>
-    <p><strong>% 變動：</strong> <span id="percent-change"></span></p>
-    <p><strong>成交量：</strong> <span id="volume"></span></p>
-    <p><em>最後更新時間： <span id="last-updated"></span></em></p>
-  </div>
-
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>00675L 日k線圖</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <script src="kline.js"></script>
+    <img src="../assets/testAssets/00675L.TW.csv">
+  </body>
   <script>
-    // 函數用於獲取和更新股票數據
-    function fetchStockData() {
-      fetch('http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_0050.tw') // 替換為實際的API端點
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById('price').textContent = data.price;
-          document.getElementById('change').textContent = data.change;
-          document.getElementById('percent-change').textContent = data.percentChange;
-          document.getElementById('volume').textContent = data.volume;
-          document.getElementById('last-updated').textContent = new Date().toLocaleString();
-        })
-        .catch(error => console.error('獲取數據時出錯：', error));
-    }
+    // 設定圖表的寬度、高度和邊距
+    const margin = { top: 20, right: 30, bottom: 30, left: 50 };
+    const width = 960 - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
 
-    // 首次獲取數據，然後每30秒更新一次（根據需要調整）
-    fetchStockData();
-    setInterval(fetchStockData, 30000); // 每30秒刷新一次
+    // 創建SVG元素
+    const svg = d3.select("#chart")
+                  .append("svg")
+                  .attr("width", width + margin.left + margin.right)
+                  .attr("height", height + margin.top + margin.bottom)
+                  .append("g")
+                  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // 設定時間尺度和價格尺度
+    const x = d3.scaleTime().range([0, width]);
+    const y = d3.scaleLinear().range([height, 0]);
+
+    // 設定K線圖的顏色
+    const color = d => d.close > d.open ? "red" : "green";
+
+    // 讀取CSV文件並處理數據
+    d3.csv("../assets/testAssets/00675L.TW.csv").then(data => {
+        data.forEach(d => {
+            d.date = d3.timeParse("%Y/%m/%d")(d.date);
+            d.open = +d.open;
+            d.high = +d.high;
+            d.low = +d.low;
+            d.close = +d.close;
+        });
+      
+        x.domain(d3.extent(data, d => d.date));
+        y.domain([d3.min(data, d => d.low), d3.max(data, d => d.high)]);
+      
+        // 添加X軸
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x));
+      
+        // 添加Y軸
+        svg.append("g")
+            .call(d3.axisLeft(y));
+      
+        // 添加K線圖
+        svg.selectAll("line.stem")
+            .data(data)
+            .enter().append("line")
+            .attr("class", "stem")
+            .attr("x1", d => x(d.date))
+            .attr("x2", d => x(d.date))
+            .attr("y1", d => y(d.high))
+            .attr("y2", d => y(d.low))
+            .attr("stroke", color);
+      
+        svg.selectAll("rect")
+            .data(data)
+            .enter().append("rect")
+            .attr("x", d => x(d.date) - 5)
+            .attr("y", d => y(Math.max(d.open, d.close)))
+            .attr("width", 5)
+            .attr("height", d => Math.abs(y(d.open) - y(d.close)))
+            .attr("fill", color);
+    });
+
   </script>
-</body>
 </html>
