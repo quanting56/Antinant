@@ -430,21 +430,25 @@ pre:has(code) {
     color: #d4d4d4;
 }
 
-#mileageDataTable td {
-    border: 1px solid #aaaaaa;
-}
-
-#d3jsAPIForDataOrganization th,
-#d3jsAPIForDataOrganization td {
+#D3jsNote th,
+#D3jsNote td {
     border: 1px solid #000000;
     border-collapse: collapse;
-}
-
-#timeFormatsTable th,
-#timeFormatsTable td {
     padding-left: 8px;
     padding-right: 8px;
 }
+
+#mileageDataTable td {
+    border: 1px solid #aaaaaa;
+    border-collapse: collapse;
+    padding: 1px;
+}
+
+#d3jsHelperFunction svg {
+  width: 800px;
+  height: 180px;
+}
+
 
 /* footer */
 footer h5 {

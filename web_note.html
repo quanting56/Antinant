@@ -2510,7 +2510,7 @@
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsDataBinding">資料綁定</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAPIForDataImporting">匯入資料的API</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAPIForDataOrganization">資料整理</a></li>
-                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsPractice">小工具練習</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsHelperFunction">繪圖HelperFunction</a></li>
                 </ul>
               </div>
               <div class="col-md-10">
@@ -2791,13 +2791,218 @@
                         </div>
                       </div>
                     </div>
+                    <ul>
+                      <li class="mt-5"><h4>一個範例（原小工具練習）</h4>
+                        <ol class="mt-3">
+                          <li>畫面上有一個輸入資料數量的框框、隨機產生資料的按紐、目前的資料集，以及與資料搭配的柱狀圖表。</li>
+                          <li>每次點擊按鈕時，會根據資料數量隨機產生不同的資料，柱狀圖表也會隨著資料更新而變化。</li>
+                        </ol>
+                        <div class="p-3 container-fluid" style="border: 0.1px solid #efefef;">
+                          <div class="row">
+                            <div class="col-xxl-6 mt-3">
+                              <div>
+                                <label>資料數量</label>
+                                <input type="number" id="d3jsPractice_dataLength">
+                                <button type="button" id="d3jsPractice_getRandomData">點擊產生隨機資料</button>
+                              </div>
+                              <div class="my-2">data資料集：<span id="d3jsPractice_showData"></span></div>
+                              <div id="d3jsPractice_chartWrap"></div>
+                              <script>
+                                const getRandomData = document.querySelector('#d3jsPractice_getRandomData');
+                                const dataLength = document.querySelector('#d3jsPractice_dataLength');
+                                const showData = document.querySelector('#d3jsPractice_showData');
+                                let randomData = [];
+                        
+                                getRandomData.addEventListener("click", (e) => {
+                                  randomData.length = 0;
+                        
+                                  for (i = 0; i < dataLength.value; i++) {
+                                    // 產生並塞入隨機亂數資料
+                                    let random = Math.floor(Math.random() * 5);
+                                    randomData.push(random);
+                                  };
+                        
+                                  // 畫面呈現目前資料集
+                                  showData.innerHTML = randomData;
+                                  
+                                  // 繪製圖表
+                                  drawDiagram();
+                                });
+                        
+                                // 建立SVG畫布
+                                const rangeSelect = d3.select('#d3jsPractice_chartWrap')
+                                                      .append('svg')
+                                                      .attr('width', 400)
+                                                      .attr('height', 300)
+                                                      .style('border', '1px solid rgb(96, 96, 96)');
+                                
+                                const drawDiagram = () => {
+                                  // 綁定update資料
+                                  let rects = rangeSelect.selectAll('rect')
+                                                         .data(randomData);
+                                                         
+                                  rects.enter()
+                                       .append('rect')
+                                       .attr('width', 0) // 初始化寬度為0
+                                       .attr('height', 40)
+                                       .style('fill', '#967259')
+                                       .attr('x', (d, index) => 0)
+                                       .attr('y', (d, index) => index * 60)
+                                       .transition()
+                                       .duration(500)
+                                       .attr('width', (d) => d * 60);
+                                       
+                                  
+                                  // 更新資料，重新設定長條圖的寬度
+                                  rects.transition()
+                                       .duration(500)
+                                       .attr('width', (d) => d * 60);
+                                  
+                                  // 移除多的DOM元素
+                                  rects.exit().remove();
+                                };
+                              </script>
+                            </div>
+                            <div class="col-xxl-6 mt-3">本段code：
+                              <pre>
+      <code>
+        &lt;div&gt;
+          &lt;<span style="color: #669bd1;">label</span>&gt;資料數量&lt;/<span style="color: #669bd1;">label</span>&gt;
+          &lt;<span style="color: #669bd1;">input</span> type="number" id=<span style="color: #c5937c;">"d3jsPractice_dataLength"</span>&gt;
+          &lt;<span style="color: #669bd1;">button</span> type="button" id=<span style="color: #c5937c;">"d3jsPractice_getRandomData"</span>&gt;點擊產生隨機資料&lt;/<span style="color: #669bd1;">button</span>&gt;
+        &lt;/div&gt;
+        &lt;div class="my-2"&gt;data資料集：&lt;span id=<span style="color: #c5937c;">"d3jsPractice_showData"</span>&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div id=<span style="color: #c5937c;">"d3jsPractice_chartWrap"</span>&gt;&lt;/div&gt;
+        &lt;<span style="color: #669bd1;">script</span>&gt;
+          <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">getRandomData</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_getRandomData'</span>);
+          <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">dataLength</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_dataLength'</span>);
+          <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">showData</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_showData'</span>);
+          <span style="color: #669bd1;">let</span> <span style="color: #a9dbfb;">randomData</span> = <span style="color: #fecf35;">[]</span>;
+    
+          <span style="color: #06bafb;">getRandomData</span>.addEventListener(<span style="color: #c5937c;">"click"</span>, (<span style="color: #a9dbfb;">e</span>) =&gt; {
+            <span style="color: #a9dbfb;">randomData</span>.<span style="color: #a9dbfb;">length</span> = 0;
+    
+            for (<span style="color: #a9dbfb;">i</span> = 0; <span style="color: #a9dbfb;">i</span> &lt; <span style="color: #06bafb;">dataLength</span>.<span style="color: #a9dbfb;">value</span>; <span style="color: #a9dbfb;">i</span>++) {
+              <span style="color: #5a8d51;">// 產生並塞入隨機亂數資料</span>
+              let <span style="color: #a9dbfb;">random</span> = <span style="color: #a9dbfb;">Math</span>.floor(<span style="color: #a9dbfb;">Math</span>.random() * 5);
+              <span style="color: #a9dbfb;">randomData</span>.push(<span style="color: #a9dbfb;">random</span>);
+            };
+    
+            <span style="color: #5a8d51;">// 畫面呈現目前資料集</span>
+            <span style="color: #06bafb;">showData</span>.<span style="color: #a9dbfb;">innerHTML</span> = <span style="color: #a9dbfb;">randomData</span>;
+            
+            <span style="color: #5a8d51;">// 繪製圖表</span>
+            drawDiagram();
+          });
+    
+          <span style="color: #5a8d51;">// 建立SVG畫布</span>
+          <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">rangeSelect</span> = <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">'#d3jsPractice_chartWrap'</span>)
+                                .append(<span style="color: #c5937c;">'svg'</span>)
+                                .attr(<span style="color: #c5937c;">'width'</span>, 400)
+                                .attr(<span style="color: #c5937c;">'height'</span>, 300)
+                                .style(<span style="color: #c5937c;">'border'</span>, <span style="color: #c5937c;">'1px solid rgb(96, 96, 96)'</span>);
+          
+          <span style="color: #669bd1;">const</span> drawDiagram = () =&gt; {
+            <span style="color: #5a8d51;">// 綁定update資料</span>
+            let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb;">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
+                                   .data(<span style="color: #a9dbfb;">randomData</span>);
+                                   
+            <span style="color: #a9dbfb;">rects</span>.enter()
+                 .append(<span style="color: #c5937c;">'rect'</span>)
+                 .attr(<span style="color: #c5937c;">'width'</span>, 0) <span style="color: #5a8d51;">// 初始化寬度為0</span>
+                 .attr(<span style="color: #c5937c;">'height'</span>, 40)
+                 .style(<span style="color: #c5937c;">'fill'</span>, <span style="color: #c5937c;">'#967259'</span>)
+                 .attr(<span style="color: #c5937c;">'x'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; 0)
+                 .attr(<span style="color: #c5937c;">'y'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; <span style="color: #a9dbfb;">index</span> * 60)
+                 .transition()
+                 .duration(500)
+                 .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60);
+                 
+            
+            <span style="color: #5a8d51;">// 更新資料，重新設定長條圖的寬度</span>
+            <span style="color: #a9dbfb;">rects</span>.transition()
+                 .duration(500)
+                 .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60);
+            
+            <span style="color: #5a8d51;">// 移除多的DOM元素</span>
+            <span style="color: #a9dbfb;">rects</span>.exit().remove();
+          };
+    
+        &lt;/<span style="color: #669bd1;">script</span>&gt;
+      </code>
+                              </pre>
+                            </div>
+                          </div>
+                          <div class="row mt-3">
+                            <div class="col-12">
+                              <pre>
+      <code>
+        <span style="color: #5a8d51;">// 而亦可將其中下面這段enter、update、exit分開寫的code改寫成join()的形式</span>
+        <span style="color: #5a8d51;">// 此為原始code</span>
+    
+          <span style="color: #669bd1;">const</span> drawDiagram = () =&gt; {
+            <span style="color: #5a8d51;">// 綁定update資料</span>
+            let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb;">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
+                                   .data(<span style="color: #a9dbfb;">randomData</span>);
+    
+            <span style="color: #a9dbfb;">rects</span>.enter()
+                 .append(<span style="color: #c5937c;">'rect'</span>)
+                 .attr(<span style="color: #c5937c;">'width'</span>, 0) <span style="color: #5a8d51;">// 初始化寬度為0</span>
+                 .attr(<span style="color: #c5937c;">'height'</span>, 40)
+                 .style(<span style="color: #c5937c;">'fill'</span>, <span style="color: #c5937c;">'#967259'</span>)
+                 .attr(<span style="color: #c5937c;">'x'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; 0)
+                 .attr(<span style="color: #c5937c;">'y'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; <span style="color: #a9dbfb;">index</span> * 60)
+                 .transition()
+                 .duration(500)
+                 .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60);
+    
+    
+            <span style="color: #5a8d51;">// 更新資料，重新設定長條圖的寬度</span>
+            <span style="color: #a9dbfb;">rects</span>.transition()
+                 .duration(500)
+                 .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60);
+    
+            <span style="color: #5a8d51;">// 移除多的DOM元素</span>
+            <span style="color: #a9dbfb;">rects</span>.exit().remove();
+          };
+    
+    
+    
+        <span style="color: #5a8d51;">// 下面這段code為改寫成join()的形式</span>
+    
+          <span style="color: #669bd1;">const</span> drawDiagram = () =&gt; {
+            <span style="color: #5a8d51;">// 綁定update資料</span>
+            let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb;">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
+                                   .data(<span style="color: #a9dbfb;">randomData</span>)
+                                   .join(
+                                     (<span style="color: #a9dbfb;">enter</span>) => <span style="color: #a9dbfb;">enter</span>.append(<span style="color: #c5937c;">'rect'</span>)
+                                                     .attr(<span style="color: #c5937c;">'width'</span>, 0) <span style="color: #5a8d51;">// 初始化寬度為0</span>
+                                                     .attr(<span style="color: #c5937c;">'height'</span>, 40)
+                                                     .style(<span style="color: #c5937c;">'fill'</span>, <span style="color: #c5937c;">'#967259'</span>)
+                                                     .attr(<span style="color: #c5937c;">'x'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; 0)
+                                                     .attr(<span style="color: #c5937c;">'y'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; <span style="color: #a9dbfb;">index</span> * 60)
+                                                     .transition()
+                                                     .duration(500)
+                                                     .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60),
+                                     (<span style="color: #a9dbfb;">update</span>) => <span style="color: #a9dbfb;">update</span>.transition()
+                                                       .duration(500)
+                                                       .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60),
+                                     (<span style="color: #a9dbfb;">exit</span>) => <span style="color: #a9dbfb;">exit</span>.remove()
+                                   );
+          };
+      </code>
+                            </pre>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                   <div id="d3jsAPIForDataImporting" class="tab-pane fade">
                     <h3>匯入資料的API（ JSON / CSV ）</h3>
                     <hr>
                     <div>
                       <ul>
-                        <li><h4>以JSON的方式匯入</h4></li>
+                        <li><h4>以JSON的方式匯入</h4>
                           <ol>
                             <li class="mt-3">沒有CORS錯誤問題（例如JSON資料在本地端）
                               <div class="mt-3">
@@ -2832,7 +3037,7 @@
                             </li>
                           </ol>
                         </li>
-                        <li class="mt-5"><h4>以CSV的方式匯入</h4></li>
+                        <li class="mt-5"><h4>以CSV的方式匯入</h4>
                           <ol>
                             <li class="mt-3">取得csv資料
                               <div class="mt-3">
@@ -2863,7 +3068,11 @@
                                 </pre>
                               </div>
                             </li>
-                            <li class="mt-5">一個匯入的範例（匯入包含各種縣市道資訊的csv檔，其中有一欄為的row name為"里程_單位公里"）
+                          </ol>
+                        </li>
+                        <li class="mt-5"><h4>一個範例</h4>
+                          <ol>
+                            <li class="mt-3">一個匯入的範例（匯入包含各種縣市道資訊的csv檔，其中有一欄為的row name為"里程_單位公里"）
                               <div class="container-fluid p-3" style="border: 0.1px solid #efefef;">
                                 <div class="row">
                                   <div class="col-xxl-4 mb-3">
@@ -3277,210 +3486,357 @@
                       </li>
                     </ul>
                   </div>
-                  <div id="d3jsPractice" class="tab-pane fade">
-                    <h3>小工具練習</h3>
+                  <div id="d3jsHelperFunction" class="tab-pane fade">
+                    <h3>繪製圖型的Helper Function</h3>
                     <hr>
-                    <ol>
-                      <li>畫面上有一個輸入資料數量的框框、隨機產生資料的按紐、目前的資料集，以及與資料搭配的柱狀圖表。</li>
-                      <li>每次點擊按鈕時，會根據資料數量隨機產生不同的資料，柱狀圖表也會隨著資料更新而變化。</li>
-                    </ol>
-                    <div class="p-3 container-fluid" style="border: 0.1px solid #efefef;">
-                      <div class="row">
-                        <div class="col-xxl-6 mt-3">
-                          <div>
-                            <label>資料數量</label>
-                            <input type="number" id="d3jsPractice_dataLength">
-                            <button type="button" id="d3jsPractice_getRandomData">點擊產生隨機資料</button>
-                          </div>
-                          <div class="my-2">data資料集：<span id="d3jsPractice_showData"></span></div>
-                          <div id="d3jsPractice_chartWrap"></div>
-                          <script>
-                            const getRandomData = document.querySelector('#d3jsPractice_getRandomData');
-                            const dataLength = document.querySelector('#d3jsPractice_dataLength');
-                            const showData = document.querySelector('#d3jsPractice_showData');
-                            let randomData = [];
-                    
-                            getRandomData.addEventListener("click", (e) => {
-                              randomData.length = 0;
-                    
-                              for (i = 0; i < dataLength.value; i++) {
-                                // 產生並塞入隨機亂數資料
-                                let random = Math.floor(Math.random() * 5);
-                                randomData.push(random);
-                              };
-                    
-                              // 畫面呈現目前資料集
-                              showData.innerHTML = randomData;
-                              
-                              // 繪製圖表
-                              drawDiagram();
-                            });
-                    
-                            // 建立SVG畫布
-                            const rangeSelect = d3.select('#d3jsPractice_chartWrap')
-                                                  .append('svg')
-                                                  .attr('width', 400)
-                                                  .attr('height', 300)
-                                                  .style('border', '1px solid rgb(96, 96, 96)');
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Function類別</th>
+                          <th>說明</th>
+                          <th>常用的API</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><b>Generators</b></td>
+                          <td>接受陣列類型的資料，產生<code>&lt;path&gt;</code>的<code>d</code>標籤路徑，用以繪製svg。</td>
+                          <td><code>line()</code>、<code>area()</code>、<code>arc()</code></td>
+                        </tr>
+                        <tr>
+                          <td><b>Components</b></td>
+                          <td>接受方法類型的資料，產生DOM元素。</td>
+                          <td><code>axis()</code>、<code>brush()</code>、<code>zoom()</code></td>
+                        </tr>
+                        <tr>
+                          <td><b>Layouts</b></td>
+                          <td>接受完整資料集，產生整張圖表。</td>
+                          <td><code>stack()</code>、<code>pie()</code>、<code>chord()</code></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <ul>
+                      <li class="mt-4">
+                        <h4>Generators</h4>
+                        <ol>
+                          <li>
+                            <h5><b>Lines</b></h5>
+                            <svg id="lineWrapper"></svg>
+                            <script>
+                              const lineData = [
+                                { x: 50, y: 180 },
+                                { x: 50, y: 100 },
+                                { x: 200, y: 100 },
+                                { x: 200, y: 20 },
+                                { x: 400, y: 20 },
+                              ];
+                              const drawLine = d3.line().x((d) => d.x)
+                                                        .y((d) => d.y);
                             
-                            const drawDiagram = () => {
-                              // 綁定update資料
-                              let rects = rangeSelect.selectAll('rect')
-                                                     .data(randomData);
-                                                     
-                              rects.enter()
-                                   .append('rect')
-                                   .attr('width', 0) // 初始化寬度為0
-                                   .attr('height', 40)
-                                   .style('fill', '#967259')
-                                   .attr('x', (d, index) => 0)
-                                   .attr('y', (d, index) => index * 60)
-                                   .transition()
-                                   .duration(500)
-                                   .attr('width', (d) => d * 60);
-                                   
-                              
-                              // 更新資料，重新設定長條圖的寬度
-                              rects.transition()
-                                   .duration(500)
-                                   .attr('width', (d) => d * 60);
-                              
-                              // 移除多的DOM元素
-                              rects.exit().remove();
-                            };
-                          </script>
-                        </div>
-                        <div class="col-xxl-6 mt-3">本段code：
-                          <pre>
+                              d3.select("#lineWrapper")
+                                .append("path")
+                                .attr("d", drawLine(lineData))
+                                .attr("stroke", "black")
+                                .attr("stroke-width", "2")
+                                .attr("fill", "none");
+                            </script>
+                            <div class="mt-4">本段code：
+                              <pre>
   <code>
-    &lt;div&gt;
-      &lt;<span style="color: #669bd1;">label</span>&gt;資料數量&lt;/<span style="color: #669bd1;">label</span>&gt;
-      &lt;<span style="color: #669bd1;">input</span> type="number" id=<span style="color: #c5937c;">"d3jsPractice_dataLength"</span>&gt;
-      &lt;<span style="color: #669bd1;">button</span> type="button" id=<span style="color: #c5937c;">"d3jsPractice_getRandomData"</span>&gt;點擊產生隨機資料&lt;/<span style="color: #669bd1;">button</span>&gt;
-    &lt;/div&gt;
-    &lt;div class="my-2"&gt;data資料集：&lt;span id=<span style="color: #c5937c;">"d3jsPractice_showData"</span>&gt;&lt;/span&gt;&lt;/div&gt;
-    &lt;div id=<span style="color: #c5937c;">"d3jsPractice_chartWrap"</span>&gt;&lt;/div&gt;
+    &lt;<span style="color: #669bd1;">svg</span> <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"lineWrapper"</span>&gt;&lt;/<span style="color: #669bd1;">svg</span>&gt;
     &lt;<span style="color: #669bd1;">script</span>&gt;
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">getRandomData</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_getRandomData'</span>);
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">dataLength</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_dataLength'</span>);
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">showData</span> = <span style="color: #a9dbfb;">document</span>.querySelector(<span style="color: #c5937c;">'#d3jsPractice_showData'</span>);
-      <span style="color: #669bd1;">let</span> <span style="color: #a9dbfb;">randomData</span> = <span style="color: #fecf35;">[]</span>;
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">lineData</span> = [
+        { <span style="color: #a9dbfb;">x:</span> 50, <span style="color: #a9dbfb;">y:</span> 180 },
+        { <span style="color: #a9dbfb;">x:</span> 50, <span style="color: #a9dbfb;">y:</span> 100 },
+        { <span style="color: #a9dbfb;">x:</span> 200, <span style="color: #a9dbfb;">y:</span> 100 },
+        { <span style="color: #a9dbfb;">x:</span> 200, <span style="color: #a9dbfb;">y:</span> 20 },
+        { <span style="color: #a9dbfb;">x:</span> 400, <span style="color: #a9dbfb;">y:</span> 20 },
+      ];
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">drawLine</span> = <span style="color: #a9dbfb;">d3</span>.line().x((<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">x</span>)
+                                .y((<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">y</span>);
+    
+      <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">"#lineWrapper"</span>)
+        .append(<span style="color: #c5937c;">"path"</span>)
+        .attr(<span style="color: #c5937c;">"d"</span>, drawLine(<span style="color: #06bafb;">lineData</span>))
+        .attr(<span style="color: #c5937c;">"stroke"</span>, <span style="color: #c5937c;">"black"</span>)
+        .attr(<span style="color: #c5937c;">"stroke-width"</span>, <span style="color: #c5937c;">"2"</span>)
+        .attr(<span style="color: #c5937c;">"fill"</span>, <span style="color: #c5937c;">"none"</span>);
+    &lt;/<span style="color: #669bd1;">script</span>&gt;
 
-      <span style="color: #06bafb;">getRandomData</span>.addEventListener(<span style="color: #c5937c;">"click"</span>, (<span style="color: #a9dbfb;">e</span>) =&gt; {
-        <span style="color: #a9dbfb;">randomData</span>.<span style="color: #a9dbfb;">length</span> = 0;
 
-        for (<span style="color: #a9dbfb;">i</span> = 0; <span style="color: #a9dbfb;">i</span> &lt; <span style="color: #06bafb;">dataLength</span>.<span style="color: #a9dbfb;">value</span>; <span style="color: #a9dbfb;">i</span>++) {
-          <span style="color: #5a8d51;">// 產生並塞入隨機亂數資料</span>
-          let <span style="color: #a9dbfb;">random</span> = <span style="color: #a9dbfb;">Math</span>.floor(<span style="color: #a9dbfb;">Math</span>.random() * 5);
-          <span style="color: #a9dbfb;">randomData</span>.push(<span style="color: #a9dbfb;">random</span>);
-        };
-
-        <span style="color: #5a8d51;">// 畫面呈現目前資料集</span>
-        <span style="color: #06bafb;">showData</span>.<span style="color: #a9dbfb;">innerHTML</span> = <span style="color: #a9dbfb;">randomData</span>;
-        
-        <span style="color: #5a8d51;">// 繪製圖表</span>
-        drawDiagram();
-      });
-
-      <span style="color: #5a8d51;">// 建立SVG畫布</span>
-      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">rangeSelect</span> = <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">'#d3jsPractice_chartWrap'</span>)
-                            .append(<span style="color: #c5937c;">'svg'</span>)
-                            .attr(<span style="color: #c5937c;">'width'</span>, 400)
-                            .attr(<span style="color: #c5937c;">'height'</span>, 300)
-                            .style(<span style="color: #c5937c;">'border'</span>, <span style="color: #c5937c;">'1px solid rgb(96, 96, 96)'</span>);
-      
-      <span style="color: #669bd1;">const</span> drawDiagram = () =&gt; {
-        <span style="color: #5a8d51;">// 綁定update資料</span>
-        let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb;">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
-                               .data(<span style="color: #a9dbfb;">randomData</span>);
-                               
-        <span style="color: #a9dbfb;">rects</span>.enter()
-             .append(<span style="color: #c5937c;">'rect'</span>)
-             .attr(<span style="color: #c5937c;">'width'</span>, 0) <span style="color: #5a8d51;">// 初始化寬度為0</span>
-             .attr(<span style="color: #c5937c;">'height'</span>, 40)
-             .style(<span style="color: #c5937c;">'fill'</span>, <span style="color: #c5937c;">'#967259'</span>)
-             .attr(<span style="color: #c5937c;">'x'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; 0)
-             .attr(<span style="color: #c5937c;">'y'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; <span style="color: #a9dbfb;">index</span> * 60)
-             .transition()
-             .duration(500)
-             .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60);
-             
-        
-        <span style="color: #5a8d51;">// 更新資料，重新設定長條圖的寬度</span>
-        <span style="color: #a9dbfb;">rects</span>.transition()
-             .duration(500)
-             .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60);
-        
-        <span style="color: #5a8d51;">// 移除多的DOM元素</span>
-        <span style="color: #a9dbfb;">rects</span>.exit().remove();
-      };
-
+    <span style="color: #5a8d51;">// 這整段code，為的是寫出
+    // &lt;svg id="lineWrapper"&gt;
+    //   &lt;path d="M50,180L50,100L200,100L200,20L400,20" stroke="black" stroke-width="2" fill="none"&gt;&lt;/path&gt;
+    // &lt;/svg&gt;
+    // 其中&lt;path&gt;中的d，因不易用人工直接寫出，所以需要這段d3.js的code協助。</span>
+  </code>
+                              </pre>
+                            </div>
+                          </li>
+                          <li class="mt-5">
+                            <h5><b>Areas</b></h5>
+                            <svg id="areaWrapper"></svg>
+                            <script>
+                              const areaData =[
+                                { x: 30, y: 180 },
+                                { x: 50, y: 100 },
+                                { x: 200, y: 100 },
+                                { x: 200, y: 20 },
+                                { x: 400, y: 20 },
+                              ];
+                              const drawArea = d3.area()
+                                                 .x((d) => d.x)
+                                                 .y0(10)
+                                                 .y1((d) => d.y);
+                              // 此處一般至少會有三個參數，例如：area.x().y0().y1()
+                            
+                              d3.select("#areaWrapper")
+                                .append("path")
+                                .attr("d", drawArea(areaData))
+                                .attr("stroke", "black")
+                                .attr("stroke-width", "2")
+                                .attr("fill", "rgba(31, 211, 255, 0.2)");
+                            </script>
+                            <div class="mt-4">本段code：
+                              <pre>
+  <code>
+    &lt;<span style="color: #669bd1;">svg</span> <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"areaWrapper"</span>&gt;&lt;/<span style="color: #669bd1;">svg</span>&gt;
+    &lt;<span style="color: #669bd1;">script</span>&gt;
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">areaData</span> = [
+        { <span style="color: #a9dbfb;">x:</span> 30, <span style="color: #a9dbfb;">y:</span> 180 },
+        { <span style="color: #a9dbfb;">x:</span> 50, <span style="color: #a9dbfb;">y:</span> 100 },
+        { <span style="color: #a9dbfb;">x:</span> 200, <span style="color: #a9dbfb;">y:</span> 100 },
+        { <span style="color: #a9dbfb;">x:</span> 200, <span style="color: #a9dbfb;">y:</span> 20 },
+        { <span style="color: #a9dbfb;">x:</span> 400, <span style="color: #a9dbfb;">y:</span> 20 },
+      ];
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">drawArea</span> = <span style="color: #a9dbfb;">d3</span>.area()
+                         .x((<span style="color: #a9dbfb;">d</span>) => <span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">x</span>)
+                         .y0(10)
+                         .y1((<span style="color: #a9dbfb;">d</span>) => <span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">y</span>);
+      <span style="color: #5a8d51;">// 此處一般至少會有三個參數，例如：area.x().y0().y1()</span>
+    
+      <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">"#areaWrapper"</span>)
+        .append(<span style="color: #c5937c;">"path"</span>)
+        .attr(<span style="color: #c5937c;">"d"</span>, drawArea(<span style="color: #06bafb;">areaData</span>))
+        .attr(<span style="color: #c5937c;">"stroke"</span>, <span style="color: #c5937c;">"black"</span>)
+        .attr(<span style="color: #c5937c;">"stroke-width"</span>, <span style="color: #c5937c;">"2"</span>)
+        .attr(<span style="color: #c5937c;">"fill"</span>, <span style="color: #c5937c;">"rgba(31, 211, 255, 0.2)"</span>);
     &lt;/<span style="color: #669bd1;">script</span>&gt;
   </code>
-                          </pre>
-                        </div>
-                      </div>
-                      <div class="row mt-3">
-                        <div class="col-12">
-                          <pre>
+                              </pre>
+                            </div>
+                          </li>
+                          <li class="mt-5">
+                            <h5><b>Curves</b></h5>
+                            <svg id="curveWrapper"></svg>
+                            <script>
+                              const curveData =[
+                                { x: 50, y: 180 },
+                                { x: 50, y: 100 },
+                                { x: 200, y: 100 },
+                                { x: 200, y: 20 },
+                                { x: 400, y: 20 },
+                              ];
+                              const drawLineCurveBasis = d3.line()
+                                                           .curve(d3.curveBasis)  // 選好要代入的d3.js曲線種類參數
+                                                           .x((d) => d.x)
+                                                           .y((d) => d.y);
+                            
+                              d3.select("#curveWrapper")
+                                .append("path")
+                                .attr("d", drawLineCurveBasis(curveData))
+                                .attr("stroke", "black")
+                                .attr("stroke-width", "2")
+                                .attr("fill", "none");
+                            </script>
+                            <div class="mt-4">本段code：
+                              <pre>
   <code>
-    <span style="color: #5a8d51;">// 而亦可將其中下面這段enter、update、exit分開寫的code改寫成join()的形式</span>
-    <span style="color: #5a8d51;">// 此為原始code</span>
-
-      <span style="color: #669bd1;">const</span> drawDiagram = () =&gt; {
-        <span style="color: #5a8d51;">// 綁定update資料</span>
-        let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb;">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
-                               .data(<span style="color: #a9dbfb;">randomData</span>);
-
-        <span style="color: #a9dbfb;">rects</span>.enter()
-             .append(<span style="color: #c5937c;">'rect'</span>)
-             .attr(<span style="color: #c5937c;">'width'</span>, 0) <span style="color: #5a8d51;">// 初始化寬度為0</span>
-             .attr(<span style="color: #c5937c;">'height'</span>, 40)
-             .style(<span style="color: #c5937c;">'fill'</span>, <span style="color: #c5937c;">'#967259'</span>)
-             .attr(<span style="color: #c5937c;">'x'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; 0)
-             .attr(<span style="color: #c5937c;">'y'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; <span style="color: #a9dbfb;">index</span> * 60)
-             .transition()
-             .duration(500)
-             .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60);
-
-
-        <span style="color: #5a8d51;">// 更新資料，重新設定長條圖的寬度</span>
-        <span style="color: #a9dbfb;">rects</span>.transition()
-             .duration(500)
-             .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60);
-
-        <span style="color: #5a8d51;">// 移除多的DOM元素</span>
-        <span style="color: #a9dbfb;">rects</span>.exit().remove();
-      };
-
-
-
-    <span style="color: #5a8d51;">// 下面這段code為改寫成join()的形式</span>
-
-      <span style="color: #669bd1;">const</span> drawDiagram = () =&gt; {
-        <span style="color: #5a8d51;">// 綁定update資料</span>
-        let <span style="color: #a9dbfb;">rects</span> = <span style="color: #06bafb;">rangeSelect</span>.selectAll(<span style="color: #c5937c;">'rect'</span>)
-                               .data(<span style="color: #a9dbfb;">randomData</span>)
-                               .join(
-                                 (<span style="color: #a9dbfb;">enter</span>) => <span style="color: #a9dbfb;">enter</span>.append(<span style="color: #c5937c;">'rect'</span>)
-                                                 .attr(<span style="color: #c5937c;">'width'</span>, 0) <span style="color: #5a8d51;">// 初始化寬度為0</span>
-                                                 .attr(<span style="color: #c5937c;">'height'</span>, 40)
-                                                 .style(<span style="color: #c5937c;">'fill'</span>, <span style="color: #c5937c;">'#967259'</span>)
-                                                 .attr(<span style="color: #c5937c;">'x'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; 0)
-                                                 .attr(<span style="color: #c5937c;">'y'</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">index</span>) =&gt; <span style="color: #a9dbfb;">index</span> * 60)
-                                                 .transition()
-                                                 .duration(500)
-                                                 .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60),
-                                 (<span style="color: #a9dbfb;">update</span>) => <span style="color: #a9dbfb;">update</span>.transition()
-                                                   .duration(500)
-                                                   .attr(<span style="color: #c5937c;">'width'</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span> * 60),
-                                 (<span style="color: #a9dbfb;">exit</span>) => <span style="color: #a9dbfb;">exit</span>.remove()
-                               );
-      };
+    &lt;<span style="color: #669bd1;">svg</span> <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"curveWrapper"</span>&gt;&lt;/<span style="color: #669bd1;">svg</span>&gt;
+    &lt;<span style="color: #669bd1;">script</span>&gt;
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">curveData</span> = [
+        { <span style="color: #a9dbfb;">x:</span> 50, <span style="color: #a9dbfb;">y:</span> 180 },
+        { <span style="color: #a9dbfb;">x:</span> 50, <span style="color: #a9dbfb;">y:</span> 100 },
+        { <span style="color: #a9dbfb;">x:</span> 200, <span style="color: #a9dbfb;">y:</span> 100 },
+        { <span style="color: #a9dbfb;">x:</span> 200, <span style="color: #a9dbfb;">y:</span> 20 },
+        { <span style="color: #a9dbfb;">x:</span> 400, <span style="color: #a9dbfb;">y:</span> 20 },
+      ];
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">drawLineCurveBasis</span> = <span style="color: #a9dbfb;">d3</span>.line()
+                                .curve(<span style="color: #a9dbfb;">d3</span>.<span style="color: #a9dbfb;">curveBasis</span>)  <span style="color: #5a8d51;">// 選好要代入的d3.js曲線種類參數</span>
+                                .x((<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">x</span>)
+                                .y((<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">y</span>);
+    
+      <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">"#curveWrapper"</span>)
+        .append(<span style="color: #c5937c;">"path"</span>)
+        .attr(<span style="color: #c5937c;">"d"</span>, drawLineCurveBasis(<span style="color: #06bafb;">curveData</span>))
+        .attr(<span style="color: #c5937c;">"stroke"</span>, <span style="color: #c5937c;">"black"</span>)
+        .attr(<span style="color: #c5937c;">"stroke-width"</span>, <span style="color: #c5937c;">"2"</span>)
+        .attr(<span style="color: #c5937c;">"fill"</span>, <span style="color: #c5937c;">"none"</span>);
+    &lt;/<span style="color: #669bd1;">script</span>&gt;
   </code>
-                        </pre>
-                      </div>
-                    </div>
+                              </pre>
+                            </div>
+                          </li>
+                          <li class="mt-5">
+                            <h5><b>Arcs</b></h5>
+                            <svg id="arcWrapper"></svg>
+                            <script>
+                              const drawArc = d3.arc()
+                                                .innerRadius(80)
+                                                .outerRadius(90)
+                                                .startAngle(Math.PI * 1.2)
+                                                .endAngle(Math.PI * 2.8);
+
+                              d3.select("#arcWrapper")
+                                .append("g")
+                                .attr("transform", "translate(200, 100)")
+                                .append("path")
+                                .attr("d", drawArc)
+                                .attr("stroke", "black")
+                                .attr("fill", "rgba(31, 211, 255, 0.2)");
+                            </script>
+                            <div class="mt-4">本段code：
+                              <pre>
+  <code>
+    &lt;<span style="color: #669bd1;">svg</span> <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"arcWrapper"</span>&gt;&lt;/<span style="color: #669bd1;">svg</span>&gt;
+    &lt;<span style="color: #669bd1;">script</span>&gt;
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">drawArc</span> = <span style="color: #a9dbfb;">d3</span>.arc()
+                        .innerRadius(80)
+                        .outerRadius(90)
+                        .startAngle(<span style="color: #a9dbfb;">Math</span>.<span style="color: #a9dbfb;">PI</span> * 1.2)
+                        .endAngle(<span style="color: #a9dbfb;">Math</span>.<span style="color: #a9dbfb;">PI</span> * 2.8);
+    
+      <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">"#arcWrapper"</span>)
+        .append(<span style="color: #c5937c;">"g"</span>)
+        .attr(<span style="color: #c5937c;">"transform"</span>, <span style="color: #c5937c;">"translate(200, 100)"</span>)  <span style="color: #5a8d51;">// 圓心預設在[0, 0]，要透過transform移到畫面中</span>
+        .append(<span style="color: #c5937c;">"path"</span>)
+        .attr(<span style="color: #c5937c;">"d"</span>, <span style="color: #06bafb;">drawArc</span>)
+        .attr(<span style="color: #c5937c;">"stroke"</span>, <span style="color: #c5937c;">"black"</span>)
+        .attr(<span style="color: #c5937c;">"fill"</span>, <span style="color: #c5937c;">"rgba(31, 211, 255, 0.2)"</span>);
+    &lt;/<span style="color: #669bd1;">script</span>&gt;
+  </code>
+                              </pre>
+                            </div>
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="mt-5">
+                        <h4>Components</h4>
+                        <ol>
+                          <li>
+                            <h5><b>Axes</b></h5>
+                            <svg id="axeWrapper" style="height: 150px;"></svg>
+                            <script>
+                              // 預設一組資料，用這組資料來繪製出一條X軸線
+                              const axeData =[
+                                { x: 10, y: 100 },
+                                { x: 20, y: 100 },
+                                { x: 30, y: 100 },
+                                { x: 90, y: 20 },
+                                { x: 220, y: 10 },
+                              ];
+
+                              // 抓出X軸要使用的資料
+                              const xData = axeData.map((i) => i.x);
+
+                              // 設定X軸的比例尺與繪製範圍
+                              const xScale = d3.scaleLinear()
+                                               .domain([0, d3.max(xData)])
+                                               .range([10, 290]);
+
+                              // 使用xScale的設定，繪製刻度(ticks)朝下的軸線
+                              const xAxis= d3.axisBottom(xScale);
+                              
+                              // 繪製軸線
+                              d3.select("#axeWrapper")
+                                .append("g")
+                                .call(xAxis)
+                                .attr("transform", "translate(0, 130)");  // 調整X軸位置
+                            </script>
+                            <div class="mt-4">本段code：
+                              <pre>
+  <code>
+    &lt;<span style="color: #669bd1;">svg</span> <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"axeWrapper"</span>&gt;&lt;/<span style="color: #669bd1;">svg</span>&gt;
+    &lt;<span style="color: #669bd1;">script</span>&gt;
+      <span style="color: #5a8d51;">// 預設一組資料，用這組資料來繪製出一條X軸線</span>
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">axeData</span> = [
+        { <span style="color: #a9dbfb;">x:</span> 10, <span style="color: #a9dbfb;">y:</span> 100 },
+        { <span style="color: #a9dbfb;">x:</span> 20, <span style="color: #a9dbfb;">y:</span> 100 },
+        { <span style="color: #a9dbfb;">x:</span> 30, <span style="color: #a9dbfb;">y:</span> 100 },
+        { <span style="color: #a9dbfb;">x:</span> 90, <span style="color: #a9dbfb;">y:</span> 20 },
+        { <span style="color: #a9dbfb;">x:</span> 220, <span style="color: #a9dbfb;">y:</span> 10 },
+      ];
+
+      <span style="color: #5a8d51;">// 抓出X軸要使用的資料</span>
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">xData</span> = <span style="color: #06bafb;">axeData</span>.map((<span style="color: #a9dbfb;">i</span>) =&gt; <span style="color: #a9dbfb;">i</span>.<span style="color: #a9dbfb;">x</span>);
+
+      <span style="color: #5a8d51;">// 設定X軸的比例尺與繪製範圍</span>
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">xScale</span> = <span style="color: #a9dbfb;">d3</span>.scaleLinear()
+                       .domain([0, <span style="color: #a9dbfb;">d3</span>.max(<span style="color: #06bafb;">xData</span>)])
+                       .range([10, 290]);
+
+      <span style="color: #5a8d51;">// 使用xScale的設定，繪製刻度(ticks)朝下的軸線</span>
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">xAxis</span>= <span style="color: #a9dbfb;">d3</span>.axisBottom(<span style="color: #06bafb;">xScale</span>);
+                              
+      <span style="color: #5a8d51;">// 繪製軸線</span>
+      <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">"#axeWrapper"</span>)
+        .append(<span style="color: #c5937c;">"g"</span>)
+        .call(<span style="color: #06bafb;">xAxis</span>)
+        .attr(<span style="color: #c5937c;">"transform"</span>, <span style="color: #c5937c;">"translate(0, 130)"</span>);  <span style="color: #5a8d51;">// 調整X軸位置</span>
+    &lt;/<span style="color: #669bd1;">script</span>&gt;
+  </code>
+                              </pre>
+                            </div>
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="mt-5">
+                        <h4>Layouts</h4>
+                        <ol>
+                          <li>
+                            <h5><b>Stacks</b></h5>
+                            <svg id="stackWrapper"></svg>
+                            <script>
+                              const dataStack = [
+                                { month: new Date(2023, 0, 1), China: 132, America: 120, Taiwan: 30 },
+                                { month: new Date(2023, 1, 1), China: 70, America: 127, Taiwan: 98 },
+                                { month: new Date(2023, 2, 1), China: 130, America: 33, Taiwan: 118 },
+                                { month: new Date(2023, 3, 1), China: 60, America: 90, Taiwan: 60 },
+                              ];
+                              const stackGenerator = d3.stack()
+                                                       .keys(["China", "America", "Taiwan"]);
+                              const stackedSeries = stackGenerator(dataStack);
+
+                              const colorScale = d3.scaleOrdinal()
+                                                   .domain(["China", "America", "Taiwan"])
+                                                   .range(["red", "blue", "orange"]);
+                              const g = d3.select("#stackWrapper")
+                                          .attr("width", 300)
+                                          .selectAll("#stackWrapper g")
+                                          .data(stackedSeries)
+                                          .enter()
+                                          .append("g")
+                                          .attr("fill", (d) => colorScale(d.key));
+
+                              g.selectAll("rect")
+                               .data((d) => d)
+                               .join("rect")
+                               .attr("width", (d) => d[1] - d[0])
+                               .attr("x", (d) => d[0])
+                               .attr("y", (d, i) => i * 35)
+                               .attr("height", 20);
+                            </script>
+                            <div class="mt-4">本段code：
+                              <pre>
+  <code>
+    // 此處（整個Layouts）code待檢查
+  </code>
+                              </pre>
+                            </div>
+                          </li>
+                        </ol>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -3502,7 +3858,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-07-26T00:42">2024/07/26 00:42</time></p>
+            資料最後更新時間：<time datetime="2024-08-01T16:57">2024/08/01 16:57</time></p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>
         <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">
