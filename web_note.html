@@ -3795,7 +3795,7 @@
                         <ol>
                           <li>
                             <h5><b>Stacks</b></h5>
-                            <svg id="stackWrapper"></svg>
+                            <svg id="stackWrapper" style="height: 135px;"></svg>
                             <script>
                               const dataStack = [
                                 { month: new Date(2023, 0, 1), China: 132, America: 120, Taiwan: 30 },
@@ -3803,13 +3803,20 @@
                                 { month: new Date(2023, 2, 1), China: 130, America: 33, Taiwan: 118 },
                                 { month: new Date(2023, 3, 1), China: 60, America: 90, Taiwan: 60 },
                               ];
+
+                              // 設定資料的keys
                               const stackGenerator = d3.stack()
                                                        .keys(["China", "America", "Taiwan"]);
+
+                              // 把資料帶入stack方法
                               const stackedSeries = stackGenerator(dataStack);
 
+                              // 設定顏色
                               const colorScale = d3.scaleOrdinal()
                                                    .domain(["China", "America", "Taiwan"])
                                                    .range(["red", "blue", "orange"]);
+
+                              // 建立集合g、設定顏色
                               const g = d3.select("#stackWrapper")
                                           .attr("width", 300)
                                           .selectAll("#stackWrapper g")
@@ -3818,6 +3825,7 @@
                                           .append("g")
                                           .attr("fill", (d) => colorScale(d.key));
 
+                              // 繪製長條圖
                               g.selectAll("rect")
                                .data((d) => d)
                                .join("rect")
@@ -3829,7 +3837,45 @@
                             <div class="mt-4">本段code：
                               <pre>
   <code>
-    // 此處（整個Layouts）code待檢查
+    &lt;<span style="color: #669bd1;">svg</span> <span style="color: #a9dbfb;">id</span>=<span style="color: #c5937c;">"stackWrapper"</span>&gt;&lt;/<span style="color: #669bd1;">svg</span>&gt;
+    &lt;<span style="color: #669bd1;">script</span>&gt;
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">dataStack</span> = [
+        { <span style="color: #a9dbfb;">month:</span> <span style="color: #669bd1;">new</span> Date(2023, 0, 1), <span style="color: #a9dbfb;">China:</span> 132, <span style="color: #a9dbfb;">America:</span> 120, <span style="color: #a9dbfb;">Taiwan:</span> 30 },
+        { <span style="color: #a9dbfb;">month:</span> <span style="color: #669bd1;">new</span> Date(2023, 1, 1), <span style="color: #a9dbfb;">China:</span> 70, <span style="color: #a9dbfb;">America:</span> 127, <span style="color: #a9dbfb;">Taiwan:</span> 98 },
+        { <span style="color: #a9dbfb;">month:</span> <span style="color: #669bd1;">new</span> Date(2023, 2, 1), <span style="color: #a9dbfb;">China:</span> 130, <span style="color: #a9dbfb;">America:</span> 33, <span style="color: #a9dbfb;">Taiwan:</span> 118 },
+        { <span style="color: #a9dbfb;">month:</span> <span style="color: #669bd1;">new</span> Date(2023, 3, 1), <span style="color: #a9dbfb;">China:</span> 60, <span style="color: #a9dbfb;">America:</span> 90, <span style="color: #a9dbfb;">Taiwan:</span> 60 },
+      ];
+
+      <span style="color: #5a8d51;">// 設定資料的keys</span>
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">stackGenerator</span> = <span style="color: #a9dbfb;">d3</span>.stack()
+                               .keys([<span style="color: #c5937c;">"China"</span>, <span style="color: #c5937c;">"America"</span>, <span style="color: #c5937c;">"Taiwan"</span>]);
+
+      <span style="color: #5a8d51;">// 把資料帶入stack方法</span>
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">stackedSeries</span> = stackGenerator(<span style="color: #06bafb;">dataStack</span>);
+
+      <span style="color: #5a8d51;">// 設定顏色</span>
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">colorScale</span> = <span style="color: #a9dbfb;">d3</span>.scaleOrdinal()
+                           .domain([<span style="color: #c5937c;">"China"</span>, <span style="color: #c5937c;">"America"</span>, <span style="color: #c5937c;">"Taiwan"</span>])
+                           .range([<span style="color: #c5937c;">"red"</span>, <span style="color: #c5937c;">"blue"</span>, <span style="color: #c5937c;">"orange"</span>]);
+
+      <span style="color: #5a8d51;">// 建立集合g、設定顏色</span>
+      <span style="color: #669bd1;">const</span> <span style="color: #06bafb;">g</span> = <span style="color: #a9dbfb;">d3</span>.select(<span style="color: #c5937c;">"#stackWrapper"</span>)
+                  .attr(<span style="color: #c5937c;">"width"</span>, 300)
+                  .selectAll(<span style="color: #c5937c;">"#stackWrapper g"</span>)
+                  .data(<span style="color: #06bafb;">stackedSeries</span>)
+                  .enter()
+                  .append(<span style="color: #c5937c;">"g"</span>)
+                  .attr(<span style="color: #c5937c;">"fill"</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; colorScale(<span style="color: #a9dbfb;">d</span>.<span style="color: #a9dbfb;">key</span>));
+
+      <span style="color: #5a8d51;">// 繪製長條圖</span>
+      <span style="color: #06bafb;">g</span>.selectAll(<span style="color: #c5937c;">"rect"</span>)
+       .data((<span style="color: #a9dbfb;">d</span>) => <span style="color: #a9dbfb;">d</span>)
+       .join(<span style="color: #c5937c;">"rect"</span>)
+       .attr(<span style="color: #c5937c;">"width"</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span>[1] - <span style="color: #a9dbfb;">d</span>[0])
+       .attr(<span style="color: #c5937c;">"x"</span>, (<span style="color: #a9dbfb;">d</span>) =&gt; <span style="color: #a9dbfb;">d</span>[0])
+       .attr(<span style="color: #c5937c;">"y"</span>, (<span style="color: #a9dbfb;">d</span>, <span style="color: #a9dbfb;">i</span>) =&gt; <span style="color: #a9dbfb;">i</span> * 35)
+       .attr(<span style="color: #c5937c;">"height"</span>, 20);
+    &lt;/<span style="color: #669bd1;">script</span>&gt;
   </code>
                               </pre>
                             </div>
@@ -3858,7 +3904,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-08-01T16:57">2024/08/01 16:57</time></p>
+            資料最後更新時間：<time datetime="2024-08-02T01:10">2024/08/02 01:10</time></p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>
         <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">
