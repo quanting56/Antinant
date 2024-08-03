@@ -25,26 +25,7 @@
     <script src="js/script.js"></script>
   </head>
 
-  <body>
-    <!-- ProgressBar -->
-    <div class="fixed-top" style="display: none; height: 1.5vh; background-color: dimgray;">
-      <div id="statusbar" style="position: absolute; height: 1.5vh; width: 1.5vh; left: 0px; background-color: red"></div>
-      <script>
-        function statusbar() {
-          var doch = $(document).height();
-          var winw = $(window).width();
-          var winh = $(window).height();
-          var max_scroll = doch - winh;
-
-          $(window).scroll(function(){
-            var current_pos = $(window).scrollTop();
-            var new_left = current_pos / max_scroll * winw;
-            $("#statusbar").css("left", new_left);
-          });
-        };
-      </script>
-    </div>
-      
+  <body>      
     <!-- Navigator -->
     <nav class="sticky-top navbar navbar-dark navbar-expand-md" style="padding: 4px 1px; background-color: #333333; opacity: 0.95;">
       <div class="container-fluid">
@@ -53,7 +34,15 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto">
             <li class="nav-item active"><a class="nav-link" href="#aboutMe">關於我</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">無功能按鍵</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">一些文章</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="photo.html">攝影</a>
+                <a class="dropdown-item" href="road.html">公路</a>
+                <a class="dropdown-item" href="study.html">學習</a>
+                <a class="dropdown-item" href="investment.html">投資</a>
+              </div>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">旅遊</a>
               <div class="dropdown-menu">
@@ -63,15 +52,6 @@
                 <a class="dropdown-item" href="trip/KaohsiungPingtung_trip_2021.html" target="_blank">高屏行</a>
                 <a class="dropdown-item">二林實地考察</a>
                 <a class="dropdown-item">蘭嶼小旅行</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">一些文章</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item">攝影</a>
-                <a class="dropdown-item" href="#NTUPHOTO_story_about_me">攝影社故事</a>
-                <a class="dropdown-item" href="road.html">公路</a>
-                <a class="dropdown-item">投資</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -96,11 +76,14 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">其他網頁</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="old_index_20240508.html" target="_blank">舊版網頁（0508版本）</a>
-                <a class="dropdown-item" href="old_index_20240620.html" target="_blank">舊版網頁（0620版本）</a>
-                <a class="dropdown-item" href="statistics_note.html" target="_blank">統計學筆記</a>
-                <a class="dropdown-item" href="degitalMedia_class.html" target="_blank">多媒體影像創作社</a>
-                <a class="dropdown-item" href="road/highway109.html" target="_blank">市道109號</a>
+                <a class="dropdown-item" href="old_index_20240508.html" target="_blank">舊版網頁（20240508版本）</a>
+                <a class="dropdown-item" href="old_index_20240620.html" target="_blank">舊版網頁（20240620版本）</a>
+                <a class="dropdown-item" href="old_web_note_20240802.html" target="_blank">舊版web_note網頁（20240802版本）</a>
+                <a class="dropdown-item" href="study/statistics_note.html" target="_blank">統計學筆記</a>
+                <a class="dropdown-item" href="other/degitalMedia_class.html" target="_blank">多媒體影像創作社</a>
+                <a class="dropdown-item" href="other/photo_short_side_calculator.html" target="_blank">加黑框短邊計算器</a>
+                <a class="dropdown-item" href="investment/d3RollingReturnTest.html" target="_blank">滾動報酬率動圖測試</a>
+                <a class="dropdown-item" href="investment/kLineTest.html" target="_blank">K線圖測試</a>
               </div>
             </li>
             <li class="nav-item"><a class="nav-link" href="#">聯絡我</a></li>
@@ -144,7 +127,6 @@
             window.addEventListener('resize', updateWindowHeight);
           </script>
         </li>
-        <li><a href="useful.html" style="text-decoration: none;">加黑框短邊計算器</a></li>
         <li><s><a href="foot" style="text-decoration: none; color: tomato;">to the botton</a></s></li>
       </ul>
     </div>
@@ -164,18 +146,18 @@
       <div class="countainer" style="background-color: #ffffff; padding: 35px;">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
           <div class="col d-flex justify-content-center my-3">
-            <a class="semi-nav-button d-flex align-items-center" href="#">
-              <img src="assets/Kodak_UltraMax_002.jpg">
-              <p class="ms-4" style="padding: 0; margin: 0;">
-                <strong style="font-size: 18px;">攝影</strong><br><span style="font-size: 13px; color: gray;">攝影相關</span>
-              </p>
-            </a>
-          </div>
-          <div class="col d-flex justify-content-center my-3">
             <a class="semi-nav-button d-flex align-items-center" href="trip.html">
               <img src="assets/IMG_1217.jpg">
               <p class="ms-4" style="padding: 0; margin: 0;">
                 <strong style="font-size: 18px;">旅遊</strong><br><span style="font-size: 13px; color: gray;">旅遊記憶</span>
+              </p>
+            </a>
+          </div>
+          <div class="col d-flex justify-content-center my-3">
+            <a class="semi-nav-button d-flex align-items-center" href="photo.html">
+              <img src="assets/Kodak_UltraMax_002.jpg">
+              <p class="ms-4" style="padding: 0; margin: 0;">
+                <strong style="font-size: 18px;">攝影</strong><br><span style="font-size: 13px; color: gray;">攝影相關</span>
               </p>
             </a>
           </div>
@@ -196,7 +178,7 @@
             </a>
           </div>
           <div class="col d-flex justify-content-center my-3">
-            <a class="semi-nav-button d-flex align-items-center" href="#">
+            <a class="semi-nav-button d-flex align-items-center" href="learn.html">
               <img src="assets/學習按鈕圖.png">
               <p class="ms-4" style="padding: 0; margin: 0;">
                 <strong style="font-size: 18px;">學習</strong><br><span style="font-size: 13px; color: gray;">學習筆記</span>
@@ -795,7 +777,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-06-28T01:17">2024/06/28 01:17</time>
+            資料最後更新時間：<time datetime="2024-08-03T20:48">2024/08/03 20:48</time>
           </p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>

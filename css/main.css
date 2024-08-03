@@ -425,11 +425,6 @@ main {
     text-align: center;
 }
 
-pre:has(code) {
-    background-color: #1e1e1e;
-    color: #d4d4d4;
-}
-
 #D3jsNote th,
 #D3jsNote td {
     border: 1px solid #000000;
