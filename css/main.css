@@ -1,100 +1,100 @@
 /* 環境 */
 body {
-    background-color: #fffafa;
-    padding: 0;
-    margin: 0;
+  background-color: #fffafa;
+  padding: 0;
+  margin: 0;
 }
 
 
 /* Navigator */
 nav a {
-    transition: background-color 0.5s;
+  transition: background-color 0.5s;
 }
 
 nav a:hover {
-    background-color: #555555;
+  background-color: #555555;
 }
 
 
 /* 首頁下方的按鈕們 */
 .semi-nav-button {
-    text-decoration: none;
-    color: black;
-    width: 90%;
-    border: 1.5px solid lightgray;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 2px 2px 3px lightgray;
-    padding: 0;
-    margin: 0;
+  text-decoration: none;
+  color: black;
+  width: 90%;
+  border: 1.5px solid lightgray;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 2px 2px 3px lightgray;
+  padding: 0;
+  margin: 0;
 }
 
 .semi-nav-button img {
-    width: 60px;
-    height: 60px;
-    border-radius: 10.5px 0 0 10.5px;
-    border: 0.1px solid #cdcdcd;
+  width: 60px;
+  height: 60px;
+  border-radius: 10.5px 0 0 10.5px;
+  border: 0.1px solid #cdcdcd;
 }
 
 .semi-nav-button:hover {
-    background-color: #dedede;
-    text-shadow: 0px 0px 2px #ffffff;
-    transform: translateY(-3px);
-    transition: background-color 0.25s;
-    transition: transform 0.25s ease-in-out;
+  background-color: #dedede;
+  text-shadow: 0px 0px 2px #ffffff;
+  transform: translateY(-3px);
+  transition: background-color 0.25s;
+  transition: transform 0.25s ease-in-out;
 }
 
 
 /* 首頁 */
 #banner {
-    background-image: url("../assets/Kodak_UltraMax_053.jpg");
-    background-size: cover;
-    background-position: center center;
-    max-width: 100%;
-    height: auto;
+  background-image: url("../assets/Kodak_UltraMax_053.jpg");
+  background-size: cover;
+  background-position: center center;
+  max-width: 100%;
+  height: auto;
 }
 
 
 /* Back to Top*/
 #BackToTop a {
-    right: 24px;
-    bottom: 20px;
-    position: fixed;
-    opacity: 0.25;
-    color: chocolate;
-    font-size: 32px;
-    z-index: 99;
+  right: 24px;
+  bottom: 20px;
+  position: fixed;
+  opacity: 0.25;
+  color: chocolate;
+  font-size: 32px;
+  z-index: 99;
 }
 
 #BackToTop a:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 
 /* main */
 main {
-    padding: 30px;
-    font-family: serif;
+  padding: 30px;
+  font-family: serif;
 }
 
 /* 都分頁後可刪掉，一頁式網頁時避免被Nav蓋掉用 */
 /* 用於index頁面與web_note頁面 */
 .segmentation {
-    padding-top: 80px;
+  padding-top: 80px;
 }
 
 
 /* 自我介紹 */
 #aboutMe .year {
-    font-family: georgia;
-    padding-left: 0.5rem;
+  font-family: georgia;
+  padding-left: 0.5rem;
 }
 
 
 /* 時間軸 timeline */
 .timeline-group-flag-header {
-    position: relative;
-    margin-bottom: 14px;
+  position: relative;
+  margin-bottom: 14px;
 }
 
 .timeline-group-flag-title {
@@ -409,34 +409,34 @@ main {
 
 /* 網頁練習/筆記 */
 #exercise5 [class*="col"] {
-    background-color: #ebdef0;
-    border: 0.5px solid purple;
-    text-align: center;
+  background-color: #ebdef0;
+  border: 0.5px solid purple;
+  text-align: center;
 }
 
 .bootstrapNote_col_bg {
-    background-color: #eeeeee;
-    border: 0.5px solid gray;
+  background-color: #eeeeee;
+  border: 0.5px solid gray;
 }
 
 .bootstrapNote_col {
-    background-color: #ebdef0;
-    border: 0.5px solid purple;
-    text-align: center;
+  background-color: #ebdef0;
+  border: 0.5px solid purple;
+  text-align: center;
 }
 
 #D3jsNote th,
 #D3jsNote td {
-    border: 1px solid #000000;
-    border-collapse: collapse;
-    padding-left: 8px;
-    padding-right: 8px;
+  border: 1px solid #000000;
+  border-collapse: collapse;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 #mileageDataTable td {
-    border: 1px solid #aaaaaa;
-    border-collapse: collapse;
-    padding: 1px;
+  border: 1px solid #aaaaaa;
+  border-collapse: collapse;
+  padding: 1px;
 }
 
 #d3jsHelperFunction svg {
@@ -447,20 +447,20 @@ main {
 
 /* footer */
 footer h5 {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 footer p {
-    font-size: 14px;
-    color: #eeeeee;
+  font-size: 14px;
+  color: #eeeeee;
 }
 
 footer a {
-    font-size: 24px;
-    color: #eeeeee;
+  font-size: 24px;
+  color: #eeeeee;
 }
 
 footer a:hover {
-    transform: translateY(-1.5px);
-    transition: transform 0.2s ease-in-out;
+  transform: translateY(-1.5px);
+  transition: transform 0.2s ease-in-out;
 }

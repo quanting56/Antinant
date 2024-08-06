@@ -18,12 +18,12 @@ function toSearchEngine() {
 // 移動游標改變顯示圖標_JavaScript
 function ntubicdImage() {
   var changeImage = document.getElementById("changeImage1");
-  changeImage.src = "assets/ntubicd_trademark.png";
+  changeImage.src = "assets/about_me/ntubicd_trademark.png";
 }
 
 function ntubicdSabImage() {
   var changeBackImage = document.getElementById("changeImage1");
-  changeBackImage.src = "assets/ntubicdsab_trademark.JPG";
+  changeBackImage.src = "assets/about_me/ntubicdsab_trademark.JPG";
 }
 
 // 移動游標改變顯示圖標_jQuery

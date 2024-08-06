@@ -38,7 +38,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"><span class="navbar-toggler-icon"></span></button>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item active"><a class="nav-link" href="#aboutMe">關於我</a></li>
+            <li class="nav-item active"><a class="nav-link" href="about_me.html">關於我</a></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">一些文章</a>
               <div class="dropdown-menu">
@@ -228,24 +228,24 @@
                         <h5>JavaScript</h5>
                         <div class="py-3">
                           <div onmouseover="ntubicdImage()" onmouseout="ntubicdSabImage()" style="height: 250px; width: 250px;">
-                            <img id="changeImage1" src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;">
+                            <img id="changeImage1" src="assets/about_me/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;">
                           </div>
                         </div>
                         <div class="mt-3">本段code：
 <pre><code class="html">
   &lt;div onmouseover="ntubicdImage()" onmouseout="ntubicdSabImage()" style="height: 250px; width: 250px;"&gt;
-    &lt;img id="changeImage1" src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;"&gt;
+    &lt;img id="changeImage1" src="assets/about_me/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;"&gt;
   &lt;/div&gt;
   
   &lt;script&gt;
     function ntubicdImage() {
       var changeImage = document.getElementById("changeImage1");
-      changeImage.src = "assets/ntubicd_trademark.png";
+      changeImage.src = "assets/about_me/ntubicd_trademark.png";
     }
 
     function ntubicdSabImage() {
       var changeBackImage = document.getElementById("changeImage1");
-      changeBackImage.src = "assets/ntubicdsab_trademark.JPG";
+      changeBackImage.src = "assets/about_me/ntubicdsab_trademark.JPG";
     }
   &lt;/script&gt;
 
@@ -259,15 +259,15 @@
                         <h5>jQuery</h5>
                         <div class="py-3">
                           <div style="height: 250px; width: 250px;">
-                            <img id="changeImage2" src="assets/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;">
+                            <img id="changeImage2" src="assets/about_me/ntubicdsab_trademark.JPG" alt="拿來測試用的生傳mark" style="height: 250px;">
                           </div>
                           <script>
                             $("#changeImage2").on("mouseover", function(){
-                              $(this).attr("src", "assets/ntubicd_trademark.png");
+                              $(this).attr("src", "assets/about_me/ntubicd_trademark.png");
                             });
                             
                             $("#changeImage2").on("mouseout", function(){
-                              $(this).attr("src", "assets/ntubicdsab_trademark.JPG");
+                              $(this).attr("src", "assets/about_me/ntubicdsab_trademark.JPG");
                             });
                           </script>
                         </div>
@@ -2506,6 +2506,7 @@
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAPIForDataImporting">匯入資料的API</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAPIForDataOrganization">資料整理</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsHelperFunction">繪圖HelperFunction</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsScales">各種比例尺</a></li>
                 </ul>
               </div>
               <div class="col-md-10">
@@ -3871,6 +3872,278 @@
                       </li>
                     </ul>
                   </div>
+                  <div id="d3jsScales" class="tab-pane fade">
+                    <h3>各種比例尺（Scales）</h3>
+                    <hr>
+                    <div>
+                      <svg width="450" height="120">
+                        <rect width="150" height="50" x="20" y="25" rx="10" stroke="#ffd382" stroke-width="4" fill="none"></rect>
+                        <text x="42" y="55" font-size="18">輸入域domain</text>
+                        <text x="200" y="62" font-size="40">&rarr;</text>
+                        <rect width="150" height="50" x="270" y="25" rx="10" stroke="orange" stroke-width="4" fill="none"></rect>
+                        <text x="300" y="55" font-size="18">輸出域range</text>
+                      </svg>
+                    </div>
+                    <table>
+                      <tr>
+                        <td>「<b>連續性資料輸入</b>」與「<b>連續性資料輸出</b>」的比例尺</td>
+                        <td>連續性比例尺（Continuous Scale）、序列比例尺（Sequential Scale）、發散比例尺（Diverging Scale）</td>
+                      </tr>
+                      <tr>
+                        <td>「<b>連續性資料輸入</b>」與「<b>離散性資料輸出</b>」的比例尺</td>
+                        <td>量化比例尺（Quantize Scale）</td>
+                      </tr>
+                      <tr>
+                        <td>「<b>離散性資料輸入</b>」與「<b>離散性資料輸出</b>」的比例尺</td>
+                        <td>次序／序位比例尺（Ordinal Scale）</td>
+                      </tr>
+                    </table>
+                    <table class="mt-3">
+                      <tr>
+                        <td>連續性比例尺（Continuous Scale）</td>
+                        <td>
+                          線性比例尺<code class="mx-1">d3.scaleLinear()</code><br>
+                          冪比比例尺d3.scalePow<br>
+                          對數比例尺d3.scaleLog<br>
+                          恆等比例尺d3.scaleIdentity<br>
+                          放射比例尺d3.scaleRadial<br>
+                          時間比例尺<code class="mx-1">d3.scaleTime()</code>
+                        </td>
+                        <td rowspan="3">
+                          三者差異：
+                          <ul>
+                            <li class="mt-1"><b>連續性比例尺</b>：<br>適用於連續數據的平滑變化，例如顏色連續過渡。</li>
+                            <li class="mt-1"><b>序列比例尺</b>：<br>適用於有序數據的單向變化，例如顏色從淺到深或從深到淺。</li>
+                            <li class="mt-1"><b>發散比例尺</b>：<br>適用於有兩個極端的數據，中間值對稱變化，例如強調正負或增減。</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>序列比例尺（Sequential Scale）</td>
+                        <td>
+                          <code>d3.scaleSequential()</code><br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>發散比例尺（Diverging Scale）</td>
+                        <td>
+                          <code>d3.scaleDiverging()</code><br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>量化比例尺（Quantize Scale）</td>
+                        <td colspan="2">
+                          量化比例尺<code class="mx-1">d3.scaleQuantize()</code><br>
+                          分位數比例尺d3.scaleQuantile<br>
+                          閾值／臨界值比例尺d3.scaleThreshold
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>次序／序位比例尺（Ordinal Scale）</td>
+                        <td colspan="2">
+                          次序比例尺<code class="mx-1">d3.scaleOrdinal()</code><br>
+                          隱含比例尺d3.scaleImplicit<br>
+                          區段比例尺<code class="mx-1">d3.scaleBand()</code><br>
+                          點比例尺<code class="mx-1">d3.scalePoint()</code>
+                        </td>
+                      </tr>
+                    </table>
+                    <ul>
+                      <li class="mt-4">
+                        <h4>連續性比例尺（Continuous Scale）</h4>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.scaleLinear()</code>線性比例尺
+<pre><code class="javascript">
+  const linearScale = d3.scaleLinear()
+                        .domain([0, 100])
+                        .range([0, 50]);
+  
+  // 線性比例尺也可以用來換算顏色的色度
+  const colorScale = d3.scaleLinear()
+                       .domain([0, 10])
+                       .range(['yellow', 'red']);
+</code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.scaleTime()</code>時間比例尺
+<pre><code class="javascript">
+  const timeScale = d3.scaleTime()
+                      .domain([new Date(2024, 0, 1), new Date(2024, 8, 1)])
+                      .range([0, 100]);
+
+</code></pre>
+                          </li>
+                          <li>
+                            <code>continuous.invert()</code>、<code class="ms-1">continuous.clamp()</code>、<code class="ms-1 me-2">continuous.nice()</code>一些連續比例尺的細節設定API
+<pre><code class="javascript">
+  // continuous.invert() 反推轉換
+  const linearScale = d3.scaleLinear()
+                        .domain([0, 10])
+                        .range([0, 100]);
+
+  console.log("invertTest", linearScale.invert(50));  // return 5
+
+
+
+  // continuous.clamp() 斬斷超過範圍的數值
+  const linearScaleClamp = d3.scaleLinear()
+                             .domain([0, 10])
+                             .range([0, 100])
+                             .clamp(true);  // 截斷超過範圍的數值，例如此例的輸出域就不會超過[0, 100]
+
+  console.log("linearScaleClampTest", linearScaleClamp(-5));  // return 0
+  console.log("linearScaleClampTest", linearScaleClamp(3));  // return 30
+  console.log("linearScaleClampTest", linearScaleClamp(10.6));  // return 100
+
+
+
+  // continuous.nice() 延展終始值
+  const d3TestScaleNiceData = [0.243, 0.584, 0.987, 0.153, 0.433];
+  const d3TestScaleWithoutNice = d3.scaleLinear()
+                                   .domain(d3.extent(data))
+                                   .range([0, 300]);  // 此時比例尺輸出的軸線會有不完整的刻度（如下左圖）
+  const d3TestScaleWithNice = d3.scaleLinear()
+                                .domain(d3.extent(data))
+                                .range([0, 300]);  // 此時比例尺輸出的軸線終始值會有較好看的刻度（如下右圖）
+
+</code></pre>
+                            <svg width="800" height="150">
+                              <g id="d3TestScaleWithoutNice">
+                                <text x="145" y="50" fill="black" font-size="16">沒有加 nice() 的軸線</text>
+                              </g>
+                              <text x="365" y="90" font-size="40">&rarr;</text>
+                              <g id="d3TestScaleWithNice">
+                                <text x="150" y="50" fill="black" font-size="16">有加 nice() 的軸線</text>
+                              </g>
+                            </svg>
+                            <script>
+                              const d3TestScaleNiceData = [0.243, 0.584, 0.987, 0.153, 0.433];
+                              const d3TestScaleWithoutNice = d3.scaleLinear()
+                                                               .domain(d3.extent(d3TestScaleNiceData))
+                                                               .range([0, 300])
+                              const d3TestScaleWithNice = d3.scaleLinear()
+                                                            .domain(d3.extent(d3TestScaleNiceData))
+                                                            .range([0, 300])
+                                                            .nice();
+                              const d3TestScaleWithoutNiceAxis = d3.axisTop(d3TestScaleWithoutNice);
+                              const d3TestScaleWithNiceAxis = d3.axisTop(d3TestScaleWithNice);
+
+                              d3.select("#d3TestScaleWithoutNice")
+                                .call(d3TestScaleWithoutNiceAxis)
+                                .attr("transform", "translate(20, 80)");
+
+                              d3.select("#d3TestScaleWithNice")
+                                .call(d3TestScaleWithNiceAxis)
+                                .attr("transform", "translate(460, 80)");
+                            </script>
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="mt-4">
+                        <h4>序列比例尺（Sequential Scale）</h4>
+                        <p>與連續比例尺不同的是，序列比例尺只能根據指定的內建插補器來設定，且輸出域、插補方式不可更動。</p>
+<pre><code class="javascript">
+  const sequentialScale = d3.scaleSequential()
+                            .domain([0, 100])
+                            .interpolator(d3.interpolateRainbow);
+
+  console.log("sequentialScaleTest", sequentialScale(0));  // return 'rgb(110, 64, 170)'
+  console.log("sequentialScaleTest", sequentialScale(50));  // return 'rgb(175, 240, 91)'
+  console.log("sequentialScaleTest", sequentialScale(100));  // return 'rgb(110, 64, 170)'
+
+</code></pre>
+                      </li>
+                      <li class="mt-4">
+                        <h4>發散比例尺（Diverging Scale）</h4>
+                        <p>主要用來將兩個相反方向的現象視覺化，像是正負數、朝上朝下。需帶入三個數值（兩個極端值與一個中間值），輸出域必須按照內建的插補值去設定。</p>
+<pre><code class="javascript">
+  const scaleAnomalyPuOr = d3.scaleDiverging()
+                             .domain([-10, 0, 10])
+                             .interpolator(d3.interpolatePuOr);
+
+  console.log("divergingScaleTest", scaleAnomalyPuOr(-10));  // return 'rgb(45, 0, 75)' 深紫色
+  console.log("divergingScaleTest", scaleAnomalyPuOr(0));  // return 'rgb(243, 238, 234)' 類白色
+  console.log("divergingScaleTest", scaleAnomalyPuOr(10));  // return 'rgb(127, 59, 8)' 橘色
+
+</code></pre>
+                      </li>
+                      <li class="mt-4">
+                        <h4>量化比例尺（Quantize Scale）</h4>
+                        <p>將一組連續性的資料，映射到另一組離散性的資料中。</p>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.scaleQuentize()</code>量化比例尺
+<pre><code class="javascript">
+  const quantizeScale = d3.scaleQuantize()
+                          .domain([0, 100])
+                          .range(['lightblue', 'orange', 'lightgreen', 'red']);
+  
+  console.log("quantizeScaleTest", quantizeScale(3));  // return 'lightblue'
+  console.log("quantizeScaleTest", quantizeScale(73));  // return 'lightgreen'
+
+</code></pre>
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="mt-4">
+                        <h4>次序／序位比例尺（Ordinal Scale）</h4>
+                        <p>將一組離散性的資料，映射到另一組離散性的資料中。</p>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.scaleOrdinal()</code>次序比例尺
+<pre><code class="javascript">
+  const ordinalData = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const ordinalScale = d3.scaleOrdinal()
+                         .domain(ordinalData)
+                         .range(['black', 'red', 'green']);
+
+  console.log("ordinalScaleTest", ordinalScale('Jan'));  // return 'black'
+  console.log("ordinalScaleTest", ordinalScale('May'));  // return 'red'
+
+  // 輸入的數值不在輸入域範圍的話，自動被加進輸入域的最後一位
+  console.log("ordinalScaleTest", ordinalScale('Sunday'));  // return 'black'
+  console.log("ordinalScaleTest", ordinalScale('Monday'));  // return 'red'
+
+</code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.scaleBand()</code>區段比例尺
+<pre><code class="javascript">
+  const bandScale = d3.scaleBand()
+                          .domain(['狗', '貓', '天竺鼠', '烏龜', '海豚'])
+                          .range([0, 200]);
+
+  console.log("bandScaleTest", bandScale('狗'));  // return 0
+  console.log("bandScaleTest", bandScale('貓'));  // return 40
+  console.log("bandScaleTest", bandScale('海豚'));  // return 160
+
+
+  // 透過band.bandwidth()取得各刻度間距
+  console.log("bandwidthTest", bandScale.bandwidth());  // return 40
+
+</code></pre>
+                          </li>
+                          <li>
+                            <code class="me-2">d3.scalePoint()</code>點比例尺
+<pre><code class="javascript">
+  const pointScale = d3.scalePoint()
+                       .domain(['狗', '貓', '天竺鼠', '烏龜', '海豚'])
+                       .range([0, 200]);
+
+  console.log("pointScaleTest", pointScale('狗'));  // return 0
+  console.log("pointScaleTest", pointScale('貓'));  // return 50
+  console.log("pointScaleTest", pointScale('海豚'));  // return 200
+
+  // 透過point.step()取得各刻度間距
+  console.log("pointStepTest", pointScale.step());  // return 50
+
+</code></pre>
+                          </li>
+                        </ol>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3891,7 +4164,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-08-03T20:49">2024/08/03 20:49</time></p>
+            資料最後更新時間：<time datetime="2024-08-06T17:00">2024/08/06 17:00</time></p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>
         <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">

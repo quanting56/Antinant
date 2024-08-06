@@ -25,6 +25,26 @@
   </head>
 
   <body>
+    <!-- 舊code -->
+    <!-- <script>
+      function heightCaculator(x) {
+        var x = Math.round(x);
+        var y = x * (16 / 9);
+        y = parseFloat(y.toFixed(1));
+        var z = x + (y - x) / 2;
+        z = z.toFixed(1);
+        
+        if (x !== NaN) {
+          alert("這張圖長邊 " + y + " px，短邊 " + x + " px\n\n有 " + (x*y/10000).toFixed(1) + " 萬像素\n加黑框後的短邊為 " + z + " px");
+        } else {
+          alert("非可計算數值");
+        }
+        
+      };
+
+      var h = prompt("請輸入短邊長（較小的數字）", "");
+      heightCaculator(h);
+    </script> -->
     <div class="p-5">
       <h1>加黑框短邊計算器</h1>
       <hr>
