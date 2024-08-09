@@ -2507,6 +2507,7 @@
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAPIForDataOrganization">資料整理</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsHelperFunction">繪圖HelperFunction</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsScales">各種比例尺</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAxes">各種軸線與刻度</a></li>
                 </ul>
               </div>
               <div class="col-md-10">
@@ -3012,7 +3013,7 @@
   const cors = "https://api.allorigins.win/get?url=";
   const url = "目標 JSON 資料的 URL";
   const getCorsData = async () => {
-    const dataGet = await d3.json(`${cors}${url}`); <span style="color: #5a8d51;">// 串接網址
+    const dataGet = await d3.json(`${cors}${url}`); // 串接網址
     console.log("d3.json()", dataGet);
   };
 
@@ -3963,6 +3964,7 @@
   const colorScale = d3.scaleLinear()
                        .domain([0, 10])
                        .range(['yellow', 'red']);
+
 </code></pre>
                           </li>
                           <li>
@@ -4144,6 +4146,1254 @@
                       </li>
                     </ul>
                   </div>
+                  <div id="d3jsAxes" class="tab-pane fade active show">
+                    <h3>各種軸線與刻度（Axes & Ticks）</h3>
+                    <hr>
+                    <div>
+                      軸線由以下三種DOM元素構成：
+                      <ul class="mt-1">
+                        <li><code>&lt;path&gt;</code>：一條直線，繪製軸線的線段。</li>
+                        <li><code>&lt;line&gt;</code>：一組延著軸線的刻度記號。</li>
+                        <li><code>&lt;text&gt;</code>：每個刻度記號的標籤文字。</li>
+                      </ul>
+                      <svg id="d3jsAxesGraph" height="100"></svg>
+                      <script>
+                        const d3jsAxesGraphScale = d3.scaleLinear()
+                                                     .domain([1, 5])
+                                                     .range([30, 140]);
+                        const d3jsAxesGraphScaleGenerator = d3.axisTop(d3jsAxesGraphScale)
+                                                              .ticks(5)
+                                                              .tickPadding(6)
+                                                              .tickSize(13.5)
+                                                              .tickSizeOuter(0);
+                        const d3jsAxesGraphG = d3.select("#d3jsAxesGraph")
+                                                 .append("g")
+                                                 .call(d3jsAxesGraphScaleGenerator)
+                                                 .attr("transform", "translate(30, 50)");
+
+                        d3jsAxesGraphG.selectAll("path")
+                                      .attr("stroke", "#ff8030")
+                                      .attr("stroke-width", "2.5");
+                        
+                        d3jsAxesGraphG.selectAll("line")
+                                      .attr("stroke", "#ffc271")
+                                      .attr("stroke-width", "2");
+                        
+                        d3jsAxesGraphG.selectAll("text")
+                                      .attr("font-size", "16");
+
+                        // 加入標籤文字
+                        d3jsAxesGraphG.append("text")
+                                      .attr("x", 160)
+                                      .attr("y", -20)
+                                      .text("<text>")
+                                      .attr("fill", "black")
+                                      .attr("font-size", "13.5")
+                                      .attr("text-anchor", "start");
+
+                        d3jsAxesGraphG.append("text")
+                                      .attr("x", 160)
+                                      .attr("y", -3)
+                                      .text("<line>")
+                                      .attr("fill", "#ffc271")
+                                      .attr("font-size", "13.5")
+                                      .attr("text-anchor", "start");
+
+                        d3jsAxesGraphG.append("text")
+                                      .attr("x", 88)
+                                      .attr("y", 17)
+                                      .text("<path>")
+                                      .attr("fill", "#ff8030")
+                                      .attr("font-size", "13.5");
+                      </script>
+                    </div>
+                    <ol class="mt-2">
+                      <li>
+                        各種刻度方向的軸線
+                        <div id="d3jsAxesDirections" class="mt-1"></div>
+                        <script>
+                          d3.select("#d3jsAxesDirections")
+                            .append("svg")
+                            .attr("width", 300)
+                            .attr("height", 300)
+                            .style("border", "1px solid lightgray");
+
+                          const d3jsAxesDirectionsScale = d3.scaleLinear()
+                                                            .domain([0, 100])
+                                                            .range([0, 200]);
+                          const d3jsAxesDirectionsTopGenerator = d3.axisTop(d3jsAxesDirectionsScale);
+                          const d3jsAxesDirectionsLeftGenerator = d3.axisLeft(d3jsAxesDirectionsScale);
+                          const d3jsAxesDirectionsRightGenerator = d3.axisRight(d3jsAxesDirectionsScale);
+                          const d3jsAxesDirectionsBottomGenerator = d3.axisBottom(d3jsAxesDirectionsScale);
+
+                          d3.select("#d3jsAxesDirections svg")
+                            .append("g")
+                            .call(d3jsAxesDirectionsTopGenerator)
+                            .attr("transform", "translate(50, 40)")
+                            .append("text")
+                            .attr("x", 100)
+                            .attr("y", 20)
+                            .text("d3.axisTop()")
+                            .attr("fill", "#d63384")
+                            .attr("font-size", "13")
+                            .attr("text-anchor", "middle");
+                          d3.select("#d3jsAxesDirections svg")
+                            .append("g")
+                            .call(d3jsAxesDirectionsLeftGenerator)
+                            .attr("transform", "translate(40, 50)")
+                            .append("text")
+                            .attr("x", -100)
+                            .attr("y", 20)
+                            .text("d3.axisLeft()")
+                            .attr("fill", "#d63384")
+                            .attr("font-size", "13")
+                            .attr("text-anchor", "middle")
+                            .attr("transform", "rotate(-90)");
+                          d3.select("#d3jsAxesDirections svg")
+                            .append("g")
+                            .call(d3jsAxesDirectionsRightGenerator)
+                            .attr("transform", "translate(260, 50)")
+                            .append("text")
+                            .attr("x", 100)
+                            .attr("y", 20)
+                            .text("d3.axisRight()")
+                            .attr("fill", "#d63384")
+                            .attr("font-size", "13")
+                            .attr("text-anchor", "middle")
+                            .attr("transform", "rotate(90)");
+                          d3.select("#d3jsAxesDirections svg")
+                            .append("g")
+                            .call(d3jsAxesDirectionsBottomGenerator)
+                            .attr("transform", "translate(50, 260)")
+                            .append("text")
+                            .attr("x", 100)
+                            .attr("y", -12)
+                            .text("d3.axisBottom()")
+                            .attr("fill", "#d63384")
+                            .attr("font-size", "13")
+                            .attr("text-anchor", "middle");
+                        </script>
+                      </li>
+                      <!-- 各種軸線part的共同設定 -->
+                      <script>
+                        const d3jsAxesWidth = 300;
+                        const d3jsAxesHeight = 200;
+                        const d3jsAxesMargin = ( d3jsAxesWidth - d3jsAxesHeight ) / 2;
+                        const d3jsAxesZodiacData = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
+                      </script>
+                      <li class="mt-5">
+                        繪製一般的x軸
+                        <div id="d3jsAxesTest"></div>
+                        <script>
+                          // 建立繪製圖表的<svg>
+                          d3.select("#d3jsAxesTest")
+                            .append("svg")
+                            .attr("width", d3jsAxesWidth)
+                            .attr("height", d3jsAxesHeight)
+                            .style("border", "1px solid lightgray");
+                          
+                          // 設定比例尺
+                          const d3jsAxesTestScale = d3.scaleLinear()
+                                                       .domain([0, 100])
+                                                       .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+                                                    
+                          // 設定軸線產生方式
+                          const d3jsAxesTestAxisGenerator = d3.axisBottom(d3jsAxesTestScale);
+
+                          // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                          d3.select("#d3jsAxesTest svg")
+                            .append("g")
+                            .call(d3jsAxesTestAxisGenerator)
+                            .attr("transform", `translate(0, ${ d3jsAxesHeight / 2 })`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="xAxis"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#xAxis")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const xScale = d3.scaleLinear()
+                     .domain([0, 100])
+                     .range([margin, width - margin]);
+
+    // 設定軸線產生方式
+    const xAxisGenerator = d3.axisBottom(xScale);
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#xAxis svg")
+      .append("g")
+      .call(xAxisGenerator)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">axis.ticks(<i class="px-1">刻度數[, 格式]</i>)</code>調整刻度（tick）數量<br>
+                        <sup class="text-muted">- <i>該方法僅接受2、5、10倍數的刻度數量，否則會自動抓取最近倍數來調整。</i></sup>
+                        <div id="d3jsAxesTickTest"></div>
+                        <script>
+                          // 建立繪製圖表的<svg>
+                          d3.select("#d3jsAxesTickTest")
+                            .append("svg")
+                            .attr("width", d3jsAxesWidth)
+                            .attr("height", d3jsAxesHeight)
+                            .style("border", "1px solid lightgray");
+                          
+                          // 設定比例尺
+                          const d3jsAxesTickTestScale = d3.scaleLinear()
+                                                          .domain([0, 100])
+                                                          .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+                                                    
+                          // 設定軸線產生方式
+                          const d3jsAxesTickTestAxisGenerator = d3.axisBottom(d3jsAxesTickTestScale)
+                                                                  .ticks(5);  // 軸線刻度數量5個，以及最前方的1個起始值
+
+                          // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                          d3.select("#d3jsAxesTickTest svg")
+                            .append("g")
+                            .call(d3jsAxesTickTestAxisGenerator)
+                            .attr("transform", `translate(0, ${ d3jsAxesHeight / 2 })`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisTickTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#axisTickTest")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisTickTestScale = d3.scaleLinear()
+                                .domain([0, 100])
+                                .range([margin, width - margin]);
+
+    // 設定軸線產生方式
+    const axisTickTestAxisGenerator = d3.axisBottom(axisTickTestScale)
+                                        .ticks(5);  // 軸線刻度數量5個，以及最前方的1個起始值
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#axisTickTest svg")
+      .append("g")
+      .call(axisTickTestAxisGenerator)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">axis.ticks(<i class="px-1">刻度數[, 格式]</i>)</code>調整刻度的數字格式<br>
+                        <sup class="text-muted">- <i>亦可改用<code class="mx-1">axis.tickFormat()</code>調整（見第 7 點）。</i></sup>
+                        <div id="d3jsAxesFormatTest"></div>
+                        <script>
+                          // 建立繪製圖表的<svg>
+                          d3.select("#d3jsAxesFormatTest")
+                            .append("svg")
+                            .attr("width", d3jsAxesWidth)
+                            .attr("height", d3jsAxesHeight)
+                            .style("border", "1px solid lightgray");
+                          
+                          // 設定比例尺
+                          const d3jsAxesFormatTestScale = d3.scaleLinear()
+                                                            .domain([0, 100])
+                                                            .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+                                                    
+                          // 設定軸線產生方式
+                          const d3jsAxesFormatTestAxisGenerator = d3.axisBottom(d3jsAxesFormatTestScale)
+                                                                  .ticks(5, '.1f');  // 一位小數
+
+                          // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                          d3.select("#d3jsAxesFormatTest svg")
+                            .append("g")
+                            .call(d3jsAxesFormatTestAxisGenerator)
+                            .attr("transform", `translate(0, ${ d3jsAxesHeight / 2 })`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisFormatTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#axisFormatTest")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisFormatTestScale = d3.scaleLinear()
+                                  .domain([0, 100])
+                                  .range([margin, width - margin]);
+                              
+    // 設定軸線產生方式
+    const axisFormatTestAxisGenerator = d3.axisBottom(axisFormatTestScale)
+                                          .ticks(5, '.1f');  // 本行亦可換成".ticks(5).tickFormat(d3.format('.1f'))"
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#axisFormatTest svg")
+      .append("g")
+      .call(axisFormatTestAxisGenerator)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                      <li class="mt-5">
+                        時間比例尺的軸線
+                        <div id="d3jsAxesTimeTickTest"></div>
+                        <script>
+                          const d3jsAxesTimeTickTestWidth = parseInt(d3.select("#d3jsAxesTimeTickTest").style("width"));
+                          const d3jsAxesTimeTickTestMargin = d3jsAxesTimeTickTestWidth / 20;
+                          const d3jsAxesTimeTickTestJanuary = new Date(2024, 0);
+                          const d3jsAxesTimeTickTestDecember = new Date(2024, 11);
+
+                          // 建立繪製圖表的<svg>
+                          d3.select("#d3jsAxesTimeTickTest")
+                            .append("svg")
+                            .attr("width", d3jsAxesTimeTickTestWidth)
+                            .attr("height", d3jsAxesHeight)
+                            .style("border", "1px solid lightgray");
+                          
+                          // 設定比例尺
+                          const d3jsAxesTimeTickTestScale = d3.scaleTime()
+                                                              .domain([d3jsAxesTimeTickTestJanuary, d3jsAxesTimeTickTestDecember])
+                                                              .range([d3jsAxesTimeTickTestMargin , d3jsAxesTimeTickTestWidth - d3jsAxesTimeTickTestMargin]);
+                                                    
+                          // 設定軸線產生方式
+                          const d3jsAxesTimeTickTestAxisGenerator = d3.axisBottom(d3jsAxesTimeTickTestScale)
+                                                                      .ticks(12, '%B');
+
+                          // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                          d3.select("#d3jsAxesTimeTickTest svg")
+                            .append("g")
+                            .call(d3jsAxesTimeTickTestAxisGenerator)
+                            .attr("transform", `translate(0, ${ d3jsAxesHeight / 2 })`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisTimeTickTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+    const January = new Date(2024, 0);
+    const December = new Date(2024, 11);
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#axisTimeTickTest")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisTimeTickTestScale = d3.scaleTime()
+                                    .domain([January, December])
+                                    .range([margin , width - margin]);
+
+    // 設定軸線產生方式
+    const axisTimeTickTestAxisGenerator = d3.axisBottom(axisTimeTickTestScale)
+                                            .ticks(12, '%B');
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#axisTimeTickTest svg")
+      .append("g")
+      .call(axisTimeTickTestAxisGenerator)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">axis.tickValues()</code>指定特殊刻度
+                        <!-- 此項有兩part，此part為指定的刻度 -->
+                        <div>
+                          <div id="d3jsAxesTickValueTest"></div>
+                          <script>
+                            // 建立繪製圖表的<svg>
+                            d3.select("#d3jsAxesTickValueTest")
+                              .append("svg")
+                              .attr("width", d3jsAxesWidth)
+                              .attr("height", d3jsAxesHeight)
+                              .style("border", "1px solid lightgray");
+
+                            // 設定比例尺
+                            const d3jsAxesTickValueTestScale = d3.scaleLinear()
+                                                                 .domain([0, 100])
+                                                                 .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+
+                            // 設定軸線產生方式
+                            const d3jsAxesTickValueTestAxisGenerator = d3.axisBottom(d3jsAxesTickValueTestScale)
+                                                                         .tickValues([0, 15, 23, 34, 60, 81, 100]);
+
+                            // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                            d3.select("#d3jsAxesTickValueTest svg")
+                              .append("g")
+                              .call(d3jsAxesTickValueTestAxisGenerator)
+                              .attr("transform", `translate(0, ${ d3jsAxesHeight / 2 })`);
+                          </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisTickValueTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#axisTickValueTest")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisTickValueTestScale = d3.scaleLinear()
+                                     .domain([0, 100])
+                                     .range([margin, width - margin]);
+
+    // 設定軸線產生方式
+    const axisTickValueTestAxisGenerator = d3.axisBottom(axisTickValueTestScale)
+                                             .tickValues([0, 15, 23, 34, 60, 81, 100]);
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#axisTickValueTest svg")
+      .append("g")
+      .call(axisTickValueTestAxisGenerator)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                        </div>
+                        <!-- 此項有兩part，此part為ScaleBand比例尺呈現指定刻度 -->
+                        <div class="mt-5">
+                          <sup class="text-muted">- <i>ScaleBand比例尺呈現指定刻度。</i></sup>
+                          <div id="d3jsAxesScaleBandTickValueTest"></div>
+                          <script>
+                            // 建立繪製圖表的<svg>
+                            const d3jsAxesScaleBandTickValueTestSVG = d3.select("#d3jsAxesScaleBandTickValueTest")
+                                                                        .append("svg")
+                                                                        .attr("width", d3jsAxesWidth)
+                                                                        .attr("height", d3jsAxesHeight)
+                                                                        .style("border", "1px solid lightgray");
+                            
+                            // 設定比例尺
+                            const d3jsAxesScaleBandTickValueTestScale = d3.scaleBand()
+                                                                          .domain(d3jsAxesZodiacData)
+                                                                          .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+
+                            // 設定軸線產生方式
+                            const d3jsAxesScaleBandWithoutTickValueTestAxisGenerator = d3.axisBottom(d3jsAxesScaleBandTickValueTestScale);
+                            const d3jsAxesScaleBandWithTickValueTestAxisGenerator = d3.axisBottom(d3jsAxesScaleBandTickValueTestScale)
+                                                                                      .tickValues(d3jsAxesScaleBandTickValueTestScale.domain().filter((i, idx) => idx%2 === 0));  // 加這行減少顯示的標籤數，以利閱讀
+
+                            // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                            d3jsAxesScaleBandTickValueTestSVG.append("g")
+                                                             .call(d3jsAxesScaleBandWithoutTickValueTestAxisGenerator)
+                                                             .attr("transform", `translate(0, ${ d3jsAxesHeight / 3 - 15})`);
+
+                            d3jsAxesScaleBandTickValueTestSVG.append("g")
+                                                             .call(d3jsAxesScaleBandWithTickValueTestAxisGenerator)
+                                                             .attr("transform", `translate(0, ${ d3jsAxesHeight * 2 / 3 })`);
+                            
+                            d3jsAxesScaleBandTickValueTestSVG.append("text")
+                                                             .text("↓")
+                                                             .attr("transform", `translate(${ d3jsAxesWidth / 2 }, ${ d3jsAxesHeight / 2 + 3})`);
+                          </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisScaleBandTickValueTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin、數據
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+    const zodiacData = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
+
+    // 建立繪製圖表的&lt;svg&gt;
+    const axisScaleBandTickValueTestSVG = d3.select("#axisScaleBandTickValueTest")
+                                            .append("svg")
+                                            .attr("width", width)
+                                            .attr("height", height)
+                                            .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisScaleBandTickValueTestScale = d3.scaleBand()
+                                              .domain(zodiacData)
+                                              .range([margin, width - margin]);
+
+    // 設定軸線產生方式
+    const axisScaleBandTickValueTestAxisGenerator = d3.axisBottom(axisScaleBandTickValueTestScale)
+                                                      .tickValues(axisScaleBandTickValueTestScale.domain().filter((i, idx) => idx%2 === 0));  // 加這行減少顯示的標籤數（即指定刻度），以利閱讀
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    axisScaleBandTickValueTestSVG.append("g")
+                                 .call(axisScaleBandTickValueTestAxisGenerator)
+                                 .attr("transform", `translate(0, ${ height / 2})`);
+  &lt;/script&gt;
+
+</code></pre>
+                        </div>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">axis.tickFormat(<i class="px-1">[format]</i>)</code>調整刻度文字的樣式
+                        <div id="d3jsAxesTickFormatTest"></div>
+                        <script>
+                          // 建立繪製圖表的<svg>
+                          d3.select("#d3jsAxesTickFormatTest")
+                            .append("svg")
+                            .attr("width", d3jsAxesWidth)
+                            .attr("height", d3jsAxesHeight)
+                            .style("border", "1px solid lightgray");
+                          
+                          // 設定比例尺
+                          const d3jsAxesTickFormatTestScale = d3.scaleLinear()
+                                                                .domain([0, 100])
+                                                                .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+                                                    
+                          // 設定軸線產生方式
+                          const d3jsAxesTickFormatTestAxisGenerator = d3.axisBottom(d3jsAxesTickFormatTestScale)
+                                                                        .ticks(5)
+                                                                        .tickFormat(d3.format('.2f'));  // 兩位小數
+
+                          // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                          d3.select("#d3jsAxesTickFormatTest svg")
+                            .append("g")
+                            .call(d3jsAxesTickFormatTestAxisGenerator)
+                            .attr("transform", `translate(0, ${ d3jsAxesHeight / 2 })`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisTickFormatTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#axisTickFormatTest")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisTickFormatTestScale = d3.scaleLinear()
+                                      .domain([0, 100])
+                                      .range([margin, width - margin]);
+
+    // 設定軸線產生方式
+    const axisTickFormatTestAxisGenerator = d3.axisBottom(axisTickFormatTestScale)
+                                              .ticks(5)
+                                              .tickFormat(d3.format('.2f'));  // 兩位小數
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#axisTickFormatTest svg")
+      .append("g")
+      .call(axisTickFormatTestAxisGenerator)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        增加刻度單位（類調整刻度文字樣式）<br>
+                        <sup class="text-muted">- <i>使用<code class="mx-1">axis.tickFormat()</code>調整。</i></sup>
+                        <div id="d3jsAxesTickFormatUnitTest"></div>
+                        <script>
+                          // 建立繪製圖表的<svg>
+                          d3.select("#d3jsAxesTickFormatUnitTest")
+                            .append("svg")
+                            .attr("width", d3jsAxesWidth)
+                            .attr("height", d3jsAxesHeight)
+                            .style("border", "1px solid lightgray");
+                          
+                          // 設定比例尺
+                          const d3jsAxesTickFormatUnitTestScale = d3.scaleLinear()
+                                                                    .domain([0, 100])
+                                                                    .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+                                                    
+                          // 設定軸線產生方式
+                          const d3jsAxesTickFormatUnitTestAxisGenerator = d3.axisBottom(d3jsAxesTickFormatUnitTestScale)
+                                                                            .ticks(5)
+                                                                            .tickFormat(d => `${d}元`);  // 增加文字單位
+
+                          // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                          d3.select("#d3jsAxesTickFormatUnitTest svg")
+                            .append("g")
+                            .call(d3jsAxesTickFormatUnitTestAxisGenerator)
+                            .attr("transform", `translate(0, ${ d3jsAxesHeight / 2 })`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisTickFormatUnitTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#axisTickFormatUnitTest")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisTickFormatUnitTestScale = d3.scaleLinear()
+                                          .domain([0, 100])
+                                          .range([margin, width - margin]);
+
+    // 設定軸線產生方式
+    const axisTickFormatUnitTestAxisGenerator = d3.axisBottom(axisTickFormatUnitTestScale)
+                                                  .ticks(5)
+                                                  .tickFormat(d => `${d}元`);  // 增加文字單位
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#axisTickFormatUnitTest svg")
+      .append("g")
+      .call(axisTickFormatUnitTestAxisGenerator)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">axis.tickSize()</code>調整刻度線段長度<br>
+                        <sup class="text-muted">- <i>刻度線段長度預設長度為<span class="mx-1">6</span>。</i></sup>
+                        <div id="d3jsAxesTickSizeTest"></div>
+                        <script>
+                          // 建立繪製圖表的<svg>
+                          const d3jsAxesTickSizeTestSVG = d3.select("#d3jsAxesTickSizeTest")
+                                                            .append("svg")
+                                                            .attr("width", d3jsAxesWidth)
+                                                            .attr("height", d3jsAxesHeight)
+                                                            .style("border", "1px solid lightgray");
+                          
+                          // 設定比例尺
+                          const d3jsAxesTickSizeTestScale = d3.scaleLinear()
+                                                            .domain([0, 100])
+                                                            .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+                                                    
+                          // 設定軸線產生方式，以此例來說，代入正數向下延伸，代入負數向上延伸
+                          const d3jsAxesTickSizeTestAxisGeneratorPositive = d3.axisBottom(d3jsAxesTickSizeTestScale)
+                                                                              .tickSize(30);
+                          const d3jsAxesTickSizeTestAxisGeneratorNegative = d3.axisBottom(d3jsAxesTickSizeTestScale)
+                                                                              .tickSize(-30);
+                          const d3jsAxesTickSizeTestAxisGenerator = d3.axisBottom(d3jsAxesTickSizeTestScale);
+
+                          // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                          d3jsAxesTickSizeTestSVG.append("g")
+                                                 .call(d3jsAxesTickSizeTestAxisGeneratorPositive)
+                                                 .attr("transform", `translate(-25, ${ d3jsAxesHeight / 2 + 35})`)
+                                                 .append("text")
+                                                 .attr("x", 257)
+                                                 .attr("y", 20)
+                                                 .text("tickSize(30)")
+                                                 .attr("fill", "#d63384")
+                                                 .attr("font-size", 12.5)
+                                                 .attr("text-anchor", "start");
+                          
+                          d3jsAxesTickSizeTestSVG.append("g")
+                                                 .call(d3jsAxesTickSizeTestAxisGeneratorNegative)
+                                                 .attr("transform", `translate(-25, ${ d3jsAxesHeight / 2 - 35})`)
+                                                 .append("text")
+                                                 .attr("x", 255)
+                                                 .attr("y", -10)
+                                                 .text("tickSize(-30)")
+                                                 .attr("fill", "#d63384")
+                                                 .attr("font-size", 12.5)
+                                                 .attr("text-anchor", "start");
+
+                          d3jsAxesTickSizeTestSVG.append("g")
+                                                 .call(d3jsAxesTickSizeTestAxisGenerator)
+                                                 .attr("transform", `translate(-25, ${ d3jsAxesHeight / 2})`)
+                                                 .append("text")
+                                                 .attr("x", 265)
+                                                 .attr("y", 10)
+                                                 .text("預設")
+                                                 .attr("fill", "#d63384")
+                                                 .attr("font-size", 12.5)
+                                                 .attr("text-anchor", "start");
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisTickSizeTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    const axisTickSizeTestSVG = d3.select("#axisTickSizeTest")
+                                  .append("svg")
+                                  .attr("width", width)
+                                  .attr("height", height)
+                                  .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisTickSizeTestScale = d3.scaleLinear()
+                                    .domain([0, 100])
+                                    .range([margin, width - margin]);
+
+    // 設定軸線產生方式，以此例來說，代入正數向下延伸，代入負數向上延伸
+    const axisTickSizeTestAxisGenerator = d3.axisBottom(axisTickSizeTestScale)
+                                            .tickSize(30);
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    axisTickSizeTestSVG.append("g")
+                       .call(axisTickSizeTestAxisGenerator)
+                       .attr("transform", `translate(0, ${ height / 2 })`)
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        <!-- 此項有兩part，此part為scaleBand() -->
+                        <div>
+                          <code class="me-1">axis.tickSizeInner()</code>、<code class="ms-1 me-2">axis.tickSizeOuter()</code>分開調整長度<br>
+                          <sup class="text-muted">- <i>D3.js的刻度線段分成Inner與Outer，可分開調整。</i></sup>
+                          <div id="d3jsAxesTickSizeIOTest"></div>
+                          <script>
+                            // 建立繪製圖表的<svg>
+                            d3.select("#d3jsAxesTickSizeIOTest")
+                              .append("svg")
+                              .attr("width", d3jsAxesWidth)
+                              .attr("height", d3jsAxesHeight)
+                              .style("border", "1px solid lightgray");
+
+                            // 設定比例尺
+                            const d3jsAxesTickSizeIOTestScale = d3.scaleBand()
+                                                                  .domain(d3jsAxesZodiacData)
+                                                                  .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+
+                            // 設定軸線產生方式
+                            const d3jsAxesTickSizeIOTestAxisGeneratorInner = d3.axisBottom(d3jsAxesTickSizeIOTestScale)
+                                                                               .tickSizeInner(30);
+                            const d3jsAxesTickSizeIOTestAxisGeneratorOuter = d3.axisBottom(d3jsAxesTickSizeIOTestScale)
+                                                                               .tickSizeOuter(30);
+
+                            // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                            d3.select("#d3jsAxesTickSizeIOTest svg")
+                              .append("g")
+                              .call(d3jsAxesTickSizeIOTestAxisGeneratorInner)
+                              .attr("transform", `translate(0, ${ d3jsAxesHeight / 3 - 30})`)
+                              .append("text")
+                              .attr("x", `${ d3jsAxesWidth / 2 }`)
+                              .attr("y", 60)
+                              .text("tickSizeInner(30)")
+                              .attr("fill", "#d63384")
+                              .attr("font-size", 13);
+
+                            d3.select("#d3jsAxesTickSizeIOTest svg")
+                              .append("g")
+                              .call(d3jsAxesTickSizeIOTestAxisGeneratorOuter)
+                              .attr("transform", `translate(0, ${ d3jsAxesHeight * 2 / 3 + 2})`)
+                              .append("text")
+                              .attr("x", `${ d3jsAxesWidth / 2 }`)
+                              .attr("y", 40)
+                              .text("tickSizeOuter(30)")
+                              .attr("fill", "#d63384")
+                              .attr("font-size", 13);
+                          </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisTickSizeIOTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+    const zodiacData = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#axisTickSizeIOTest")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisTickSizeIOTestScale = d3.scaleBand()
+                                      .domain(zodiacData)
+                                      .range([margin, width - margin]);
+
+    // 設定軸線產生方式
+    const axisTickSizeIOTestAxisGeneratorInner = d3.axisBottom(axisTickSizeIOTestScale)
+                                                   .tickSizeInner(30);  // 調Inner用這個
+                                                   // .tickSizeOuter(30);  調Outer用這個
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#axisTickSizeIOTest svg")
+      .append("g")
+      .call(axisTickSizeIOTestAxisGeneratorInner)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                        </div>
+                        <!-- 此項有兩part，此part為scaleLinear() -->
+                        <div class="mt-5">
+                          <sup class="text-muted">- <i>由於Outer刻度其實並非刻度線段之一，而是隸屬軸線，所以Outer在某些情況下會和首末Inner刻度線段重疊，例如使用連續性比例尺（d3.scaleLinear）時。</i></sup>
+                          <div id="d3jsAxesTickSizeIO2Test"></div>
+                          <script>
+                            // 建立繪製圖表的<svg>
+                            d3.select("#d3jsAxesTickSizeIO2Test")
+                              .append("svg")
+                              .attr("width", d3jsAxesWidth)
+                              .attr("height", d3jsAxesHeight)
+                              .style("border", "1px solid lightgray");
+
+                            // 設定比例尺
+                            const d3jsAxesTickSizeIO2TestScale = d3.scaleLinear()
+                                                                   .domain([0, 100])
+                                                                   .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+
+                            // 設定軸線產生方式
+                            const d3jsAxesTickSizeIO2TestAxisGeneratorInner = d3.axisBottom(d3jsAxesTickSizeIO2TestScale)
+                                                                                .tickSizeInner(30);
+                            const d3jsAxesTickSizeIO2TestAxisGeneratorOuter = d3.axisBottom(d3jsAxesTickSizeIO2TestScale)
+                                                                                .tickSizeOuter(30);
+
+                            // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                            d3.select("#d3jsAxesTickSizeIO2Test svg")
+                              .append("g")
+                              .call(d3jsAxesTickSizeIO2TestAxisGeneratorInner)
+                              .attr("transform", `translate(0, ${ d3jsAxesHeight / 3 - 30})`)
+                              .append("text")
+                              .attr("x", `${ d3jsAxesWidth / 2 }`)
+                              .attr("y", 60)
+                              .text("tickSizeInner(30)")
+                              .attr("fill", "#d63384")
+                              .attr("font-size", 13);
+
+                            d3.select("#d3jsAxesTickSizeIO2Test svg")
+                              .append("g")
+                              .call(d3jsAxesTickSizeIO2TestAxisGeneratorOuter)
+                              .attr("transform", `translate(0, ${ d3jsAxesHeight * 2 / 3 + 2})`)
+                              .append("text")
+                              .attr("x", `${ d3jsAxesWidth / 2 }`)
+                              .attr("y", 40)
+                              .text("tickSizeOuter(30)")
+                              .attr("fill", "#d63384")
+                              .attr("font-size", 13);
+                          </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisTickSizeIO2Test"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#axisTickSizeIO2Test")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisTickSizeIO2TestScale = d3.scaleLinear()
+                                       .domain([0, 100])
+                                       .range([margin, width - margin]);
+
+    // 設定軸線產生方式
+    const axisTickSizeIO2TestAxisGeneratorInner = d3.axisBottom(axisTickSizeIO2TestScale)
+                                                    .tickSizeInner(30);  // 調Inner用這個
+                                                    // .tickSizeOuter(30);  調Outer用這個
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#axisTickSizeIO2Test svg")
+      .append("g")
+      .call(axisTickSizeIO2TestAxisGeneratorInner)
+      .attr("transform", `translate(0, ${ height / 2 })`)
+  &lt;/script&gt;
+
+</code></pre>
+                        </div>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">axis.tickPadding()</code>調整刻度線段與文字標籤的距離<br>
+                        <sup class="text-muted">- <i>刻度線段與文字標籤的距離預設為<span class="mx-1">3</span>。</i></sup>
+                        <div id="d3jsAxesTickPaddingTest"></div>
+                        <script>
+                          // 建立繪製圖表的<svg>
+                          d3.select("#d3jsAxesTickPaddingTest")
+                            .append("svg")
+                            .attr("width", d3jsAxesWidth)
+                            .attr("height", d3jsAxesHeight)
+                            .style("border", "1px solid lightgray");
+                          
+                          // 設定比例尺
+                          const d3jsAxesTickPaddingTestScale = d3.scaleLinear()
+                                                                 .domain([0, 100])
+                                                                 .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+                                                    
+                          // 設定軸線產生方式
+                          const d3jsAxesTickPaddingTestAxisGenerator = d3.axisBottom(d3jsAxesTickPaddingTestScale)
+                                                                         .tickPadding(30);
+
+                          // 建立<g>元素並呼叫軸線產生方式，生成軸線
+                          d3.select("#d3jsAxesTickPaddingTest svg")
+                            .append("g")
+                            .call(d3jsAxesTickPaddingTestAxisGenerator)
+                            .attr("transform", `translate(0, ${ d3jsAxesHeight / 2 })`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="axisTickPaddingTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#axisTickPaddingTest")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "1px solid lightgray");
+
+    // 設定比例尺
+    const axisTickPaddingTestScale = d3.scaleLinear()
+                                       .domain([0, 100])
+                                       .range([margin, width - margin]);
+
+    // 設定軸線產生方式
+    const axisTickPaddingTestAxisGenerator = d3.axisBottom(axisTickPaddingTestScale)
+                                               .tickPadding(30);
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，生成軸線
+    d3.select("#axisTickPaddingTest svg")
+      .append("g")
+      .call(axisTickPaddingTestAxisGenerator)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        建立x、y軸
+                        <div id="d3jsAxesXYTest"></div>
+                        <script>
+                          const d3jsAxesXYTestData = [{x: 100, y: 20}, {x: 18, y: 30}, {x: 90, y: 250}];
+
+                          // 建立繪製圖表的<svg>
+                          const d3jsAxesXYTestSVG = d3.select("#d3jsAxesXYTest")
+                                                      .append("svg")
+                                                      .attr("width", d3jsAxesWidth)
+                                                      .attr("height", d3jsAxesHeight)
+                                                      .style("border", "1px solid lightgray");
+                          
+                          // 抓出x軸、y軸需要用到的資料
+                          const d3jsAxesXYTestXData = d3jsAxesXYTestData.map((d) => d.x);
+                          const d3jsAxesXYTestYData = d3jsAxesXYTestData.map((d) => d.y);
+
+                          // x比例尺與軸線
+                          const d3jsAxesXYTestXScale = d3.scaleLinear()
+                                                         .domain([0, d3.max(d3jsAxesXYTestXData)])
+                                                         .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin])
+                                                         .nice();
+                          const d3jsAxesXYTestXAxisGenerator = d3.axisBottom(d3jsAxesXYTestXScale)
+                                                                 .ticks(10);  // 調整數量，讓間距看起來跟y軸差不多
+
+                          // y比例尺與軸線
+                          const d3jsAxesXYTestYScale = d3.scaleLinear()
+                                                         .domain([0, d3.max(d3jsAxesXYTestYData)])
+                                                         .range([d3jsAxesHeight - d3jsAxesMargin * 2, 0])
+                                                         .nice();
+                          const d3jsAxesXYTestYAxisGenerator = d3.axisLeft(d3jsAxesXYTestYScale)
+                                                                 .ticks(5)  // 調整數量，讓間距看起來跟x軸差不多
+                                                                 .tickSizeOuter(0);  // 消除非整數倍的刻度線段
+
+                          // 建立<g>元素並呼叫軸線產生方式，分別生成x與y軸線
+                          d3jsAxesXYTestSVG.append("g")
+                                           .call(d3jsAxesXYTestXAxisGenerator)
+                                           .attr("transform", `translate(0, ${ d3jsAxesHeight - d3jsAxesMargin })`);
+
+                          d3jsAxesXYTestSVG.append("g")
+                                           .call(d3jsAxesXYTestYAxisGenerator)
+                                           .attr("transform", `translate(${d3jsAxesMargin}, ${d3jsAxesMargin})`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="xyAxes"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 給定的數據
+    const xyAxesData = [{x: 100, y: 20}, {x: 18, y: 30}, {x: 90, y: 250}];
+
+    // 建立繪製圖表的&lt;svg&gt;
+    const xyAxesSVG = d3.select("#xyAxes")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height)
+                        .style("border", "1px solid lightgray");
+
+    // 抓出x軸、y軸需要用到的資料
+    const xyAxesXData = xyAxesData.map((d) => d.x);
+    const xyAxesYData = xyAxesData.map((d) => d.y);
+
+    // x比例尺與軸線
+    const xyAxesXScale = d3.scaleLinear()
+                           .domain([0, d3.max(xyAxesXData)])
+                           .range([margin, width - margin])
+                           .nice();
+    const xyAxesXAxisGenerator = d3.axisBottom(xyAxesXScale)
+                                   .ticks(10);  // 調整數量，讓間距看起來跟y軸差不多
+
+    // y比例尺與軸線
+    const xyAxesYScale = d3.scaleLinear()
+                           .domain([0, d3.max(xyAxesYData)])
+                           .range([height - margin * 2, 0])
+                           .nice();
+    const xyAxesYAxisGenerator = d3.axisLeft(xyAxesYScale)
+                                   .ticks(5)  // 調整數量，讓間距看起來跟x軸差不多
+                                   .tickSizeOuter(0);  // 消除非整數倍的刻度線段
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，分別生成x與y軸線
+    xyAxesSVG.append("g")
+             .call(xyAxesXAxisGenerator)
+             .attr("transform", `translate(0, ${ height - margin })`);
+
+    xyAxesSVG.append("g")
+             .call(xyAxesYAxisGenerator)
+             .attr("transform", `translate(${margin}, ${margin})`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        建立棋盤軸線樣式的x、y軸
+                        <div id="d3jsAxesXYTestCheckerboardStyle"></div>
+                        <script>
+                          const d3jsAxesXYTestCheckerboardStyleData = [{x: 100, y: 20}, {x: 18, y: 30}, {x: 90, y: 95}];
+
+                          // 建立繪製圖表的<svg>
+                          const d3jsAxesXYTestCheckerboardStyleSVG = d3.select("#d3jsAxesXYTestCheckerboardStyle")
+                                                                       .append("svg")
+                                                                       .attr("width", d3jsAxesWidth)
+                                                                       .attr("height", d3jsAxesHeight)
+                                                                       .style("border", "1px solid lightgray");
+                          
+                          // 抓出x軸、y軸需要用到的資料
+                          const d3jsAxesXYTestCheckerboardStyleXData = d3jsAxesXYTestCheckerboardStyleData.map((d) => d.x);
+                          const d3jsAxesXYTestCheckerboardStyleYData = d3jsAxesXYTestCheckerboardStyleData.map((d) => d.y);
+
+                          // x比例尺與軸線
+                          const d3jsAxesXYTestCheckerboardStyleXScale = d3.scaleLinear()
+                                                                          .domain([0, d3.max(d3jsAxesXYTestCheckerboardStyleXData)])
+                                                                          .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin])
+                                                                          .nice();
+                          const d3jsAxesXYTestCheckerboardStyleXAxisGenerator = d3.axisBottom(d3jsAxesXYTestCheckerboardStyleXScale)
+                                                                                  .tickSize( -d3jsAxesHeight + d3jsAxesMargin * 2 )  // y軸線長度
+                                                                                  .tickPadding(7);  // 讓標籤文字跟軸線保持一段距離
+
+                          // y比例尺與軸線
+                          const d3jsAxesXYTestCheckerboardStyleYScale = d3.scaleLinear()
+                                                                          .domain([0, d3.max(d3jsAxesXYTestCheckerboardStyleYData)])
+                                                                          .range([d3jsAxesHeight - d3jsAxesMargin * 2, 0])
+                                                                          .nice();
+                          const d3jsAxesXYTestCheckerboardStyleYAxisGenerator = d3.axisLeft(d3jsAxesXYTestCheckerboardStyleYScale)
+                                                                                  .tickSize( -d3jsAxesWidth + d3jsAxesMargin * 2 )  // x軸線長度
+                                                                                  .tickPadding(7);  // 讓標籤文字跟軸線保持一段距離
+
+                          // 建立<g>元素並呼叫軸線產生方式，分別生成x與y軸線
+                          d3jsAxesXYTestCheckerboardStyleSVG.append("g")
+                                                            .call(d3jsAxesXYTestCheckerboardStyleXAxisGenerator)
+                                                            .attr("transform", `translate(0, ${ d3jsAxesHeight - d3jsAxesMargin })`);
+
+                          d3jsAxesXYTestCheckerboardStyleSVG.append("g")
+                                           .call(d3jsAxesXYTestCheckerboardStyleYAxisGenerator)
+                                           .attr("transform", `translate(${d3jsAxesMargin}, ${d3jsAxesMargin})`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="xyAxesCheckerboardStyle"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 給定的數據
+    const xyAxesCheckerboardStyleData = [{x: 100, y: 20}, {x: 18, y: 30}, {x: 90, y: 95}];
+
+    // 建立繪製圖表的&lt;svg&gt;
+    const xyAxesCheckerboardStyleSVG = d3.select("#xyAxesCheckerboardStyle")
+                                         .append("svg")
+                                         .attr("width", width)
+                                         .attr("height", height)
+                                         .style("border", "1px solid lightgray");
+
+    // 抓出x軸、y軸需要用到的資料
+    const xyAxesCheckerboardStyleXData = xyAxesCheckerboardStyleData.map((d) => d.x);
+    const xyAxesCheckerboardStyleYData = xyAxesCheckerboardStyleData.map((d) => d.y);
+
+    // x比例尺與軸線
+    const xyAxesCheckerboardStyleXScale = d3.scaleLinear()
+                                            .domain([0, d3.max(xyAxesCheckerboardStyleXData)])
+                                            .range([margin, width - margin])
+                                            .nice();
+    const xyAxesCheckerboardStyleXAxisGenerator = d3.axisBottom(xyAxesCheckerboardStyleXScale)
+                                                    .tickSize( -height + margin * 2 )  // y軸線長度
+                                                    .tickPadding(7);  // 讓標籤文字跟軸線保持一段距離
+
+    // y比例尺與軸線
+    const xyAxesCheckerboardStyleYScale = d3.scaleLinear()
+                                            .domain([0, d3.max(xyAxesCheckerboardStyleYData)])
+                                            .range([height - margin * 2, 0])
+                                            .nice();
+    const xyAxesCheckerboardStyleYAxisGenerator = d3.axisLeft(xyAxesCheckerboardStyleYScale)
+                                                    .tickSize( -width + margin * 2 )  // x軸線長度
+                                                    .tickPadding(7);  // 讓標籤文字跟軸線保持一段距離
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，分別生成x與y軸線
+    xyAxesCheckerboardStyleSVG.append("g")
+                              .call(xyAxesCheckerboardStyleXAxisGenerator)
+                              .attr("transform", `translate(0, ${ height - margin })`);
+
+    xyAxesCheckerboardStyleSVG.append("g")
+                     .call(xyAxesCheckerboardStyleYAxisGenerator)
+                     .attr("transform", `translate(${margin}, ${margin})`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        建立井字軸線樣式的x、y軸
+                        <div id="d3jsAxesXYTestHashtagStyle"></div>
+                        <script>
+                          const d3jsAxesXYTestHashtagStyleData = [{x: 100, y: 20}, {x: 18, y: 30}, {x: 90, y: 95}];
+
+                          // 建立繪製圖表的<svg>
+                          const d3jsAxesXYTestHashtagStyleSVG = d3.select("#d3jsAxesXYTestHashtagStyle")
+                                                                  .append("svg")
+                                                                  .attr("width", d3jsAxesWidth)
+                                                                  .attr("height", d3jsAxesHeight)
+                                                                  .style("border", "1px solid lightgray");
+                          
+                          // 抓出x軸、y軸需要用到的資料
+                          const d3jsAxesXYTestHashtagStyleXData = d3jsAxesXYTestHashtagStyleData.map((d) => d.x);
+                          const d3jsAxesXYTestHashtagStyleYData = d3jsAxesXYTestHashtagStyleData.map((d) => d.y);
+
+                          // x比例尺與軸線
+                          const d3jsAxesXYTestHashtagStyleXScale = d3.scaleLinear()
+                                                                     .domain([0, d3.max(d3jsAxesXYTestHashtagStyleXData)])
+                                                                     .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin])
+                                                                     .nice();
+                          const d3jsAxesXYTestHashtagStyleXAxisGenerator = d3.axisBottom(d3jsAxesXYTestHashtagStyleXScale)
+                                                                             .tickSize( -d3jsAxesHeight + d3jsAxesMargin )  // y軸線長度
+                                                                             .tickSizeOuter(0)
+                                                                             .tickPadding( d3jsAxesMargin / 2 + 7 );  // 讓標籤文字跟軸線保持一段距離
+
+                          // y比例尺與軸線
+                          const d3jsAxesXYTestHashtagStyleYScale = d3.scaleLinear()
+                                                                     .domain([0, d3.max(d3jsAxesXYTestHashtagStyleYData)])
+                                                                     .range([d3jsAxesHeight - d3jsAxesMargin * 2, 0])
+                                                                     .nice();
+                          const d3jsAxesXYTestHashtagStyleYAxisGenerator = d3.axisLeft(d3jsAxesXYTestHashtagStyleYScale)
+                                                                             .tickSize( -d3jsAxesWidth + d3jsAxesMargin )  // x軸線長度
+                                                                             .tickSizeOuter(0)
+                                                                             .tickPadding( d3jsAxesMargin - 20 );  // 讓標籤文字跟軸線保持一段距離
+
+                          // 建立<g>元素並呼叫軸線產生方式，分別生成x與y軸線
+                          d3jsAxesXYTestHashtagStyleSVG.append("g")
+                                                       .attr("id", "d3jsAxesXYTestHashtagStyleXAxis")
+                                                       .call(d3jsAxesXYTestHashtagStyleXAxisGenerator)
+                                                       .attr("transform", `translate(0, ${ d3jsAxesHeight - d3jsAxesMargin })`)
+                                                       .selectAll("#d3jsAxesXYTestHashtagStyleXAxis line")
+                                                       .attr("transform", `translate(0, ${ d3jsAxesMargin / 2 })`);
+
+                          d3jsAxesXYTestHashtagStyleSVG.append("g")
+                                                       .attr("id", "d3jsAxesXYTestHashtagStyleYAxis")
+                                                       .call(d3jsAxesXYTestHashtagStyleYAxisGenerator)
+                                                       .attr("transform", `translate(${d3jsAxesMargin}, ${d3jsAxesMargin})`)
+                                                       .selectAll("#d3jsAxesXYTestHashtagStyleYAxis line")
+                                                       .attr("transform", `translate(${ -d3jsAxesMargin / 2 }, 0)`);
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="xyAxesHashtagStyle"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 給定的數據
+    const xyAxesHashtagStyleData = [{x: 100, y: 20}, {x: 18, y: 30}, {x: 90, y: 95}];
+
+    // 建立繪製圖表的&lt;svg&gt;
+    const xyAxesHashtagStyleSVG = d3.select("#xyAxesHashtagStyle")
+                                    .append("svg")
+                                    .attr("width", width)
+                                    .attr("height", height)
+                                    .style("border", "1px solid lightgray");
+
+    // 抓出x軸、y軸需要用到的資料
+    const xyAxesHashtagStyleXData = xyAxesHashtagStyleData.map((d) => d.x);
+    const xyAxesHashtagStyleYData = xyAxesHashtagStyleData.map((d) => d.y);
+
+    // x比例尺與軸線
+    const xyAxesHashtagStyleXScale = d3.scaleLinear()
+                                       .domain([0, d3.max(xyAxesHashtagStyleXData)])
+                                       .range([margin, width - margin])
+                                       .nice();
+    const xyAxesHashtagStyleXAxisGenerator = d3.axisBottom(xyAxesHashtagStyleXScale)
+                                               .tickSize( -height + margin )  // y軸線長度
+                                               .tickSizeOuter(0)
+                                               .tickPadding( margin / 2 + 7 );  // 讓標籤文字跟軸線保持一段距離
+
+    // y比例尺與軸線
+    const xyAxesHashtagStyleYScale = d3.scaleLinear()
+                                       .domain([0, d3.max(xyAxesHashtagStyleYData)])
+                                       .range([height - margin * 2, 0])
+                                       .nice();
+    const xyAxesHashtagStyleYAxisGenerator = d3.axisLeft(xyAxesHashtagStyleYScale)
+                                               .tickSize( -width + margin )  // x軸線長度
+                                               .tickSizeOuter(0)
+                                               .tickPadding( margin - 20 );  // 讓標籤文字跟軸線保持一段距離
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，分別生成x與y軸線
+    xyAxesHashtagStyleSVG.append("g")
+                         .attr("id", "xyAxesHashtagStyleXAxis")
+                         .call(xyAxesHashtagStyleXAxisGenerator)
+                         .attr("transform", `translate(0, ${ height - margin })`)
+                         .selectAll("#xyAxesHashtagStyleXAxis line")
+                         .attr("transform", `translate(0, ${ margin / 2 })`);
+
+    xyAxesHashtagStyleSVG.append("g")
+                         .attr("id", "xyAxesHashtagStyleYAxis")
+                         .call(xyAxesHashtagStyleYAxisGenerator)
+                         .attr("transform", `translate(${margin}, ${margin})`)
+                         .selectAll("#xyAxesHashtagStyleYAxis line")
+                         .attr("transform", `translate(${ -margin / 2 }, 0)`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                    </ol>
+                  </div>
                 </div>
               </div>
             </div>
@@ -4164,7 +5414,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-08-06T17:00">2024/08/06 17:00</time></p>
+            資料最後更新時間：<time datetime="2024-08-10T00:42">2024/08/10 00:42</time></p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>
         <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">
