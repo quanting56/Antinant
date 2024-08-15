@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../css/bootstrap_icons-main/font/bootstrap-icons.css"/>
     <link rel="stylesheet" href="../css/font_awesome_v6.5.2_all.css" type="text/css" />
     <link rel="stylesheet" href="../css/animate_v4.1.1_min.css">
+    <link rel="stylesheet" href="../css/vs2015_min.css">
     <link rel="stylesheet" href="../css/main.css"/>
 
     <!-- jQuery -->
@@ -21,20 +22,326 @@
     <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
     <script src="../js/d3_v7.9.0_min.js"></script>
     <script src="../js/wow_v1.1.3_min.js"></script>
+    <script src="../js/highlight_min.js"></script>
     <script src="../js/script.js"></script>
+
+    <!-- // 啟用 Highlight.js -->
+    <script>hljs.highlightAll();</script>
+
     <style>
       body {
         padding: 30px;
       }
 
-      svg {
-        width: 800px;
-        height: 180px;
+      li {
+        padding-top: 30px;
       }
     </style>
   </head>
   <body>
     <h2>歡迎來到測試場</h2>
     <hr>
+    <ol>
+      <li>移動<br>
+        <svg id="moveRect" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+        <button id="moveBtn" class="btn btn-primary mt-3" type="button">移動</button>
+        <script>
+          const moveRect = d3.select("#moveRect")
+                             .append("rect")
+                             .attr("width", 40)
+                             .attr("height", 40)
+                             .attr("fill", "#f48b47")
+                             .attr("stroke", "f68b47");
+          document.querySelector("#moveBtn").addEventListener("click", () => {
+            moveRect.transition()
+                    .duration(1000)
+                    .attr("transform", "translate(140, 60)");
+          });
+        </script>
+      </li>
+      <li>變色<br>
+        <svg id="transitionColorRect" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+        <button id="transitionColorBtn" class="btn btn-primary mt-3" type="button">變色</button>
+        <script>
+          const transitionColorRect = d3.select("#transitionColorRect")
+                                        .append("rect")
+                                        .attr("width", 40)
+                                        .attr("height", 40)
+                                        .attr("fill", "#f48b47")
+                                        .attr("stroke", "#f68b47")
+                                        .attr("transform", "translate(120, 50)");
+          document.querySelector("#transitionColorBtn").addEventListener("click", () => {
+            transitionColorRect.transition()
+                               .duration(1000)
+                               .attr("fill", "green")
+                               .attr("stroke-width", 6)
+                               .attr("stroke", "red"); 
+          });
+        </script>
+      </li>
+      <li>移動還會變色<br>
+        <svg id="moveAndTransitionColorAndDelayRect" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+        <button id="moveAndTransitionColorAndDelayBtn" class="btn btn-primary mt-3" type="button">開始動作</button>
+        <script>
+          const moveAndTransitionColorAndDelayRect = d3.select("#moveAndTransitionColorAndDelayRect")
+                                                       .append("rect")
+                                                       .attr("width", 40)
+                                                       .attr("height", 40)
+                                                       .attr("fill", "#f48b47")
+                                                       .attr("stroke", "#f68b47")
+          document.querySelector("#moveAndTransitionColorAndDelayBtn").addEventListener("click", () => {
+            moveAndTransitionColorAndDelayRect.transition()  // 這裡開始第一段動畫
+                                              .duration(1500)
+                                              .delay(300)  // 按下按鈕後，延遲0.3秒再執行下列動作
+                                              .attr("transform", "translate(140, 60)")
+                                              .transition()  // 這裡開始第二段動畫
+                                              .delay(500)  // 移動到定位後，延遲0.5秒再執行下列動作
+                                              .attr("fill", "green")
+                                              .attr("stroke-width", 6)
+                                              .attr("stroke", "red"); 
+          });
+        </script>
+      </li>
+      <li>延遲球動動<br>
+        <svg id="delayCircleMove" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+        <button id="delayCircleMoveBtn" class="btn btn-primary mt-3" type="button">開始動作</button>
+        <script>
+          const dataDelay = [];
+          for (let i = 0; i < 8; i++) {
+            dataDelay.push(160 - i * 20);
+          };
+
+          const delayCircleMove = d3.select("#delayCircleMove")
+                                    .selectAll("circle")
+                                    .data(dataDelay)
+                                    .enter()
+                                    .append("circle")
+                                    .attr("cx", (d) => d)
+                                    .attr("cy", 30)
+                                    .attr("r", 15)
+                                    .attr("fill", "#f48b47")
+                                    .attr("opacity", 0.5);
+
+          document.querySelector("#delayCircleMoveBtn").addEventListener("click", () => {
+            delayCircleMove.transition()
+                           .delay((d, i) => i * 200)  // 分別延遲
+                           .attr("cx", (d) => d + 120);  // 位移距離
+          });
+        </script>
+      </li>
+      <li>ease()動畫展示<br>
+        <svg id="easeDemonstration" style="border: 1px solid rgb(103, 102, 102);"></svg>
+        <div class="d-flex align-items-baseline">
+          <select name="easeDemonstration" id="easeDemonstrationSelection" class="m-3">
+            <option value=""></option>
+          </select>
+          <button id="easeDemonstrationBtn" class="btn btn-primary mt-3" type="button" onclick="updateEase()">Ease開始</button>
+        </div>
+        <script>
+          const easeDot = d3.select("#easeDemonstration")
+                            .append("circle")
+                            .attr("cx", 40)
+                            .attr("cy", 40)
+                            .attr("r", 30)
+                            .attr("fill", "#f68b47");
+
+          // 抓出 D3.js 中所有 API 中名稱帶有 ease 開頭的 API
+          const easeNames = Object.keys(d3).filter((d) => d.slice(0, 4) === "ease");  // 註：'slice(0, 4)'是將字符串的第0個到第4個字符提取出來（不包含第4個字符）
+
+          d3.select("#easeDemonstrationSelection")
+            .selectAll("option")
+            .data(easeNames)
+            .join("option")
+            .attr("value", (d) => d)
+            .text((d) => `d3.${d}`);
+
+          const updateEase = () => {
+            const easeName = d3.select("#easeDemonstrationSelection")
+                               .node().value;
+            easeDot.attr("cx", 40)  // 回原點
+                   .transition()  // 設定動畫效果
+                   .ease(d3[easeName])
+                   .attr("cx", 200);
+          };
+        </script>
+      </li>
+      <li>loopAnimation<br>
+        <svg id="loopAnimation" style="border: 1px solid rgb(103, 102, 102);"></svg>
+        <script>
+          const loopAnimation = d3.select("#loopAnimation")
+                                  .append("circle")
+                                  .attr("cx", 50)
+                                  .attr("cy", 50)
+                                  .attr("r", 25)
+                                  .attr("fill", "#f68b47")
+                                  .transition()
+                                  .duration(2000)
+                                  .on("start", goRight);
+          function goRight() {
+            d3.active(this)
+              .attr("cx", 200)
+              .transition()
+              .on("start", goLeft);
+          };
+
+          function goLeft() {
+            d3.active(this)
+              .attr("cx", 50)
+              .transition()
+              .on("start", goRight);
+          }
+        </script>
+      </li>
+      <li>點擊事件發生<br>
+        <svg id="clickSVG" style="border: 1px solid rgb(103, 102, 102);"></svg>
+        <script>
+          const clickCircle = d3.select("#clickSVG")
+                                .append("circle")
+                                .attr("cx", 20)
+                                .attr("cy", 20)
+                                .attr("r", 20)
+                                .attr("fill", "#f68b47")
+                                .attr("cursor", "pointer");
+          let isMoved = false;  // 用來追蹤圓球是否已經移動
+
+          clickCircle.on("click", (e) => {
+            if (!isMoved) {
+              d3.select(e.target)
+                .transition()
+                .ease(d3.easeBack)
+                .duration(1000)
+                .attr("fill", "blue")
+                .attr("transform", "translate(250, 0)");
+              isMoved = true;  // 更新狀態為已移動
+            } else {
+              d3.select(e.target)
+                .transition()
+                .ease(d3.easeBack)
+                .duration(1000)
+                .attr("fill", "#f68b47")
+                .attr("transform", "translate(0, 0)");
+              isMoved = false;  // 更新狀態為未移動
+            };
+          });
+        </script>
+      </li>
+      <li>滑鼠拂過變色<br>
+        <svg id="mouseoverSVG" style="border: 1px solid rgb(103, 102, 102);"></svg>
+        <script>
+          const mouseoverCircle = d3.select("#mouseoverSVG")
+                                    .append("circle")
+                                    .attr("cx", 20)
+                                    .attr("cy", 20)
+                                    .attr("r", 50)
+                                    .attr("cursor", "pointer")
+                                    .attr("fill", "#f68b47")
+                                    .attr("transform", "translate(130, 50)");
+          
+          mouseoverCircle
+            .on("mouseover", (e) => {
+              d3.select(e.target)
+                .transition()
+                .duration(2000)
+                .attr("fill", "blue");
+            })
+            .on("mouseleave", (e) => {
+              d3.select(e.target)
+                .transition()
+                .duration(2000)
+                .attr("fill", "#f68b47");
+            });
+        </script>
+      </li>
+      <li>獲取DOM節點的座標位置<br>
+        <svg id="pointerSVG" style="border: 1px solid rgb(103, 102, 102);"></svg>
+        <script>
+          const pointerSVG = d3.select("#pointerSVG")
+                               .attr("width", 500)
+                               .attr("height", 300)
+                               .attr("cursor", "pointer");
+          let txt = pointerSVG.append("text");
+
+          pointerSVG.on("mousemove", (e) => {
+            let position = d3.pointer(e, pointerSVG.node());
+
+            txt.attr("x", position[0])  // 取[x]
+               .attr("y", position[1])  // 取[y]
+               .text(`x: ${parseInt(position[0])},
+                      y: ${parseInt(position[1])}`);
+          });
+        </script>
+      </li>
+      <li>工具提示框</li>
+      <li>進階工具提示框<br>
+        <div id="advancedTooltip" style="border: 1px solid rgb(103, 102, 102);"></div>
+        <script>
+          const advancedTooltipData = [
+            {r: 17, x: 134, y: 181},
+            {r: 23, x: 294, y: 131},
+            {r: 14, x: 84, y: 273},
+            {r: 9, x: 323, y: 59},
+            {r: 18, x: 172, y: 251},
+            {r: 26, x: 404, y: 154}
+          ];
+          const svg = d3.select("#advancedTooltip")
+                        .append("svg")
+                        .attr("width", 500)
+                        .attr("height", 400);
+          
+          // 設定顏色
+          const rData = advancedTooltipData.map((d) => d.r);
+          const colors = d3.scaleOrdinal(d3.schemeTableau10)
+                           .domain(rData);
+
+          // 建立圓點
+          const dots = svg.selectAll("circle")
+                          .data(advancedTooltipData)
+                          .join("circle")
+                          .attr("cx", (d) => d.x)
+                          .attr("cy", (d) => d.y)
+                          .attr("r", (d) => d.r)
+                          .attr("fill", (d) => colors(d.x))
+                          .style("cursor", "pointer");
+
+          // 建立tooltip
+          const tooltip = d3.select("#advancedTooltip")
+                            .style("position", "relative")
+                            .append("div")
+                            .style("display", "none")
+                            .style("position", "absolute")
+                            .style("background-color", "white")
+                            .style("border", "2px solid")
+                            .style("border-radius", "5px")
+                            .style("padding", "5px");
+
+          // 顯示tooltip
+          dots
+            .on("mousemove", (e) => {
+              // 抓圓點位置
+              let pt = d3.pointer(event, e.target);
+              tooltip.style("display", "block")
+                     .style("left", `${pt[0] + 30}px`)  // 設定tooltip的水平位置
+                     .style("top", `${pt[1]}px`)  // 設定tooltip的垂直位置
+                     .html(`圓半徑：${e.target.__data__.r}`);
+              console.log(e.target.__data__);
+            })
+            .on("mouseleave", (e) => {
+              tooltip.style("display", "none");
+            });
+        </script>
+      </li>
+      <li>插入其他html頁面
+        <div id="otherHTML"></div>
+        <!-- <script>
+          d3.html("../index.html").then(function(data) {
+            // 只選取 <body> 內的內容
+            const bodyContent = d3.select(data).select("body").html();
+            
+            // 將選取的內容插入到 #Test 中
+            d3.select("#otherHTML").html(bodyContent);
+          });
+        </script> -->
+      </li>
+    </ol>
   </body>
 </html>

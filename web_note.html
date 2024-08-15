@@ -26,8 +26,12 @@
     <script src="js/highlight_min.js"></script>
     <script src="js/script.js"></script>
 
-    <!-- // 啟用 Highlight.js -->
+    <!-- 啟用 Highlight.js -->
     <script>hljs.highlightAll();</script>  
+
+    <!-- Tooltip引用統計學頁面，需以latex渲染數學公式 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
 
   <body>
@@ -2508,6 +2512,8 @@
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsHelperFunction">繪圖HelperFunction</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsScales">各種比例尺</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAxes">各種軸線與刻度</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAnimation">動畫</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsMouseEvent">滑鼠事件</a></li>
                 </ul>
               </div>
               <div class="col-md-10">
@@ -4146,7 +4152,7 @@
                       </li>
                     </ul>
                   </div>
-                  <div id="d3jsAxes" class="tab-pane fade active show">
+                  <div id="d3jsAxes" class="tab-pane fade">
                     <h3>各種軸線與刻度（Axes & Ticks）</h3>
                     <hr>
                     <div>
@@ -4461,7 +4467,7 @@
                         時間比例尺的軸線
                         <div id="d3jsAxesTimeTickTest"></div>
                         <script>
-                          const d3jsAxesTimeTickTestWidth = parseInt(d3.select("#d3jsAxesTimeTickTest").style("width"));
+                          const d3jsAxesTimeTickTestWidth = d3jsAxesWidth * 2;
                           const d3jsAxesTimeTickTestMargin = d3jsAxesTimeTickTestWidth / 20;
                           const d3jsAxesTimeTickTestJanuary = new Date(2024, 0);
                           const d3jsAxesTimeTickTestDecember = new Date(2024, 11);
@@ -5392,7 +5398,1551 @@
 
 </code></pre>
                       </li>
+                      <li class="mt-5">
+                        建立Grid軸線樣式的x、y軸
+                        <div id="d3jsAxesXYTestGridStyle"></div>
+                        <script>
+                          const d3jsAxesXYTestGridStyleData = [{x: 100, y: 20}, {x: 18, y: 30}, {x: 105, y: 250}];
+
+                          // 建立繪製圖表的<svg>
+                          const d3jsAxesXYTestGridStyleSVG = d3.select("#d3jsAxesXYTestGridStyle")
+                                                               .append("svg")
+                                                               .attr("width", d3jsAxesWidth)
+                                                               .attr("height", d3jsAxesHeight)
+                                                               .style("border", "1px solid lightgray");
+                          
+                          // 抓出x軸、y軸需要用到的資料
+                          const d3jsAxesXYTestGridStyleXData = d3jsAxesXYTestGridStyleData.map((d) => d.x);
+                          const d3jsAxesXYTestGridStyleYData = d3jsAxesXYTestGridStyleData.map((d) => d.y);
+
+                          // x比例尺與軸線
+                          const d3jsAxesXYTestGridStyleXScale = d3.scaleLinear()
+                                                                  .domain([0, d3.max(d3jsAxesXYTestGridStyleXData)])
+                                                                  .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+                                                                  // .nice();  // 加不加'.nice()'看情況
+                          const d3jsAxesXYTestGridStyleXAxisGenerator = d3.axisBottom(d3jsAxesXYTestGridStyleXScale)
+                                                                          .ticks(10)  // 調整數量，讓間距看起來跟y軸差不多
+                                                                          .tickSizeOuter(0);  // 消除非整數倍的刻度線段
+
+                          // y比例尺與軸線
+                          const d3jsAxesXYTestGridStyleYScale = d3.scaleLinear()
+                                                                  .domain([0, d3.max(d3jsAxesXYTestGridStyleYData)])
+                                                                  .range([d3jsAxesHeight - d3jsAxesMargin * 2, 0])
+                                                                  .nice();  // 加不加'.nice()'看情況
+                          const d3jsAxesXYTestGridStyleYAxisGenerator = d3.axisLeft(d3jsAxesXYTestGridStyleYScale)
+                                                                          .ticks(5)  // 調整數量，讓間距看起來跟x軸差不多
+                                                                          .tickSizeOuter(0);  // 消除非整數倍的刻度線段
+
+                          // 建立<g>元素並呼叫軸線產生方式，分別生成x與y軸線
+                          d3jsAxesXYTestGridStyleSVG.append("g")
+                                                    .attr("id", "d3jsAxesXYTestGridStyleXAxis")  // 增加id，方便之後選擇而用以增添不同色軸線
+                                                    .call(d3jsAxesXYTestGridStyleXAxisGenerator)
+                                                    .attr("transform", `translate(0, ${ d3jsAxesHeight - d3jsAxesMargin })`);
+
+                          d3jsAxesXYTestGridStyleSVG.append("g")
+                                                    .attr("id", "d3jsAxesXYTestGridStyleYAxis")  // 增加id，方便之後選擇而用以增添不同色軸線
+                                                    .call(d3jsAxesXYTestGridStyleYAxisGenerator)
+                                                    .attr("transform", `translate(${d3jsAxesMargin}, ${d3jsAxesMargin})`);
+
+                          // 繪製x軸向上的不同色軸線
+                          d3jsAxesXYTestGridStyleSVG.selectAll("#d3jsAxesXYTestGridStyleXAxis .tick")  // '.tick'為預設的class名稱
+                                                    .append("line")
+                                                    .attr("x1", 0)
+                                                    .attr("x2", 0)
+                                                    .attr("y1", 0)
+                                                    .attr("y2", -d3jsAxesHeight + d3jsAxesMargin * 2 )
+                                                    .attr("stroke", "#e4e4e4");
+
+                          // 繪製y軸向右的不同色軸線
+                          d3jsAxesXYTestGridStyleSVG.selectAll("#d3jsAxesXYTestGridStyleYAxis .tick")  // '.tick'為預設的class名稱
+                                                    .filter((d, i) => i !== 0)  // 不繪製第一條與x軸重疊的y軸線
+                                                    .append("line")
+                                                    .attr("x1", 0)
+                                                    .attr("x2", d3jsAxesWidth - d3jsAxesMargin * 2)
+                                                    .attr("y1", 0)
+                                                    .attr("y2", 0)
+                                                    .attr("stroke", "#e4e4e4");
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="xyAxesGridStyle"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 給定的數據
+    const xyAxesGridStyleData = [{x: 100, y: 20}, {x: 18, y: 30}, {x: 105, y: 250}];
+
+    // 建立繪製圖表的&lt;svg&gt;
+    const xyAxesGridStyleSVG = d3.select("#xyAxesGridStyle")
+                                 .append("svg")
+                                 .attr("width", width)
+                                 .attr("height", height)
+                                 .style("border", "1px solid lightgray");
+
+    // 抓出x軸、y軸需要用到的資料
+    const xyAxesGridStyleXData = xyAxesGridStyleData.map((d) => d.x);
+    const xyAxesGridStyleYData = xyAxesGridStyleData.map((d) => d.y);
+
+    // x比例尺與軸線
+    const xyAxesGridStyleXScale = d3.scaleLinear()
+                                    .domain([0, d3.max(xyAxesGridStyleXData)])
+                                    .range([margin, width - margin]);
+                                    // .nice();  // 加不加'.nice()'看情況
+    const xyAxesGridStyleXAxisGenerator = d3.axisBottom(xyAxesGridStyleXScale)
+                                            .ticks(10)  // 調整數量，讓間距看起來跟y軸差不多
+                                            .tickSizeOuter(0);  // 消除非整數倍的刻度線段
+
+    // y比例尺與軸線
+    const xyAxesGridStyleYScale = d3.scaleLinear()
+                                    .domain([0, d3.max(xyAxesGridStyleYData)])
+                                    .range([height - margin * 2, 0])
+                                    .nice();  // 加不加'.nice()'看情況
+    const xyAxesGridStyleYAxisGenerator = d3.axisLeft(xyAxesGridStyleYScale)
+                                            .ticks(5)  // 調整數量，讓間距看起來跟x軸差不多
+                                            .tickSizeOuter(0);  // 消除非整數倍的刻度線段
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，分別生成x與y軸線
+    xyAxesGridStyleSVG.append("g")
+                      .attr("id", "xyAxesGridStyleXAxis")  // 增加id，方便之後選擇而用以增添不同色軸線
+                      .call(xyAxesGridStyleXAxisGenerator)
+                      .attr("transform", `translate(0, ${ height - margin })`);
+
+    xyAxesGridStyleSVG.append("g")
+                      .attr("id", "xyAxesGridStyleYAxis")  // 增加id，方便之後選擇而用以增添不同色軸線
+                      .call(xyAxesGridStyleYAxisGenerator)
+                      .attr("transform", `translate(${margin}, ${margin})`);
+
+    // 繪製x軸向上的不同色軸線
+    xyAxesGridStyleSVG.selectAll("#xyAxesGridStyleXAxis .tick")  // '.tick'為預設的class名稱
+                      .append("line")
+                      .attr("x1", 0)
+                      .attr("x2", 0)
+                      .attr("y1", 0)
+                      .attr("y2", -height + margin * 2 )
+                      .attr("stroke", "#e4e4e4");
+
+    // 繪製y軸向右的不同色軸線
+    xyAxesGridStyleSVG.selectAll("#xyAxesGridStyleYAxis .tick")  // '.tick'為預設的class名稱
+                      .filter((d, i) => i !== 0)  // 不繪製第一條與x軸重疊的y軸線
+                      .append("line")
+                      .attr("x1", 0)
+                      .attr("x2", width - margin * 2)
+                      .attr("y1", 0)
+                      .attr("y2", 0)
+                      .attr("stroke", "#e4e4e4");
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        文字標籤旋轉
+                        <div id="d3jsAxesXYTestTickTextRotation"></div>
+                        <script>
+                          const d3jsAxesXYTestTickTextRotationData = [
+                            {x: new Date(2024, 0), y: 30},
+                            {x: new Date(2024, 2), y: 80},
+                            {x: new Date(2024, 8), y: 90},
+                            {x: new Date(2024, 11), y: 20},
+                          ];
+
+                          // 建立繪製圖表的<svg>
+                          const d3jsAxesXYTestTickTextRotationSVG = d3.select("#d3jsAxesXYTestTickTextRotation")
+                                                                      .append("svg")
+                                                                      .attr("width", d3jsAxesWidth)
+                                                                      .attr("height", d3jsAxesHeight)
+                                                                      .style("border", "1px solid lightgray");
+                          
+                          // 抓出x軸、y軸需要用到的資料
+                          const d3jsAxesXYTestTickTextRotationXData = d3jsAxesXYTestTickTextRotationData.map((d) => d.x);
+                          const d3jsAxesXYTestTickTextRotationYData = d3jsAxesXYTestTickTextRotationData.map((d) => d.y);
+
+                          // x比例尺與軸線
+                          const d3jsAxesXYTestTickTextRotationXScale = d3.scaleTime()
+                                                                         .domain([new Date(2024, 0), new Date(2024, 11)])
+                                                                         .range([d3jsAxesMargin, d3jsAxesWidth - d3jsAxesMargin]);
+                          const d3jsAxesXYTestTickTextRotationXAxisGenerator = d3.axisBottom(d3jsAxesXYTestTickTextRotationXScale)
+                                                                                 .tickFormat(d3.timeFormat("%Y-%m-%d"))
+                                                                                 .tickSize(10);  // 延長刻度線，方便判讀
+
+                          // y比例尺與軸線
+                          const d3jsAxesXYTestTickTextRotationYScale = d3.scaleLinear()
+                                                                         .domain([0, d3.max(d3jsAxesXYTestTickTextRotationYData)])
+                                                                         .range([d3jsAxesHeight - d3jsAxesMargin * 2, 0]);
+                          const d3jsAxesXYTestTickTextRotationYAxisGenerator = d3.axisLeft(d3jsAxesXYTestTickTextRotationYScale)
+                                                                                 .ticks(5)
+                                                                                 .tickSize(10)  // 延長刻度線，方便判讀
+                                                                                 .tickSizeOuter(0);  // 消除非整數倍的刻度線段
+
+                          // 建立<g>元素並呼叫軸線產生方式，分別生成x與y軸線
+                          d3jsAxesXYTestTickTextRotationSVG.append("g")
+                                                           .attr("id", "d3jsAxesXYTestTickTextRotationXAxis")  // 增加id，方便之後選擇而用以增添不同色軸線
+                                                           .call(d3jsAxesXYTestTickTextRotationXAxisGenerator)
+                                                           .attr("transform", `translate(0, ${ d3jsAxesHeight - d3jsAxesMargin - 15})`);
+
+                          d3jsAxesXYTestTickTextRotationSVG.append("g")
+                                                           .call(d3jsAxesXYTestTickTextRotationYAxisGenerator)
+                                                           .attr("transform", `translate(${d3jsAxesMargin}, ${d3jsAxesMargin - 15})`);
+
+                          // 旋轉x軸上的文字標籤
+                          d3jsAxesXYTestTickTextRotationSVG.selectAll("#d3jsAxesXYTestTickTextRotationXAxis text")  // '.tick'為預設的class名稱
+                                                           .attr("transform", "translate(-27, 22) rotate(-45)");
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="xyAxesTickTextRotation"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const width = 300;
+    const height = 200;
+    const margin = ( width - height ) / 2;
+
+    // 給定的數據
+    const xyAxesTickTextRotationData = [
+      {x: new Date(2024, 0), y: 30},
+      {x: new Date(2024, 2), y: 80},
+      {x: new Date(2024, 8), y: 90},
+      {x: new Date(2024, 11), y: 20},
+    ];
+
+    // 建立繪製圖表的&lt;svg&gt;
+    const xyAxesTickTextRotationSVG = d3.select("#xyAxesTickTextRotation")
+                                        .append("svg")
+                                        .attr("width", width)
+                                        .attr("height", height)
+                                        .style("border", "1px solid lightgray");
+
+    // 抓出x軸、y軸需要用到的資料
+    const xyAxesTickTextRotationXData = xyAxesTickTextRotationData.map((d) => d.x);
+    const xyAxesTickTextRotationYData = xyAxesTickTextRotationData.map((d) => d.y);
+
+    // x比例尺與軸線
+    const xyAxesTickTextRotationXScale = d3.scaleTime()
+                                           .domain([new Date(2024, 0), new Date(2024, 11)])
+                                           .range([margin, width - margin]);
+    const xyAxesTickTextRotationXAxisGenerator = d3.axisBottom(xyAxesTickTextRotationXScale)
+                                                   .tickFormat(d3.timeFormat("%Y-%m-%d"))
+                                                   .tickSize(10);  // 延長刻度線，方便判讀
+
+    // y比例尺與軸線
+    const xyAxesTickTextRotationYScale = d3.scaleLinear()
+                                           .domain([0, d3.max(xyAxesTickTextRotationYData)])
+                                           .range([height - margin * 2, 0]);
+    const xyAxesTickTextRotationYAxisGenerator = d3.axisLeft(xyAxesTickTextRotationYScale)
+                                                   .ticks(5)
+                                                   .tickSize(10)  // 延長刻度線，方便判讀
+                                                   .tickSizeOuter(0);  // 消除非整數倍的刻度線段                          
+
+    // 建立&lt;g&gt;元素並呼叫軸線產生方式，分別生成x與y軸線
+    xyAxesTickTextRotationSVG.append("g")
+                             .attr("id", "xyAxesTickTextRotationXAxis")  // 增加id，方便之後選擇而用以增添不同色軸線
+                             .call(xyAxesTickTextRotationXAxisGenerator)
+                             .attr("transform", `translate(0, ${ height - margin - 15})`);
+
+    xyAxesTickTextRotationSVG.append("g")
+                             .call(xyAxesTickTextRotationYAxisGenerator)
+                             .attr("transform", `translate(${margin}, ${margin - 15})`);
+
+    // 旋轉x軸上的文字標籤
+    xyAxesTickTextRotationSVG.selectAll("#xyAxesTickTextRotationXAxis text")  // '.tick'為預設的class名稱
+                             .attr("transform", "translate(-27, 22) rotate(-45)");
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        時鐘刻度軸線
+                        <div id="d3jsAxesClockAxisTest"></div>
+                        <script>
+                          // 設定繪製圖表的<svg>大小，並建立之
+                          const d3jsAxesClockAxisTestHeight = 300;
+                          const d3jsAxesClockAxisTestWidth = d3jsAxesClockAxisTestHeight;
+                          const d3jsAxesClockAxisTestSVG = d3.select("#d3jsAxesClockAxisTest")
+                                                             .append("svg")
+                                                             .attr("width", d3jsAxesClockAxisTestWidth)
+                                                             .attr("height", d3jsAxesClockAxisTestHeight)
+                                                             .style("border", "1px solid lightgray");
+
+                          // 設定變數
+                          const d3jsAxesClockAxisTestClockRadius = d3jsAxesClockAxisTestHeight / 3;  // 時鐘半徑，設定為SVG高度的三分之一
+                          const d3jsAxesClockAxisTestMinuteTickInnerRadius = d3jsAxesClockAxisTestClockRadius - 10;  // 分鐘刻度線長度，設定為10
+                          const d3jsAxesClockAxisTestHourTickInnerRadius = d3jsAxesClockAxisTestClockRadius - 17;  // 小時刻度線長度，設定為17
+                          const d3jsAxesClockAxisTestDegToRad = Math.PI / 180;  // 弧度，將度數轉換為弧度
+                          const d3jsAxesClockAxisTestMinuteLabelRadius = d3jsAxesClockAxisTestClockRadius + 15;  // 分鐘文字標籤半徑，設定為時鐘半徑+15
+                          const d3jsAxesClockAxisTestMinuteLabelYOffset = 5;  // 分鐘文字標籤Y方向的偏移量（y位置為文字基線，需再修正），避免標籤與刻度線重疊
+                          const d3jsAxesClockAxisTestHourLabelRadius = d3jsAxesClockAxisTestClockRadius - 35;  // 小時文字標籤半徑，設定為時鐘半徑-15
+                          const d3jsAxesClockAxisTestHourLabelYOffset = 6;  // 小時文字標籤Y方向上的偏移量（y位置為文字基線，需再修正）
+
+                          // 設定小時刻度比例尺和分鐘刻度比例尺
+                          // 小時比例尺（12小時映射到360度）
+                          const d3jsAxesClockAxisTestHourScale = d3.scaleLinear()
+                                                                   .domain([0, 12])
+                                                                   .range([0, 360]);
+                          // 分鐘比例尺（60分鐘映射到360度）
+                          const d3jsAxesClockAxisTestMinuteScale = d3.scaleLinear()
+                                                                     .domain([0, 60])
+                                                                     .range([0, 360]);
+
+                          // 建立<g>，起始點移動到<svg>中心
+                          const d3jsAxesClockAxisTestG = d3jsAxesClockAxisTestSVG.append("g")
+                                                                                 .attr("transform", `translate(${[Math.round( d3jsAxesClockAxisTestWidth / 2 ), Math.round( d3jsAxesClockAxisTestHeight / 2 )]})`);
+
+                          // 分鐘刻度
+                          d3jsAxesClockAxisTestG.selectAll(".d3jsAxesClockAxisTestMinuteTicks")
+                                                .data(d3.range(0, 60))  // 建立0到59的數列
+                                                .enter()
+                                                .append("line")
+                                                .attr("class", "d3jsAxesClockAxisTestMinuteTicks")
+                                                .attr("x1", "0")
+                                                .attr("x2", "0")
+                                                .attr("y1", d3jsAxesClockAxisTestClockRadius)
+                                                .attr("y2", d3jsAxesClockAxisTestMinuteTickInnerRadius)
+                                                .attr("stroke-width", "3")
+                                                .attr("stroke", "black")
+                                                .attr("transform", (d) => `rotate(${d3jsAxesClockAxisTestMinuteScale(d)})`);
+
+                          // 分鐘數字標籤
+                          d3jsAxesClockAxisTestG.selectAll(".d3jsAxesClockAxisTestMinuteLabels")
+                                                .data(d3.range(5, 61, 5))  // 5到60，間隔5
+                                                .enter()
+                                                .append("text")
+                                                .attr("class", "d3jsAxesClockAxisTestMinuteLabels")
+                                                .attr("x", (d) => d3jsAxesClockAxisTestMinuteLabelRadius * Math.sin(d3jsAxesClockAxisTestMinuteScale(d) * d3jsAxesClockAxisTestDegToRad))  // 標籤的半徑乘以sin(比例尺承弧度)
+                                                .attr("y", (d) => -d3jsAxesClockAxisTestMinuteLabelRadius * Math.cos(d3jsAxesClockAxisTestMinuteScale(d) * d3jsAxesClockAxisTestDegToRad) + d3jsAxesClockAxisTestMinuteLabelYOffset)  // 標籤的半徑乘以cos(比例尺承弧度)
+                                                .text((d) => d)
+                                                .attr("text-anchor", "middle")
+                                                .attr("font-size", "14")
+                                                .style("fill", "#a0a0a0");
+        
+                          // 時鐘刻度
+                          d3jsAxesClockAxisTestG.selectAll(".d3jsAxesClockAxisTestHourTicks")
+                                                .data(d3.range(0, 12))  // 建立0到11的數列
+                                                .enter()
+                                                .append("line")
+                                                .attr("class", "d3jsAxesClockAxisTestHourTicks")
+                                                .attr("x1", "0")
+                                                .attr("x2", "0")
+                                                .attr("y1", d3jsAxesClockAxisTestClockRadius)
+                                                .attr("y2", d3jsAxesClockAxisTestHourTickInnerRadius)
+                                                .attr("stroke-width", "5")
+                                                .attr("stroke", "black")
+                                                .attr("transform", (d) => `rotate(${d3jsAxesClockAxisTestHourScale(d)})`);
+
+                          // 時鐘數字標籤
+                          d3jsAxesClockAxisTestG.selectAll(".d3jsAxesClockAxisTestHourLabels")
+                                                .data(d3.range(3, 13, 3))  // 3到12，間隔3
+                                                .enter()
+                                                .append("text")
+                                                .attr("class", "d3jsAxesClockAxisTestHourLabels")
+                                                .attr("x", (d) => d3jsAxesClockAxisTestHourLabelRadius * Math.sin(d3jsAxesClockAxisTestHourScale(d) * d3jsAxesClockAxisTestDegToRad))  // 標籤的半徑乘以sin(比例尺承弧度)
+                                                .attr("y", (d) => -d3jsAxesClockAxisTestHourLabelRadius * Math.cos(d3jsAxesClockAxisTestHourScale(d) * d3jsAxesClockAxisTestDegToRad) + d3jsAxesClockAxisTestHourLabelYOffset)  // 標籤的半徑乘以cos(比例尺承弧度)
+                                                .text((d) => d)
+                                                .attr("text-anchor", "middle")
+                                                .style("font-weight", "bolder");
+                        </script>
+<pre class="mt-2"><code class="html">
+  &lt;div id="clockAxisTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定繪製圖表的&lt;svg&gt;大小，並建立之
+    const height = 300;
+    const width = height;
+    const SVG = d3.select("#clockAxisTest")
+                  .append("svg")
+                  .attr("width", width)
+                  .attr("height", height)
+                  .style("border", "1px solid lightgray");
+
+    // 設定變數
+    const clockRadius = height / 3;  // 時鐘半徑，設定為&lt;svg&gt;高度的三分之一
+    const minuteTickInnerRadius = clockRadius - 10;  // 分鐘刻度線長度，設定為10
+    const hourTickInnerRadius = clockRadius - 17;  // 小時刻度線長度，設定為17
+    const degToRad = Math.PI / 180;  // 弧度，將度數轉換為弧度
+    const minuteLabelRadius = clockRadius + 15;  // 分鐘文字標籤半徑，設定為時鐘半徑+15
+    const minuteLabelYOffset = 5;  // 分鐘文字標籤Y方向的偏移量（y位置為文字基線，需再修正），避免標籤與刻度線重疊
+    const hourLabelRadius = clockRadius - 35;  // 小時文字標籤半徑，設定為時鐘半徑-15
+    const hourLabelYOffset = 6;  // 小時文字標籤Y方向上的偏移量（y位置為文字基線，需再修正）
+
+    // 設定小時刻度比例尺和分鐘刻度比例尺
+    // 小時比例尺（12小時映射到360度）
+    const hourScale = d3.scaleLinear()
+                        .domain([0, 12])
+                        .range([0, 360]);
+    // 分鐘比例尺（60分鐘映射到360度）
+    const minuteScale = d3.scaleLinear()
+                          .domain([0, 60])
+                          .range([0, 360]);
+
+    // 建立&lt;g&gt;，起始點移動到&lt;svg&gt;中心
+    const G = SVG.append("g")
+                 .attr("transform", `translate(${[Math.round( width / 2 ), Math.round( height / 2 )]})`);
+
+    // 分鐘刻度
+    G.selectAll(".minuteTicks")
+     .data(d3.range(0, 60))  // 建立0到59的數列
+     .enter()
+     .append("line")
+     .attr("class", "minuteTicks")
+     .attr("x1", "0")
+     .attr("x2", "0")
+     .attr("y1", clockRadius)
+     .attr("y2", minuteTickInnerRadius)
+     .attr("stroke-width", "3")
+     .attr("stroke", "black")
+     .attr("transform", (d) => `rotate(${minuteScale(d)})`);
+
+    // 分鐘數字標籤
+    G.selectAll(".minuteLabels")
+     .data(d3.range(5, 61, 5))  // 5到60，間隔5
+     .enter()
+     .append("text")
+     .attr("class", "minuteLabels")
+     .attr("x", (d) => minuteLabelRadius * Math.sin(minuteScale(d) * degToRad))  // 標籤的半徑乘以sin(比例尺承弧度)
+     .attr("y", (d) => -minuteLabelRadius * Math.cos(minuteScale(d) * degToRad) + minuteLabelYOffset)  // 標籤的半徑乘以cos(比例尺承弧度)
+     .text((d) => d)
+     .attr("text-anchor", "middle")
+     .attr("font-size", "14")
+     .style("fill", "#a0a0a0");
+
+    // 時鐘刻度
+    G.selectAll(".hourTicks")
+     .data(d3.range(0, 12))  // 建立0到11的數列
+     .enter()
+     .append("line")
+     .attr("class", "hourTicks")
+     .attr("x1", "0")
+     .attr("x2", "0")
+     .attr("y1", clockRadius)
+     .attr("y2", hourTickInnerRadius)
+     .attr("stroke-width", "5")
+     .attr("stroke", "black")
+     .attr("transform", (d) => `rotate(${hourScale(d)})`);
+
+    // 時鐘數字標籤
+    G.selectAll(".hourLabels")
+     .data(d3.range(3, 13, 3))  // 3到12，間隔3
+     .enter()
+     .append("text")
+     .attr("class", "hourLabels")
+     .attr("x", (d) => hourLabelRadius * Math.sin(hourScale(d) * degToRad))  // 標籤的半徑乘以sin(比例尺承弧度)
+     .attr("y", (d) => -hourLabelRadius * Math.cos(hourScale(d) * degToRad) + hourLabelYOffset)  // 標籤的半徑乘以cos(比例尺承弧度)
+     .text((d) => d)
+     .attr("text-anchor", "middle")
+     .style("font-weight", "bolder");
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        響應式圖表<br>
+                        <sup class="text-muted">- <i>使用現有寬度來調整寬度大小（需重新整理）。當放置在Bootstrap標籤頁（Tabs）裡非首頁時，渲染可能會失敗。</i></sup>
+                        <div id="d3jsAxesRWDAxisTest">（註：因現在用的Bootstrap會導致報錯，故此處先不示範）</div>
+                        <!-- 因現在用的Bootstrap會導致報錯，先註解掉，之後可直接恢復使用 -->
+                        <!-- <script>
+                          const d3jsAxesRWDAxisTestCurrentWidth = parseInt(d3.select("#d3jsAxesRWDAxisTest").style("width"));
+                          // const height = d3jsAxesHeight;
+                          const d3jsAxesRWDAxisTestCurrentMargin = Math.max(0, ( d3jsAxesRWDAxisTestCurrentWidth - d3jsAxesHeight ) / 2);
+                          console.log(d3jsAxesRWDAxisTestCurrentWidth);
+
+                          // 先建立<svg>元素，並設定大小
+                          d3.select("#d3jsAxesRWDAxisTest")
+                            .append("svg")
+                            .attr("width", d3jsAxesRWDAxisTestCurrentWidth)
+                            .attr("height", d3jsAxesHeight)
+                            .style("border", "1px solid rgb(96, 96, 96)");
+
+                          // 設定比例尺
+                          const d3jsAxesRWDAxisTestScale = d3.scaleLinear()
+                                                             .domain([0, 100])
+                                                             .range([d3jsAxesRWDAxisTestCurrentMargin, d3jsAxesRWDAxisTestCurrentWidth - d3jsAxesRWDAxisTestCurrentMargin]);
+
+                          // 設定軸線產生方式
+                          const d3jsAxesRWDAxisTestGenerator = d3.axisBottom(d3jsAxesRWDAxisTestScale);
+
+                          // 再建立<g>元素，並呼叫軸線產生方法，生成軸線
+                          d3.select("#d3jsAxesRWDAxisTest svg")
+                            .append("g")
+                            .call(d3jsAxesRWDAxisTestGenerator)
+                            .attr("transform", `translate(0, ${ d3jsAxesHeight / 2 })`);
+                        </script> -->
+<pre class="mt-2"><code class="html">
+  &lt;div id="RWDAxisTest"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    // 設定width、height、margin
+    const RWDAxisTestCurrentWidth = parseInt(d3.select("#RWDAxisTest").style("width"));
+    const height = 300;
+    const RWDAxisTestCurrentMargin = ( RWDAxisTestCurrentWidth - height ) / 2;
+
+    // 建立繪製圖表的&lt;svg&gt;
+    d3.select("#RWDAxisTest")
+      .append("svg")
+      .attr("width", RWDAxisTestCurrentWidth)
+      .attr("height", height)
+      .style("border", "1px solid rgb(96, 96, 96)");
+
+    // 設定比例尺
+    const RWDAxisTestScale = d3.scaleLinear()
+                               .domain([0, 100])
+                               .range([RWDAxisTestCurrentMargin, RWDAxisTestCurrentWidth - RWDAxisTestCurrentMargin]);
+
+    // 設定軸線產生方式
+    const RWDAxisTestGenerator = d3.axisBottom(RWDAxisTestScale);
+
+    // 再建立&lt;g&gt;元素，並呼叫軸線產生方法，生成軸線
+    d3.select("#RWDAxisTest svg")
+      .append("g")
+      .call(RWDAxisTestGenerator)
+      .attr("transform", `translate(0, ${ height / 2 })`);
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
                     </ol>
+                  </div>
+                  <div id="d3jsAnimation" class="tab-pane fade">
+                    <h3>動畫（Transition）</h3>
+                    <hr>
+                    <ol class="mt-2">
+                      <li>
+                        瞬間移動<br>
+                        <svg id="d3jsMove" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+                        <button id="d3jsMoveBtn" class="btn btn-primary mt-2" type="button">移動</button>
+                        <button id="d3jsMoveBtnReset" class="btn btn-primary mt-2 ms-1" type="button">回復</button>
+                        <script>
+                          const d3jsMoveRect = d3.select("#d3jsMove")
+                                                 .append("rect")
+                                                 .attr("width", 40)
+                                                 .attr("height", 40)
+                                                 .attr("fill", "#f68b47")
+                                                 .attr("stroke", "#f68b47");
+                          
+                          document.querySelector("#d3jsMoveBtn").addEventListener("click", () => {
+                            d3jsMoveRect.attr("transform", "translate(140, 60)");
+                          });
+
+                          document.querySelector("#d3jsMoveBtnReset").addEventListener("click", () => {
+                            d3jsMoveRect.attr("transform", "translate(0, 0)");
+                          });
+                        </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="move" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;&lt;br&gt;
+  &lt;button id="moveBtn" class="btn btn-primary mt-2" type="button"&gt;移動&lt;/button&gt;
+  &lt;button id="moveBtnReset" class="btn btn-primary mt-2 ms-1" type="button"&gt;回復&lt;/button&gt;
+  &lt;script&gt;
+    const moveRect = d3.select("#move")
+                       .append("rect")
+                       .attr("width", 40)
+                       .attr("height", 40)
+                       .attr("fill", "#f68b47")
+                       .attr("stroke", "#f68b47");
+    
+    document.querySelector("#moveBtn").addEventListener("click", () =&gt; {
+      moveRect.attr("transform", "translate(140, 60)");
+    });
+
+    document.querySelector("#moveBtnReset").addEventListener("click", () =&gt; {
+      moveRect.attr("transform", "translate(0, 0)");
+    });
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">selection.transition()</code>平滑移動<br>
+                        <svg id="d3jsTransition" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+                        <button id="d3jsTransitionBtn" class="btn btn-primary mt-2" type="button">移動</button>
+                        <button id="d3jsTransitionBtnReset" class="btn btn-primary mt-2 ms-1" type="button">回復</button>
+                        <script>
+                          const d3jsTransitionRect = d3.select("#d3jsTransition")
+                                                 .append("rect")
+                                                 .attr("width", 40)
+                                                 .attr("height", 40)
+                                                 .attr("fill", "#f68b47")
+                                                 .attr("stroke", "#f68b47");
+                          
+                          document.querySelector("#d3jsTransitionBtn").addEventListener("click", () => {
+                            d3jsTransitionRect.transition()
+                                              .attr("transform", "translate(140, 60)");
+                          });
+
+                          document.querySelector("#d3jsTransitionBtnReset").addEventListener("click", () => {
+                            d3jsTransitionRect.attr("transform", "translate(0, 0)");
+                          });
+                        </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="transition" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;&lt;br&gt;
+  &lt;button id="transitionBtn" class="btn btn-primary mt-2" type="button"&gt;移動&lt;/button&gt;
+  &lt;button id="transitionBtnReset" class="btn btn-primary mt-2 ms-1" type="button"&gt;回復&lt;/button&gt;
+  &lt;script&gt;
+    const transitionRect = d3.select("#transition")
+                             .append("rect")
+                             .attr("width", 40)
+                             .attr("height", 40)
+                             .attr("fill", "#f68b47")
+                             .attr("stroke", "#f68b47");
+    
+    document.querySelector("#transitionBtn").addEventListener("click", () =&gt; {
+      transitionRect.transition()  // 使用transition()
+                    .attr("transform", "translate(140, 60)");
+    });
+
+    document.querySelector("#transitionBtnReset").addEventListener("click", () =&gt; {
+      transitionRect.attr("transform", "translate(0, 0)");
+    });
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">transition.duration()</code>設定持續時間<br>
+                        <sup class="text-muted">- <i>單位：ms。</i></sup><br>
+                        <svg id="d3jsTransitionDuration" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+                        <button id="d3jsTransitionDurationBtn" class="btn btn-primary mt-2" type="button">移動</button>
+                        <button id="d3jsTransitionDurationBtnReset" class="btn btn-primary mt-2 ms-1" type="button">回復</button>
+                        <script>
+                          const d3jsTransitionDurationRect = d3.select("#d3jsTransitionDuration")
+                                                               .append("rect")
+                                                               .attr("width", 40)
+                                                               .attr("height", 40)
+                                                               .attr("fill", "#f68b47")
+                                                               .attr("stroke", "#f68b47");
+                          
+                          document.querySelector("#d3jsTransitionDurationBtn").addEventListener("click", () => {
+                            d3jsTransitionDurationRect.transition()
+                                                      .duration(2000)  // 設定動畫時間持續2秒鐘
+                                                      .attr("transform", "translate(140, 60)");
+                          });
+
+                          document.querySelector("#d3jsTransitionDurationBtnReset").addEventListener("click", () => {
+                            d3jsTransitionDurationRect.attr("transform", "translate(0, 0)");
+                          });
+                        </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="transitionDuration" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;&lt;br&gt;
+  &lt;button id="transitionDurationBtn" class="btn btn-primary mt-2" type="button"&gt;移動&lt;/button&gt;
+  &lt;button id="transitionDurationBtnReset" class="btn btn-primary mt-2 ms-1" type="button"&gt;回復&lt;/button&gt;
+  &lt;script&gt;
+    const transitionDurationRect = d3.select("#transitionDuration")
+                                     .append("rect")
+                                     .attr("width", 40)
+                                     .attr("height", 40)
+                                     .attr("fill", "#f68b47")
+                                     .attr("stroke", "#f68b47");
+    
+    document.querySelector("#transitionDurationBtn").addEventListener("click", () =&gt; {
+      transitionDurationRect.transition()
+                            .duration(2000)  // 設定動畫時間持續2秒鐘
+                            .attr("transform", "translate(140, 60)");
+    });
+
+    document.querySelector("#transitionDurationBtnReset").addEventListener("click", () =&gt; {
+      transitionDurationRect.attr("transform", "translate(0, 0)");
+    });
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        逐漸改變顏色<br>
+                        <svg id="d3jsTransitionColor" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+                        <button id="d3jsTransitionColorBtn" class="btn btn-primary mt-2" type="button">變色</button>
+                        <button id="d3jsTransitionColorBtnReset" class="btn btn-primary mt-2 ms-1" type="button">回復</button>
+                        <script>
+                          const d3jsTransitionColorRect = d3.select("#d3jsTransitionColor")
+                                                            .append("rect")
+                                                            .attr("width", 40)
+                                                            .attr("height", 40)
+                                                            .attr("fill", "#f68b47")
+                                                            .attr("stroke", "#f68b47")
+                                                            .attr("transform", "translate(140, 60)");
+                          
+                          document.querySelector("#d3jsTransitionColorBtn").addEventListener("click", () => {
+                            d3jsTransitionColorRect.transition()
+                                                   .duration(1000)
+                                                   .attr("fill", "green")
+                                                   .attr("stroke-width", 6)
+                                                   .attr("stroke", "red");
+                          });
+
+                          document.querySelector("#d3jsTransitionColorBtnReset").addEventListener("click", () => {
+                            d3jsTransitionColorRect.attr("fill", "#f68b47")
+                                                   .attr("stroke-width", 1)
+                                                   .attr("stroke", "#f68b47");
+                          });
+                        </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="transitionColor" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;&lt;br&gt;
+  &lt;button id="transitionColorBtn" class="btn btn-primary mt-2" type="button"&gt;變色&lt;/button&gt;
+  &lt;button id="transitionColorBtnReset" class="btn btn-primary mt-2 ms-1" type="button"&gt;回復&lt;/button&gt;
+  &lt;script&gt;
+    const transitionColorRect = d3.select("#transitionColor")
+                                  .append("rect")
+                                  .attr("width", 40)
+                                  .attr("height", 40)
+                                  .attr("fill", "#f68b47")
+                                  .attr("stroke", "#f68b47")
+                                  .attr("transform", "translate(140, 60)");
+    
+    document.querySelector("#transitionColorBtn").addEventListener("click", () =&gt; {
+      transitionColorRect.transition()
+                         .duration(1000)
+                         .attr("fill", "green")
+                         .attr("stroke-width", 6)
+                         .attr("stroke", "red");
+    });
+
+    document.querySelector("#transitionColorBtnReset").addEventListener("click", () =&gt; {
+      transitionColorRect.attr("fill", "#f68b47")
+                         .attr("stroke-width", 1)
+                         .attr("stroke", "#f68b47");
+    });
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">transition.delay()</code>延遲發動動畫的時間
+                        <!-- 此項有兩part，，此part為移動還會變色 -->
+                        <div>
+                          <sup class="text-muted">- <i>本例為逐漸移動再改變顏色</i></sup><br>
+                          <svg id="d3jsTransitionColorAndDelay" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+                          <button id="d3jsTransitionColorAndDelayBtn" class="btn btn-primary mt-2" type="button">開始動作</button>
+                          <button id="d3jsTransitionColorAndDelayBtnReset" class="btn btn-primary mt-2 ms-1" type="button">回復</button>
+                          <script>
+                            const d3jsTransitionColorAndDelayRect = d3.select("#d3jsTransitionColorAndDelay")
+                                                                      .append("rect")
+                                                                      .attr("width", 40)
+                                                                      .attr("height", 40)
+                                                                      .attr("fill", "#f68b47")
+                                                                      .attr("stroke", "#f68b47")
+
+                            document.querySelector("#d3jsTransitionColorAndDelayBtn").addEventListener("click", () => {
+                              d3jsTransitionColorAndDelayRect.transition()  // 這裡開始第一段動畫
+                                                             .duration(1500)
+                                                             .delay(300)  // 按下按鈕後，延遲0.3秒再執行下列動作
+                                                             .attr("transform", "translate(140, 60)")
+                                                             .transition()  // 這裡開始第二段動畫
+                                                             .delay(500)  // 移動到定位後，延遲0.5秒再執行下列動作
+                                                             .attr("fill", "green")
+                                                             .attr("stroke-width", 6)
+                                                             .attr("stroke", "red");
+                            });
+
+                            document.querySelector("#d3jsTransitionColorAndDelayBtnReset").addEventListener("click", () => {
+                              d3jsTransitionColorAndDelayRect.attr("transform", "translate(0, 0)")
+                                                             .attr("fill", "#f68b47")
+                                                             .attr("stroke-width", 1)
+                                                             .attr("stroke", "#f68b47");
+                            });
+                          </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="transitionColorAndDelay" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;&lt;br&gt;
+  &lt;button id="transitionColorAndDelayBtn" class="btn btn-primary mt-2" type="button"&gt;開始動作&lt;/button&gt;
+  &lt;button id="transitionColorAndDelayBtnReset" class="btn btn-primary mt-2 ms-1" type="button"&gt;回復&lt;/button&gt;
+  &lt;script&gt;
+    const transitionColorAndDelayRect = d3.select("#transitionColorAndDelay")
+                                          .append("rect")
+                                          .attr("width", 40)
+                                          .attr("height", 40)
+                                          .attr("fill", "#f68b47")
+                                          .attr("stroke", "#f68b47")
+    
+    document.querySelector("#transitionColorAndDelayBtn").addEventListener("click", () =&gt; {
+      transitionColorAndDelayRect.transition()  // 這裡開始第一段動畫
+                                 .duration(1500)
+                                 .delay(300)  // 按下按鈕後，延遲0.3秒再執行下列動作
+                                 .attr("transform", "translate(140, 60)")
+                                 .transition()  // 這裡開始第二段動畫
+                                 .delay(500)  // 移動到定位後，延遲0.5秒再執行下列動作
+                                 .attr("fill", "green")
+                                 .attr("stroke-width", 6)
+                                 .attr("stroke", "red");
+    });
+
+    document.querySelector("#transitionColorAndDelayBtnReset").addEventListener("click", () =&gt; {
+      transitionColorAndDelayRect.attr("transform", "translate(0, 0)")
+                                 .attr("fill", "#f68b47")
+                                 .attr("stroke-width", 1)
+                                 .attr("stroke", "#f68b47");
+    });
+  &lt;/script&gt;
+
+</code></pre>
+                        </div>
+                        <!-- 此項有兩part，，此part為延遲球動動 -->
+                        <div class="mt-5">
+                          <sup class="text-muted">- <i>本例為球依次移動</i></sup><br>
+                          <svg id="d3jsDelayCircleMove" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
+                          <button id="d3jsDelayCircleMoveBtn" class="btn btn-primary mt-3" type="button">開始動作</button>
+                          <button id="d3jsDelayCircleMoveBtnReset" class="btn btn-primary mt-3 ms-1" type="button">回復上一動</button>
+                          <script>
+                            // 用for迴圈設定延遲時間
+                            const d3jsDataDelay = [];
+                            for (let i = 0; i < 8; i++) {
+                              d3jsDataDelay.push(160 - i * 20);
+                            };
+                            // 160 140 120 100 ... 20
+
+                            const d3jsDelayCircleMove = d3.select("#d3jsDelayCircleMove")
+                                                          .selectAll("circle")
+                                                          .data(d3jsDataDelay)
+                                                          .join("circle")
+                                                          .attr("cx", (d) => d)
+                                                          .attr("cy", 30)
+                                                          .attr("r", 15)
+                                                          .attr("fill", "#f48b47")
+                                                          .attr("opacity", 0.5);
+
+                            document.querySelector("#d3jsDelayCircleMoveBtn").addEventListener("click", () => {
+                              d3jsDelayCircleMove.transition()
+                                                 .delay((d, i) => i * 200)  // 分別延遲
+                                                 .attr("cx", (d) => d + 120);  // 位移距離
+                            });
+
+                            document.querySelector("#d3jsDelayCircleMoveBtnReset").addEventListener("click", () => {
+                              d3jsDelayCircleMove.transition()
+                                                 .delay((d, i) => 1600 - i * 200)  // 先進後出
+                                                 .attr("cx", (d) => d);  // 回復原位
+                            });
+                          </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="delayCircleMove" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;&lt;br&gt;
+  &lt;button id="delayCircleMoveBtn" class="btn btn-primary mt-3" type="button"&gt;開始動作&lt;/button&gt;
+  &lt;button id="delayCircleMoveBtnReset" class="btn btn-primary mt-3 ms-1" type="button"&gt;回復上一動&lt;/button&gt;
+  &lt;script&gt;
+    // 用for迴圈設定延遲時間
+    const dataDelay = [];
+    for (let i = 0; i &lt; 8; i++) {
+      dataDelay.push(160 - i * 20);
+    };
+    // 160 140 120 100 ... 20
+
+    const delayCircleMove = d3.select("#delayCircleMove")
+                                  .selectAll("circle")
+                                  .data(dataDelay)
+                                  .join("circle")
+                                  .attr("cx", (d) =&gt; d)
+                                  .attr("cy", 30)
+                                  .attr("r", 15)
+                                  .attr("fill", "#f48b47")
+                                  .attr("opacity", 0.5);
+
+    document.querySelector("#delayCircleMoveBtn").addEventListener("click", () =&gt; {
+      delayCircleMove.transition()
+                     .delay((d, i) =&gt; i * 200)  // 分別延遲
+                     .attr("cx", (d) =&gt; d + 120);  // 位移距離
+    });
+
+    document.querySelector("#delayCircleMoveBtnReset").addEventListener("click", () =&gt; {
+      delayCircleMove.transition()
+                     .delay((d, i) =&gt; 1600 - i * 200)  // 先進後出
+                     .attr("cx", (d) =&gt; d);  // 回復原位
+    });
+  &lt;/script&gt;
+
+</code></pre>
+                        </div>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">transition.ease()</code><br>
+                        <sup class="text-muted">- <i>ease動畫展示。</i></sup><br>
+                        <svg id="d3jsTransitionEaseDemonstration" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg>
+                        <div class="d-flex align-items-baseline">
+                          <select name="easeDemonstration" id="d3jsTransitionEaseDemonstrationSelection" class="m-3">
+                            <option></option>
+                          </select>
+                          <button id="d3jsTransitionEaseDemonstrationBtn" class="btn btn-primary mt-3" type="button" onclick="d3jsTransitionUpdateEase()">Ease開始</button>
+                        </div>
+                        <script>
+                          const d3jsTransitionEaseDot = d3.select("#d3jsTransitionEaseDemonstration")
+                                                          .append("circle")
+                                                          .attr("cx", 40)
+                                                          .attr("cy", 40)
+                                                          .attr("r", 30)
+                                                          .attr("fill", "#f68b47");
+                
+                          // 抓出 D3.js 中所有 API 中名稱帶有 ease 開頭的 API
+                          const d3jsTransitionEaseNames = Object.keys(d3).filter((d) => d.slice(0, 4) === "ease");  // 註：'slice(0, 4)'是將字符串的第0個到第4個字符提取出來（不包含第4個字符）
+                
+                          d3.select("#d3jsTransitionEaseDemonstrationSelection")
+                            .selectAll("option")
+                            .data(d3jsTransitionEaseNames)
+                            .join("option")
+                            .attr("value", (d) => d)
+                            .text((d) => `d3.${d}`);
+                
+                          const d3jsTransitionUpdateEase = () => {
+                            const easeName = d3.select("#d3jsTransitionEaseDemonstrationSelection")
+                                               .node().value;
+                            d3jsTransitionEaseDot.attr("cx", 40)  // 回原點
+                                                 .transition()
+                                                 .ease(d3[easeName])  // 設定動畫效果
+                                                 .duration(1000)
+                                                 .attr("cx", 200);
+                          };
+                        </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="easeDemonstration" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;
+  &lt;div class="d-flex align-items-baseline"&gt;
+    &lt;select name="easeDemonstration" id="easeDemonstrationSelection" class="m-3"&gt;
+      &lt;option&gt;&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;button id="easeDemonstrationBtn" class="btn btn-primary mt-3" type="button" onclick="updateEase()"&gt;Ease開始&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const easeDot = d3.select("#easeDemonstration")
+                      .append("circle")
+                      .attr("cx", 40)
+                      .attr("cy", 40)
+                      .attr("r", 30)
+                      .attr("fill", "#f68b47");
+                
+    // 抓出 D3.js 中所有 API 中名稱帶有 ease 開頭的 API
+    const easeNames = Object.keys(d3).filter((d) =&gt; d.slice(0, 4) === "ease");  // 註：'slice(0, 4)'是將字符串的第0個到第4個字符提取出來（不包含第4個字符）
+                
+    d3.select("#easeDemonstrationSelection")
+      .selectAll("option")
+      .data(easeNames)
+      .join("option")
+      .attr("value", (d) =&gt; d)
+      .text((d) =&gt; `d3.${d}`);
+
+    const updateEase = () =&gt; {
+      const easeName = d3.select("#easeDemonstrationSelection")
+                         .node().value;
+      easeDot.attr("cx", 40)  // 回原點
+             .transition()
+             .ease(d3[easeName])  // 設定動畫效果
+             .attr("cx", 200);
+    };
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                      <li class="mt-5">
+                        <code class="me-2">transition.on(<i class="px-1">typename[, 想執行的程式]</i>)</code><br>
+                        <sup class="text-muted">- <i><code>typename = ['start', 'end', 'interrupt', 'cancel']</code></i></sup><br>
+                        <svg id="d3jsTransitionLoopAnimation" style="border: 1px solid rgb(103, 102, 102);"></svg>
+                        <script>
+                          const d3jsTransitionLoopAnimation = d3.select("#d3jsTransitionLoopAnimation")
+                                                                .append("circle")
+                                                                .attr("cx", 50)
+                                                                .attr("cy", 50)
+                                                                .attr("r", 25)
+                                                                .attr("fill", "#f68b47")
+                                                                .transition()
+                                                                .duration(2000)
+                                                                .on("start", goRight);
+
+                          function goRight() {
+                            d3.active(this)  // 取得正在進行中的過渡效果（transition）的函數
+                              .attr("cx", 250)
+                              .transition()
+                              .on("start", goLeft);
+                          };
+
+                          function goLeft() {
+                            d3.active(this)  // 取得正在進行中的過渡效果（transition）的函數
+                              .attr("cx", 50)
+                              .transition()
+                              .on("start", goRight);
+                          }
+                        </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="loopAnimation" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;
+  &lt;script&gt;
+    const loopAnimation = d3.select("#loopAnimation")
+                            .append("circle")
+                            .attr("cx", 50)
+                            .attr("cy", 50)
+                            .attr("r", 25)
+                            .attr("fill", "#f68b47")
+                            .transition()
+                            .duration(2000)
+                            .on("start", goRight);
+
+    function goRight() {
+      d3.active(this)  // 取得正在進行中的過渡效果（transition）的函數
+        .attr("cx", 250)
+        .transition()
+        .on("start", goLeft);
+    };
+
+    function goLeft() {
+      d3.active(this)  // 取得正在進行中的過渡效果（transition）的函數
+        .attr("cx", 50)
+        .transition()
+        .on("start", goRight);
+    }
+  &lt;/script&gt;
+
+</code></pre>
+                      </li>
+                    </ol>
+                  </div>
+                  <div id="d3jsMouseEvent" class="tab-pane fade show active">
+                    <h3>滑鼠事件</h3>
+                    <hr>
+                    <ul>
+                      <li class="mt-2">
+                        <h4>點擊＆拂過</h4>
+                        <ol class="mt-2">
+                          <li>
+                            <!-- 此項有兩part，，此part為點擊觸發事件 -->
+                            <div>
+                              <code class="me-2">selection.on()</code>滑鼠觸發事件<br>
+                              <sup class="text-muted">- <i>點擊事件發生。此處使用<code class="mx-1">.on("click", listener)</code>。</i></sup><br>
+                              <svg id="d3jsMouseEventClickSVG" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg>
+                              <script>
+                                const d3jsMouseEventClickCircle = d3.select("#d3jsMouseEventClickSVG")
+                                                                    .append("circle")
+                                                                    .attr("cx", 30)
+                                                                    .attr("cy", 20)
+                                                                    .attr("r", 20)
+                                                                    .attr("fill", "#f68b47")
+                                                                    .attr("cursor", "pointer");
+                                let d3jsMouseEventClickIsMoved = false;  // 用來追蹤圓球是否已經移動
+                
+                                d3jsMouseEventClickCircle.on("click", (e) => {
+                                  if (!d3jsMouseEventClickIsMoved) {
+                                    d3.select(e.target)
+                                      .transition()
+                                      .ease(d3.easeBack)
+                                      .duration(1000)
+                                      .attr("fill", "blue")
+                                      .attr("transform", "translate(240, 0)");
+                                    d3jsMouseEventClickIsMoved = true;  // 更新狀態為已移動
+                                  } else {
+                                    d3.select(e.target)
+                                      .transition()
+                                      .ease(d3.easeBack)
+                                      .duration(1000)
+                                      .attr("fill", "#f68b47")
+                                      .attr("transform", "translate(0, 0)");
+                                    d3jsMouseEventClickIsMoved = false;  // 更新狀態為未移動
+                                  };
+                                });
+                              </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="clickSVG" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;
+  &lt;script&gt;
+    const clickCircle = d3.select("#clickSVG")
+                          .append("circle")
+                          .attr("cx", 30)
+                          .attr("cy", 20)
+                          .attr("r", 20)
+                          .attr("fill", "#f68b47")
+                          .attr("cursor", "pointer");
+    let isMoved = false;  // 用來追蹤圓球是否已經移動
+
+    clickCircle.on("click", (e) =&gt; {
+      if (!isMoved) {
+        d3.select(e.target)
+          .transition()
+          .ease(d3.easeBack)
+          .duration(1000)
+          .attr("fill", "blue")
+          .attr("transform", "translate(240, 0)");
+        isMoved = true;  // 更新狀態為已移動
+      } else {
+        d3.select(e.target)
+          .transition()
+          .ease(d3.easeBack)
+          .duration(1000)
+          .attr("fill", "#f68b47")
+          .attr("transform", "translate(0, 0)");
+        isMoved = false;  // 更新狀態為未移動
+      };
+    });
+  &lt;/script&gt;
+
+</code></pre>
+                            </div>
+                            <!-- 此項有兩part，，此part為拂過觸發事件 -->
+                            <div class="mt-5">
+                              <sup class="text-muted">- <i>滑鼠拂過變色。此處使用<code class="mx-1">.on("mouseover", listener)</code>與<code class="mx-1">.on("mouseleave", listener)</code>。</i></sup><br>
+                              <svg id="d3jsMouseEventMouseoverSVG" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg>
+                              <script>
+                                const d3jsMouseEventMouseoverCircle = d3.select("#d3jsMouseEventMouseoverSVG")
+                                                                        .append("circle")
+                                                                        .attr("cx", 20)
+                                                                        .attr("cy", 20)
+                                                                        .attr("r", 50)
+                                                                        .attr("cursor", "pointer")
+                                                                        .attr("fill", "#f68b47")
+                                                                        .attr("transform", "translate(130, 55)");
+
+                                d3jsMouseEventMouseoverCircle
+                                  .on("mouseover", (e) => {
+                                    d3.select(e.target)
+                                      .transition()
+                                      .duration(2000)
+                                      .attr("fill", "blue");
+                                  })
+                                  .on("mouseleave", (e) => {
+                                    d3.select(e.target)
+                                      .transition()
+                                      .duration(2000)
+                                      .attr("fill", "#f68b47");
+                                  });
+                              </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="mouseoverSVG" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;
+  &lt;script&gt;
+    const mouseoverCircle = d3.select("#mouseoverSVG")
+                              .append("circle")
+                              .attr("cx", 20)
+                              .attr("cy", 20)
+                              .attr("r", 50)
+                              .attr("cursor", "pointer")
+                              .attr("fill", "#f68b47")
+                              .attr("transform", "translate(130, 55)");
+
+    mouseoverCircle
+      .on("mouseover", (e) =&gt; {
+        d3.select(e.target)
+          .transition()
+          .duration(2000)
+          .attr("fill", "blue");
+      })
+      .on("mouseleave", (e) =&gt; {
+        d3.select(e.target)
+          .transition()
+          .duration(2000)
+          .attr("fill", "#f68b47");
+      });
+  &lt;/script&gt;
+
+</code></pre>
+                            </div>
+                          </li>
+                          <li class="mt-5">
+                            <code class="me-2">d3.pointer(<i class="px-1">event[, target]</i>)</code>取得DOM節點的座標軸座標<br>
+                            <sup class="text-muted">- <i><code class="me-1">event</code>代表進行的事件；<code class="mx-1">target</code>代表指定（要顯示座標）的目標。</i></sup><br>
+                            <svg id="d3jsMouseEventPointerSVG" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg>
+                            <script>
+                              const d3jsMouseEventPointerSVG = d3.select("#d3jsMouseEventPointerSVG")
+                                                                 .attr("width", 500)
+                                                                 .attr("height", 300)
+                                                                 .attr("cursor", "pointer");
+                              let d3jsMouseEventPointerTxt = d3jsMouseEventPointerSVG.append("text");
+                
+                              d3jsMouseEventPointerSVG
+                                .on("mousemove", (e) => {
+                                  let d3jsMouseEventPointerPosition = d3.pointer(e, d3jsMouseEventPointerSVG.node());
+
+                                  d3jsMouseEventPointerTxt.attr("x", d3jsMouseEventPointerPosition[0])  // 取[x]
+                                                          .attr("y", d3jsMouseEventPointerPosition[1])  // 取[y]
+                                                          .text(`x: ${parseInt(d3jsMouseEventPointerPosition[0])},
+                                                                 y: ${parseInt(d3jsMouseEventPointerPosition[1])}`)
+                                                          .style("display", "block");
+                                })
+                                .on("mouseleave", (e) => {
+                                  d3jsMouseEventPointerTxt.style("display", "none");  // 離開SVG後不顯示文字
+                                });
+                            </script>
+<pre class="mt-3"><code class="html">
+  &lt;svg id="pointerSVG" style="border: 1px solid rgb(103, 102, 102);"&gt;&lt;/svg&gt;
+  &lt;script&gt;
+    const pointerSVG = d3.select("#pointerSVG")
+                         .attr("width", 500)
+                         .attr("height", 300)
+                         .attr("cursor", "pointer");
+    let pointerTxt = pointerSVG.append("text");
+
+    pointerSVG
+      .on("mousemove", (e) =&gt; {
+        let pointerPosition = d3.pointer(e, pointerSVG.node());
+
+        pointerTxt.attr("x", pointerPosition[0])  // 取[x]
+                  .attr("y", pointerPosition[1])  // 取[y]
+                  .text(`x: ${parseInt(pointerPosition[0])},
+                         y: ${parseInt(pointerPosition[1])}`)
+                  .style("display", "block");
+      })
+      .on("mouseleave", (e) =&gt; {
+        pointerTxt.style("display", "none");  // 離開SVG後不顯示文字
+      });
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li class="mt-5">
+                            工具提示框（Tooltips）<br>
+                            <div id="d3jsMouseEventTooltip" class="mt-1"></div>
+                            <script>
+                              const d3jsMouseEventTooltipCircle = d3.select("#d3jsMouseEventTooltip")
+                                                                    .append("svg")
+                                                                    .append("circle")
+                                                                    .attr("cx", 80)
+                                                                    .attr("cy", 75)
+                                                                    .attr("r", 40)
+                                                                    .attr("cursor", "pointer")
+                                                                    .attr("fill", "#f6cefc");
+                              const d3jsMouseEventTooltip = d3.select("#d3jsMouseEventTooltip")
+                                                              .style("position", "relative")
+                                                              .append("div")
+                                                              .style("position", "absolute")
+                                                              .style("display", "none")  // 初始隱藏Tooltip
+                                                              .style("border", "1px solid black")
+                                                              .style("border-radius", "5px")
+                                                              .style("padding", "8px")
+                                                              .html(
+                                                                `<p>
+                                                                  <b>我是Tooltip</b><br>
+                                                                  這裡可以放入想放入的文字，<br>
+                                                                  也可以插入圖片
+                                                                 </p>
+                                                                 <img src="assets/IMG_2073.jpg" width="60px" class="d-inline-block">
+                                                                `);
+
+                              // 加上滑鼠事件
+                              d3jsMouseEventTooltipCircle
+                                .on("mouseover", (e) => {
+                                  d3jsMouseEventTooltip.style("display", "block");  
+                                })
+                                .on("mousemove", (e) => {
+                                  d3jsMouseEventTooltip.style("top", "-5px")
+                                                       .style("left", "180px");
+                                })
+                                .on("mouseleave", (e) => {
+                                  d3jsMouseEventTooltip.style("display", "none");
+                                });
+                            </script>
+<pre class="mt-3"><code class="html">
+  &lt;div id="tooltip"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const tooltipCircle = d3.select("#tooltip")
+                            .append("svg")
+                            .append("circle")
+                            .attr("cx", 80)
+                            .attr("cy", 75)
+                            .attr("r", 40)
+                            .attr("cursor", "pointer")
+                            .attr("fill", "#f6cefc");
+    const tooltip = d3.select("#tooltip")
+                      .style("position", "relative")
+                      .append("div")
+                      .style("position", "absolute")
+                      .style("display", "none")  // 初始隱藏Tooltip
+                      .style("border", "1px solid black")
+                      .style("border-radius", "5px")
+                      .style("padding", "8px")
+                      .html(
+                        `&lt;p&gt;
+                          &lt;b&gt;我是Tooltip&lt;/b&gt;&lt;br&gt;
+                          這裡可以放入想放入的文字，&lt;br&gt;
+                          也可以插入圖片
+                         &lt;/p&gt;
+                         &lt;img src="assets/IMG_2073.jpg" width="60px" class="d-inline-block"&gt;
+                        `);
+
+    // 加上滑鼠事件
+    tooltipCircle
+      .on("mouseover", (e) =&gt; {
+        tooltip.style("display", "block");  
+      })
+      .on("mousemove", (e) =&gt; {
+        tooltip.style("top", "-5px")
+               .style("left", "180px");
+      })
+      .on("mouseleave", (e) =&gt; {
+        tooltip.style("display", "none");
+      });
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li class="mt-5">
+                            進階工具提示框（Tooltips）<br>
+                            <div id="d3jsMouseEventAdvancedTooltip" class="mt-1"></div>
+                            <script>
+                              const d3jsMouseEventAdvancedTooltipData = [
+                                {r: 17, x: 134, y: 181},
+                                {r: 23, x: 294, y: 131},
+                                {r: 14, x: 84, y: 273},
+                                {r: 9, x: 323, y: 59},
+                                {r: 18, x: 172, y: 251},
+                                {r: 26, x: 404, y: 154}
+                              ];
+                              const d3jsMouseEventAdvancedTooltipSVG = d3.select("#d3jsMouseEventAdvancedTooltip")
+                                                                         .append("svg")
+                                                                         .style("border", "1px solid rgb(103, 102, 102)")
+                                                                         .attr("width", 500)
+                                                                         .attr("height", 300);
+
+                              // 設定顏色
+                              const d3jsMouseEventAdvancedTooltipRData = d3jsMouseEventAdvancedTooltipData.map((d) => d.r);
+                              const d3jsMouseEventAdvancedTooltipColors = d3.scaleOrdinal(d3.schemeTableau10)  // 因'd3.schemeTableau10'已預設輸出域，所以不有另設定'.range()'
+                                                                            .domain(d3jsMouseEventAdvancedTooltipRData);
+
+                              // 建立圓點
+                              const d3jsMouseEventAdvancedTooltipDots = d3jsMouseEventAdvancedTooltipSVG.selectAll("circle")
+                                                                                                        .data(d3jsMouseEventAdvancedTooltipData)
+                                                                                                        .join("circle")
+                                                                                                        .attr("cx", (d) => d.x)
+                                                                                                        .attr("cy", (d) => d.y)
+                                                                                                        .attr("r", (d) => d.r)
+                                                                                                        .attr("fill", (d) => d3jsMouseEventAdvancedTooltipColors(d.x))
+                                                                                                        .style("cursor", "pointer");
+                
+                              // 建立tooltip
+                              const d3jsMouseEventAdvancedTooltipTooltip = d3.select("#d3jsMouseEventAdvancedTooltip")
+                                                                             .style("position", "relative")
+                                                                             .append("div")
+                                                                             .style("display", "none")
+                                                                             .style("position", "absolute")
+                                                                             .style("background-color", "white")
+                                                                             .style("border", "2px solid")
+                                                                             .style("border-radius", "5px")
+                                                                             .style("padding", "5px");
+
+                              // 顯示tooltip
+                              d3jsMouseEventAdvancedTooltipDots
+                                .on("mouseover", (e) => {
+                                  d3jsMouseEventAdvancedTooltipTooltip.style("display", "block");
+                                })
+                                .on("mousemove", (e) => {
+                                  let pt = d3.pointer(e, e.target);  // 抓圓點位置
+                                  d3jsMouseEventAdvancedTooltipTooltip.style("left", `${pt[0] + 30}px`)  // 設定tooltip的水平位置
+                                                                      .style("top", `${pt[1]}px`)  // 設定tooltip的垂直位置
+                                                                      .html(`圓半徑：${e.target.__data__.r}`);
+                                })
+                                .on("mouseleave", (e) => {
+                                  d3jsMouseEventAdvancedTooltipTooltip.style("display", "none");
+                                });
+                            </script>
+<pre class="mt-3"><code class="html">
+  &lt;div id="d3jsMouseEventAdvancedTooltip"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const data = [
+      {r: 17, x: 134, y: 181},
+      {r: 23, x: 294, y: 131},
+      {r: 14, x: 84, y: 273},
+      {r: 9, x: 323, y: 59},
+      {r: 18, x: 172, y: 251},
+      {r: 26, x: 404, y: 154}
+    ];
+    const svg = d3.select("#d3jsMouseEventAdvancedTooltip")
+                  .append("svg")
+                  .style("border", "1px solid rgb(103, 102, 102)")
+                  .attr("width", 500)
+                  .attr("height", 300);
+    
+    // 設定顏色
+    const rData = data.map((d) =&gt; d.r);
+    const colors = d3.scaleOrdinal(d3.schemeTableau10)  // 因'd3.schemeTableau10'已預設輸出域，所以不有另設定'.range()'
+                     .domain(rData);
+
+    // 建立圓點
+    const dots = svg.selectAll("circle")
+                    .data(data)
+                    .join("circle")
+                    .attr("cx", (d) =&gt; d.x)
+                    .attr("cy", (d) =&gt; d.y)
+                    .attr("r", (d) =&gt; d.r)
+                    .attr("fill", (d) =&gt; colors(d.x))
+                    .style("cursor", "pointer");
+
+    // 建立tooltip
+    const tooltip = d3.select("#d3jsMouseEventAdvancedTooltip")
+                      .style("position", "relative")
+                      .append("div")
+                      .style("display", "none")
+                      .style("position", "absolute")
+                      .style("background-color", "white")
+                      .style("border", "2px solid")
+                      .style("border-radius", "5px")
+                      .style("padding", "5px");
+
+    // 顯示tooltip
+    dots
+      .on("mouseover", (e) =&gt; {
+        tooltip.style("display", "block");
+      })
+      .on("mousemove", (e) =&gt; {
+        let pt = d3.pointer(e, e.target);  // 抓圓點位置
+        tooltip.style("left", `${pt[0] + 30}px`)  // 設定tooltip的水平位置
+               .style("top", `${pt[1]}px`)  // 設定tooltip的垂直位置
+               .html(`圓半徑：${e.target.__data__.r}`);
+      })
+      .on("mouseleave", (e) =&gt; {
+        tooltip.style("display", "none");
+      });
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li class="mt-5">
+                            插入其他html頁面<br>
+                            <sup class="text-muted">- <i>點擊以打開包含其他web的Tooltip，再點擊一次關閉。</i></sup><br>
+                            <div id="d3jsMouseEventInsertHTMLWeb" class="mt-1"></div>
+                            <script>
+                              const d3jsMouseEventInsertHTMLWebTooltipIcon = d3.select("#d3jsMouseEventInsertHTMLWeb")
+                                                                        .append("svg")
+                                                                        .attr("height", 200)
+                                                                        .attr("width", 200)
+                                                                        .append("g")
+                                                                        .style("cursor", "pointer");
+                              const d3jsMouseEventInsertHTMLWebTooltipIconCircle = d3jsMouseEventInsertHTMLWebTooltipIcon.append("circle")
+                                                                                                           .attr("cx", 100)
+                                                                                                           .attr("cy", 100)
+                                                                                                           .attr("r", 60)
+                                                                                                           .attr("fill", "#69b3a2");
+                              const d3jsMouseEventInsertHTMLWebTooltipIconText = d3jsMouseEventInsertHTMLWebTooltipIcon.append("text")
+                                                                                                         .text("按鈕")
+                                                                                                         .attr("fill", "#eeeeee")
+                                                                                                         .attr("x", 100)
+                                                                                                         .attr("y", 110)
+                                                                                                         .attr("text-anchor", "middle")
+                                                                                                         .attr("font-size", 30)
+                                                                                                         .attr("font-family", "sans-serif");
+                              const d3jsMouseEventInsertHTMLWebTooltip = d3.select("#d3jsMouseEventInsertHTMLWeb")
+                                                                           .style("position", "relative")
+                                                                           .append("div")
+                                                                           .attr("id", "d3jsMouseEventInsertHTMLWebTooltipWebsite")
+                                                                           .style("position", "absolute")
+                                                                           .style("display", "none")
+                                                                           .style("border", "2px solid black")
+                                                                           .style("border-radius", "10px")
+                                                                           .style("width", "700px")
+                                                                           .style("max-height", "600px")
+                                                                           .style("overflow", "auto")
+                                                                           .style("background-color", "#ffffff")
+                                                                           .style("padding", "20px");
+                              let d3jsMouseEventInsertHTMLWebIsClick = false;
+                              d3jsMouseEventInsertHTMLWebTooltipIcon
+                                .on("click", (e) => {
+                                  if (!d3jsMouseEventInsertHTMLWebIsClick) {
+                                    d3.html("study/statistics_note.html").then( (d) => {
+                                      // 只選取 <body> 內的內容
+                                      const d3jsMouseEventInsertHTMLWebBodyContent = d3.select(d).select("body").html();
+
+                                      // 將選取的內容插入到 Tooltip 中
+                                      d3.select("#d3jsMouseEventInsertHTMLWebTooltipWebsite")
+                                        .style("display", "block")
+                                        .html(d3jsMouseEventInsertHTMLWebBodyContent);
+
+                                      // 重新渲染 MathJax 公式
+                                      MathJax.typesetPromise();
+                                    });
+                                    d3jsMouseEventInsertHTMLWebIsClick = true;
+                                  } else {
+                                    d3.select("#d3jsMouseEventInsertHTMLWebTooltipWebsite")
+                                      .style("display", "none");
+                                    d3jsMouseEventInsertHTMLWebIsClick = false;
+                                  };
+                                })
+                                .on("mouseover", () => {
+                                  d3jsMouseEventInsertHTMLWebTooltipIconCircle.attr("stroke", "#ffffff")
+                                                                       .attr("stroke-width", 5);
+                                })
+                                .on("mousemove", (e) => {
+                                  let d3jsMouseEventInsertHTMLPt = d3.pointer(e, e.target);
+                                  // 設置Tooltip位置
+                                  d3.select("#d3jsMouseEventInsertHTMLWebTooltipWebsite")
+                                    .style("left", `${d3jsMouseEventInsertHTMLPt[0] + 40}px`)
+                                    .style("top", `${d3jsMouseEventInsertHTMLPt[1] - 30}px`);
+                                })
+                                .on("mouseleave", () => {
+                                  d3jsMouseEventInsertHTMLWebTooltipIconCircle.attr("stroke-width", 0);
+                                });
+                            </script>
+<pre class="mt-3"><code class="html">
+  &lt;div id="d3jsMouseEventInsertHTMLWeb"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const tooltipIcon = d3.select("#d3jsMouseEventInsertHTMLWeb")
+                          .append("svg")
+                          .attr("height", 200)
+                          .attr("width", 200)
+                          .append("g")
+                          .style("cursor", "pointer");
+    const tooltipIconCircle = tooltipIcon.append("circle")
+                                         .attr("cx", 100)
+                                         .attr("cy", 100)
+                                         .attr("r", 60)
+                                         .attr("fill", "#69b3a2");
+    const tooltipIconText = tooltipIcon.append("text")
+                                       .text("按鈕")
+                                       .attr("fill", "#eeeeee")
+                                       .attr("x", 100)
+                                       .attr("y", 110)
+                                       .attr("text-anchor", "middle")
+                                       .attr("font-size", 30)
+                                       .attr("font-family", "sans-serif");
+    const tooltip = d3.select("#d3jsMouseEventInsertHTMLWeb")
+                      .style("position", "relative")
+                      .append("div")
+                      .attr("id", "tooltipWebsite")
+                      .style("position", "absolute")
+                      .style("display", "none")
+                      .style("border", "2px solid black")
+                      .style("border-radius", "10px")
+                      .style("width", "700px")
+                      .style("max-height", "600px")
+                      .style("overflow", "auto")
+                      .style("background-color", "#ffffff")
+                      .style("padding", "20px");
+
+    // 判斷是否已點擊開啟tooltip用
+    let isClick = false;
+
+    tooltipIcon
+      .on("click", (e) =&gt; {
+        if (!isClick) {
+          // 引用其他網頁內容
+          d3.html("study/statistics_note.html").then( (d) =&gt; {
+            const bodyContent = d3.select(d).select("body").html();  // 只選取該網頁&lt;body&gt;內的內容
+
+            d3.select("#tooltipWebsite")
+              .style("display", "block")
+              .html(bodyContent);  // 將選取的內容插入到Tooltip中
+
+            MathJax.typesetPromise();  // 重新渲染 MathJax 公式
+          });
+          isClick = true;  // 切換至已開啟tooltip狀態
+        } else {
+          d3.select("#tooltipWebsite")
+            .style("display", "none");
+          isClick = false;  // 切換至未開啟tooltip狀態
+        };
+      })
+      .on("mouseover", () =&gt; {
+        tooltipIconCircle.attr("stroke", "#ffffff")
+                         .attr("stroke-width", 5);
+      })
+      .on("mousemove", (e) =&gt; {
+        let pt = d3.pointer(e, e.target);
+        // 設置Tooltip位置
+        d3.select("#tooltipWebsite")
+          .style("left", `${pt[0] + 40}px`)
+          .style("top", `${pt[1] - 30}px`);
+      })
+      .on("mouseleave", () =&gt; {
+        tooltipIconCircle.attr("stroke-width", 0);
+      });
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="mt-5">
+                        <h4>拖曳</h4>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.drag()</code>拖曳<br>
+                            <svg id="d3jsMouseEventClickSVG" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg>
+                            <script>
+
+                            </script>
+<pre class="mt-3"><code class="html">
+  
+</code></pre>
+                          </li>
+                          <li class="mt-5"></li>
+                        </ol>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -5414,7 +6964,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-08-10T00:42">2024/08/10 00:42</time></p>
+            資料最後更新時間：<time datetime="2024-08-16T00:21">2024/08/16 00:21</time></p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>
         <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">
