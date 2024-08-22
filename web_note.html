@@ -30,7 +30,6 @@
     <script>hljs.highlightAll();</script>  
 
     <!-- Tooltip引用統計學頁面，需以latex渲染數學公式 -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
 
@@ -2514,6 +2513,8 @@
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAxes">各種軸線與刻度</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsAnimation">動畫</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsMouseEvent">滑鼠事件</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsPieChart">圓餅圖</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#d3jsScatterChart">散點圖</a></li>
                 </ul>
               </div>
               <div class="col-md-10">
@@ -3036,7 +3037,7 @@
                               <div>
 <pre><code class="javascript">
   const getCsvData = async () => {
-    const csvData = await d3.csv("檔案路徑");
+    const csvData = await d3.csv("串接網址 or 檔案路徑");
     console.log("csvData", csvData);
   };
 
@@ -6379,8 +6380,8 @@
                       </li>
                     </ol>
                   </div>
-                  <div id="d3jsMouseEvent" class="tab-pane fade show active">
-                    <h3>滑鼠事件</h3>
+                  <div id="d3jsMouseEvent" class="tab-pane fade">
+                    <h3>滑鼠事件<sub>（點擊＆拂過、拖曳、縮放、選取刷）</sub></h3>
                     <hr>
                     <ul>
                       <li class="mt-2">
@@ -6930,8 +6931,994 @@
                         <h4>拖曳</h4>
                         <ol>
                           <li>
-                            <code class="me-2">d3.drag()</code>拖曳<br>
-                            <svg id="d3jsMouseEventClickSVG" class="mt-1" style="border: 1px solid rgb(103, 102, 102);"></svg>
+                            <code class="me-2">d3.drag()</code>拖曳
+                            <ul style="list-style-type: circle;">
+                              <li class="my-1"><code class="me-2">drag.on(<i class="px-1">"typenames"[, listener]</i>)</code>：設定拖曳的細節，兩個參數分別是事件<code class="mx-1">typenames</code>與函示<code class="mx-1">listener</code>，其中typenames有"start"、"dragged"、"end"三個階段。</li>
+                            </ul>
+                            <div id="d3jsDragContainer" class="mt-1"></div>
+                            <script>
+                              const d3jsDragContainerData = [
+                                {name: "A", x: 200, y: 340},
+                                {name: "B", x: 220, y: 300},
+                                {name: "C", x: 250, y: 198},
+                                {name: "D", x: 360, y: 296},
+                                {name: "E", x: 160, y: 150},
+                                {name: "F", x: 320, y: 60},
+                                {name: "G", x: 187, y: 250}
+                              ];
+                              const d3jsDragContainerWidth = 600;
+                              const d3jsDragContainerHeight = 400;
+                              const d3jsDragContainerSVG = d3.select("#d3jsDragContainer")
+                                                             .append("svg")
+                                                             .attr("width", d3jsDragContainerWidth)
+                                                             .attr("height", d3jsDragContainerHeight)
+                                                             .style("border", "1px solid rgb(103, 102, 102)");
+                    
+                              // 建立圓點
+                              const d3jsDragContainerDots = d3jsDragContainerSVG.append("g")
+                                                                                .selectAll("circle")
+                                                                                .data(d3jsDragContainerData)
+                                                                                .join("circle")
+                                                                                .attr("r", 25)
+                                                                                .attr("cx", (d) => d.x)
+                                                                                .attr("cy", (d) => d.y)
+                                                                                .style("fill", "#19d3a2")
+                                                                                .style("fill-opacity", 0.3)
+                                                                                .attr("stroke", "#b3a2c8")
+                                                                                .attr("stroke-width", 4)
+                                                                                .style("cursor", "pointer");
+                    
+                              // 建立拖曳方法
+                              // 在d3.drag()事件處理器中，應避免使用箭頭函數來確保'this'能綁定到正確的DOM元素
+                              const d3jsDragContainerDrag = d3.drag()
+                                                              .on("start", function() {  // 因為要用'this'，所以用普通函數
+                                                                d3.select(this).style("stroke", "blue");
+                                                              })
+                                                              .on("drag", function(e) {  // 因為要用'this'，所以用普通函數
+                                                                const pt = d3.pointer(e, this);
+                                                                d3.select(this)
+                                                                  .attr("cx", pt[0])
+                                                                  .attr("cy", pt[1]);
+                                                              })
+                                                              .on("end", function() {  // 因為要用'this'，所以用普通函數
+                                                                d3.select(this).style("stroke", "#b3a2c8");
+                                                              });
+                    
+                              // 呼叫拖曳方法
+                              d3jsDragContainerDots.call(d3jsDragContainerDrag);
+                            </script>
+<pre class="mt-3"><code class="html">
+  &lt;div id="d3jsDragContainer" class="mt-1"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const data = [
+      {name: "A", x: 200, y: 340},
+      {name: "B", x: 220, y: 300},
+      {name: "C", x: 250, y: 198},
+      {name: "D", x: 360, y: 296},
+      {name: "E", x: 160, y: 150},
+      {name: "F", x: 320, y: 60},
+      {name: "G", x: 187, y: 250}
+    ];
+    const width = 600;
+    const height = 400;
+    const svg = d3.select("#d3jsDragContainer")
+                  .append("svg")
+                  .attr("width", width)
+                  .attr("height", height)
+                  .style("border", "1px solid rgb(103, 102, 102)");
+
+    // 建立圓點
+    const dots = svg.append("g")
+                    .selectAll("circle")
+                    .data(data)
+                    .join("circle")
+                    .attr("r", 25)
+                    .attr("cx", (d) =&gt; d.x)
+                    .attr("cy", (d) =&gt; d.y)
+                    .style("fill", "#19d3a2")
+                    .style("fill-opacity", 0.3)
+                    .attr("stroke", "#b3a2c8")
+                    .attr("stroke-width", 4)
+                    .style("cursor", "pointer");
+
+    // 建立拖曳方法
+    // 在d3.drag()事件處理器中，應避免使用箭頭函數來確保'this'能綁定到正確的DOM元素
+    const drag = d3.drag()
+                   .on("start", function() {  // 因為要用'this'，所以用普通函數
+                     d3.select(this).style("stroke", "blue");
+                   })
+                   .on("drag", function(e) {  // 因為要用'this'，所以用普通函數
+                     const pt = d3.pointer(e, this);
+                     d3.select(this)
+                       .attr("cx", pt[0])
+                       .attr("cy", pt[1]);
+                   })
+                   .on("end", function() {  // 因為要用'this'，所以用普通函數
+                     d3.select(this).style("stroke", "#b3a2c8");
+                   });
+
+    // 呼叫拖曳方法
+    dots.call(drag);
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="mt-5">
+                        <h4>縮放</h4>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.zoom()</code>縮放
+                            <ul style="list-style-type: circle;">
+                              <li class="my-1"><code class="me-2">zoom.scaleExtent(<i class="px-1">[k0, k1]</i>)</code>：設定縮放係數的大小範圍，預設是[0, &infin;]。</li>
+                              <li class="my-1"><code class="me-2">zoom.duration()</code>：滑鼠雙擊或觸控雙擊時zoom縮放的變換時長。</li>
+                              <li class="my-1"><code class="me-2">d3.zoomIdentity()</code>：設定transform物件的狀態，可以藉下面的code，讓縮放後的物件回復到原本大小。</li>
+<pre><code class="javascript">
+  d3.select("#resetBtn")
+    .on("click", () => {
+      const transformFunction = d3.zoomIdendity.scale(1);
+      svg.call(zoomFunction.transform, transformFunction);
+    });
+
+</code></pre>
+                            </ul>
+                            <div id="d3jsZoomBasic" class="mt-4"></div>
+                            <button id="d3jsZoomBasicResetBtn" type="button" class="btn btn-primary mt-2">重設</button>
+                            <script>
+                              const d3jsZoomBasicWidth = 450;
+                              const d3jsZoomBasicHeight = 300;
+                              const d3jsZoomBasicSVG = d3.select("#d3jsZoomBasic")
+                                                         .append("svg")
+                                                         .attr("width", d3jsZoomBasicWidth)
+                                                         .attr("height", d3jsZoomBasicHeight)
+                                                         .style("border", "1px solid gray");
+                                    
+                              // 加個圓點
+                              const d3jsZoomBasicCircle = d3jsZoomBasicSVG.append("circle")
+                                                                          .attr("id", "dot")
+                                                                          .attr("cx", d3jsZoomBasicWidth / 2)
+                                                                          .attr("cy", d3jsZoomBasicHeight / 2)
+                                                                          .attr("r", 50)
+                                                                          .attr("fill", "#69b3a2")
+                                                                          .style("cursor", "pointer");
+                    
+                              // 建立Zoom事件
+                              const d3jsZoomBasicZoom = d3.zoom()
+                                                          .extent([
+                                                            [0, 0], [250, 250]
+                                                          ])
+                                                          .scaleExtent([1/5, 5])  // 縮放大小倍率限制
+                                                          .duration(600)
+                                                          .on("zoom", (e) => {
+                                                            const transform = e.transform;
+                                                            // 這邊決定要放大誰
+                                                            // 使用transform.k調整選定元素屬性的transform的k，避免動到x、y造成元素位置改變
+                                                            // 50為圓原半徑
+                                                            d3jsZoomBasicCircle.attr("r", (d) => 50 * transform.k);
+                                                          });
+                                    
+                              // 呼叫Zoom事件
+                              d3jsZoomBasicSVG.call(d3jsZoomBasicZoom);
+                              
+                              // 設立重置按鈕，以回復到原本狀態
+                              d3.select("#d3jsZoomBasicResetBtn")
+                                .on("click", () => {
+                                  const transform = d3.zoomIdentity.scale(1);
+                                  d3jsZoomBasicSVG.call(d3jsZoomBasicZoom.transform, transform);
+                                });
+                            </script>
+<pre class="mt-3"><code class="html">
+  &lt;div id="zoomBasic" class="mt-1"&gt;&lt;/div&gt;
+  &lt;button id="resetBtn" type="button" class="btn btn-primary mt-2"&gt;重設&lt;/button&gt;
+  &lt;script&gt;
+    const width = 450;
+    const height = 300;
+    const svg = d3.select("#zoomBasic")
+                  .append("svg")
+                  .attr("width", width)
+                  .attr("height", height)
+                  .style("border", "1px solid gray");
+          
+    // 加個圓點
+    const circle = svg.append("circle")
+                      .attr("id", "dot")
+                      .attr("cx", width / 2)
+                      .attr("cy", height / 2)
+                      .attr("r", 50)
+                      .attr("fill", "#69b3a2")
+                      .style("cursor", "pointer");
+
+    // 建立Zoom事件
+    const zoomEvent = d3.zoom()
+                        .extent([
+                          [0, 0], [250, 250]
+                        ])
+                        .scaleExtent([1/5, 5])  // 縮放大小倍率限制
+                        .duration(600)
+                        .on("zoom", (e) =&gt; {
+                          const transform = e.transform;
+                          // 這邊決定要放大誰
+                          // 使用transform.k調整選定元素屬性的transform的k，避免動到x、y造成元素位置改變
+                          // 50為圓原半徑
+                          circle.attr("r", (d) =&gt; 50 * transform.k);
+                        });
+          
+    // 呼叫Zoom事件
+    svg.call(zoomEvent);
+    
+    // 設立重置按鈕，以回復到原本狀態
+    d3.select("#resetBtn")
+      .on("click", () =&gt; {
+        const transform = d3.zoomIdentity.scale(1);
+        svg.call(zoomEvent.transform, transform);
+      });
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="mt-5">
+                        <h4>選取刷</h4>
+                        <ol>
+                          <li>
+                            <code class="me-2">d3.brush()</code>選取刷
+                            <ul style="list-style-type: circle;">
+                              <li class="my-1"><code>d3.brush()</code>、<code>d3.brushX()</code>、<code class="me-2">d3.brushY()</code>：分別是建立二維brush、水平方向brush、垂直方向brush。</li>
+                              <li class="my-1"><code class="me-2">brush.on(<i class="px-1">"typenames"[, listener]</i>)</code>：用來監聽brush事件，兩個參數分別是事件<code class="mx-1">typenames</code>與函示<code class="mx-1">listener</code>，其中typenames有"start"、"brush"、"end"三個階段。</li>
+                              <li class="my-1"><code class="me-2">brush.extent(<i class="px-1">[[x0, y0], [x1, y1]]</i>)</code>：設定允許刷取的範圍，<code>[x0, y0]</code>為範圍左上角，<code>[x1, y1]</code>為範圍右下角</li>
+                            </ul>
+                            <div id="d3jsBrush" class="mt-4"></div>
+                            <script>
+                              const d3jsBrushWidth = 540;
+                              const d3jsBrushHeight = 360;
+                              const d3jsBrushData = [
+                                {r: 20, x: 200, y: 120},
+                                {r: 35, x: 350, y: 280},
+                                {r: 25, x: 120, y: 240},
+                              ];
+                    
+                              // 建立SVG
+                              const d3jsBrushSVG = d3.select("#d3jsBrush")
+                                                     .append("svg")
+                                                     .attr("width", d3jsBrushWidth)
+                                                     .attr("height", d3jsBrushHeight)
+                                                     .style("border", "1px solid gray");
+                              
+                              // 加上圓點
+                              const d3jsBrushDots = d3jsBrushSVG.selectAll("circle")
+                                                                .data(d3jsBrushData)
+                                                                .join("circle")
+                                                                .attr("cx", (d) => d.x)
+                                                                .attr("cy", (d) => d.y)
+                                                                .attr("r", (d) => d.r)
+                                                                .style("fill", "#69b3a2");
+                    
+                              // 設定brush的功能
+                              // 使用e.selection取得目前的selection
+                              // selection會產出一個二維陣列
+                              // 分別代表'x0', 'x1', 'y0', 'y1'，左上到右下的位置
+                              // 讓開發者有辦法重新計算目前位置的extent，進而進行其他操作。
+                              const d3jsBrushed = (e) => {
+                                const brushExtent = e.selection;
+                                d3jsBrushDots.style("fill", (d) => 
+                                  isBrushed(brushExtent, d.x, d.y) ? "blue" : "#69b3a2"
+                                );
+
+                                // 判斷圓點是否在brush選到的區域內
+                                function isBrushed (brush_coors, cx, cy) {  // 'brush_coors', 'cx', 'cy'三者皆僅為函數變數名
+                                  let x0 = brush_coors[0][0],
+                                      x1 = brush_coors[1][0],
+                                      y0 = brush_coors[0][1],
+                                      y1 = brush_coors[1][1];
+                                  return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;  // 如果圓點在brush的範圍內，就會傳true：反之，則回傳false
+                                };
+                              };
+                    
+                              // 建立brush事件
+                              const d3jsBrushEvent = d3.brush()
+                                                       .extent([
+                                                         [0, 0],
+                                                         [600, 600]
+                                                       ])  // extent限制刷子的活動區塊，理想是比SVG畫布稍大
+                                                       .on("start brush", d3jsBrushed);  // 綁定brush事件
+                    
+                              // 呼叫brush事件
+                              d3jsBrushSVG.call(d3jsBrushEvent);
+                            </script>
+<pre class="mt-3"><code class="html">
+  &lt;div id="brush" class="mt-4"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const width = 540;
+    const height = 360;
+    const data = [
+      {r: 20, x: 200, y: 120},
+      {r: 35, x: 350, y: 280},
+      {r: 25, x: 120, y: 240},
+    ];
+
+    // 建立SVG
+    const svg = d3.select("#brush")
+                  .append("svg")
+                  .attr("width", width)
+                  .attr("height", height)
+                  .style("border", "1px solid gray");
+
+    // 加上圓點
+    const dots = svg.selectAll("circle")
+                    .data(data)
+                    .join("circle")
+                    .attr("cx", (d) =&gt; d.x)
+                    .attr("cy", (d) =&gt; d.y)
+                    .attr("r", (d) =&gt; d.r)
+                    .style("fill", "#69b3a2");
+
+    // 設定brush的功能
+    // 使用e.selection取得目前的selection
+    // selection會產出一個二維陣列
+    // 分別代表'x0', 'x1', 'y0', 'y1'，左上到右下的位置
+    // 讓開發者有辦法重新計算目前位置的extent，進而進行其他操作。
+    const brushed = (e) =&gt; {
+      const brushExtent = e.selection;
+      dots.style("fill", (d) =&gt; 
+        isBrushed(brushExtent, d.x, d.y) ? "blue" : "#69b3a2"
+      );
+
+      // 判斷圓點是否在brush選到的區域內
+      function isBrushed (brush_coors, cx, cy) {  // 'brush_coors', 'cx', 'cy'三者皆僅為函數變數名
+        let x0 = brush_coors[0][0],
+            x1 = brush_coors[1][0],
+            y0 = brush_coors[0][1],
+            y1 = brush_coors[1][1];
+        return x0 &lt;= cx && cx &lt;= x1 && y0 &lt;= cy && cy &lt;= y1;  // 如果圓點在brush的範圍內，就會傳true：反之，則回傳false
+      };
+    };
+
+    // 建立brush事件
+    const brushEvent = d3.brush()
+                         .extent([
+                           [0, 0],
+                           [600, 600]
+                         ])  // extent限制刷子的活動區塊，理想是比SVG畫布稍大
+                         .on("start brush", brushed);  // 綁定brush事件
+
+    // 呼叫brush事件
+    svg.call(brushEvent);
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                        </ol>
+                      </li>
+                    </ul>
+                  </div>
+                  <div id="d3jsPieChart" class="tab-pane fade">
+                    <h3>圓餅圖（Pie Chart）</h3>
+                    <hr>
+                    <ul>
+                      <li class="mt-2">
+                        <h4>一般圓餅圖</h4>
+                        <ol class="mt-2">
+                          <li>
+                            一般的圓餅圖
+                            <!-- 此項有兩part，，此part為書本範例改編 -->
+                            <div>
+                              <sup class="text-muted">- <i>此處使用簡單格式的data。</i></sup><br>
+                              <div id="d3jsPieChartExample" class="mt-1"></div>
+                              <script>
+                                const d3jsPieChartExampleWidth = 600;
+                                const d3jsPieChartExampleHeight = 400;
+                                const d3jsPieChartExampleMargin = 40;
+                                const d3jsPieChartExampleData = [
+                                  { item: "交通", data: 3000 },
+                                  { item: "房租", data: 12000 },
+                                  { item: "日常用品", data: 1400 },
+                                  { item: "吃飯", data: 4000 },
+                                  { item: "交際應酬", data: 2400 }
+                                ];
+                              
+                                const d3jsPieChartExampleSVG = d3.select("#d3jsPieChartExample")
+                                                                 .append("svg")
+                                                                 .attr("width", d3jsPieChartExampleWidth)
+                                                                 .attr("height", d3jsPieChartExampleHeight);
+                              
+                                // 建立圓餅圖的群組元素'g'，用來容納圓餅圖的切片
+                                d3jsPieChartExampleSVG.append("g")
+                                                      .attr("id", "d3jsPieChartExampleSlices")
+                                                      .attr("transform", `translate(${d3jsPieChartExampleWidth / 2}, ${d3jsPieChartExampleHeight / 2})`);
+                              
+                                // 設定顏色比例尺，從'd3.schemeSet2'配色方案中選取顏色
+                                const d3jsPieChartExampleColor = d3.scaleOrdinal().range(d3.schemeSet2);
+                              
+                                // 設定圓餅圖的半徑
+                                const d3jsPieChartExampleRadius = Math.min(d3jsPieChartExampleWidth, d3jsPieChartExampleHeight) / 2 - d3jsPieChartExampleMargin;
+                              
+                                // 設定圓餅圖的生成器，指定根據'data'屬性來生成圖表
+                                const d3jsPieChartExamplePieChartGenerator = d3.pie().value((d) => d.data);
+                              
+                                // 設定每個圓餅圖切片的弧度生成器，定義內半徑和外半徑
+                                const d3jsPieChartExampleArc = d3.arc()
+                                                                 .innerRadius(0)  // 設定內半徑為0（實心圓）
+                                                                 .outerRadius(d3jsPieChartExampleRadius)  // 設定外半徑為計算出的半徑值
+                                                                 .padAngle(0);  // 設定每個切片之間的間隔角度為0
+                              
+                                // 設定外弧，用於放置標籤或其他用途
+                                const d3jsPieChartExampleOuterArc = d3.arc()
+                                                                      .outerRadius(d3jsPieChartExampleRadius)
+                                                                      .innerRadius(d3jsPieChartExampleRadius - 10);
+                              
+                                // 使用圓餅圖生成器將資料轉換為可以繪製的形式
+                                const d3jsPieChartExamplePieChartData = d3jsPieChartExamplePieChartGenerator(d3jsPieChartExampleData);
+                              
+                                // 在群組元素中綁定資料並生成'path'元素，代表圓餅圖的每一塊
+                                const d3jsPieChartExampleExpensesChart = d3jsPieChartExampleSVG.select("#d3jsPieChartExampleSlices")
+                                                                                               .selectAll("path")
+                                                                                               .data(d3jsPieChartExamplePieChartData)
+                                                                                               .join("path")
+                                                                                               .attr("d", d3jsPieChartExampleArc)  // 根據生成的弧形路徑繪製圓餅圖
+                                                                                               .attr("class", "d3jsPieChartExampleArc")  // 設定弧形們的class
+                                                                                               .attr("fill", d3jsPieChartExampleColor)  // 根據資料設定填充顏色
+                                                                                               .attr("stroke", "#ffffff")  // 設定弧形的邊框顏色為白色
+                                                                                               .attr("stroke-width", "3px")  // 設定邊框寬度為3像素
+                                                                                               .style("opacity", 1);  // 設定每個切片的透明度為1（不透明）
+                    
+                              
+                                // 加上每個區塊的數字標示，計算百分比並設定標籤文字
+                                const d3jsPieChartExampleTotal = d3.sum(d3jsPieChartExampleData, (d) => d.data);  // 計算總支出金額
+                                d3jsPieChartExampleData.forEach((i) => {  // 透過一個forEach迴圈，計算每項支出佔總額的百分比
+                                  i.percentage = Math.round((i.data / d3jsPieChartExampleTotal) * 100);  // 在原始data新增一個名為'percentage'的新屬性，儲存百分比
+                                });
+                              
+                                // 綁定標籤資料，生成'text'元素並設定位置、文字內容、樣式
+                                const d3jsPieChartExampleLabels = d3.select("#d3jsPieChartExampleSlices")
+                                                                    .selectAll("text")
+                                                                    .data(d3jsPieChartExamplePieChartData)  // 需使用d3.pie()處理後的資料，因為原始資料沒有角度資訊
+                                                                    .join("text")
+                                                                    .attr("class", "d3jsPieChartExampleLabels")
+                                                                    .attr("transform", (d) => `translate(${d3jsPieChartExampleOuterArc.centroid(d)})`)
+                                                                    .text((d) => d.data.item + " " + d.data.percentage + "%")  // 'd.data'是d3.pie()處理後的資料裡所包含的原始資料部分
+                                                                    .style("text-anchor", "middle")
+                                                                    .style("font-size", 16)
+                                                                    .style("fill", "black");
+                              
+                                // 設定滑鼠互動事件，當滑鼠移到圓餅圖的切片上時，切片會放大並產生陰影
+                                d3.selectAll(".d3jsPieChartExampleArc")
+                                  .style("cursor", "pointer")
+                                  .on("mouseover", (e, d) => {  // 當滑鼠移到切片上時觸發
+                                    d3.select(e.target)
+                                      .transition()
+                                      .duration(500)
+                                      .style("transform", "scale(1.1)");  // 將切片放大至1.1倍
+                    
+                                    d3.selectAll(".d3jsPieChartExampleLabels")
+                                      .filter((labelData) => labelData.index === d.index)  // 選取對應的標籤
+                                      .transition()
+                                      .duration(500)
+                                      .style("font-size", "24px");
+                                  })
+                                  .on("mousemove", (d) => {
+                                    d3.select(d.target)
+                                      .style("filter", "drop-shadow(2px 4px 6px #000000)");  // 加上陰影效果
+                                  })
+                                  .on("mouseleave", (e, d) => {  // 當滑鼠離開切片時觸發
+                                    d3.select(e.target)
+                                      .transition()
+                                      .duration(500)
+                                      .style("filter", "drop-shadow(0 0 0 black)")  // 移除陰影效果
+                                      .style("transform", "scale(1)");  // 將切片還原到原始大小
+                    
+                                    d3.selectAll(".d3jsPieChartExampleLabels")
+                                      .filter((labelData) => labelData.index === d.index)  // 選取對應的標籤
+                                      .transition()
+                                      .duration(500)
+                                      .style("font-size", "16px");
+                                  });
+                              </script>
+<pre class="mt-3"><code class="html">
+  &lt;div id="pieChartExample" class="mt-1"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const pieChartExampleWidth = 600;
+    const pieChartExampleHeight = 400;
+    const pieChartExampleMargin = 40;
+    const pieChartExampleData = [
+      { item: "交通", data: 3000 },
+      { item: "房租", data: 12000 },
+      { item: "日常用品", data: 1400 },
+      { item: "吃飯", data: 4000 },
+      { item: "交際應酬", data: 2400 }
+    ];
+  
+    const pieChartExampleSVG = d3.select("#pieChartExample")
+                                 .append("svg")
+                                 .attr("width", pieChartExampleWidth)
+                                 .attr("height", pieChartExampleHeight);
+  
+    // 建立圓餅圖的群組元素'g'，用來容納圓餅圖的切片
+    pieChartExampleSVG.append("g")
+                      .attr("id", "pieChartExampleSlices")
+                      .attr("transform", `translate(${pieChartExampleWidth / 2}, ${pieChartExampleHeight / 2})`);
+  
+    // 設定顏色比例尺，從'd3.schemeSet2'配色方案中選取顏色
+    const pieChartExampleColor = d3.scaleOrdinal().range(d3.schemeSet2);
+  
+    // 設定圓餅圖的半徑
+    const pieChartExampleRadius = Math.min(pieChartExampleWidth, pieChartExampleHeight) / 2 - pieChartExampleMargin;
+  
+    // 設定圓餅圖的生成器，指定根據'data'屬性來生成圖表
+    const pieChartExamplePieChartGenerator = d3.pie().value((d) =&gt; d.data);
+  
+    // 設定每個圓餅圖切片的弧度生成器，定義內半徑和外半徑
+    const pieChartExampleArc = d3.arc()
+                                 .innerRadius(0)  // 設定內半徑為0（實心圓）
+                                 .outerRadius(pieChartExampleRadius)  // 設定外半徑為計算出的半徑值
+                                 .padAngle(0);  // 設定每個切片之間的間隔角度為0
+  
+    // 設定外弧，用於放置標籤或其他用途
+    const pieChartExampleOuterArc = d3.arc()
+                                      .outerRadius(pieChartExampleRadius)
+                                      .innerRadius(pieChartExampleRadius - 10);
+  
+    // 使用圓餅圖生成器將資料轉換為可以繪製的形式
+    const pieChartExamplePieChartData = pieChartExamplePieChartGenerator(pieChartExampleData);
+  
+    // 在群組元素中綁定資料並生成'path'元素，代表圓餅圖的每一塊
+    const pieChartExampleExpensesChart = pieChartExampleSVG.select("#pieChartExampleSlices")
+                                                           .selectAll("path")
+                                                           .data(pieChartExamplePieChartData)
+                                                           .join("path")
+                                                           .attr("d", pieChartExampleArc)  // 根據生成的弧形路徑繪製圓餅圖
+                                                           .attr("class", "pieChartExampleArc")  // 設定弧形們的class
+                                                           .attr("fill", pieChartExampleColor)  // 根據資料設定填充顏色
+                                                           .attr("stroke", "#ffffff")  // 設定弧形的邊框顏色為白色
+                                                           .attr("stroke-width", "3px")  // 設定邊框寬度為3像素
+                                                           .style("opacity", 1);  // 設定每個切片的透明度為1（不透明）
+
+    
+    // 加上每個區塊的數字標示，計算百分比並設定標籤文字
+    const pieChartExampleTotal = d3.sum(pieChartExampleData, (d) =&gt; d.data);  // 計算總支出金額
+    pieChartExampleData.forEach((i) =&gt; {  // 透過一個forEach迴圈，計算每項支出佔總額的百分比
+      i.percentage = Math.round((i.data / pieChartExampleTotal) * 100);  // 在原始data新增一個名為'percentage'的新屬性，儲存百分比
+    });
+  
+    // 綁定標籤資料，生成'text'元素並設定位置、文字內容、樣式
+    const pieChartExampleLabels = d3.select("#pieChartExampleSlices")
+                                    .selectAll("text")
+                                    .data(pieChartExamplePieChartData)  // 需使用d3.pie()處理後的資料，因為原始資料沒有角度資訊
+                                    .join("text")
+                                    .attr("class", "pieChartExampleLabels")
+                                    .attr("transform", (d) =&gt; `translate(${pieChartExampleOuterArc.centroid(d)})`)
+                                    .text((d) =&gt; d.data.item + " " + d.data.percentage + "%")  // 'd.data'是d3.pie()處理後的資料裡所包含的原始資料部分
+                                    .style("text-anchor", "middle")
+                                    .style("font-size", 16)
+                                    .style("fill", "black");
+  
+    
+    // 設定滑鼠互動事件，當滑鼠移到圓餅圖的切片上時，切片會放大並產生陰影
+    d3.selectAll(".pieChartExampleArc")
+      .style("cursor", "pointer")
+      .on("mouseover", (e, d) =&gt; {  // 當滑鼠移到切片上時觸發
+        d3.select(e.target)
+          .transition()
+          .duration(500)
+          .style("transform", "scale(1.1)");  // 將切片放大至1.1倍
+
+        d3.selectAll(".pieChartExampleLabels")
+          .filter((labelData) =&gt; labelData.index === d.index)  // 選取對應的標籤
+          .transition()
+          .duration(500)
+          .style("font-size", "24px");
+      })
+      .on("mousemove", (d) =&gt; {
+        d3.select(d.target)
+          .style("filter", "drop-shadow(2px 4px 6px #000000)");  // 加上陰影效果
+      })
+      .on("mouseleave", (e, d) =&gt; {  // 當滑鼠離開切片時觸發
+        d3.select(e.target)
+          .transition()
+          .duration(500)
+          .style("filter", "drop-shadow(0 0 0 black)")  // 移除陰影效果
+          .style("transform", "scale(1)");  // 將切片還原到原始大小
+
+        d3.selectAll(".pieChartExampleLabels")
+          .filter((labelData) =&gt; labelData.index === d.index)  // 選取對應的標籤
+          .transition()
+          .duration(500)
+          .style("font-size", "16px");
+      });
+  &lt;/script&gt;
+
+</code></pre>
+                            </div>
+                            <div class="mt-5">
+                              <!-- 此項有兩part，，此part為使用個人飲食記錄的練習 -->
+                              <sup class="text-muted">- <i>此處使用個人 fatsecret 於2023年的飲食紀錄，資料引用外部csv檔案。</i></sup><br>
+                              <div id="d3jsEnergyGainPieChart" class="mt-1"></div>
+                              <div class="d-flex justify-content-center">
+                                <button type="button" id="d3jsEnergyGainPieChart2023MayBtn" class="btn btn-warning mx-1">2023/05</button>
+                                <button type="button" id="d3jsEnergyGainPieChart2023JuneBtn" class="btn btn-warning mx-1">2023/06</button>
+                                <button type="button" id="d3jsEnergyGainPieChart2023JulyBtn" class="btn btn-warning mx-1">2023/07</button>
+                              </div>
+                              <script>
+                                const d3jsEnergyGainChart = async() => {
+                                  const width = 600;
+                                  const height = 400;
+                                  const margin = 40;
+
+                                  // 切換月份的按鈕
+                                  const May2023Btn = d3.select("#d3jsEnergyGainPieChart2023MayBtn")
+                                                       .on("click", (e, d) => {
+                                                         May2023Btn.style("background-color", "#e09500")
+                                                         June2023Btn.style("background-color", "#ffc107")
+                                                         July2023Btn.style("background-color", "#ffc107")
+                                                         upDatePieData(data202305)
+                                                       });
+                                  const June2023Btn = d3.select("#d3jsEnergyGainPieChart2023JuneBtn")
+                                                        .on("click", (e, d) => {
+                                                          May2023Btn.style("background-color", "#ffc107")
+                                                          June2023Btn.style("background-color", "#e09500")
+                                                          July2023Btn.style("background-color", "#ffc107")
+                                                          upDatePieData(data202306)
+                                                        });
+                                  const July2023Btn = d3.select("#d3jsEnergyGainPieChart2023JulyBtn")
+                                                        .on("click", (e, d) => {
+                                                          May2023Btn.style("background-color", "#ffc107")
+                                                          June2023Btn.style("background-color", "#ffc107")
+                                                          July2023Btn.style("background-color", "#e09500")
+                                                          upDatePieData(data202307)
+                                                        });
+
+                                  // 獲取數據（資料少時可用的方法）（注意此時變數名稱不一樣）
+                                  let data202305 = await d3.csv("data/energyGain/202305.csv");
+                                  data202305 = data202305.filter((d, i) => i >= 1 && i <= 4);
+                                  let data202306 = await d3.csv("data/energyGain/202306.csv");
+                                  data202306 = data202306.filter((d, i) => i >= 1 && i <= 4);
+                                  let data202307 = await d3.csv("data/energyGain/202307.csv");
+                                  data202307 = data202307.filter((d, i) => i >= 1 && i <= 4);
+                                  
+                                  // 建立svg
+                                  const svg = d3.select("#d3jsEnergyGainPieChart")
+                                                .append("svg")
+                                                .attr("width", width)
+                                                .attr("height", height);
+
+                                  // 建立圓餅圖的群組元素'g'，用來容納圓餅圖的切片
+                                  svg.append("g")
+                                     .attr("id", "d3jsEnergyGainPieChartSlices")
+                                     .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+                                  // 設定顏色比例尺，從'd3.schemeSet2'配色方案中選取顏色
+                                  const color = d3.scaleOrdinal()
+                                                  .domain(['breakfast', 'lunch', 'dinner', 'snack'])
+                                                  .range(d3.schemeTableau10);
+
+                                  // 設定圓餅圖的半徑
+                                  const radius = Math.min(width, height) / 2 - margin;
+
+                                  // 設定更新資料的方法，把要繪圖的函式放進去，以讓它們能夠重新繪圖
+                                  const upDatePieData = (data) => {
+
+                                    // 設定圓餅圖的生成器，指定根據'data'屬性來生成圖表
+                                    const pieChartGenerator = d3.pie().value((d) => d.total).sort((a, b) => d3.ascending(a.key, b.key));
+
+                                    // 設定每個圓餅圖切片的弧度生成器，定義內半徑和外半徑
+                                    const arc = d3.arc()
+                                                  .innerRadius(0)  // 設定內半徑為0（實心圓）
+                                                  .outerRadius(radius)  // 設定外半徑為計算出的半徑值
+                                                  .padAngle(0);
+
+                                    // 設定外弧，用於放置標籤或其他用途
+                                    const outerArc = d3.arc()
+                                                       .outerRadius(radius)
+                                                       .innerRadius(radius - 10);
+
+                                    // 使用圓餅圖生成器將資料轉換為可以繪製的形式
+                                    const pieChartData = pieChartGenerator(data);
+
+                                    // 在群組元素中綁定資料並生成'path'元素，代表圓餅圖的每一塊
+                                    const energyGainChart = svg.select("#d3jsEnergyGainPieChartSlices")
+                                                               .selectAll("path")
+                                                               .data(pieChartData)
+                                                               .join("path")
+                                                               .attr("class", "d3jsEnergyGainPieChartArc")  // 設定弧形們的class
+                                                               .transition()
+                                                               .duration(800)
+                                                               .attr("d", arc)  // 根據生成的弧形路徑繪製圓餅圖
+                                                               .attr("fill", (d) => color(d.data.date))  // 根據資料設定填充顏色（此處壓'date'乃僅因剛好資料中餐別的行首是'date'）
+                                                               .attr("stroke", "#f2f2f2")  // 設定弧形的邊框顏色為類白色
+                                                               .attr("stroke-width", "3px")  // 設定邊框寬度為3像素
+                                                               .style("opacity", 1);  // 設定每個切片的透明度為1（不透明）
+
+                                    // 加上每個區塊的數字標示，計算百分比並設定標籤文字
+                                    const dataTotal = d3.sum(data, (d) => d.total);  // 計算總支出金額
+                                    data.forEach((i) => {  // 透過一個forEach迴圈，計算每項支出佔總額的百分比
+                                      i.percentage = Math.round((i.total / dataTotal) * 100);  // 在原始data新增一個名為'percentage'的新屬性，儲存百分比
+                                    });
+
+                                    // 定義餐別名，製作文字標籤用
+                                    const mealType = d3.scaleOrdinal()
+                                                       .domain(['breakfast', 'lunch', 'dinner', 'snack'])
+                                                       .range(['早餐', '午餐', '晚餐', '點心']);
+
+                                    // 綁定標籤資料，生成'text'元素並設定位置、文字內容、樣式
+                                    const labels = d3.select("#d3jsEnergyGainPieChartSlices")
+                                                     .selectAll("text")
+                                                     .data(pieChartData)  // 需使用d3.pie()處理後的資料，因為原始資料沒有角度資訊
+                                                     .join("text")
+                                                     .attr("class", "d3jsEnergyGainPieChartLabels")
+                                                     .transition()
+                                                     .duration(800)
+                                                     .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
+                                                     .text((d) => mealType(d.data.date) + " " + d.data.percentage + "%")  // 'd.data'是d3.pie()處理後的資料裡所包含的原始資料部分
+                                                     .style("text-anchor", "middle")
+                                                     .style("font-size", 16)
+                                                     .style("fill", "black");
+                                  };
+                                  upDatePieData(data202305);
+
+                                  // 設定滑鼠互動事件，當滑鼠移到圓餅圖的切片上時，切片會放大並產生陰影
+                                  d3.selectAll(".d3jsEnergyGainPieChartArc")
+                                    .style("cursor", "pointer")
+                                    .on("mouseover", (e, d) => {  // 當滑鼠移到切片上時觸發
+                                      d3.select(e.target)
+                                        .transition()
+                                        .duration(500)
+                                        .style("transform", "scale(1.1)");  // 將切片放大至1.1倍
+                                    
+                                      d3.selectAll(".d3jsEnergyGainPieChartLabels")
+                                        .filter((labelData) => labelData.index === d.index)  // 選取對應的標籤
+                                        .transition()
+                                        .duration(500)
+                                        .style("font-size", "24px");
+
+                                      // 加Tooltip
+                                      const pt = d3.pointer(e, e.target);
+                                      d3.select("#d3jsEnergyGainPieChart")
+                                        .style("position", "relative")
+                                        .append("div")
+                                        .style("position", "absolute")
+                                        .attr("class", "d3jsEnergyGainPieChartToolpix")
+                                        .style("left", `${pt[0] + 320}px`)  // '320'為偏移修正量
+                                        .style("top", `${pt[1] + 140}px`)  // '140'為偏移修正量
+                                        .style("background-color", "#f2f2f2")
+                                        .style("color", "#121212")
+                                        .style("border", "2px solid #121212")
+                                        .style("border-radius", "5px")
+                                        .style("padding", "10px")
+                                        .html(`共 ${d.data.total} 大卡`)
+                                    })
+                                    .on("mousemove", (e, d) => {
+                                      d3.select(e.target)
+                                        .style("filter", "drop-shadow(2px 4px 6px #000000)");  // 加上陰影效果
+
+                                      // 移動Tooltip
+                                      const pt = d3.pointer(e, e.target);
+                                      d3.select(".d3jsEnergyGainPieChartToolpix")
+                                        .style("left", `${pt[0] + 320}px`)  // '320'為偏移修正量
+                                        .style("top", `${pt[1] + 140}px`);  // '140'為偏移修正量
+                                    })
+                                    .on("mouseleave", (e, d) => {  // 當滑鼠離開切片時觸發
+                                      d3.select(e.target)
+                                        .transition()
+                                        .duration(500)
+                                        .style("filter", "drop-shadow(0 0 0 black)")  // 移除陰影效果
+                                        .style("transform", "scale(1)");  // 將切片還原到原始大小
+                                    
+                                      d3.selectAll(".d3jsEnergyGainPieChartLabels")
+                                        .filter((labelData) => labelData.index === d.index)  // 選取對應的標籤
+                                        .transition()
+                                        .duration(500)
+                                        .style("font-size", "16px");
+
+                                      // 移出圓餅圖後刪除tooltip
+                                      d3.select(".d3jsEnergyGainPieChartToolpix").remove();
+                                    });
+                                };
+                                d3jsEnergyGainChart();
+                              </script>
+<pre class="mt-3"><code class="html">
+  &lt;div id="d3jsEnergyGainPieChart" class="mt-1"&gt;&lt;/div&gt;
+  &lt;div class="d-flex justify-content-center"&gt;
+    &lt;button type="button" id="d3jsEnergyGainPieChart2023MayBtn" class="btn btn-warning mx-1"&gt;2023/05&lt;/button&gt;
+    &lt;button type="button" id="d3jsEnergyGainPieChart2023JuneBtn" class="btn btn-warning mx-1"&gt;2023/06&lt;/button&gt;
+    &lt;button type="button" id="d3jsEnergyGainPieChart2023JulyBtn" class="btn btn-warning mx-1"&gt;2023/07&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const d3jsEnergyGainChart = async() =&gt; {
+      const width = 600;
+      const height = 400;
+      const margin = 40;
+
+      // 切換月份的按鈕
+      const May2023Btn = d3.select("#d3jsEnergyGainPieChart2023MayBtn")
+                           .on("click", (e, d) =&gt; {
+                             May2023Btn.style("background-color", "#e09500")
+                             June2023Btn.style("background-color", "#ffc107")
+                             July2023Btn.style("background-color", "#ffc107")
+                             upDatePieData(data202305)
+                           });
+      const June2023Btn = d3.select("#d3jsEnergyGainPieChart2023JuneBtn")
+                            .on("click", (e, d) =&gt; {
+                              May2023Btn.style("background-color", "#ffc107")
+                              June2023Btn.style("background-color", "#e09500")
+                              July2023Btn.style("background-color", "#ffc107")
+                              upDatePieData(data202306)
+                            });
+      const July2023Btn = d3.select("#d3jsEnergyGainPieChart2023JulyBtn")
+                            .on("click", (e, d) =&gt; {
+                              May2023Btn.style("background-color", "#ffc107")
+                              June2023Btn.style("background-color", "#ffc107")
+                              July2023Btn.style("background-color", "#e09500")
+                              upDatePieData(data202307)
+                            });
+
+      // 獲取數據
+      let data202305 = await d3.csv("data/energyGain/202305.csv");
+      data202305 = data202305.filter((d, i) =&gt; i &gt;= 1 && i &lt;= 4);
+      let data202306 = await d3.csv("data/energyGain/202306.csv");
+      data202306 = data202306.filter((d, i) =&gt; i &gt;= 1 && i &lt;= 4);
+      let data202307 = await d3.csv("data/energyGain/202307.csv");
+      data202307 = data202307.filter((d, i) =&gt; i &gt;= 1 && i &lt;= 4);
+      
+      // 建立svg
+      const svg = d3.select("#d3jsEnergyGainPieChart")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height);
+
+      // 建立圓餅圖的群組元素'g'，用來容納圓餅圖的切片
+      svg.append("g")
+         .attr("id", "d3jsEnergyGainPieChartSlices")
+         .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+      // 設定顏色比例尺，從'd3.schemeSet2'配色方案中選取顏色
+      const color = d3.scaleOrdinal()
+                      .domain(['breakfast', 'lunch', 'dinner', 'snack'])
+                      .range(d3.schemeTableau10);
+
+      // 設定圓餅圖的半徑
+      const radius = Math.min(width, height) / 2 - margin;
+
+      // 設定更新資料的方法，把要繪圖的函式放進去，以讓它們能夠重新繪圖
+      const upDatePieData = (data) =&gt; {
+
+        // 設定圓餅圖的生成器，指定根據'data'屬性來生成圖表
+        const pieChartGenerator = d3.pie().value((d) =&gt; d.total).sort((a, b) =&gt; d3.ascending(a.key, b.key));
+
+        // 設定每個圓餅圖切片的弧度生成器，定義內半徑和外半徑
+        const arc = d3.arc()
+                      .innerRadius(0)  // 設定內半徑為0（實心圓）
+                      .outerRadius(radius)  // 設定外半徑為計算出的半徑值
+                      .padAngle(0);
+
+        // 設定外弧，用於放置標籤或其他用途
+        const outerArc = d3.arc()
+                           .outerRadius(radius)
+                           .innerRadius(radius - 10);
+
+        // 使用圓餅圖生成器將資料轉換為可以繪製的形式
+        const pieChartData = pieChartGenerator(data);
+
+        // 在群組元素中綁定資料並生成'path'元素，代表圓餅圖的每一塊
+        const energyGainChart = svg.select("#d3jsEnergyGainPieChartSlices")
+                                   .selectAll("path")
+                                   .data(pieChartData)
+                                   .join("path")
+                                   .attr("class", "d3jsEnergyGainPieChartArc")  // 設定弧形們的class
+                                   .transition()
+                                   .duration(800)
+                                   .attr("d", arc)  // 根據生成的弧形路徑繪製圓餅圖
+                                   .attr("fill", (d) =&gt; color(d.data.date))  // 根據資料設定填充顏色（此處壓'date'乃僅因剛好資料中餐別的行首是'date'）
+                                   .attr("stroke", "#f2f2f2")  // 設定弧形的邊框顏色為類白色
+                                   .attr("stroke-width", "3px")  // 設定邊框寬度為3像素
+                                   .style("opacity", 1);  // 設定每個切片的透明度為1（不透明）
+
+        // 加上每個區塊的數字標示，計算百分比並設定標籤文字
+        const dataTotal = d3.sum(data, (d) =&gt; d.total);  // 計算總支出金額
+        data.forEach((i) =&gt; {  // 透過一個forEach迴圈，計算每項支出佔總額的百分比
+          i.percentage = Math.round((i.total / dataTotal) * 100);  // 在原始data新增一個名為'percentage'的新屬性，儲存百分比
+        });
+
+        // 定義餐別名，製作文字標籤用
+        const mealType = d3.scaleOrdinal()
+                           .domain(['breakfast', 'lunch', 'dinner', 'snack'])
+                           .range(['早餐', '午餐', '晚餐', '點心']);
+
+        // 綁定標籤資料，生成'text'元素並設定位置、文字內容、樣式
+        const labels = d3.select("#d3jsEnergyGainPieChartSlices")
+                         .selectAll("text")
+                         .data(pieChartData)  // 需使用d3.pie()處理後的資料，因為原始資料沒有角度資訊
+                         .join("text")
+                         .attr("class", "d3jsEnergyGainPieChartLabels")
+                         .transition()
+                         .duration(800)
+                         .attr("transform", (d) =&gt; `translate(${outerArc.centroid(d)})`)
+                         .text((d) =&gt; mealType(d.data.date) + " " + d.data.percentage + "%")  // 'd.data'是d3.pie()處理後的資料裡所包含的原始資料部分
+                         .style("text-anchor", "middle")
+                         .style("font-size", 16)
+                         .style("fill", "black");
+      };
+      upDatePieData(data202305);
+
+      // 設定滑鼠互動事件，當滑鼠移到圓餅圖的切片上時，切片會放大並產生陰影
+      d3.selectAll(".d3jsEnergyGainPieChartArc")
+        .style("cursor", "pointer")
+        .on("mouseover", (e, d) =&gt; {  // 當滑鼠移到切片上時觸發
+          d3.select(e.target)
+            .transition()
+            .duration(500)
+            .style("transform", "scale(1.1)");  // 將切片放大至1.1倍
+        
+          d3.selectAll(".d3jsEnergyGainPieChartLabels")
+            .filter((labelData) =&gt; labelData.index === d.index)  // 選取對應的標籤
+            .transition()
+            .duration(500)
+            .style("font-size", "24px");
+
+          // 加Tooltip
+          const pt = d3.pointer(e, e.target);
+          d3.select("#d3jsEnergyGainPieChart")
+            .style("position", "relative")
+            .append("div")
+            .style("position", "absolute")
+            .attr("class", "d3jsEnergyGainPieChartToolpix")
+            .style("left", `${pt[0] + 320}px`)  // '320'為偏移修正量
+            .style("top", `${pt[1] + 140}px`)  // '140'為偏移修正量
+            .style("background-color", "#f2f2f2")
+            .style("color", "#121212")
+            .style("border", "2px solid #121212")
+            .style("border-radius", "5px")
+            .style("padding", "10px")
+            .html(`共 ${d.data.total} 大卡`)
+        })
+        .on("mousemove", (e, d) =&gt; {
+          d3.select(e.target)
+            .style("filter", "drop-shadow(2px 4px 6px #000000)");  // 加上陰影效果
+
+          // 移動Tooltip
+          const pt = d3.pointer(e, e.target);
+          d3.select(".d3jsEnergyGainPieChartToolpix")
+            .style("left", `${pt[0] + 320}px`)  // '320'為偏移修正量
+            .style("top", `${pt[1] + 140}px`);  // '140'為偏移修正量
+        })
+        .on("mouseleave", (e, d) =&gt; {  // 當滑鼠離開切片時觸發
+          d3.select(e.target)
+            .transition()
+            .duration(500)
+            .style("filter", "drop-shadow(0 0 0 black)")  // 移除陰影效果
+            .style("transform", "scale(1)");  // 將切片還原到原始大小
+        
+          d3.selectAll(".d3jsEnergyGainPieChartLabels")
+            .filter((labelData) =&gt; labelData.index === d.index)  // 選取對應的標籤
+            .transition()
+            .duration(500)
+            .style("font-size", "16px");
+
+          // 移出圓餅圖後刪除tooltip
+          d3.select(".d3jsEnergyGainPieChartToolpix").remove();
+        });
+    };
+    d3jsEnergyGainChart();
+  &lt;/script&gt;
+
+</code></pre>
+                            </div>
+                          </li>
+                        </ol>
+                      </li>
+                    </ul>
+                  </div>
+                  <div id="d3jsScatterChart" class="tab-pane fade active show">
+                    <h3>散佈圖／散點圖（Scatter Chart）</h3>
+                    <hr>
+                    <ul>
+                      <li class="mt-2">
+                        <h4>一般散點圖</h4>
+                        <ol class="mt-2">
+                          <li>
+                            一般的圓餅圖
+                            <sup class="text-muted">- <i>此處使用簡單格式的data。</i></sup><br>
+                            <div id="d3jsPieChartExample" class="mt-1"></div>
                             <script>
 
                             </script>
@@ -6939,7 +7926,6 @@
   
 </code></pre>
                           </li>
-                          <li class="mt-5"></li>
                         </ol>
                       </li>
                     </ul>
@@ -6964,7 +7950,7 @@
           </p>
           <p class="fw-light">
             聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-08-16T00:21">2024/08/16 00:21</time></p>
+            資料最後更新時間：<time datetime="2024-08-22T16:16">2024/08/22 16:16</time></p>
           <p class="fw-light">&copy; 2024 Copyright</p>
         </div>
         <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">

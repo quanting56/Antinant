@@ -42,305 +42,389 @@
     <h2>歡迎來到測試場</h2>
     <hr>
     <ol>
-      <li>移動<br>
-        <svg id="moveRect" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
-        <button id="moveBtn" class="btn btn-primary mt-3" type="button">移動</button>
+      <li>
+        散點圖
+        <div id="basicScatter"></div>
         <script>
-          const moveRect = d3.select("#moveRect")
-                             .append("rect")
-                             .attr("width", 40)
-                             .attr("height", 40)
-                             .attr("fill", "#f48b47")
-                             .attr("stroke", "f68b47");
-          document.querySelector("#moveBtn").addEventListener("click", () => {
-            moveRect.transition()
-                    .duration(1000)
-                    .attr("transform", "translate(140, 60)");
-          });
+          const basicScatter = async() => {
+            const svgWidth = 600;
+            const svgHeight = 400;
+            const margin = 50;
+            const dotRadius = 1.5;
+            const svg = d3.select("#basicScatter")
+                          .append("svg")
+                          .attr("width", svgWidth)
+                          .attr("height", svgHeight);
+            
+            // 取資料
+            const url = "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv"
+            const data = await d3.csv(`${url}`);
+
+            // 建立X軸線
+            const xScale = d3.scaleLinear()
+                             .domain([0, 4000])
+                             .range([margin, (svgWidth - margin)]);
+
+            const xAxisGenerator = d3.axisBottom(xScale);
+
+            svg.append("g")
+               .attr("transform", `translate(0, ${svgHeight - margin})`)
+               .call(xAxisGenerator);
+
+            // 建立Y軸線
+            const yScale = d3.scaleLinear()
+                             .domain([0, 500000])
+                             .range([(svgHeight - margin), margin]);
+            
+            const yAxisGenerator = d3.axisLeft(yScale)
+                                     .tickFormat((d) => "$" + d);
+            
+            svg.append("g")
+               .attr("transform", `translate(${margin}, 0)`)
+               .call(yAxisGenerator);
+
+            // 加上點點
+            svg.append("g")
+               .selectAll("circle")
+               .data(data)
+               .join("circle")
+               .attr("cx", (d) => xScale(d.GrLivArea))
+               .attr("cy", (d) => yScale(d.SalePrice))
+               .attr("r", dotRadius)
+               .style("fill", (d) => d.SalePrice > 129000 ? "pink" : "#69b3a2")
+               .on("mouseover", handleMouseOver)
+               .on("mouseout", handleMouseOut);
+            
+            // mouseover時點點變色+tooltip
+            function handleMouseOver(e) {
+              d3.select(this)  // 選定this元素，改變hover時的顏色和形狀
+                .style("fill", "orange")
+                .attr("r", dotRadius * 2)
+                .style("cursor", "pointer");
+
+              let pt = d3.pointer(e, e.target)
+              svg.append("text")
+                 .attr("class", "basicScatterHoverTextInfo")
+                 .attr("x", pt[0] + 10)
+                 .attr("y", pt[1] - 10)
+                 .style("fill", "red")
+                 .text([`GrLivArea: ${e.target.__data__.GrLivArea}, SalePrice: $${e.target.__data__.SalePrice}`]);
+            };
+
+            function handleMouseOut(e, d) {
+              d3.selectAll(".basicScatterHoverTextInfo").remove();
+              d3.select(this)
+                .style("fill", (d) => d.SalePrice > 129000 ? "pink" : "#69b3a2")
+                .attr("r", dotRadius);
+            };
+          };
+          basicScatter();
         </script>
       </li>
-      <li>變色<br>
-        <svg id="transitionColorRect" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
-        <button id="transitionColorBtn" class="btn btn-primary mt-3" type="button">變色</button>
+      <li>
+        可以透過點擊新增點點的散點圖
+        <div id="addPointScatter"></div>
         <script>
-          const transitionColorRect = d3.select("#transitionColorRect")
-                                        .append("rect")
-                                        .attr("width", 40)
-                                        .attr("height", 40)
-                                        .attr("fill", "#f48b47")
-                                        .attr("stroke", "#f68b47")
-                                        .attr("transform", "translate(120, 50)");
-          document.querySelector("#transitionColorBtn").addEventListener("click", () => {
-            transitionColorRect.transition()
-                               .duration(1000)
-                               .attr("fill", "green")
-                               .attr("stroke-width", 6)
-                               .attr("stroke", "red"); 
-          });
-        </script>
-      </li>
-      <li>移動還會變色<br>
-        <svg id="moveAndTransitionColorAndDelayRect" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
-        <button id="moveAndTransitionColorAndDelayBtn" class="btn btn-primary mt-3" type="button">開始動作</button>
-        <script>
-          const moveAndTransitionColorAndDelayRect = d3.select("#moveAndTransitionColorAndDelayRect")
-                                                       .append("rect")
-                                                       .attr("width", 40)
-                                                       .attr("height", 40)
-                                                       .attr("fill", "#f48b47")
-                                                       .attr("stroke", "#f68b47")
-          document.querySelector("#moveAndTransitionColorAndDelayBtn").addEventListener("click", () => {
-            moveAndTransitionColorAndDelayRect.transition()  // 這裡開始第一段動畫
-                                              .duration(1500)
-                                              .delay(300)  // 按下按鈕後，延遲0.3秒再執行下列動作
-                                              .attr("transform", "translate(140, 60)")
-                                              .transition()  // 這裡開始第二段動畫
-                                              .delay(500)  // 移動到定位後，延遲0.5秒再執行下列動作
-                                              .attr("fill", "green")
-                                              .attr("stroke-width", 6)
-                                              .attr("stroke", "red"); 
-          });
-        </script>
-      </li>
-      <li>延遲球動動<br>
-        <svg id="delayCircleMove" style="border: 1px solid rgb(103, 102, 102);"></svg><br>
-        <button id="delayCircleMoveBtn" class="btn btn-primary mt-3" type="button">開始動作</button>
-        <script>
-          const dataDelay = [];
-          for (let i = 0; i < 8; i++) {
-            dataDelay.push(160 - i * 20);
+          const addPointScatterWidth = 600;
+          const addPointScatterHeight = 400;
+          const addPointScatterMargin = 50;
+          const addPointScatterDotRadius = 2;
+          const addPointScatterData = [
+            { x: 100,y: 110 }, { x: 83,y: 43 }, { x: 92,y: 28 },
+            { x: 49,y: 74 }, { x: 51,y: 10 }, { x: 25,y: 98 },
+            { x: 77,y: 30}, { x: 20,y: 83 }, { x: 11,y: 63 },
+            { x: 4,y: 55 }, { x: 0,y: 0 }, { x: 85,y: 100 },
+            { x: 60,y: 40 }, { x: 70,y: 80 }, { x: 10,y: 20 },
+            { x: 40,y: 50 }, { x: 25,y: 31 }
+          ]
+          const addPointScatterSVG = d3.select("#addPointScatter")
+                                       .append("svg")
+                                       .attr("width", addPointScatterWidth)
+                                       .attr("height", addPointScatterHeight);
+
+          // 建立X軸線
+          const addPointScatterXScale = d3.scaleLinear()
+                                          .domain([0, (d3.max(addPointScatterData, d => d.x))])
+                                          .range([addPointScatterMargin, addPointScatterWidth - addPointScatterMargin])
+                                          .nice();
+                           
+          const addPointScatterXAxisGenerator = d3.axisBottom(addPointScatterXScale);
+
+          addPointScatterSVG.append("g")
+                            .attr("transform", `translate(0, ${addPointScatterHeight - addPointScatterMargin})`)
+                            .call(addPointScatterXAxisGenerator);
+
+          // 建立Y軸線
+          const addPointScatterYScale = d3.scaleLinear()
+                                          .domain([0, (d3.max(addPointScatterData, d => d.y))])
+                                          .range([(addPointScatterHeight - addPointScatterMargin), addPointScatterMargin])
+                                          .nice();
+
+          const addPointScatterYAxisGenerator = d3.axisLeft(addPointScatterYScale);
+
+          addPointScatterSVG.append("g")
+                            .attr("transform", `translate(${addPointScatterMargin}, 0)`)
+                            .call(addPointScatterYAxisGenerator);
+
+          // 加上點點
+          addPointScatterSVG.append("g")
+                            .selectAll("circle")
+                            .data(addPointScatterData)
+                            .join("circle")
+                            .attr("cx", (d) => addPointScatterXScale(d.x))
+                            .attr("cy", (d) => addPointScatterYScale(d.y))
+                            .attr("r", addPointScatterDotRadius)
+                            .attr("fill", "#121212")
+                            .on("mouseover", addPointScatterHandleMouseOver)
+                            .on("mouseout", addPointScatterHandleMouseOut);
+          
+          // mouseover時點點變色+tooltip
+          function addPointScatterHandleMouseOver(e) {
+            d3.select(this)  // 選定this元素，改變hover時的顏色和形狀
+              .style("fill", "orange")
+              .attr("r", addPointScatterDotRadius * 2)
+              .style("cursor", "pointer");
+            
+            let pt = d3.pointer(e, e.target)
+            addPointScatterSVG.append("text")
+                              .attr("class", "addPointScatterHoverTextInfo")
+                              .attr("x", pt[0] + 10)
+                              .attr("y", pt[1] - 10)
+                              .style("fill", "red")
+                              .text([`x:${e.target.__data__.x}, y:${e.target.__data__.y}`]);
           };
 
-          const delayCircleMove = d3.select("#delayCircleMove")
-                                    .selectAll("circle")
-                                    .data(dataDelay)
-                                    .enter()
-                                    .append("circle")
-                                    .attr("cx", (d) => d)
-                                    .attr("cy", 30)
-                                    .attr("r", 15)
-                                    .attr("fill", "#f48b47")
-                                    .attr("opacity", 0.5);
+          function addPointScatterHandleMouseOut() {
+            d3.selectAll(".addPointScatterHoverTextInfo").remove();
+            d3.select(this)
+              .style("fill", "#121212")
+              .attr("r", addPointScatterDotRadius);
+          };
 
-          document.querySelector("#delayCircleMoveBtn").addEventListener("click", () => {
-            delayCircleMove.transition()
-                           .delay((d, i) => i * 200)  // 分別延遲
-                           .attr("cx", (d) => d + 120);  // 位移距離
+          // 滑鼠click的時候增加一個點
+          addPointScatterSVG.on("click", (e) => {
+            const coords = d3.pointer(e, e.target);
+            const newData = {
+              x: Math.round(addPointScatterXScale.invert(coords[0])),
+              y: Math.round(addPointScatterYScale.invert(coords[1]))
+            };  // 透過scale.invert()把XY像素位置轉換回座標資料值
+
+            // 將增加的資料座標推入原本的data
+            addPointScatterData.push(newData);
+
+            // 將新的資料綁定上circle
+            addPointScatterSVG.selectAll("circle")
+                              .data(addPointScatterData)
+                              .join("circle")
+                              .attr("cx", (d) => addPointScatterXScale(d.x))
+                              .attr("cy", (d) => addPointScatterYScale(d.y))
+                              .attr("r", addPointScatterDotRadius)
+                              .attr("fill", "#121212")
+                              .on("mouseover", addPointScatterHandleMouseOver)
+                              .on("mouseout", addPointScatterHandleMouseOut);
           });
         </script>
       </li>
-      <li>ease()動畫展示<br>
-        <svg id="easeDemonstration" style="border: 1px solid rgb(103, 102, 102);"></svg>
-        <div class="d-flex align-items-baseline">
-          <select name="easeDemonstration" id="easeDemonstrationSelection" class="m-3">
-            <option value=""></option>
-          </select>
-          <button id="easeDemonstrationBtn" class="btn btn-primary mt-3" type="button" onclick="updateEase()">Ease開始</button>
+      <li>
+        氣泡圖
+        <div id="bubbleChart"></div>
+        <script>
+          const drawBubbleChart = async () => {
+            // 設定圖表大小
+            const svgWidth = 600;
+            const svgHeight = 400;
+            const margin = {top: 10, right: 20, bottom: 30, left: 50};
+            const chartWidth = svgWidth - margin.left - margin.right;
+            const chartHeight = svgHeight - margin.top - margin.bottom;
+
+            // 建立svg
+            const svg = d3.select("#bubbleChart")
+                          .append("svg")
+                          .attr("width", svgWidth)
+                          .attr("height", svgHeight);
+
+            // 匯入資料
+            const url = "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/4_ThreeNum.csv";
+            const data = await d3.csv(`${url}`);
+
+            // 整理X軸資料、Y軸資料、Z的人口數量資料
+            const xData = data.map((d) => parseInt(d.gdpPercap));
+            const yData = data.map((d) => d.lifeExp);
+            const zData = data.map((d) => d.pop);
+
+            // 建立X軸
+            const xScale = d3.scaleLinear()
+                             .domain([0, d3.max(xData)])
+                             .range([margin.left, chartWidth])
+                             .nice();
+            const xAxisGenerator = d3.axisBottom(xScale);
+
+            svg.append("g")
+               .attr("transform", `translate(0, ${margin.top + chartHeight})`)
+               .call(xAxisGenerator);
+
+            // 建立Y軸
+            const yScale = d3.scaleLinear()
+                             .domain([0, d3.max(yData)])
+                             .range([margin.top + chartHeight, margin.top])
+                             .nice();
+            const yAxisGenerator = d3.axisLeft(yScale);
+
+            svg.append("g")
+               .attr("transform", `translate(${margin.left}, 0)`)
+               .call(yAxisGenerator);
+
+
+            // 氣泡(Z)的部分
+            // 按照人口去設定氣泡大小的比例尺
+            const radiusScale = d3.scaleLinear()
+                                  .domain([d3.min(zData), 1310000000])
+                                  .range([4, 30]);
+
+            // 設定氣泡顏色，本例根據不同洲來設定
+            const bubbleColor = d3.scaleOrdinal()
+                                  .domain(["Asia", "Europe", "Americas", "Africa", "Oceania"])
+                                  .range(d3.schemeSet2);
+
+            // 建立tooltip
+            const tooltip = d3.select("#bubbleChart")
+                              .style("position", "relative")
+                              .append("div")
+                              .style("display", "none")
+                              .style("position", "absolute")
+                              .attr("class", "dotsTooltip")
+                              .style("background-color", "#121212")
+                              .style("border-radius", "5px")
+                              .style("padding", "10px")
+                              .style("color", "#f2f2f2");
+
+            // 設定顯示、移動、隱藏tooltips
+            const showTooltip = (e, d) => {
+              const pt = d3.pointer(e, e.target);
+
+              // 設定tooltip樣式與呈現文字
+              tooltip.style("display", "block")
+                     .html(`<p>國家：${d.country}</p>
+                            <p>所屬洲：${d.continent}</p>
+                            <p>人口數：${d.pop}</p>
+                            <p>平均壽命：${d.lifeExp}</p>
+                            <p>人均GDP：${d.gdpPercap}</p>`)
+                     .style("left", `${pt[0] + 10}px`)
+                     .style("top", `${pt[1] + 10}px`);
+
+              // 圓點強調
+              d3.select(e.target)
+                .attr("r", radiusScale(d.pop) + 5)
+                .style("opacity", 0.7);
+            };
+
+            const moveTooltip = (e) => {
+              const pt = d3.pointer(e, e.target);
+              tooltip.style("display", "block")
+                     .style("left", `${pt[0] + 10}px`)
+                     .style("top", `${pt[1] + 10}px`);
+            };
+
+            const hideTooltip = (e, d) => {
+              tooltip.style("display", "none");
+
+              // 圓點復原
+              d3.select(e.target)
+                .attr("r", radiusScale(d.pop))
+                .style("opacity", 1);
+            };
+
+            // 綁定氣泡
+            const bubble = svg.append("g")
+                              .selectAll("circle")
+                              .data(data)
+                              .join("circle")
+                              .attr("cx", (d) => xScale(d.gdpPercap))
+                              .attr("cy", (d) => yScale(d.lifeExp))
+                              .attr("r", (d) => radiusScale(d.pop))
+                              .style("fill", (d) => bubbleColor(d => d.continent))
+                              .style("cursor", "pointer")
+                              .on("mouseover", showTooltip)
+                              .on("mousemove", moveTooltip)
+                              .on("mouseleave", hideTooltip);
+          };
+          drawBubbleChart();
+        </script>
+      </li>
+      <li>
+        基礎長條圖
+        <div id="barChart"></div>
+        <div id="btnWrap">
+          <button id="barChartApril2024Btn" class="btn btn-outline-warning" onclick="updateElectricChart('../data/taipowerData/202404.csv')">2024 4月</button>
+          <button id="barChartMay2024Btn" class="btn btn-outline-warning" onclick="updateElectricChart('../data/taipowerData/202405.csv')">2024 5月</button>
+          <button id="barChartJune2024Btn" class="btn btn-outline-warning" onclick="updateElectricChart('../data/taipowerData/202406.csv')">2024 6月</button>
         </div>
         <script>
-          const easeDot = d3.select("#easeDemonstration")
-                            .append("circle")
-                            .attr("cx", 40)
-                            .attr("cy", 40)
-                            .attr("r", 30)
-                            .attr("fill", "#f68b47");
+          // 建立svg
+          const barChartWidth = 750;
+          const barChartHeight = 500;
+          const barChartMargin = {top: 40, right: 40, bottom: 40, left: 80};
+          const barChartSVG = d3.select("#barChart")
+                                .append("svg")
+                                .attr("width", barChartWidth)
+                                .attr("height", barChartHeight);
 
-          // 抓出 D3.js 中所有 API 中名稱帶有 ease 開頭的 API
-          const easeNames = Object.keys(d3).filter((d) => d.slice(0, 4) === "ease");  // 註：'slice(0, 4)'是將字符串的第0個到第4個字符提取出來（不包含第4個字符）
+          // 建立初始X軸
+          const xScale = d3.scaleBand()
+                           .range([barChartMargin.left, barChartWidth - barChartMargin.right])
+                           .padding(0.2);
+          const xAxisGenerator = d3.axisBottom(xScale);
+          const xAxis = barChartSVG.append("g")
+                                   .attr("transform", `translate(0, ${barChartHeight - barChartMargin.bottom})`);
 
-          d3.select("#easeDemonstrationSelection")
-            .selectAll("option")
-            .data(easeNames)
-            .join("option")
-            .attr("value", (d) => d)
-            .text((d) => `d3.${d}`);
+          // 建立初始Y軸
+          const yScale = d3.scaleLinear()
+                           .range([barChartHeight - barChartMargin.bottom, barChartMargin.top]);
+          const yAxisGenerator = d3.axisLeft(yScale)
+                                   .ticks(5)
+                                   .tickSize(3);
+          const yAxis = barChartSVG.append("g")
+                                   .attr("transform", `translate(${barChartMargin.left}, 0)`);
 
-          const updateEase = () => {
-            const easeName = d3.select("#easeDemonstrationSelection")
-                               .node().value;
-            easeDot.attr("cx", 40)  // 回原點
-                   .transition()  // 設定動畫效果
-                   .ease(d3[easeName])
-                   .attr("cx", 200);
+          // 取得資料
+          const updateElectricChart = async (url) => {
+            const data = await d3.csv(url);
+            // map資料集
+            xData = data.map((i) => i["縣市"]);
+            yData = data.map((i) => parseInt(i["合計售電量_度"].split(",").join("")));
+
+            // 設定X軸Domain、建立X軸
+            xScale.domain(xData);
+            xAxis.transition().duration(1000).call(xAxisGenerator);
+
+            // 調整X軸刻度文字標籤傾斜
+            xAxis.selectAll("text")
+                 .attr("transform", "translate(-10, 0) rotate(-45)")
+                 .style("text-anchor", "end");
+
+            // 設定Y軸Domain、建立Y軸
+            yScale.domain([0, d3.max(yData)]).nice();
+            yAxis.transition().duration(1000).call(yAxisGenerator);
+
+            // 開始建立長條圖
+            const bar = barChartSVG.selectAll("rect")
+                                   .data(data)
+                                   .join("rect");
+
+            // 加上漸增動畫
+            // 注意：如果要加動畫，事件要分開寫
+            bar.transition()
+               .duration(1000)
+               .attr("x", d => xScale(d["縣市"]))
+               .attr("y", d => yScale(parseInt(d["合計售電量_度"].split(",").join(""))))
+               .attr("width", xScale.bandwidth())
+               .attr("height", d => ( barChartHeight - barChartMargin ) - yScale(parseInt(d["合計售電量_度"].split(",").join(""))) )
+               .attr("fill", "#69b3a2");
+
+            // 加上滑鼠事件（未完成，目前y軸長條圖還出不來）
           };
+          updateElectricChart('../data/taipowerData/202404.csv');
         </script>
-      </li>
-      <li>loopAnimation<br>
-        <svg id="loopAnimation" style="border: 1px solid rgb(103, 102, 102);"></svg>
-        <script>
-          const loopAnimation = d3.select("#loopAnimation")
-                                  .append("circle")
-                                  .attr("cx", 50)
-                                  .attr("cy", 50)
-                                  .attr("r", 25)
-                                  .attr("fill", "#f68b47")
-                                  .transition()
-                                  .duration(2000)
-                                  .on("start", goRight);
-          function goRight() {
-            d3.active(this)
-              .attr("cx", 200)
-              .transition()
-              .on("start", goLeft);
-          };
-
-          function goLeft() {
-            d3.active(this)
-              .attr("cx", 50)
-              .transition()
-              .on("start", goRight);
-          }
-        </script>
-      </li>
-      <li>點擊事件發生<br>
-        <svg id="clickSVG" style="border: 1px solid rgb(103, 102, 102);"></svg>
-        <script>
-          const clickCircle = d3.select("#clickSVG")
-                                .append("circle")
-                                .attr("cx", 20)
-                                .attr("cy", 20)
-                                .attr("r", 20)
-                                .attr("fill", "#f68b47")
-                                .attr("cursor", "pointer");
-          let isMoved = false;  // 用來追蹤圓球是否已經移動
-
-          clickCircle.on("click", (e) => {
-            if (!isMoved) {
-              d3.select(e.target)
-                .transition()
-                .ease(d3.easeBack)
-                .duration(1000)
-                .attr("fill", "blue")
-                .attr("transform", "translate(250, 0)");
-              isMoved = true;  // 更新狀態為已移動
-            } else {
-              d3.select(e.target)
-                .transition()
-                .ease(d3.easeBack)
-                .duration(1000)
-                .attr("fill", "#f68b47")
-                .attr("transform", "translate(0, 0)");
-              isMoved = false;  // 更新狀態為未移動
-            };
-          });
-        </script>
-      </li>
-      <li>滑鼠拂過變色<br>
-        <svg id="mouseoverSVG" style="border: 1px solid rgb(103, 102, 102);"></svg>
-        <script>
-          const mouseoverCircle = d3.select("#mouseoverSVG")
-                                    .append("circle")
-                                    .attr("cx", 20)
-                                    .attr("cy", 20)
-                                    .attr("r", 50)
-                                    .attr("cursor", "pointer")
-                                    .attr("fill", "#f68b47")
-                                    .attr("transform", "translate(130, 50)");
-          
-          mouseoverCircle
-            .on("mouseover", (e) => {
-              d3.select(e.target)
-                .transition()
-                .duration(2000)
-                .attr("fill", "blue");
-            })
-            .on("mouseleave", (e) => {
-              d3.select(e.target)
-                .transition()
-                .duration(2000)
-                .attr("fill", "#f68b47");
-            });
-        </script>
-      </li>
-      <li>獲取DOM節點的座標位置<br>
-        <svg id="pointerSVG" style="border: 1px solid rgb(103, 102, 102);"></svg>
-        <script>
-          const pointerSVG = d3.select("#pointerSVG")
-                               .attr("width", 500)
-                               .attr("height", 300)
-                               .attr("cursor", "pointer");
-          let txt = pointerSVG.append("text");
-
-          pointerSVG.on("mousemove", (e) => {
-            let position = d3.pointer(e, pointerSVG.node());
-
-            txt.attr("x", position[0])  // 取[x]
-               .attr("y", position[1])  // 取[y]
-               .text(`x: ${parseInt(position[0])},
-                      y: ${parseInt(position[1])}`);
-          });
-        </script>
-      </li>
-      <li>工具提示框</li>
-      <li>進階工具提示框<br>
-        <div id="advancedTooltip" style="border: 1px solid rgb(103, 102, 102);"></div>
-        <script>
-          const advancedTooltipData = [
-            {r: 17, x: 134, y: 181},
-            {r: 23, x: 294, y: 131},
-            {r: 14, x: 84, y: 273},
-            {r: 9, x: 323, y: 59},
-            {r: 18, x: 172, y: 251},
-            {r: 26, x: 404, y: 154}
-          ];
-          const svg = d3.select("#advancedTooltip")
-                        .append("svg")
-                        .attr("width", 500)
-                        .attr("height", 400);
-          
-          // 設定顏色
-          const rData = advancedTooltipData.map((d) => d.r);
-          const colors = d3.scaleOrdinal(d3.schemeTableau10)
-                           .domain(rData);
-
-          // 建立圓點
-          const dots = svg.selectAll("circle")
-                          .data(advancedTooltipData)
-                          .join("circle")
-                          .attr("cx", (d) => d.x)
-                          .attr("cy", (d) => d.y)
-                          .attr("r", (d) => d.r)
-                          .attr("fill", (d) => colors(d.x))
-                          .style("cursor", "pointer");
-
-          // 建立tooltip
-          const tooltip = d3.select("#advancedTooltip")
-                            .style("position", "relative")
-                            .append("div")
-                            .style("display", "none")
-                            .style("position", "absolute")
-                            .style("background-color", "white")
-                            .style("border", "2px solid")
-                            .style("border-radius", "5px")
-                            .style("padding", "5px");
-
-          // 顯示tooltip
-          dots
-            .on("mousemove", (e) => {
-              // 抓圓點位置
-              let pt = d3.pointer(event, e.target);
-              tooltip.style("display", "block")
-                     .style("left", `${pt[0] + 30}px`)  // 設定tooltip的水平位置
-                     .style("top", `${pt[1]}px`)  // 設定tooltip的垂直位置
-                     .html(`圓半徑：${e.target.__data__.r}`);
-              console.log(e.target.__data__);
-            })
-            .on("mouseleave", (e) => {
-              tooltip.style("display", "none");
-            });
-        </script>
-      </li>
-      <li>插入其他html頁面
-        <div id="otherHTML"></div>
-        <!-- <script>
-          d3.html("../index.html").then(function(data) {
-            // 只選取 <body> 內的內容
-            const bodyContent = d3.select(data).select("body").html();
-            
-            // 將選取的內容插入到 #Test 中
-            d3.select("#otherHTML").html(bodyContent);
-          });
-        </script> -->
       </li>
     </ol>
   </body>
