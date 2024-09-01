@@ -444,6 +444,10 @@ main {
   height: 180px;
 }
 
+.d3jsSubtitle {
+  font-size: 12px;
+}
+
 
 /* footer */
 footer h5 {
