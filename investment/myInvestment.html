@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Title -->
+    <title>阿蛤ㄉ窩 - 投資總覽</title>
+    <link rel="icon" href="favicon/favicon-v1.0.png" type="images/png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/bootstrap_icons-main/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="../css/font_awesome_v6.5.2_all.css" type="text/css" />
+    <link rel="stylesheet" href="../css/animate_v4.1.1_min.css">
+    <link rel="stylesheet" href="../css/vs2015_min.css">
+    <link rel="stylesheet" href="../css/main.css"/>
+
+    <!-- jQuery -->
+    <script src="../js/jquery_v3.7.1_min.js"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="../js/d3_v7.9.0_min.js"></script>
+    <script src="../js/wow_v1.1.3_min.js"></script>
+    <script src="../js/highlight_min.js"></script>
+    <script src="../js/script.js"></script>
+
+    <!-- 啟用 Highlight.js -->
+    <script>hljs.highlightAll();</script>  
+
+    <!-- Tooltip引用統計學頁面，需以latex渲染數學公式 -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+  <body>
+    <main>
+      <style>
+        .myInvestmentUnit {
+          border: 0.8px solid #dfdfdf;
+          border-radius: 8px;
+        };
+      </style>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="myInvestmentUnit">
+            <div id="assets"></div>
+            <script>
+              const assets = async () => {
+                const width = parseInt(d3.select("#assets").style("width"));
+                const height = width>1200 ? 800 : width*0.7 ;
+                const margin = 70;
+                const svg = d3.select("#assets")
+                              .append("svg")
+                              .attr("width", width)
+                              .attr("height", height);
+
+                const data = await d3.csv("../data/investment/assets.csv");
+
+                // 解析資料
+                const parseData = data.map((d) => ({
+                  date: d3.timeParse("%Y/%m/%d")(d["日期"]),
+                  taiwanCooperativeBank: +d["合作金庫銀行"].replace(/,/g, "") || 0,
+                  chunghwaPost: +d["郵局"].replace(/,/g, "") || 0,
+                  cathayUnitedBank: +d["國泰世華銀行"].replace(/,/g, "") || 0,
+                  taishinInternationalBank: +d["台新銀行"].replace(/,/g, "") || 0,
+                  stock: +d["股票當日市值"].replace(/,/g, "") || 0,
+                  sum: (+d["合作金庫銀行"].replace(/,/g, "") || 0) +
+                       (+d["郵局"].replace(/,/g, "") || 0) +
+                       (+d["國泰世華銀行"].replace(/,/g, "") || 0) +
+                       (+d["台新銀行"].replace(/,/g, "") || 0) +
+                       (+d["股票當日市值"].replace(/,/g, "") || 0)
+                }));
+
+                const color = d3.scaleOrdinal()
+                                .domain(["taiwanCooperativeBank", "chunghwaPost", "cathayUnitedBank", "taishinInternationalBank", "stock", "sum"])
+                                .range(["#f5ba1a", "#e37933", "#6ea647", "#a5a5a5", "#406cb4", "#040000"]);
+
+                // X軸
+                const xScale = d3.scaleTime()
+                                 .domain(d3.extent(parseData, d => d["date"]))
+                                 .range([margin, width - margin]);
+                const xAxisGenerator = d3.axisBottom(xScale)
+                                         .tickFormat(d => d3.timeFormat("%Y %b %d")(d))
+                                         .ticks(width>500 ? 10 : 5);
+                const xAxis = svg.append("g")
+                                 .attr("transform", `translate(0, ${height - margin})`)
+                                 .call(xAxisGenerator);
+                xAxis.selectAll(".tick text")
+                     .attr("transform", "translate(-25, 25) rotate(-45)");
+
+                // Y軸
+                const yScale = d3.scaleLinear()
+                                 .domain([0, d3.max(parseData, d => d["sum"])])
+                                 .range([height - margin, margin])
+                                 .nice();
+                const yAxisGenerator = d3.axisLeft(yScale)
+                                         .tickFormat(d => d3.format(",")(d) + " 元");
+                const yAxis = svg.append("g")
+                                 .attr("transform", `translate(${margin}, 0)`)
+                                 .call(yAxisGenerator);
+
+                // 建立tooltip
+                const nameTag = d3.select("#assets")
+                                  .style("position", "relative")
+                                  .append("div")
+                                  .attr("class", "assetsNameTag")
+                                  .style("position", "absolute")
+                                  .style("background-color", "#121212")
+                                  .style("color", "#f2f2f2")
+                                  .style("border-radius", "5px")
+                                  .style("padding", "10px")
+                                  .style("display", "none");
+
+                // 開始建立折線圖
+                const bankKeys = ["taiwanCooperativeBank", "chunghwaPost", "cathayUnitedBank", "taishinInternationalBank", "stock", "sum"];
+                const lineGenerator = d3.line()
+                                        .x((d) => xScale(d.date))
+                                        .y((d) => yScale(d.yValue));
+                const lines = svg.append("g");
+
+                bankKeys.forEach((key) => {
+                  lines.append("path")
+                       .datum(parseData.map((d) => ({
+                         date: d.date,
+                         yValue: d[key]
+                       })))
+                       .attr("d", lineGenerator)
+                       .attr("fill", "none")
+                       .attr("stroke", color(key))
+                       .attr("stroke-width", 1.5)
+                       .style("cursor", "pointer")
+                       .on("mouseover", mouseover)
+                       .on("mouseleave", mouseleave)
+                });
+
+                function mouseover() {
+                  
+                };
+                function mouseleave() {};
+                   
+              };
+
+              // // 監聽視窗大小變動（待處理）
+              // window.addEventListener("resize", assets);
+
+              assets();
+            </script>
+          </div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 3</div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 4</div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 5</div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 6</div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 7</div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 8</div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 9</div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 10</div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 11</div>
+          <div class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 12</div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
