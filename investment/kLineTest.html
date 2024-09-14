@@ -6,74 +6,159 @@
     <script src="https://d3js.org/d3.v6.min.js"></script>
   </head>
   <body>
-    <div id="chart"></div>
-    <script src="kline.js"></script>
-    <img src="../assets/testAssets/00675L.TW.csv">
-  </body>
-  <script>
-    // 設定圖表的寬度、高度和邊距
-    const margin = { top: 20, right: 30, bottom: 30, left: 50 };
-    const width = 1280 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+    <div id="kLineChart"></div>
+    <script>
+      const kLineChart = async () => {
+        const width = parseInt(d3.select("#kLineChart").style("width"));
+        const height = width>900 ? 600 : width*0.7 ;
+        const margin = {top: 60, right: 30, bottom: 60, left: 50};
+        const svg = d3.select("#kLineChart")
+                      .append("svg")
+                      .attr("width", width)
+                      .attr("height", height);
 
-    // 創建SVG元素
-    const svg = d3.select("#chart")
-                  .append("svg")
-                  .attr("width", width + margin.left + margin.right)
-                  .attr("height", height + margin.top + margin.bottom)
-                  .append("g")
-                  .attr("transform", `translate(${margin.left},${margin.top})`);
+        // title
+        svg.append("text")
+                   .attr("x", margin.left)
+                   .attr("y", margin.top * (2/3))
+                   .attr("text-anchor", "middle")
+                   .attr("font-size", width>800 ? 20 : 18)
+                   .attr("font-family", "serif")
+                   .attr("text-anchor", "start")
+                  //  .style("fill", "#f2f2f2")
+                   .text("- 00675.TW -");
 
-    // 設定時間尺度和價格尺度
-    const x = d3.scaleTime().range([0, width]);
-    const y = d3.scaleLinear().range([height, 0]);
+        // 匯入及處理數據
+        const res = await d3.csv("../assets/testAssets/00675L.TW.csv");
+        const data = res.map(d => {
+                          d.Date = d3.timeParse("%Y-%m-%d")(d.Date);
+                          d.Open = +d.Open;
+                          d.High = +d.High;
+                          d.Low = +d.Low;
+                          d.Close = +d.Close;
+                          return d;
+                        })
+                        .filter(d => 
+                          d.Open>0 && d.High>0 && d.Low>0 && d.Close>0
+                        );
 
-    // 設定K線圖的顏色
-    const color = d => d.Close > d.Open ? "red" : "green";
+        // 設定K線圖的顏色
+        const color = (d) => (d.Close > d.Open) ? "red" : "green";
 
-    // 讀取CSV文件並處理數據
-    d3.csv("../assets/testAssets/00675L.TW.csv").then(data => {
-        data.forEach(d => {
-            d.Date = d3.timeParse("%Y-%m-%d")(d.Date);
-            d.Open = +d.Open;
-            d.High = +d.High;
-            d.Low = +d.Low;
-            d.Close = +d.Close;
-        });
-      
-        x.domain(d3.extent(data, d => d.Date));
-        y.domain([d3.min(data, d => d.Low), d3.max(data, d => d.High)]);
-      
-        // 添加X軸
-        svg.append("g")
-            .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x));
-      
-        // 添加Y軸
-        svg.append("g")
-            .call(d3.axisLeft(y));
-      
+        // 設定時間尺度（X軸）
+        const xScale = d3.scaleTime()
+                         .domain(d3.extent(data, d => d.Date))
+                         .range([margin.left, width - margin.right])
+                         .nice();
+        const xAxisGenerator = d3.axisBottom(xScale)
+                                 .tickFormat(d3.timeFormat("%Y/%m/%d"));
+        const xAxis = svg.append("g")
+                         .attr("transform", `translate(0, ${height - margin.bottom})`)
+                         .call(xAxisGenerator);
+        xAxis.selectAll(".tick text")
+             .attr("transform", "translate(-25, 25) rotate(-45)");
+        // 繪製xGridLine
+        const xGridLine = xAxis.selectAll(".tick")
+                               .filter((d, i) => i !== 0)
+                               .append("line")
+                               .attr("class", "xGridLine")
+                               .attr("x1", 0)
+                               .attr("x2", 0)
+                               .attr("y1", 0)
+                               .attr("y2", -height + margin.top + margin.bottom)
+                               .attr("stroke", "#f2f2f2");
+
+        // 設定價格尺度（Y軸）
+        const yScale = d3.scaleLinear()
+                         .domain([0, d3.max(data, d => d.High) * 1.1])
+                         .range([height - margin.bottom, margin.top])
+                         .nice();
+        const yAxisGenerator = d3.axisLeft(yScale);
+        const yAxis = svg.append("g")
+                         .attr("transform", `translate(${margin.left}, 0)`)
+                         .call(yAxisGenerator);
+        // 繪製yGridLine
+        const yGridLine = yAxis.selectAll(".tick")
+                               .filter((d, i) => i !== 0)
+                               .append("line")
+                               .attr("class", "xGridLine")
+                               .attr("x1", 0)
+                               .attr("x2", width - margin.left - margin.right)
+                               .attr("y1", 0)
+                               .attr("y2", 0)
+                               .attr("stroke", "#f2f2f2");
+        
         // 添加K線圖
-        svg.selectAll("line.stem")
-            .data(data)
-            .enter().append("line")
-            .attr("class", "stem")
-            .attr("x1", d => x(d.Date))
-            .attr("x2", d => x(d.Date))
-            .attr("y1", d => y(d.High))
-            .attr("y2", d => y(d.Low))
-            .attr("stroke", color);
-      
-        svg.selectAll("rect")
-            .data(data)
-            .enter().append("rect")
-            .attr("x", d => x(d.Date) - 3)
-            .attr("y", d => y(Math.max(d.Open, d.Close)))
-            .attr("width", 4)
-            .attr("height", d => Math.abs(y(d.Open) - y(d.Close)))
-            .attr("fill", color);
-    });
+        const highLowLine = svg.selectAll("line .high-low-line")
+                               .data(data)
+                               .join("line")
+                               .attr("class", "high-low-line")
+                               .attr("x1", d => xScale(d.Date))
+                               .attr("x2", d => xScale(d.Date))
+                               .attr("y1", d => yScale(d.High))
+                               .attr("y2", d => yScale(d.Low))
+                               .attr("stroke", "#121212")
+                               .attr("stroke-width", 1);
+        
+        const openCloseLineWidth = 4;
+        const openCloseLine = svg.selectAll("rect .open-close-line")
+                                 .data(data)
+                                 .join("rect")
+                                 .attr("class", "open-close-line")
+                                 .attr("x", d => xScale(d.Date) - openCloseLineWidth/2)
+                                 .attr("y", d => yScale(Math.max(d.Open, d.Close)))
+                                 .attr("width", openCloseLineWidth)
+                                 .attr("height", d => Math.abs(yScale(d.Open) - yScale(d.Close)))
+                                 .attr("stroke", "#121212")
+                                 .attr("stroke-width", 0.1)
+                                 .attr("fill", color)
+                                 .on("mouseover", mouseover)
+                                 .on("mouseleave", mouseleave);
 
-  </script>
+        // tooltip
+        const tooltip = d3.select("#kLineChart")
+                          .style("position", "relative")
+                          .append("div")
+                          .attr("class", "kLineChartNameTag")
+                          .style("position", "absolute")
+                          .style("background-color", "#f2f2f2")
+                          .style("color", "#121212")
+                          .style("border-radius", "5px")
+                          .style("padding", "10px")
+                          .style("font-size", "14px")
+                          .style("white-space", "nowrap")
+                          .style("display", "none");
+
+        function mouseover(e, d) {
+          d3.select(this).attr("stroke-width", 0.5);
+          tooltip.style("display", "block")
+                 .style("left", xScale(d.Date) + 20 + "px")
+                 .style("top", yScale(Math.max(d.Open, d.Close)) - 20 + "px")
+                 .html(`日期：${d3.timeFormat("%Y.%m.%d")(d.Date)}<br>` +
+                       `開盤：${d3.format(".2f")(d.Open)}<br>` +
+                       `收盤：${d3.format(".2f")(d.Close)}<br>` +
+                       `最高：${d3.format(".2f")(d.High)}<br>` +
+                       `最低：${d3.format(".2f")(d.Low)}<br>`)
+
+          // 建立Y-dashed線
+          svg.append("line")
+                     .attr("class", "kLineChartDashedY")
+                     .attr("x1", margin.left)
+                     .attr("x2", xScale(d.Date))
+                     .attr("y1", yScale(Math.max(d.Open, d.Close)))
+                     .attr("y2", yScale(Math.max(d.Open, d.Close)))
+                     .style("stroke", "#d0d2d2")
+                     .style("stroke-dasharray", "4");
+        };
+
+        function mouseleave() {
+          openCloseLine.attr("stroke-width", 0.1);
+          tooltip.style("display", "none");
+          svg.selectAll(".kLineChartDashedY").remove();
+        }
+      };
+      kLineChart();
+    </script>
+  </body>
   
 </html>

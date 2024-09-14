@@ -6,16 +6,6 @@ body {
 }
 
 
-/* Navigator */
-nav a {
-  transition: background-color 0.5s;
-}
-
-nav a:hover {
-  background-color: #555555;
-}
-
-
 /* 首頁下方的按鈕們 */
 .semi-nav-button {
   text-decoration: none;
@@ -446,25 +436,4 @@ main {
 
 .d3jsSubtitle {
   font-size: 12px;
-}
-
-
-/* footer */
-footer h5 {
-  color: #ffffff;
-}
-
-footer p {
-  font-size: 14px;
-  color: #eeeeee;
-}
-
-footer a {
-  font-size: 24px;
-  color: #eeeeee;
-}
-
-footer a:hover {
-  transform: translateY(-1.5px);
-  transition: transform 0.2s ease-in-out;
 }

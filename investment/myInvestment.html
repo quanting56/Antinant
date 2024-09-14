@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- Title -->
-    <title>阿蛤ㄉ窩 - 投資總覽</title>
+    <title>阿蛤ㄉ窩 - 我的投資</title>
     <link rel="icon" href="favicon/favicon-v1.0.png" type="images/png">
 
     <!-- Bootstrap CSS -->
@@ -36,315 +36,495 @@
       body {
         background-color: #060606;
       }
-      .myInvestmentUnit {
+
+      .myInvestmentUnit > div {
         background-color: #121212;
         border: 0.2px solid #242424;
         border-radius: 8px;
       }
 
-      /* footer（移植自main.css） */
-      footer h5 {
-        color: #ffffff;
+      #summary .title {
+        color: #f2f2f2;
       }
 
-      footer p {
-        font-size: 14px;
-        color: #eeeeee;
+      #summary hr {
+        margin: 0;
+        color: #f2f2f2;
       }
 
-      footer a {
+      #summary p {
+        margin-top: 5px;
+        margin-bottom: 0;
+        color: red;
+      }  /*  暫時先直接用這個設定（之後用javascript）  */
+
+      #summary .current-price {
         font-size: 24px;
-        color: #eeeeee;
       }
 
-      footer a:hover {
-        transform: translateY(-1.5px);
-        transition: transform 0.2s ease-in-out;
+      #summary .price-change {
+        font-size: 12px;
+      }
+
+      .chartTitleText {
+        fill: #f2f2f2;
       }
     </style>
+    <script>
+      // summary的價格中，因價格不同而顯示紅色或綠色（條件式待處理）
+      let summaryPriceColor = document.getElementsByClassName("price");
+      // summaryPriceColor.style.color = "red";  // 暫時先直接用css寫
+    </script>
   </head>
 
   <body>
+    <header>阿蛤ㄉ窩 - 我的投資</header>
     <main>
       <div class="container-fluid">
         <div class="row">
-          <section class="myInvestmentUnit">
-            <div id="assets"></div>
-            <script>
-              const assets = async () => {
-                const width = parseInt(d3.select("#assets").style("width"));
-                const height = width>900 ? 600 : width*0.7 ;
-                const margin = 70;
-                // 因需隨視窗大小更改而即時更改圖型，故'svg'改為以下寫法
-                let svg = d3.select("#assets").select("svg");
-                if (svg.empty()) {
-                  svg = d3.select("#assets")
-                          .append("svg")
-                          .attr("width", width)
-                          .attr("height", height);
-                } else {
-                  svg.attr("width", width)
-                     .attr("height", height);
-                };
-                svg.selectAll("*").remove();  // 清空之前的圖表元素，以重新繪製
-                
-                // title
-                svg.append("text")
-                   .attr("x", width>800 ? width/4 : width/3)
-                   .attr("y", height / 2)
-                   .attr("text-anchor", "middle")
-                   .attr("font-size", width>800 ? 20 : 18)
-                   .attr("font-family", "serif")
-                   .attr("font-style", "italic")
-                   .style("fill", "#f2f2f2")
-                   .text("- 每日錢錢統計 -");
-
-                // 匯入及解析資料
-                const data = await d3.csv("../data/investment/assets.csv");
-                const parseData = data.map((d) => ({
-                  date: d3.timeParse("%Y/%m/%d")(d["日期"]),
-                  taiwanCooperativeBank: +d["合作金庫銀行"].replace(/,/g, "") || 0,
-                  chunghwaPost: +d["郵局"].replace(/,/g, "") || 0,
-                  cathayUnitedBank: +d["國泰世華銀行"].replace(/,/g, "") || 0,
-                  taishinInternationalBank: +d["台新銀行"].replace(/,/g, "") || 0,
-                  stock: +d["股票當日市值"].replace(/,/g, "") || 0,
-                  sum: (+d["合作金庫銀行"].replace(/,/g, "") || 0) +
-                       (+d["郵局"].replace(/,/g, "") || 0) +
-                       (+d["國泰世華銀行"].replace(/,/g, "") || 0) +
-                       (+d["台新銀行"].replace(/,/g, "") || 0) +
-                       (+d["股票當日市值"].replace(/,/g, "") || 0),
-                  depositRatio: (
-                                  (+d["合作金庫銀行"].replace(/,/g, "") || 0) +
-                                  (+d["郵局"].replace(/,/g, "") || 0) +
-                                  (+d["國泰世華銀行"].replace(/,/g, "") || 0) +
-                                  (+d["台新銀行"].replace(/,/g, "") || 0)
-                                ) / (
-                                  (+d["合作金庫銀行"].replace(/,/g, "") || 0) +
-                                  (+d["郵局"].replace(/,/g, "") || 0) +
-                                  (+d["國泰世華銀行"].replace(/,/g, "") || 0) +
-                                  (+d["台新銀行"].replace(/,/g, "") || 0) +
-                                  (+d["股票當日市值"].replace(/,/g, "") || 0)
-                                ) * 100
-                }));
-
-                const color = d3.scaleOrdinal()
-                                .domain(["taiwanCooperativeBank", "chunghwaPost", "cathayUnitedBank", "taishinInternationalBank", "stock", "sum"])
-                                .range(["#f5ba1a", "#e37933", "#6ea647", "#a5a5a5", "#406cb4", "#d0d2d2"]);
-
-                // X軸
-                const xScale = d3.scaleTime()
-                                 .domain([
-                                   d3.min(parseData, d => d["date"]),
-                                   d3.timeMonth.offset(d3.max(parseData, d => d["date"]), 3)  // 最大日期往後加2年
-                                  ])
-                                 .range([margin, width - margin]);
-                const xAxisGenerator = d3.axisBottom(xScale)
-                                         .tickFormat(d => d3.timeFormat("%Y %b %d")(d))
-                                         .ticks(width>500 ? 10 : 5)
-                                         .tickSizeOuter(0);
-                const xAxis = svg.append("g")
-                                 .attr("transform", `translate(0, ${height - margin})`)
-                                 .call(xAxisGenerator);
-                xAxis.selectAll(".tick text")
-                     .attr("transform", "translate(-25, 25) rotate(-45)")
-                     .style("fill", "#b2b2b2");  // 選轉文字、改變文字顏色
-                xAxis.selectAll(".tick line")
-                     .style("stroke", "#b2b2b2");  // 改變刻度線顏色
-                xAxis.selectAll(".domain")
-                     .style("stroke", "#b2b2b2");  // 改變X軸主軸線顏色
-
-                // Y軸
-                const yScale = d3.scaleLinear()
-                                 .domain([0, d3.max(parseData, d => d["sum"])])
-                                 .range([height - margin, margin])
-                                 .nice();
-                const yAxisGenerator = d3.axisLeft(yScale)
-                                         .tickFormat(d => d3.format(",")(d) + " 元");
-                const yAxis = svg.append("g")
-                                 .attr("transform", `translate(${margin}, 0)`)
-                                 .call(yAxisGenerator);
-                yAxis.selectAll(".tick text")
-                     .style("fill", "#b2b2b2");  // 改變文字顏色
-                yAxis.selectAll(".tick line")
-                     .style("stroke", "#b2b2b2");  // 改變刻度線顏色
-                yAxis.selectAll(".domain")
-                     .style("stroke", "#b2b2b2");  // 改變Y軸主軸線顏色
-
-                // 建立tooltip
-                const tooltip = d3.select("#assets")
-                                  .style("position", "relative")
-                                  .append("div")
-                                  .attr("class", "assetsNameTag")
-                                  .style("position", "absolute")
-                                  .style("background-color", "#f2f2f2")
-                                  .style("color", "#121212")
-                                  .style("border-radius", "5px")
-                                  .style("padding", "10px")
-                                  .style("font-size", "14px")
-                                  .style("white-space", "nowrap")
-                                  .style("display", "none");
-
-                // 開始建立折線圖
-                const bankKeys = ["taiwanCooperativeBank", "chunghwaPost", "cathayUnitedBank", "taishinInternationalBank", "stock", "sum"];
-                const lineGenerator = d3.line()
-                                        .x((d) => xScale(d.date))
-                                        .y((d) => yScale(d.yValue));
-                const lines = svg.append("g");
-                const focusDots = svg.append("g");
-
-                bankKeys.forEach((key) => {
-                  // 折線
-                  lines.append("path")
-                       .datum(parseData.map((d) => ({
-                         date: d.date,
-                         yValue: d[key]
-                       })))
-                       .attr("class", "assetsLine")
-                       .attr("d", lineGenerator)
-                       .attr("fill", "none")
-                       .attr("stroke", color(key))
-                       .attr("stroke-width", 1.5);
-
-                  // 小圓點
-                  focusDots.selectAll(`#${key}FocusDot`)
-                           .data(parseData, d => d.date)  // 用日期作為唯一識別
-                           .join(
-                             enter => enter.append("circle")
-                                           .attr("id", d => `${key}FocusDot_${d3.timeFormat("%Y-%b-%d")(d.date)}`)
-                                           .attr("cx", d => xScale(d.date))
-                                           .attr("cy", d => yScale(d[key]))
-                                           .attr("r", 3)
-                                           .style("fill", color(key))
-                                           .style("stroke", "f2f2f2")
-                                           .style("stroke-width", 0.3)
-                                           .style("opacity", 0),
-                             update => update.attr("cx", d => xScale(d.date))
-                                             .attr("cy", d => yScale(d[key])),
-                             exit => exit.remove()
-                           );
-                });
-
-                // 建立一個覆蓋SVG的方形
-                svg.append("rect")
-                   .style("fill", "transparent")
-                   .style("pointer-events", "all")
-                   .style("cursor", "pointer")
-                   .attr("width", width - margin)
-                   .attr("height", height - margin)
-                   .on("mouseover", mouseover)
-                   .on("mousemove", mousemove)
-                   .on("mouseout", mouseout);
-
-                // 使用d3.bisector()找到根據資料的date對應的資料點
-                const bisect = d3.bisector((d) => d.date).left;
-
-                function mouseover() {
-                  // focusDots.selectAll("circle").style("opacity", 1);
-                  tooltip.style("display", "block");
-                };
-
-                function mousemove(e) {
-                  const [mouseX, mouseY] = d3.pointer(e, this);  // 用解構賦值語法取得滑鼠的x位置
-                  const xDate = xScale.invert(mouseX);  // 根據滑鼠的x位置取得在座標上的時刻（日期）
-                  const i = bisect(parseData, xDate);  // 用bisector找到離滑鼠最近的資料點index
-                  const closestDot = parseData[i];  // 取得最近的資料點
-                  const formattedClosestDotDate = d3.timeFormat("%Y-%b-%d")(closestDot.date);
-
-                  // 先隱藏所有圓點和所有tooltip，及消除dashedY
-                  focusDots.selectAll("circle").style("opacity", 0);
-                  tooltip.style("display", "none");
-                  svg.selectAll(".assetsDashedY").remove();
-                  svg.selectAll(".assetsDashedYText").remove();
-
-                  // 再顯示對應位置的圓點
-                  bankKeys.forEach((key) => {
-                    const focusDot = svg.select(`#${key}FocusDot_${formattedClosestDotDate}`);
-                    if (!focusDot.empty()) {
-                      focusDot.style("opacity", 1);
-                    } else {
-                      focusDot.style("opacity", 0);
-                    };
-
-                    tooltip.style("display", "block")
-                           .style("left", mouseX + 20 + "px")
-                           .style("top", mouseY - 200 + "px")
-                           .html(`日期：${d3.timeFormat("%Y.%m.%d")(closestDot.date)}<br>` +
-                                 `合作金庫銀行：${d3.format(",")(closestDot.taiwanCooperativeBank)}<br>` +
-                                 `郵局：${d3.format(",")(closestDot.chunghwaPost)}<br>` +
-                                 `國泰世華銀行：${d3.format(",")(closestDot.cathayUnitedBank)}<br>` +
-                                 `台新銀行：${d3.format(",")(closestDot.taishinInternationalBank)}<br>` +
-                                 `股票當日市值：${d3.format(",")(closestDot.stock)}<br>` +
-                                 `總和：${d3.format(",")(closestDot.stock)}<br>` +
-                                 `活存佔比(%)：${d3.format(".2f")(closestDot.depositRatio)} %`)
-                  });
-
-                  // 建立Y-dashed線
-                  svg.append("line")
-                     .attr("class", "assetsDashedY")
-                     .attr("x1", margin)
-                     .attr("y1", yScale(closestDot.sum))
-                     .attr("x2", xScale(closestDot.date))
-                     .attr("y2", yScale(closestDot.sum))
-                     .style("stroke", "#d0d2d2")
-                     .style("stroke-dasharray", "4");
-
-                  // Y-dashed線上的文字
-                  svg.append("text")
-                     .attr("class", "assetsDashedYText")
-                     .attr("x", margin + 5)
-                     .attr("y", yScale(closestDot.sum) - 3)
-                     .attr("fill", "#d0d2d2")
-                     .style("font-size", 12)
-                     .style("text-anchor", "start")
-                     .text(d3.format(",")(closestDot.sum));
-                };
-                
-                function mouseout() {
-                  focusDots.selectAll("circle").style("opacity", 0);
-                  tooltip.style("display", "none");
-                  svg.selectAll(".assetsDashedY").remove();
-                  svg.selectAll(".assetsDashedYText").remove();
-                };
-              };
-              assets();
-              // 監聽視窗大小變動（待處理）
-              window.addEventListener("resize", assets);
-            </script>
+          <section id="summary" class="myInvestmentUnit g-2">
+            <div class="d-flex">
+              <div style="padding: 18px;">
+                <h5 class="title">加權指數</h5>
+                <hr>
+                <p class="price">
+                  <span class="current-price">21759.65</span><br>
+                  <span class="price-change">
+                    <span class="price-point-change">+ 106.40</span> / <span class="price-percentage-change">+0.49%</span>
+                  </span>
+                </p>
+              </div>
+            </div>
           </section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 3</section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 4</section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 5</section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 6</section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 7</section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 8</section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 9</section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 10</section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 11</section>
-          <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2">Div 12</section>
-          
+          <section class="myInvestmentUnit col-md-2 col-sm-3 g-2"><div>Navigator</div></section>
+          <div class="col-md-10 col-sm-9">
+            <div class="row">
+              <!-- 每日錢錢統計 -->
+              <section class="myInvestmentUnit g-2">
+                <div>
+                  <div id="assets"></div>
+                  <script>
+                    const assets = async () => {
+                      const width = parseInt(d3.select("#assets").style("width"));
+                      const height = width>900 ? 600 : width*0.7 ;
+                      const margin = 70;
+                      // 因需隨視窗大小更改而即時更改圖型，故'svg'改為以下寫法
+                      let svg = d3.select("#assets").select("svg");
+                      if (svg.empty()) {
+                        svg = d3.select("#assets")
+                                .append("svg")
+                                .attr("width", width)
+                                .attr("height", height);
+                      } else {
+                        svg.attr("width", width)
+                           .attr("height", height);
+                      };
+                      svg.selectAll("*").remove();  // 清空之前的圖表元素，以重新繪製
+                    
+                      // title
+                      svg.append("text")
+                         .attr("class", "chartTitleText")
+                         .attr("x", width>800 ? width/4 : width/3)
+                         .attr("y", height / 2)
+                         .attr("text-anchor", "middle")
+                         .attr("font-size", width>800 ? 20 : 18)
+                         .attr("font-family", "serif")
+                         .attr("font-style", "italic")
+                         .text("- 每日錢錢統計 -");
+                    
+                      // 匯入及解析資料
+                      const data = await d3.csv("../data/investment/assets.csv");
+                      const parseData = data.map((d) => ({
+                        date: d3.timeParse("%Y/%m/%d")(d["日期"]),
+                        taiwanCooperativeBank: +d["合作金庫銀行"].replace(/,/g, "") || 0,
+                        chunghwaPost: +d["郵局"].replace(/,/g, "") || 0,
+                        cathayUnitedBank: +d["國泰世華銀行"].replace(/,/g, "") || 0,
+                        taishinInternationalBank: +d["台新銀行"].replace(/,/g, "") || 0,
+                        stock: +d["股票當日市值"].replace(/,/g, "") || 0,
+                        sum: (+d["合作金庫銀行"].replace(/,/g, "") || 0) +
+                             (+d["郵局"].replace(/,/g, "") || 0) +
+                             (+d["國泰世華銀行"].replace(/,/g, "") || 0) +
+                             (+d["台新銀行"].replace(/,/g, "") || 0) +
+                             (+d["股票當日市值"].replace(/,/g, "") || 0),
+                        depositRatio: (
+                                        (+d["合作金庫銀行"].replace(/,/g, "") || 0) +
+                                        (+d["郵局"].replace(/,/g, "") || 0) +
+                                        (+d["國泰世華銀行"].replace(/,/g, "") || 0) +
+                                        (+d["台新銀行"].replace(/,/g, "") || 0)
+                                      ) / (
+                                        (+d["合作金庫銀行"].replace(/,/g, "") || 0) +
+                                        (+d["郵局"].replace(/,/g, "") || 0) +
+                                        (+d["國泰世華銀行"].replace(/,/g, "") || 0) +
+                                        (+d["台新銀行"].replace(/,/g, "") || 0) +
+                                        (+d["股票當日市值"].replace(/,/g, "") || 0)
+                                      ) * 100
+                      }));
+                    
+                      const color = d3.scaleOrdinal()
+                                      .domain(["taiwanCooperativeBank", "chunghwaPost", "cathayUnitedBank", "taishinInternationalBank", "stock", "sum"])
+                                      .range(["#f5ba1a", "#e37933", "#6ea647", "#a5a5a5", "#406cb4", "#d0d2d2"]);
+                    
+                      // X軸
+                      const xScale = d3.scaleTime()
+                                       .domain([
+                                         d3.min(parseData, d => d["date"]),
+                                         d3.timeMonth.offset(d3.max(parseData, d => d["date"]), 3)  // 最大日期往後加2年
+                                        ])
+                                       .range([margin, width - margin]);
+                      const xAxisGenerator = d3.axisBottom(xScale)
+                                               .tickFormat(d => d3.timeFormat("%Y %b %d")(d))
+                                               .ticks(width>500 ? 10 : 5)
+                                               .tickSizeOuter(0);
+                      const xAxis = svg.append("g")
+                                       .attr("transform", `translate(0, ${height - margin})`)
+                                       .call(xAxisGenerator);
+                      xAxis.selectAll(".tick text")
+                           .attr("transform", "translate(-25, 25) rotate(-45)")
+                           .style("fill", "#b2b2b2");  // 選轉文字、改變文字顏色
+                      xAxis.selectAll(".tick line")
+                           .style("stroke", "#b2b2b2");  // 改變刻度線顏色
+                      xAxis.selectAll(".domain")
+                           .style("stroke", "#b2b2b2");  // 改變X軸主軸線顏色
+                    
+                      // Y軸
+                      const yScale = d3.scaleLinear()
+                                       .domain([0, d3.max(parseData, d => d["sum"])])
+                                       .range([height - margin, margin])
+                                       .nice();
+                      const yAxisGenerator = d3.axisLeft(yScale)
+                                               .tickFormat(d => d3.format(",")(d) + " 元");
+                      const yAxis = svg.append("g")
+                                       .attr("transform", `translate(${margin}, 0)`)
+                                       .call(yAxisGenerator);
+                      yAxis.selectAll(".tick text")
+                           .style("fill", "#b2b2b2");  // 改變文字顏色
+                      yAxis.selectAll(".tick line")
+                           .style("stroke", "#b2b2b2");  // 改變刻度線顏色
+                      yAxis.selectAll(".domain")
+                           .style("stroke", "#b2b2b2");  // 改變Y軸主軸線顏色
+                    
+                      // 建立tooltip
+                      const tooltip = d3.select("#assets")
+                                        .style("position", "relative")
+                                        .append("div")
+                                        .attr("class", "assetsNameTag")
+                                        .style("position", "absolute")
+                                        .style("background-color", "#f2f2f2")
+                                        .style("color", "#121212")
+                                        .style("border-radius", "5px")
+                                        .style("padding", "10px")
+                                        .style("font-size", "14px")
+                                        .style("white-space", "nowrap")
+                                        .style("display", "none");
+                    
+                      // 開始建立折線圖
+                      const bankKeys = ["taiwanCooperativeBank", "chunghwaPost", "cathayUnitedBank", "taishinInternationalBank", "stock", "sum"];
+                      const lineGenerator = d3.line()
+                                              .x((d) => xScale(d.date))
+                                              .y((d) => yScale(d.yValue));
+                      const lines = svg.append("g");
+                      const focusDots = svg.append("g");
+                    
+                      bankKeys.forEach((key) => {
+                        // 折線
+                        lines.append("path")
+                             .datum(parseData.map((d) => ({
+                               date: d.date,
+                               yValue: d[key]
+                             })))
+                             .attr("class", "assetsLine")
+                             .attr("d", lineGenerator)
+                             .attr("fill", "none")
+                             .attr("stroke", color(key))
+                             .attr("stroke-width", 1.5);
+                           
+                        // 小圓點
+                        focusDots.selectAll(`#${key}FocusDot`)
+                                 .data(parseData, d => d.date)  // 用日期作為唯一識別
+                                 .join(
+                                   enter => enter.append("circle")
+                                                 .attr("id", d => `${key}FocusDot_${d3.timeFormat("%Y-%b-%d")(d.date)}`)
+                                                 .attr("cx", d => xScale(d.date))
+                                                 .attr("cy", d => yScale(d[key]))
+                                                 .attr("r", 3)
+                                                 .style("fill", color(key))
+                                                 .style("stroke", "f2f2f2")
+                                                 .style("stroke-width", 0.3)
+                                                 .style("opacity", 0),
+                                   update => update.attr("cx", d => xScale(d.date))
+                                                   .attr("cy", d => yScale(d[key])),
+                                   exit => exit.remove()
+                                 );
+                      });
+                    
+                      // 建立一個覆蓋SVG的方形
+                      svg.append("rect")
+                         .style("fill", "transparent")
+                         .style("pointer-events", "all")
+                         .style("cursor", "pointer")
+                         .attr("width", width - margin)
+                         .attr("height", height - margin)
+                         .on("mouseover", mouseover)
+                         .on("mousemove", mousemove)
+                         .on("mouseout", mouseout);
+                    
+                      // 使用d3.bisector()找到根據資料的date對應的資料點
+                      const bisect = d3.bisector((d) => d.date).left;
+                    
+                      function mouseover() {
+                        // focusDots.selectAll("circle").style("opacity", 1);
+                        tooltip.style("display", "block");
+                      };
+                    
+                      function mousemove(e) {
+                        const [mouseX, mouseY] = d3.pointer(e, this);  // 用解構賦值語法取得滑鼠的x位置
+                        const xDate = xScale.invert(mouseX);  // 根據滑鼠的x位置取得在座標上的時刻（日期）
+                        const i = bisect(parseData, xDate);  // 用bisector找到離滑鼠最近的資料點index
+                        const closestDot = parseData[i];  // 取得最近的資料點
+                        const formattedClosestDotDate = d3.timeFormat("%Y-%b-%d")(closestDot.date);
+                      
+                        // 先隱藏所有圓點和所有tooltip，及消除dashedY
+                        focusDots.selectAll("circle").style("opacity", 0);
+                        tooltip.style("display", "none");
+                        svg.selectAll(".assetsDashedY").remove();
+                        svg.selectAll(".assetsDashedYText").remove();
+                      
+                        // 再顯示對應位置的圓點
+                        bankKeys.forEach((key) => {
+                          const focusDot = svg.select(`#${key}FocusDot_${formattedClosestDotDate}`);
+                          if (!focusDot.empty()) {
+                            focusDot.style("opacity", 1);
+                          } else {
+                            focusDot.style("opacity", 0);
+                          };
+                        
+                          tooltip.style("display", "block")
+                                 .style("left", mouseX + 20 + "px")
+                                 .style("top", mouseY - 200 + "px")
+                                 .html(`日期：${d3.timeFormat("%Y.%m.%d")(closestDot.date)}<br>` +
+                                       `合作金庫銀行：${d3.format(",")(closestDot.taiwanCooperativeBank)}<br>` +
+                                       `郵局：${d3.format(",")(closestDot.chunghwaPost)}<br>` +
+                                       `國泰世華銀行：${d3.format(",")(closestDot.cathayUnitedBank)}<br>` +
+                                       `台新銀行：${d3.format(",")(closestDot.taishinInternationalBank)}<br>` +
+                                       `股票當日市值：${d3.format(",")(closestDot.stock)}<br>` +
+                                       `總和：${d3.format(",")(closestDot.stock)}<br>` +
+                                       `活存佔比(%)：${d3.format(".2f")(closestDot.depositRatio)} %`)
+                        });
+                      
+                        // 建立Y-dashed線
+                        svg.append("line")
+                           .attr("class", "assetsDashedY")
+                           .attr("x1", margin)
+                           .attr("x2", xScale(closestDot.date))
+                           .attr("y1", yScale(closestDot.sum))
+                           .attr("y2", yScale(closestDot.sum))
+                           .style("stroke", "#d0d2d2")
+                           .style("stroke-dasharray", "4");
+                      
+                        // Y-dashed線上的文字
+                        svg.append("text")
+                           .attr("class", "assetsDashedYText")
+                           .attr("x", margin + 5)
+                           .attr("y", yScale(closestDot.sum) - 3)
+                           .attr("fill", "#d0d2d2")
+                           .style("font-size", 12)
+                           .style("text-anchor", "start")
+                           .text(d3.format(",")(closestDot.sum));
+                      };
+                    
+                      function mouseout() {
+                        focusDots.selectAll("circle").style("opacity", 0);
+                        tooltip.style("display", "none");
+                        svg.selectAll(".assetsDashedY").remove();
+                        svg.selectAll(".assetsDashedYText").remove();
+                      };
+                    };
+                    assets();
+                    // 監聽視窗大小變動（待處理）
+                    window.addEventListener("resize", assets);
+                  </script>
+                </div>
+              </section>
+              <!-- K線區 -->
+              <section class="myInvestmentUnit col-xxl-5 col-lg-6 col-sm-8 g-2">
+                <div id="kLineChart"></div>
+                <script>
+                  const kLineChart = async () => {
+                    const width = parseInt(d3.select("#kLineChart").style("width"));
+                    const height = width>900 ? 600 : width*0.7 ;
+                    const margin = {top: 60, right: 30, bottom: 60, left: 50};
+                    const svg = d3.select("#kLineChart")
+                                  .append("svg")
+                                  .attr("width", width)
+                                  .attr("height", height);
+            
+                    // title
+                    svg.append("text")
+                       .attr("class", "chartTitleText")
+                       .attr("x", margin.left)
+                       .attr("y", margin.top * (2/3))
+                       .attr("text-anchor", "middle")
+                       .attr("font-size", width>800 ? 20 : 18)
+                       .attr("font-family", "serif")
+                       .attr("text-anchor", "start")
+                       .text("- 00675.TW -");
+            
+                    // 匯入及處理數據
+                    const res = await d3.csv("../assets/testAssets/00675L.TW.csv");
+                    const data = res.map(d => {
+                                      d.Date = d3.timeParse("%Y-%m-%d")(d.Date);
+                                      d.Open = +d.Open;
+                                      d.High = +d.High;
+                                      d.Low = +d.Low;
+                                      d.Close = +d.Close;
+                                      return d;
+                                    })
+                                    .filter(d => 
+                                      d.Open>0 && d.High>0 && d.Low>0 && d.Close>0
+                                    );
+            
+                    // 設定K線圖的顏色
+                    const color = (d) => (d.Close > d.Open) ? "red" : "green";
+            
+                    // 設定時間尺度（X軸）
+                    const xScale = d3.scaleTime()
+                                     .domain(d3.extent(data, d => d.Date))
+                                     .range([margin.left, width - margin.right])
+                                     .nice();
+                    const xAxisGenerator = d3.axisBottom(xScale)
+                                             .tickFormat(d3.timeFormat("%Y/%m/%d"));
+                    const xAxis = svg.append("g")
+                                     .attr("transform", `translate(0, ${height - margin.bottom})`)
+                                     .call(xAxisGenerator);
+                    xAxis.selectAll(".tick text")
+                         .attr("transform", "translate(-25, 25) rotate(-45)")
+                         .style("fill", "#b2b2b2");  // 選轉文字、改變文字顏色
+                    xAxis.selectAll(".tick line")
+                         .style("stroke", "#b2b2b2");  // 改變刻度線顏色
+                    xAxis.selectAll(".domain")
+                         .style("stroke", "#b2b2b2");  // 改變X軸主軸線顏色
+                    // 繪製xGridLine
+                    const xGridLine = xAxis.selectAll(".tick")
+                                           .filter((d, i) => i !== 0)
+                                           .append("line")
+                                           .attr("class", "xGridLine")
+                                           .attr("x1", 0)
+                                           .attr("x2", 0)
+                                           .attr("y1", 0)
+                                           .attr("y2", -height + margin.top + margin.bottom)
+                                           .attr("stroke", "#222222");
+            
+                    // 設定價格尺度（Y軸）
+                    const yScale = d3.scaleLinear()
+                                     .domain([0, d3.max(data, d => d.High) * 1.1])
+                                     .range([height - margin.bottom, margin.top])
+                                     .nice();
+                    const yAxisGenerator = d3.axisLeft(yScale);
+                    const yAxis = svg.append("g")
+                                     .attr("transform", `translate(${margin.left}, 0)`)
+                                     .call(yAxisGenerator);
+                    yAxis.selectAll(".tick text")
+                         .style("fill", "#b2b2b2");  // 改變文字顏色
+                    yAxis.selectAll(".tick line")
+                         .style("stroke", "#b2b2b2");  // 改變刻度線顏色
+                    yAxis.selectAll(".domain")
+                         .style("stroke", "#b2b2b2");  // 改變Y軸主軸線顏色
+                    // 繪製yGridLine
+                    const yGridLine = yAxis.selectAll(".tick")
+                                           .filter((d, i) => i !== 0)
+                                           .append("line")
+                                           .attr("class", "xGridLine")
+                                           .attr("x1", 0)
+                                           .attr("x2", width - margin.left - margin.right)
+                                           .attr("y1", 0)
+                                           .attr("y2", 0)
+                                           .attr("stroke", "#222222");
+                    
+                    // 添加K線圖
+                    const highLowLine = svg.selectAll("line .high-low-line")
+                                           .data(data)
+                                           .join("line")
+                                           .attr("class", "high-low-line")
+                                           .attr("x1", d => xScale(d.Date))
+                                           .attr("x2", d => xScale(d.Date))
+                                           .attr("y1", d => yScale(d.High))
+                                           .attr("y2", d => yScale(d.Low))
+                                           .attr("stroke", "#121212")
+                                           .attr("stroke-width", 1);
+                    
+                    const openCloseLineWidth = 4;
+                    const openCloseLine = svg.selectAll("rect .open-close-line")
+                                             .data(data)
+                                             .join("rect")
+                                             .attr("class", "open-close-line")
+                                             .attr("x", d => xScale(d.Date) - openCloseLineWidth/2)
+                                             .attr("y", d => yScale(Math.max(d.Open, d.Close)))
+                                             .attr("width", openCloseLineWidth)
+                                             .attr("height", d => Math.abs(yScale(d.Open) - yScale(d.Close)))
+                                             .attr("stroke", "#121212")
+                                             .attr("stroke-width", 0.1)
+                                             .attr("fill", color)
+                                             .on("mouseover", mouseover)
+                                             .on("mouseleave", mouseleave);
+            
+                    // tooltip
+                    const tooltip = d3.select("#kLineChart")
+                                      .style("position", "relative")
+                                      .append("div")
+                                      .attr("class", "kLineChartNameTag")
+                                      .style("position", "absolute")
+                                      .style("background-color", "#f2f2f2")
+                                      .style("color", "#121212")
+                                      .style("border-radius", "5px")
+                                      .style("padding", "10px")
+                                      .style("font-size", "14px")
+                                      .style("white-space", "nowrap")
+                                      .style("display", "none");
+            
+                    function mouseover(e, d) {
+                      d3.select(this).attr("stroke-width", 0.5);
+                      tooltip.style("display", "block")
+                             .style("left", xScale(d.Date) + 20 + "px")
+                             .style("top", yScale(Math.max(d.Open, d.Close)) - 20 + "px")
+                             .html(`日期：${d3.timeFormat("%Y.%m.%d")(d.Date)}<br>` +
+                                   `開盤：${d3.format(".2f")(d.Open)}<br>` +
+                                   `收盤：${d3.format(".2f")(d.Close)}<br>` +
+                                   `最高：${d3.format(".2f")(d.High)}<br>` +
+                                   `最低：${d3.format(".2f")(d.Low)}<br>`)
+            
+                      // 建立Y-dashed線
+                      svg.append("line")
+                                 .attr("class", "kLineChartDashedY")
+                                 .attr("x1", margin.left)
+                                 .attr("x2", xScale(d.Date))
+                                 .attr("y1", yScale(Math.max(d.Open, d.Close)))
+                                 .attr("y2", yScale(Math.max(d.Open, d.Close)))
+                                 .style("stroke", "#d0d2d2")
+                                 .style("stroke-dasharray", "4");
+                    };
+            
+                    function mouseleave() {
+                      openCloseLine.attr("stroke-width", 0.1);
+                      tooltip.style("display", "none");
+                      svg.selectAll(".kLineChartDashedY").remove();
+                    }
+                  };
+                  kLineChart();
+                </script>
+              </section>
+              <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2"><div>Div 4</div></section>
+              <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2"><div>Div 5</div></section>
+              <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2"><div>Div 6</div></section>
+              <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2"><div>Div 7</div></section>
+              <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2"><div>Div 8</div></section>
+              <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2"><div>Div 9</div></section>
+              <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2"><div>Div 10</div></section>
+              <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2"><div>Div 11</div></section>
+              <section class="myInvestmentUnit col-xxl-3 col-lg-4 col-sm-6 g-2"><div>Div 12</div></section>
+            </div>
+          </div>
         </div>
       </div>
     </main>
-    <footer class="container-fluid" style="background-color: #3c3c3c; padding: 25px; padding-left: 35px;"></footer>
-      <div class="row">
-        <div class="col-sm-7">
-          <p class="fw-light">
-            內文撰寫｜董冠霆<br>
-            製&emsp;&emsp;圖｜董冠霆<br>
-            網&emsp;&emsp;頁｜董冠霆<br>
-            攝&emsp;&emsp;影｜董冠霆<br>
-          </p>
-          <p class="fw-light">
-            聯絡方式：LineID @310956585<br>
-            資料最後更新時間：<time datetime="2024-09-13T02:42">2024/09/13 02:42</time></p>
-          <p class="fw-light">&copy; 2024 Copyright</p>
-        </div>
-        <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">
-          <a href="https://www.instagram.com/ting.d_927" class="d-inline-block me-3" target="_blank"><i class="bi bi-instagram"></i></a>
-          <a href="https://www.facebook.com/guanting.dong" class="d-inline-block me-3" target="_blank"><i class="bi bi-facebook"></i></a>
-          <a href="https://line.me/ti/p/fOtvr_KEbv" class="d-inline-block me-5" target="_blank"><i class="bi bi-line"></i></a>
-        </div>
-      </div>
-    </footer>
   </body>
 </html>
