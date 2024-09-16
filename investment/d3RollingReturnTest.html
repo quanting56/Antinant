@@ -1,169 +1,178 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <!-- 必要的 meta 標籤 -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- 必要的 meta 標籤 -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- 標題 -->
-    <title>d3測試區</title>
+  <!-- 標題 -->
+  <title>d3測試區</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../css/bootstrap_5.3.3_css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../css/bootstrap_icons-main/font/bootstrap-icons.css"/>
-    <link rel="stylesheet" href="../css/font_awesome_v6.5.2_all.css" type="text/css" />
-    <link rel="stylesheet" href="../css/animate_v4.1.1_min.css">
-    <link rel="stylesheet" href="../css/main.css"/>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="../css/bootstrap_icons-main/font/bootstrap-icons.css"/>
+  <link rel="stylesheet" href="../css/font_awesome_v6.5.2_all.css" type="text/css" />
+  <link rel="stylesheet" href="../css/animate_v4.1.1_min.css">
+  <link rel="stylesheet" href="../css/main.css"/>
 
-    <!-- jQuery -->
-    <script src="../js/jquery_v3.7.1_min.js"></script>
-    <!-- Bootstrap Bundle JS -->
-    <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
-    <script src="../js/d3_v7.9.0_min.js"></script>
-    <script src="../js/wow_v1.1.3_min.js"></script>
-    <script src="../js/script.js"></script>
+  <!-- jQuery -->
+  <script src="../js/jquery_v3.7.1_min.js"></script>
+  <!-- Bootstrap Bundle JS -->
+  <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+  <script src="../js/d3_v7.9.0_min.js"></script>
+  <script src="../js/wow_v1.1.3_min.js"></script>
+  <script src="../js/script.js"></script>
 </head>
 <body>
-    <div id="test"></div>
-    <script>
-        // 使用 fetch 從 CSV 文件中讀取數據
-        async function fetchData() {
-            const files = [
-                { symbol: "台積電", url: "../assets/testAssets/d3Test/2330.TW.csv" },
-                { symbol: "鴻海", url: "../assets/testAssets/d3Test/2317.TW.csv" },
-                { symbol: "聯發科", url: "../assets/testAssets/d3Test/2454.TW.csv" },
-                { symbol: "富邦金", url: "../assets/testAssets/d3Test/2881.TW.csv" },
-                { symbol: "台達電", url: "../assets/testAssets/d3Test/2308.TW.csv" },
-                { symbol: "廣達", url: "../assets/testAssets/d3Test/2382.TW.csv" },
-                { symbol: "中華電", url: "../assets/testAssets/d3Test/2412.TW.csv" },
-                { symbol: "國泰金", url: "../assets/testAssets/d3Test/2882.TW.csv" },
-            ];
+  <div id="test"></div>
+  <div id="test"></div>
+  <script>
+    // 使用fetch從CSV文件中讀取數據
+    async function fetchData() {
+      const files = [
+        { symbol: "台積電", url: "../assets/testAssets/d3Test/2330.TW.csv" },
+        { symbol: "鴻海", url: "../assets/testAssets/d3Test/2317.TW.csv" },
+        { symbol: "聯發科", url: "../assets/testAssets/d3Test/2454.TW.csv" },
+        { symbol: "富邦金", url: "../assets/testAssets/d3Test/2881.TW.csv" },
+        { symbol: "台達電", url: "../assets/testAssets/d3Test/2308.TW.csv" },
+        { symbol: "廣達", url: "../assets/testAssets/d3Test/2382.TW.csv" },
+        { symbol: "中華電", url: "../assets/testAssets/d3Test/2412.TW.csv" },
+        { symbol: "國泰金", url: "../assets/testAssets/d3Test/2882.TW.csv" }
+      ];  // 'symbol'只是一個屬性名稱，跟'key'的用法一樣
 
-            const promises = files.map(file =>
-                fetch(file.url)
-                    .then(response => response.text())
-                    .then(text => d3.csvParse(text, d3.autoType))
-                    .then(values => values.map(d => ({ Symbol: file.symbol, ...d })))
-            );
+      // 使用Promise來處理多個文件的讀取，將每個文件解析成CSV並且轉換成包含Symbol的數據
+      const promises = files.map(file =>
+        fetch(file.url).then(response => response.text())  // fetch請求完成後，將回應轉換成文本
+                       .then(text => d3.csvParse(text, d3.autoType))  // 用'd3.csvParse()'解析CSV格式的數據並將CSV文字轉換為數據陣列，再透過'd3.autoType'自動類型轉換
+                       .then(values => values.map(d => ({ Symbol: file.symbol, ...d })))  // 將'file.symbol'的值作為新屬性'Symbol'，然後使用'...d'將'd'這個物件的所有其他屬性展開並合併到新的物件中
+      );  // 'fetch()'是一個瀏覽器內建的API，用來發送HTTP請求並獲取資源，通常是從伺服器端拉取數據，並返回一個Promise
 
-            return (await Promise.all(promises)).flat();
+      // 等待所有Promise完成，將它們平坦化為一個單一陣列
+      return (await Promise.all(promises)).flat();
+    }
+
+    fetchData().then(stocks => {
+        // 設定圖表的尺寸
+        const width = 928;
+        const height = 600;
+        const marginTop = 20;
+        const marginRight = 40;
+        const marginBottom = 30;
+        const marginLeft = 40;
+
+        // 創建水平時間尺度，定義 X 軸（日期）
+        const x = d3.scaleUtc()
+            .domain(d3.extent(stocks, d => d.Date)) // 設定時間範圍
+            .range([marginLeft, width - marginRight]) // 設定 X 軸範圍
+            .clamp(true); // 夾住範圍，防止超出
+
+        // 正規化系列資料
+        const series = d3.groups(stocks, d => d.Symbol).map(([key, values]) => {
+            const v = values[0].Close; // 每個系列的起始價格
+            // 將每個日期的收盤價除以起始價格，得到標準化值
+            return { key, values: values.map(({ Date, Close }) => ({ Date, value: Close / v })) };
+        });
+
+        // 創建垂直尺度，定義 Y 軸（價格變化比率）
+        const k = d3.max(series, ({ values }) => d3.max(values, d => d.value) / d3.min(values, d => d.value)); // 計算最大和最小比率
+        const y = d3.scaleLog() // 使用對數尺度處理比例
+                    .domain([1 / k, k]) // 定義 Y 軸範圍
+                    .rangeRound([height - marginBottom, marginTop]);  // '.rangeRound()'會將輸出的值四捨五入成整數，此為與'.range()'的主要區別
+
+        // 創建顏色尺度，用來為每個 Symbol 指定顏色
+        const color = d3.scaleOrdinal(d3.schemeCategory10).domain(series.map(d => d.key));
+
+        // 創建 SVG 容器，設置寬高及其他樣式
+        const svg = d3.select("#test")
+                      .append("svg")
+                      .attr("width", width)
+                      .attr("height", height)
+                      .attr("viewBox", [0, 0, width, height])
+                      .attr("style", "max-width: 100%; height: auto; -webkit-tap-highlight-color: transparent;");
+
+        // 創建 X 軸（時間）
+        svg.append("g")
+           .attr("transform", `translate(0,${height - marginBottom})`)
+           .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))  // 設置刻度
+           .call(g => g.select(".domain").remove());  // 移除軸線
+
+        // 創建 Y 軸（價格比例）
+        svg.append("g")
+           .attr("transform", `translate(${marginLeft},0)`)
+           .call(d3.axisLeft(y)
+               .ticks(null, x => +x.toFixed(6) + "×"))  // 設置刻度格式
+           .call(g => g.selectAll(".tick line").clone()  // 複製每個刻度線
+               .attr("stroke-opacity", d => d === 1 ? null : 0.2)  // 修改刻度線的透明度
+               .attr("x2", width - marginLeft - marginRight))  // 延長刻度線
+           .call(g => g.select(".domain").remove());  // 移除 Y 軸的軸線
+
+        // 創建一條垂直規則線，作為指示
+        const rule = svg.append("g")
+                        .append("line")
+                        .attr("y1", height)
+                        .attr("y2", 0)
+                        .attr("stroke", "black");
+
+        // 為每個系列創建一條線和對應的標籤
+        const serie = svg.append("g")
+                         .style("font", "bold 10px sans-serif")
+                         .selectAll("g")
+                         .data(series)
+                         .join("g");
+
+        // 定義繪製線條的函數
+        const line = d3.line()
+                       .x(d => x(d.Date))  // 根據日期定位X座標
+                       .y(d => y(d.value));  // 根據標準化值定位Y座標
+
+        // 為每個系列繪製線條
+        serie.append("path")
+            .attr("fill", "none")
+            .attr("stroke-width", 1.5)
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("stroke", d => color(d.key))
+            .attr("d", d => line(d.values));
+
+        // 為每個系列添加末尾的標籤
+        serie.append("text")
+            .datum(d => ({ key: d.key, value: d.values[d.values.length - 1].value }))  // 取每個系列的最後一個值
+            .attr("fill", d => color(d.key))
+            .attr("paint-order", "stroke")
+            .attr("stroke", "white")
+            .attr("stroke-width", 3)
+            .attr("x", x.range()[1] + 3)  // 標籤放在最右側
+            .attr("y", d => y(d.value))  // 根據價值決定 Y 位置
+            .attr("dy", "0.35em")
+            .text(d => d.key);  // 顯示 Symbol 名稱
+
+        // 定義更新函數，根據日期移動規則線和線條
+        function update(date) {
+            date = d3.utcDay.round(date);  // 'd3.utcDay'是D3.js的時間間隔工具，專門處理UTC時間的天數間隔，可用來四捨五入、計算或篩選日期。
+            rule.attr("transform", `translate(${x(date) + 0.5},0)`);  // 更新規則線的位置
+            serie.attr("transform", ({ values }) => {
+                const i = d3.bisector(d => d.Date).left(values, date, 0, values.length - 1);  // d3.bisector().left(資料陣列, 尋找的目標, 搜尋範圍的起點, 搜尋範圍的終點)
+                return `translate(0,${y(1) - y(values[i].value / values[0].value)})`;  // 更新線條的變換
+            });
+            svg.property("value", date).dispatch("input");  // 更新SVG的值並模擬觸發input事件
         }
 
-        fetchData().then(stocks => {
-            // 設定圖表的尺寸
-            const width = 928;
-            const height = 600;
-            const marginTop = 20;
-            const marginRight = 40;
-            const marginBottom = 30;
-            const marginLeft = 40;
-
-            // 創建水平時間尺度
-            const x = d3.scaleUtc()
-                .domain(d3.extent(stocks, d => d.Date))
-                .range([marginLeft, width - marginRight])
-                .clamp(true);
-
-            // 正規化系列資料
-            const series = d3.groups(stocks, d => d.Symbol).map(([key, values]) => {
-                const v = values[0].Close;
-                return { key, values: values.map(({ Date, Close }) => ({ Date, value: Close / v })) };
+        // 創建引導動畫，從最新日期到最早日期
+        d3.transition()
+            .ease(d3.easeCubicOut)
+            .duration(1500)
+            .tween("date", () => {
+                const i = d3.interpolateDate(x.domain()[1], x.domain()[0]);  // 'd3.interpolateDate()'用來在兩個日期之間進行插值運算，它能根據一個輸入比例t(從0到1），回傳對應時間點
+                return t => update(i(t)); // 隨著時間更新
             });
 
-            // 創建垂直尺度
-            const k = d3.max(series, ({ values }) => d3.max(values, d => d.value) / d3.min(values, d => d.value));
-            const y = d3.scaleLog()
-                .domain([1 / k, k])
-                .rangeRound([height - marginBottom, marginTop]);
-
-            // 創建顏色尺度
-            const z = d3.scaleOrdinal(d3.schemeCategory10).domain(series.map(d => d.key));
-
-            // 創建 SVG 容器
-            const svg = d3.select("#test")
-                .append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("viewBox", [0, 0, width, height])
-                .attr("style", "max-width: 100%; height: auto; -webkit-tap-highlight-color: transparent;");
-
-            // 創建軸線和中間規則
-            svg.append("g")
-                .attr("transform", `translate(0,${height - marginBottom})`)
-                .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))
-                .call(g => g.select(".domain").remove());
-
-            svg.append("g")
-                .attr("transform", `translate(${marginLeft},0)`)
-                .call(d3.axisLeft(y)
-                    .ticks(null, x => +x.toFixed(6) + "×"))
-                .call(g => g.selectAll(".tick line").clone()
-                    .attr("stroke-opacity", d => d === 1 ? null : 0.2)
-                    .attr("x2", width - marginLeft - marginRight))
-                .call(g => g.select(".domain").remove());
-
-            const rule = svg.append("g")
-                .append("line")
-                .attr("y1", height)
-                .attr("y2", 0)
-                .attr("stroke", "black");
-
-            // 為每個系列創建一條線和一個標籤
-            const serie = svg.append("g")
-                .style("font", "bold 10px sans-serif")
-                .selectAll("g")
-                .data(series)
-                .join("g");
-
-            const line = d3.line()
-                .x(d => x(d.Date))
-                .y(d => y(d.value));
-
-            serie.append("path")
-                .attr("fill", "none")
-                .attr("stroke-width", 1.5)
-                .attr("stroke-linejoin", "round")
-                .attr("stroke-linecap", "round")
-                .attr("stroke", d => z(d.key))
-                .attr("d", d => line(d.values));
-
-            serie.append("text")
-                .datum(d => ({ key: d.key, value: d.values[d.values.length - 1].value }))
-                .attr("fill", d => z(d.key))
-                .attr("paint-order", "stroke")
-                .attr("stroke", "white")
-                .attr("stroke-width", 3)
-                .attr("x", x.range()[1] + 3)
-                .attr("y", d => y(d.value))
-                .attr("dy", "0.35em")
-                .text(d => d.key);
-
-            // 定義更新函數
-            function update(date) {
-                date = d3.utcDay.round(date);
-                rule.attr("transform", `translate(${x(date) + 0.5},0)`);
-                serie.attr("transform", ({ values }) => {
-                    const i = d3.bisector(d => d.Date).left(values, date, 0, values.length - 1);
-                    return `translate(0,${y(1) - y(values[i].value / values[0].value)})`;
-                });
-                svg.property("value", date).dispatch("input");
-            }
-
-            // 創建引導動畫
-            d3.transition()
-                .ease(d3.easeCubicOut)
-                .duration(1500)
-                .tween("date", () => {
-                    const i = d3.interpolateDate(x.domain()[1], x.domain()[0]);
-                    return t => update(i(t));
-                });
-
-            // 當使用者移動滑鼠或觸摸螢幕時，根據指針的水平位置更新日期
-            svg.on("mousemove touchmove", function (event) {
-                update(x.invert(d3.pointer(event, this)[0]));
-                event.preventDefault();
-            });
+        // 當使用者移動滑鼠或觸摸時，根據指針位置更新日期
+        svg.on("mousemove touchmove", function (event) {
+            update(x.invert(d3.pointer(event, this)[0]));  // 根據滑鼠或觸控位置計算日期並更新圖表
+            event.preventDefault();  // 防止預設行為
         });
-    </script>
+    });
+  </script>
+
 </body>
 </html>

@@ -3925,7 +3925,7 @@
                           對數比例尺d3.scaleLog<br>
                           恆等比例尺d3.scaleIdentity<br>
                           放射比例尺d3.scaleRadial<br>
-                          時間比例尺<code class="mx-1">d3.scaleTime()</code>
+                          時間比例尺<code class="mx-1">d3.scaleTime()</code>、<code class="mx-1">d3.scaleUtc()</code>
                         </td>
                         <td rowspan="3">
                           三者差異：
@@ -3985,11 +3985,19 @@
 </code></pre>
                           </li>
                           <li>
-                            <code class="me-2">d3.scaleTime()</code>時間比例尺
+                            <code class="me-2">d3.scaleTime()</code>（本地）時間比例尺、<code class="me-2">d3.scaleUtc()</code>世界標準時間比例尺
 <pre><code class="javascript">
   const timeScale = d3.scaleTime()
                       .domain([new Date(2024, 0, 1), new Date(2024, 8, 1)])
                       .range([0, 100]);
+
+  const utcScale = d3.scaleUtc()
+                     .domain([new Date(Date.UTC(2024, 1, 1)), new Date(Date.UTC(2024, 12, 31))])
+                     .range([0, 100]);
+
+  // 兩者用法類似，有以下差別：
+  // '.scaleTime()'是D3.js中的時間尺度，用來處理本地時間（Local Time），根據使用者系統設定的時區來計算。
+  // '.scaleUtc()'則是處理UTC（Coordinated Universal Time，世界標準時間），時間不受時區影響。若在全球範圍內需要統一時間基準時，使用'.scaleUtc()'會更合適。
 
 </code></pre>
                           </li>
