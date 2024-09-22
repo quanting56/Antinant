@@ -107,7 +107,9 @@
                     const assets = async () => {
                       const width = parseInt(d3.select("#assets").style("width"));
                       const height = width>900 ? 600 : width*0.7 ;
-                      const margin = 70;
+                      const margin = {top: 50, right: 70, bottom: 70, left: 70};
+                      const assetsMargin = {top: 50, right: 70, bottom: 240, left: 70};
+                      const depositRatioMargin = {top: height-assetsMargin.bottom+70, right: 70, bottom: 70, left: 70};
                       // 因需隨視窗大小更改而即時更改圖型，故'svg'改為以下寫法
                       let svg = d3.select("#assets").select("svg");
                       if (svg.empty()) {
@@ -161,8 +163,8 @@
                       }));
                     
                       const color = d3.scaleOrdinal()
-                                      .domain(["taiwanCooperativeBank", "chunghwaPost", "cathayUnitedBank", "taishinInternationalBank", "stock", "sum"])
-                                      .range(["#f5ba1a", "#e37933", "#6ea647", "#a5a5a5", "#406cb4", "#d0d2d2"]);
+                                      .domain(["taiwanCooperativeBank", "chunghwaPost", "cathayUnitedBank", "taishinInternationalBank", "stock", "sum", "depositRatio"])
+                                      .range(["#f5ba1a", "#e37933", "#6ea647", "#a5a5a5", "#406cb4", "#d0d2d2", "#4caeea"]);
                     
                       // X軸
                       const xScale = d3.scaleTime()
@@ -170,13 +172,13 @@
                                          d3.min(parseData, d => d["date"]),
                                          d3.timeMonth.offset(d3.max(parseData, d => d["date"]), 3)  // 最大日期往後加2年
                                         ])
-                                       .range([margin, width - margin]);
+                                       .range([assetsMargin.left, width - assetsMargin.right]);
                       const xAxisGenerator = d3.axisBottom(xScale)
                                                .tickFormat(d => d3.timeFormat("%Y %b %d")(d))
                                                .ticks(width>500 ? 10 : 5)
                                                .tickSizeOuter(0);
                       const xAxis = svg.append("g")
-                                       .attr("transform", `translate(0, ${height - margin})`)
+                                       .attr("transform", `translate(0, ${height - assetsMargin.bottom})`)
                                        .call(xAxisGenerator);
                       xAxis.selectAll(".tick text")
                            .attr("transform", "translate(-25, 25) rotate(-45)")
@@ -189,12 +191,12 @@
                       // Y軸
                       const yScale = d3.scaleLinear()
                                        .domain([0, d3.max(parseData, d => d["sum"])])
-                                       .range([height - margin, margin])
+                                       .range([height - assetsMargin.bottom, assetsMargin.top])
                                        .nice();
                       const yAxisGenerator = d3.axisLeft(yScale)
                                                .tickFormat(d => d3.format(",")(d) + " 元");
                       const yAxis = svg.append("g")
-                                       .attr("transform", `translate(${margin}, 0)`)
+                                       .attr("transform", `translate(${assetsMargin.left}, 0)`)
                                        .call(yAxisGenerator);
                       yAxis.selectAll(".tick text")
                            .style("fill", "#b2b2b2");  // 改變文字顏色
@@ -202,7 +204,43 @@
                            .style("stroke", "#b2b2b2");  // 改變刻度線顏色
                       yAxis.selectAll(".domain")
                            .style("stroke", "#b2b2b2");  // 改變Y軸主軸線顏色
-                    
+                      
+                      // 活存佔比圖的X軸與小圖Y軸
+                      const depositRatioXAxis = svg.append("g")
+                                                   .attr("transform", `translate(0, ${height - depositRatioMargin.bottom})`)
+                                                   .call(xAxisGenerator);
+                      depositRatioXAxis.selectAll(".tick text")
+                                       .attr("transform", "translate(-25, 25) rotate(-45)")
+                                       .style("fill", "#b2b2b2");  // 選轉文字、改變文字顏色
+                      depositRatioXAxis.selectAll(".tick line")
+                                       .style("stroke", "#b2b2b2");  // 改變刻度線顏色
+                      depositRatioXAxis.selectAll(".domain")
+                                       .style("stroke", "#b2b2b2");  // 改變X軸主軸線顏色
+                      const depositRatioYScale = d3.scaleLinear()
+                                                   .domain([0, 50])
+                                                   .range([height - depositRatioMargin.bottom, depositRatioMargin.top])
+                                                   .nice();
+                      const depositRatioYAxisGenerator = d3.axisLeft(depositRatioYScale)
+                                                           .tickFormat(d => d3.format(",")(d) + " %")
+                                                           .ticks(5);
+                      const depositRatioYAxis = svg.append("g")
+                                                   .attr("transform", `translate(${depositRatioMargin.left}, 0)`)
+                                                   .call(depositRatioYAxisGenerator);
+                      depositRatioYAxis.selectAll(".tick text")
+                                       .style("fill", "#b2b2b2");  // 改變文字顏色
+                      depositRatioYAxis.selectAll(".tick line")
+                                       .style("stroke", "#b2b2b2");  // 改變刻度線顏色
+                      depositRatioYAxis.selectAll(".domain")
+                                       .style("stroke", "#b2b2b2");  // 改變Y軸主軸線顏色
+                      depositRatioYAxis.selectAll(".tick")
+                                       .filter((d, i) => i !== 0)
+                                       .append("line")
+                                       .attr("x1", 0)
+                                       .attr("x2", width - margin.left - margin.right)
+                                       .attr("y1", 0)
+                                       .attr("y2", 0)
+                                       .attr("stroke", "#222222");  // 繪製yGridLine
+
                       // 建立tooltip
                       const tooltip = d3.select("#assets")
                                         .style("position", "relative")
@@ -256,14 +294,50 @@
                                    exit => exit.remove()
                                  );
                       });
+
+                      // 活存佔比圖
+                      const depositRatioLineGenerator = d3.line()
+                                                          .x((d) => xScale(d.date))
+                                                          .y((d) => depositRatioYScale(d.yValue))
+                                                          .defined((d) => d.yValue < 50);;
+
+                      // 活存佔比圖的折線
+                      lines.append("path")
+                           .datum(parseData.map((d) => ({
+                             date: d.date,
+                             yValue: d.depositRatio
+                           })))
+                           .attr("class", "assetsLine")
+                           .attr("d", depositRatioLineGenerator)
+                           .attr("fill", "none")
+                           .attr("stroke", color("depositRatio"))
+                           .attr("stroke-width", 1.5);
+
+                      // 活存佔比圖的小圓點
+                      focusDots.selectAll(`#depositRatioFocusDot`)
+                               .data(parseData, d => d.date)  // 用日期作為唯一識別
+                               .join(
+                                 enter => enter.append("circle")
+                                               .attr("id", d => `depositRatioFocusDot_${d3.timeFormat("%Y-%b-%d")(d.date)}`)
+                                               .attr("cx", d => xScale(d.date))
+                                               .attr("cy", d => depositRatioYScale(d.depositRatio))
+                                               .attr("r", 3)
+                                               .style("fill", color("depositRatio"))
+                                               .style("stroke", "f2f2f2")
+                                               .style("stroke-width", 0.3)
+                                               .style("opacity", 0),
+                                 update => update.attr("cx", d => xScale(d.date))
+                                                 .attr("cy", d => depositRatioYScale(d.depositRatio)),
+                                 exit => exit.remove()
+                               );
                     
                       // 建立一個覆蓋SVG的方形
                       svg.append("rect")
                          .style("fill", "transparent")
                          .style("pointer-events", "all")
                          .style("cursor", "pointer")
-                         .attr("width", width - margin)
-                         .attr("height", height - margin)
+                         .attr("width", width - margin.right)
+                         .attr("height", height - margin.bottom)
                          .on("mouseover", mouseover)
                          .on("mousemove", mousemove)
                          .on("mouseout", mouseout);
@@ -292,14 +366,21 @@
                         // 再顯示對應位置的圓點
                         bankKeys.forEach((key) => {
                           const focusDot = svg.select(`#${key}FocusDot_${formattedClosestDotDate}`);
+                          const depositRatioFocusDot = svg.select(`#depositRatioFocusDot_${formattedClosestDotDate}`);
                           if (!focusDot.empty()) {
                             focusDot.style("opacity", 1);
+                            depositRatioFocusDot.style("opacity", 1);
                           } else {
                             focusDot.style("opacity", 0);
+                            depositRatioFocusDot.style("opacity", 0);
+                          };
+
+                          if (closestDot.depositRatio > 50) {
+                            depositRatioFocusDot.style("opacity", 0);
                           };
                         
                           tooltip.style("display", "block")
-                                 .style("left", mouseX + 20 + "px")
+                                 .style("left", ((mouseX<width*3/4)?(mouseX+20):(mouseX-75)) + "px")
                                  .style("top", mouseY - 200 + "px")
                                  .html(`日期：${d3.timeFormat("%Y.%m.%d")(closestDot.date)}<br>` +
                                        `合作金庫銀行：${d3.format(",")(closestDot.taiwanCooperativeBank)}<br>` +
@@ -314,7 +395,7 @@
                         // 建立Y-dashed線
                         svg.append("line")
                            .attr("class", "assetsDashedY")
-                           .attr("x1", margin)
+                           .attr("x1", assetsMargin.left)
                            .attr("x2", xScale(closestDot.date))
                            .attr("y1", yScale(closestDot.sum))
                            .attr("y2", yScale(closestDot.sum))
@@ -324,7 +405,7 @@
                         // Y-dashed線上的文字
                         svg.append("text")
                            .attr("class", "assetsDashedYText")
-                           .attr("x", margin + 5)
+                           .attr("x", assetsMargin.left + 5)
                            .attr("y", yScale(closestDot.sum) - 3)
                            .attr("fill", "#d0d2d2")
                            .style("font-size", 12)
@@ -407,7 +488,6 @@
                     const xGridLine = xAxis.selectAll(".tick")
                                            .filter((d, i) => i !== 0)
                                            .append("line")
-                                           .attr("class", "xGridLine")
                                            .attr("x1", 0)
                                            .attr("x2", 0)
                                            .attr("y1", 0)
@@ -433,7 +513,6 @@
                     const yGridLine = yAxis.selectAll(".tick")
                                            .filter((d, i) => i !== 0)
                                            .append("line")
-                                           .attr("class", "xGridLine")
                                            .attr("x1", 0)
                                            .attr("x2", width - margin.left - margin.right)
                                            .attr("y1", 0)
