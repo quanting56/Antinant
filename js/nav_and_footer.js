@@ -68,6 +68,7 @@ const navContent = `
               <a class="dropdown-item" href="study/statistics_note.html" target="_blank">統計學筆記</a>
               <a class="dropdown-item" href="other/degitalMedia_class.html" target="_blank">多媒體影像創作社</a>
               <a class="dropdown-item" href="other/photo_short_side_calculator.html" target="_blank">加黑框短邊計算器</a>
+              <a class="dropdown-item" href="four_month_military_life/diary.html" target="_blank">軍中日記</a>
             </div>
           </li>
           <li class="nav-item"><a class="nav-link" href="#">聯絡我</a></li>

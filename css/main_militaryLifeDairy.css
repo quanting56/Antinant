@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #020202;
+    color: #f5f5f5;
+}
+
+/* Banner */
+
+
+/* Article */
+.diary-article-title a,
+.diary-article-title a:link,
+.diary-article-title a:visited,
+.diary-article-title a:active {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.diary-article-title a:hover {
+    color: #dddddd;
+}
+
+.diary-article-subtitle {
+    margin-bottom: 0;
+    font-size: 12px;
+    color: #9c9c9c;
+}
+
+.diary-article-text section {
+    margin-top: 48px;
+    margin-bottom: 144px;
+}
+
+.diary-article-text h3 {
+    font-family: Georgia;
+}
+
+.diary-article-text p {
+    text-indent: 32px;
+}
+
+.diary-article-text a,
+.diary-article-text a:link,
+.diary-article-text a:visited,
+.diary-article-text a:active {
+  color: #a67a44;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-bottom: 1px solid #d8d8d8;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.diary-article-text a:hover {
+  border-bottom: 1px solid #a67a44;
+}
+
+.map-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+}
+
+.map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* footer */
+footer h5 {
+    color: #ffffff;
+}
+
+footer p {
+    font-size: 14px;
+    color: #eeeeee;
+}
+
+footer a {
+    font-size: 16px;
+    color: #eeeeee;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #ffffff;
+    transform: translateY(-1.5px);
+    transition: transform 0.2s ease-in-out;
+}
