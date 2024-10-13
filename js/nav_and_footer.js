@@ -101,7 +101,7 @@ const footerContent = `
         </p>
         <p class="fw-light">
           聯絡方式：LineID @310956585<br>
-          資料最後更新時間：<time datetime="2024-09-22T16:19">2024/09/22 16:19</time>
+          資料最後更新時間：<time datetime="2024-10-13T15:33">2024/10/13 15:33</time>
         </p>
         <p class="fw-light">&copy; 2024 Copyright</p>
       </div>
