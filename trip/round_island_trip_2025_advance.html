@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Title -->
+    <title>2025機車環島</title>
+
+    <!-- CSS link -->
+    <link rel="stylesheet" href="../css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+
+    <!-- JS link -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="../js/d3_v7.9.0_min.js"></script>
+    <!-- 引入 Leaflet.js 和 Leaflet Routing Machine -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-image: url("round_island_trip_2025/picture/IMG_5408.JPG");
+        height: 100vh;
+        color: #ffffff;
+        padding: 5vh 0;
+        text-align: center;
+      }
+
+      .bgWithImage {
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center center;
+        min-height: 100vh;
+        width: auto;
+      }
+
+      /* 地圖在網頁上的大小 */
+      #main-map {
+        height: 100vh;
+        width: 100vw;
+        margin: 10px;
+      }
+
+      /* 地圖上方路線資訊欄文字部分 */
+      .leaflet-routing-container {
+        width: 200px;
+        height: auto;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: rgba(255, 255, 255, 0.8); /* 半透明背景，避免完全遮蓋地圖 */
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        display: none;
+      }
+
+      #starting-point {
+        background-color: #9a6852;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1.5px solid #0077be;
+        position: relative;
+      }
+
+      #starting-point::after {
+        content: "起";
+        color: #ffffff;
+        position: absolute;
+        left: 2px;
+        top: -1px;
+      }
+
+      .daily-entry {
+        background-color: #f0f0f0;
+      }
+
+      .writing-table {
+        position: relative;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 60px;
+      }
+
+      .daily-entry p {
+        font-family: Serif;
+        text-indent: 32px;
+      }
+
+      .daily-entry a,
+      .daily-entry a:link,
+      .daily-entry a:visited,
+      .daily-entry a:active {
+        color: #9a6852;
+        -webkit-text-decoration: none;
+        text-decoration: none;
+        border-bottom: 1px solid #d8d8d8;
+      }
+
+      .daily-entry a:hover {
+        border-bottom: 1px solid #9a6852;
+      }
+
+      .daily-entry dt,
+      .daily-entry dd {
+        margin-top: 8px;
+      }
+
+      .daily-food-list li {
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="bgWithImage">
+      <div class="text-center" style="position: relative; top: 42vh; color: white;">
+        <div style="text-shadow: 3px 3px 3px gray;">
+          <h1 style="letter-spacing: 5px;">我的七天六夜獨自環島旅程</h1>
+          <p style="font-family: Georgia; font-size: 18px; padding-left: 0.5rem;">2025.01.02 - 01.08<br>董冠霆</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- 導言 -->
+      <div class="container-fluid my-4">
+        <div class="row justify-content-center">
+          <div class="col-xl-7 col-lg-8 col-10">
+            <p style="font-family: Serif; text-indent: 32px;">在這次環島旅程中，我以機車走了一場七天六夜的環島之旅，從南港出發，沿著東部海岸，穿越南迴公路、繞經中部山區，最終又回到南港。我記錄了每一天的路線、時間與景點，也拍攝了一些美麗的照片，想要與大家分享。</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- diary -->
+      <section>
+        <div id="day1" class="daily-entry">
+          <div id="Day1_1" class="container-fluid bgWithImage" style="height: 730vh;">
+            <div class="row" style="padding-top: 130vh;">
+              <div class="col-md-7 offset-md-1">
+                <div class="writing-table">
+                  <p>旅程的第一天，我從南港車站啟程，沿著台5線騎行，在暖暖轉至台2丁續行至瑞濱，在瑞濱看見浪濤打在濱海公路的消波塊上。沿著台2線，陸續經過陰陽海、鼻頭漁港、福隆，不一會兒來到三貂角的極東公園，獲得此行意外收穫的極東點（這次環島<span class="mx-1">臺北-宜蘭段</span>本欲走北宜公路，因天候不佳才改走北部濱海公路）。北部濱海公路自過了三貂角後，沿途均可見到矗立在太平洋之上的龜山島，東北季風吹拂之下，騎車從東北角一路至烏石鼻有些痛苦，寒風刺骨難耐，到頭城後，先繞至國五頭城交流道附近的<span class="mx-1">北宜蛋之家（將軍茶葉蛋）</span>來碗熱熱的八仙湯，由於內用座位有限，我是在外面的站立座位區喝湯，特別的體驗。喝完湯繼續上路，從頭城切回台2線繼續南下，一路經過壯圍鄉、五結鄉，沒多久蘇澳鎮的路牌就出現了，在蘇澳我選擇咖哩飯作為今日午餐。</p>
+                  <p>吃完午餐後，進入今天另外的一場重頭戲——蘇花公路，從白米橋開始一路向南的山路，風呼呼地吹著寂寞的機車騎士，由於蘇花改通車後，原蘇花公路的車流少之又少，加上非旅遊旺季的下午兩點多，會在此時進入蘇花公路的人更加稀少 隨著火車穿越山洞與稻田，最終抵達花蓮市，並入住當地的一家溫馨民宿。這一天的旅程充滿期待與冒險感，為接下來的旅途揭開序幕。總路程至少需要 4 小時 43 分鐘。</p>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="height: 120vh"></div>
+            <div class="row justify-content-evenly" style="padding: 50px">
+              <div class="col-xs-10 col-sm-5 col-lg-4 mt-5">
+                <div class="card">
+                  <img class="card-img-top" src="../assets/KaohsiungPingtung_trip_2021/IMG_2522.jpg" title="超級柴油" alt="第一次加超級柴油">
+                  <div class="card-body">
+                    <h5 class="card-title">第一次加超級柴油</h5>
+                    <p class="card-text" style="text-indent: 32px;">你有加過超級柴油嗎？我是沒有啦。</p>
+                  </div>
+                  <div class="card-footer text-end text-muted">2021.08.18 臺南市東區</div>
+                </div>
+              </div>
+              <div class="col-xs-10 col-sm-5 col-lg-4 mt-5">
+                <div class="card">
+                  <img class="card-img-top" src="../assets/KaohsiungPingtung_trip_2021/IMG_2541.jpg" title="老闆要的紅布條" alt="在新堀江看到的紅布條">
+                  <div class="card-body">
+                    <h5 class="card-title">老闆，這是你要的紅布條</h5>
+                    <p class="card-text" style="text-indent: 32px;">是敷衍的員工，還是不講清楚的老闆呢？</p>
+                  </div>
+                  <div class="card-footer text-end text-muted">2021.08.18 高雄市新興區</div>
+                </div>
+              </div>
+              <div class="col-xs-10 col-sm-5 col-lg-4 mt-5">
+                <div class="card">
+                  <img class="card-img-top" src="../assets/KaohsiungPingtung_trip_2021/IMG_2553.jpg" title="臺大的垃圾" alt="垃圾製造垃圾">
+                  <div class="card-body">
+                    <h5 class="card-title">宵夜的殘骸</h5>
+                    <p class="card-text" style="text-indent: 32px;">垃圾製造垃圾？是臺大的垃圾！</p>
+                  </div>
+                  <div class="card-footer text-end text-muted">2021.08.19 高雄市鹽埕區</div>
+                </div>
+              </div>
+              <div class="d-none d-lg-block" style="height: 100vh;"></div>
+              <div class="d-sm-none" style="height: 30vh;"></div>
+              <div class="col-xs-10 col-sm-5 col-lg-12 mt-5 text-center" style="color: aliceblue; text-shadow: 3px 3px 3px gray;">
+                <h4>而底下這張圖是接完臺南友人後，從台一線南下時所拍的一張照片。<br>印象中我們這天沒有看到日落。</h4>
+              </div>
+            </div>
+          </div>
+
+          <h3>Day 1: 南港 → 三貂角 → 蘇澳 → 花蓮</h3>
+          <div class="container">
+            <dl class="row">
+              <dt class="col-sm-3">今日里程數</dt>
+              <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">230</b>km</dd>
+              <dt class="col-sm-3">今晚住在哪裡</dt>
+              <dd class="col-sm-9"><a href="https://maps.app.goo.gl/cbCVTNRMBbC1gTuz9" target="_blank">花蓮青年旅館．北吉光輕旅 Hualien Hostel Bayhouse</a></dd>
+              <dt class="col-sm-3">今天吃了些什麼</dt>
+              <dd class="col-sm-9">
+                <ol id="day1-food-list" class="daily-food-list">
+                  <li>
+                    四海八仙湯 $100<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/eVcxhRFWFZEgDGC86" target="_blank" class="ms-1">北宜蛋之家（將軍茶葉蛋）</a></span>
+                  </li>
+                  <li>
+                    特選牛肉泰式綠咖哩飯 $170<br>
+                    雞米花 $50<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/oKD2Ydvmf18fnKCCA" target="_blank" class="ms-1">台灣雙醬咖哩 蘇澳店</a></span>
+                  </li>
+                  <li>
+                    大熱拿鐵 $55<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/3guATinN8T2ruqCE9" target="_blank" class="ms-1">7-11金玉門市</a></span>
+                  </li>
+                  <li>
+                    夏威夷生菜飯 $198<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/BpcewdntYbM1K9C56" target="_blank" class="ms-1">jam kitchen 花蓮中山棧</a></span>
+                  </li>
+                  <li>
+                    蕎麥綠茶 $30<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/CUDRiU8iNsFhxtnX9" target="_blank" class="ms-1">瓦克茶飲 Walker Tea Shop</a></span>
+                  </li>
+                </ol>
+              </dd>
+              <dt class="col-sm-3">今日總花費</dt>
+              <dd class="col-sm-9">
+                <span id="day1-daily-expenses-list">
+                  餐費<b id="day1-food-expenses" class="mx-2"></b>元<br>
+                  + 交通費<b class="mx-2 daily-transportation-expenses">161</b>元（今日加油的油錢）<br>
+                  + 住宿費<b class="mx-2 daily-hotel-expenses">317</b>元<br>
+                </span>
+                = 共<b id="day1-daily-expenses" class="mx-2 text-danger daily-total-expenses"></b>元
+              </dd>
+            </dl>
+          </div>
+        </div>
+
+        <div id="day2" class="daily-entry">
+          <h3>Day 2: 花蓮 → 林田山 → 臺東</h3>
+          <div class="container">
+            <dl class="row">
+              <dt class="col-sm-3">今日里程數</dt>
+              <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">183</b>km</dd>
+              <dt class="col-sm-3">今晚住在哪裡</dt>
+              <dd class="col-sm-9"><a href="https://maps.app.goo.gl/JyeXfUBF23YkN5rQ6" target="_blank">途中．台東國際青年旅舍 On My Way．Taitung Hostel & Backpacker</a></dd>
+              <dt class="col-sm-3">今天吃了些什麼</dt>
+              <dd class="col-sm-9">
+                <ol id="day2-food-list" class="daily-food-list">
+                  <li>
+                    九層塔蛋河粉皮（類蛋餅） $45<br>
+                    香濃茄汁蘑菇鐵板麵（加半熟蛋、加玉米） $85<br>
+                    人氣紅茶-大杯 $25<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/S4L2uE7JmRjyLJLd9" target="_blank" class="ms-1">來客早午餐 Like Brunch</a></span>
+                  </li>
+                  <li>
+                    日式辛香豬肉咖哩飯 $89<br>
+                    統一陽光無加糖高纖豆漿（i珍食） $17<br>
+                    關東煮（米血糕、雪白魚豆腐、高麗菜捲、春雨） $64<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/mTnsBMoSXHfmZSmYA" target="_blank" class="ms-1">7-11萬榮門市</a></span>
+                  </li>
+                  <li>
+                    凱薩沙拉（友善食光） $46<br>
+                    培根蛋餅（友善食光） $35<br>
+                    義式蕃茄蔬菜筆尖麵（友善食光） $63<br>
+                    舒芙蕾布丁（友善食光） $46<br>
+                    經典雙色小泡芙（友善食光） $34<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/Jp1YUua6X94F4GNR6" target="_blank" class="ms-1">全家便利商店 台東車站店</a></span>
+                  </li>
+                  <li>
+                    綠豆鮮乳大杯 $85<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/z8g9ZmaAmtstYNBo9" target="_blank" class="ms-1">老東芳青草茶 車站門市</a></span>
+                  </li>
+                </ol>
+              </dd>
+              <dt class="col-sm-3">今日總花費</dt>
+              <dd class="col-sm-9">
+                <span id="day2-daily-expenses-list">
+                  餐費<b id="day2-food-expenses" class="mx-2 daily-food-expenses"></b>元<br>
+                  + 交通費<b class="mx-2 daily-transportation-expenses">143</b>元（今日加油的油錢）<br>
+                  + 住宿費<b class="mx-2 daily-hotel-expenses">648</b>元<br>
+                </span>
+                = 共<b id="day2-daily-expenses" class="mx-2 text-danger daily-total-expenses"></b>元
+              </dd>
+            </dl>
+          </div>
+          <p>第二天，我繼續沿著花東縱谷向南進發，途中經過萬榮鄉的茶園、豐濱鄉的海岸線，以及長濱鄉的小漁村。中午時分，我到達玉里鎮，品嚐了當地著名的粄條。午後，前往東河的都蘭藝術村探索當地文化，最終抵達臺東市，入住市區的旅店。這一天的風景變化多端，從山谷到海邊，每一刻都充滿驚喜。全程至少需要 6 小時 35 分鐘。</p>
+        </div>
+        <div id="day3" class="daily-entry">
+          <h3>Day 3: 臺東 → 下南田 → 內埔 → 高雄</h3>
+          <div class="container">
+            <dl class="row">
+              <dt class="col-sm-3">今日里程數</dt>
+              <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">224</b>km</dd>
+              <dt class="col-sm-3">今晚住在哪裡</dt>
+              <dd class="col-sm-9"><a href="https://maps.app.goo.gl/H92nb3YaLRm6j1ir8" target="_blank">旅聚居青年旅舍</a></dd>
+              <dt class="col-sm-3">今天吃了些什麼</dt>
+              <dd class="col-sm-9">
+                <ol id="day3-food-list" class="daily-food-list">
+                  <li>
+                    東河肉包 $40<br>
+                    酸菜包 $35<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/4mmpwC64am6NDazp9" target="_blank" class="ms-1">大武之心南迴驛站</a><a class="ms-1">東河包子</a></span>
+                  </li>
+                  <li>
+                    大腸包馬告香腸＋卑南豬血湯 $140<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/4mmpwC64am6NDazp9" target="_blank" class="ms-1">大武之心南迴驛站</a><a href="https://maps.app.goo.gl/HVwuyTRaXhUSaxwA6" target="_blank" class="ms-1">南迴驛站天生牌香腸</a></span>
+                  </li>
+                  <li>
+                    大熱卡布奇諾 $55<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/9mGufduP1g1mfm8x5" target="_blank" class="ms-1">7-11南北棧門市</a></span>
+                  </li>
+                  <li>
+                    泰式高牢＋飯 $160<br>
+                    涼拌綜合 $120<br>
+                    白飯 $20<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/AGUaZCvX5aZaTr5JA" target="_blank" class="ms-1">拾壹船麵</a></span>
+                  </li>
+                  <li>
+                    紅豆抹茶牛奶冰 $65<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/JJEgyGm2WHhuGC9h9" target="_blank" class="ms-1">渡船頭海之冰</a></span>
+                  </li>
+                </ol>
+              </dd>
+              <dt class="col-sm-3">今日總花費</dt>
+              <dd class="col-sm-9">
+                <span id="day3-daily-expenses-list">
+                  餐費<b id="day3-food-expenses" class="mx-2 daily-food-expenses"></b>元<br>
+                  + 交通費<b class="mx-2 daily-transportation-expenses">100</b>元（今日加油的油錢）<br>
+                  + 住宿費<b class="mx-2 daily-hotel-expenses">600</b>元<br>
+                </span>
+                = 共<b id="day3-daily-expenses" class="mx-2 text-danger daily-total-expenses"></b>元
+              </dd>
+            </dl>
+          </div>
+          <p>從臺東出發，我駛向太麻里，欣賞晨曦中的海岸線，接著繞過南田鄉，來到屏東縣的霧台，探訪魯凱族的傳統文化。下午，我沿台24線進入高屏地區，途經紅門、內埔等鄉鎮，最終抵達高雄鹽埕區，夜晚在六合夜市品嘗當地小吃。這一天的旅程富有挑戰，但也讓我見識到台灣南部的多元風貌。總路程至少需要 7 小時 32 分鐘。</p>
+        </div>
+        <div id="day4" class="daily-entry">
+          <h3>Day 4: 高雄 → 三地門 → 荖濃 → 楠西 → 嘉義</h3>
+          <div class="container">
+            <dl class="row">
+              <dt class="col-sm-3">今日里程數</dt>
+              <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">204</b>km</dd>
+              <dt class="col-sm-3">今晚住在哪裡</dt>
+              <dd class="col-sm-9"><a href="https://maps.app.goo.gl/Rd42VA85658qm4hW7" target="_blank">仲青行旅嘉義館LIGHT HOSTEL</a></dd>
+              <dt class="col-sm-3">今天吃了些什麼</dt>
+              <dd class="col-sm-9">
+                <ol id="day4-food-list" class="daily-food-list">
+                  <li>
+                    13號套餐（赤肉麵線焿＋豬肉可樂餅＋大冰紅茶尼奶） $92<br>
+                    無骨雞塊5入 $47<br>
+                    玉米濃湯 $26<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/VX2GJd75GiKxHZA79" target="_blank" class="ms-1">丹丹漢堡 七賢店</a></span>
+                  </li>
+                  <li>
+                    紅燒牛肉燴飯 $70<br>
+                    統一陽光無加糖高纖豆漿 $25<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/hec2kqAmsWzALwH26" target="_blank" class="ms-1">7-11荖濃門市</a></span>
+                  </li>
+                  <li>
+                    花椰菜 $35<br>
+                    龍鬚菜 $35<br>
+                    雞肉飯 $45<br>
+                    皮蛋豆腐 $35<br>
+                    手工魚丸湯 $25<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/f47GTQpkeouMamPU9" target="_blank" class="ms-1">波波食堂（嘉義雞肉飯）</a></span>
+                  </li>
+                  <li>
+                    冰淇淋紅茶拿鐵-大 $75<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/C6gKRKUq4BR4E54D9" target="_blank" class="ms-1">50嵐-嘉義民族店</a></span>
+                  </li>
+                </ol>
+              </dd>
+              <dt class="col-sm-3">今日總花費</dt>
+              <dd class="col-sm-9">
+                <span id="day4-daily-expenses-list">
+                  餐費<b id="day4-food-expenses" class="mx-2 daily-food-expenses"></b>元<br>
+                  + 交通費<b class="mx-2 daily-transportation-expenses">182</b>元（今日加油的油錢）<br>
+                  + 住宿費<b class="mx-2 daily-hotel-expenses">409</b>元<br>
+                  + 洗衣費<b class="mx-2 daily-other-expenses">70</b>元<br>
+                </span>
+                = 共<b id="day4-daily-expenses" class="mx-2 text-danger daily-total-expenses"></b>元
+              </dd>
+            </dl>
+          </div>
+          <p>第四天，我從高雄出發，經過屏東的三地門與茂林國家風景區，沿途欣賞壯麗的山谷與溪流，並在茂林停留拍照。下午，我穿越玉井的芒果園，品嚐當地的芒果冰，最終抵達嘉義市，感受這座城市的悠閒氣氛。全程至少需要 6 小時 10 分鐘。</p>
+        </div>
+        <div id="day5" class="daily-entry">
+          <h3>Day 5: 嘉義 → 車埕 → 地利 → 日月潭</h3>
+          <div class="container">
+            <dl class="row">
+              <dt class="col-sm-3">今日里程數</dt>
+              <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">114</b>km</dd>
+              <dt class="col-sm-3">今晚住在哪裡</dt>
+              <dd class="col-sm-9"><a href="https://maps.app.goo.gl/fbmoXAuLvrLDwue37" target="_blank">Dreamy Nomads Hostel 日月潭背包客棧</a></dd>
+              <dt class="col-sm-3">今天吃了些什麼</dt>
+              <dd class="col-sm-9">
+                <ol id="day5-food-list" class="daily-food-list">
+                  <li>
+                    雞片飯-小 $50<br>
+                    五味魷魚 $60<br>
+                    花椰菜 $35<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/3edhtdRnuW2RktVx5" target="_blank" class="ms-1">夯仔內火雞肉飯</a></span>
+                  </li>
+                  <li>
+                    藍莓乳酪三明治＋波蜜一日蔬菜紫色蔬果汁 $45<br>
+                    OPEN!小將杯裝穀物高鈣乳飲品 $39<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/2JGw3JynYmDT4RJy8" target="_blank" class="ms-1">7-11錚多門市</a></span>
+                  </li>
+                  <li>
+                    烤熱狗-蜂蜜芥末醬 $50<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/HUm1XZNBRF7rExG69" target="_blank" class="ms-1">馬拉引碳烤小米麻糬專賣店</a></span>
+                  </li>
+                  <li>
+                    提拉米蘇（友善食光） $34<br>
+                    剝皮辣椒鹽水雞（友善食光） $42<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/Ca2Qv9fgKh7jSVzc6" target="_blank" class="ms-1">全家便利商店 魚池伊達邵店</a></span>
+                  </li>
+                  <li>
+                    雞腿 $60<br>
+                    涼麵套餐（美味涼麵*1＋當季時蔬*3） $60<br>
+                    3樣蔬菜 $50<br>
+                    <span class="ms-2">@<a class="ms-1">不吃不可鹹水雞</a></span>
+                  </li>
+                  <li>
+                    阜杭豆漿-經典飯糰 $45<br>
+                    立頓奶茶 $15<br>
+                    OPEN!小將杯裝穀物高鈣麥芽乳 $39<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/RAHPwF4EGNrgafMd9" target="_blank" class="ms-1">7-11日月潭門市</a></span>
+                  </li>
+                </ol>
+              </dd>
+              <dt class="col-sm-3">今日總花費</dt>
+              <dd class="col-sm-9">
+                <span id="day5-daily-expenses-list">
+                  餐費<b id="day5-food-expenses" class="mx-2 daily-food-expenses"></b>元<br>
+                  + 交通費<b class="mx-2 daily-transportation-expenses">100</b>元（今日加油的油錢）<br>
+                  + 住宿費<b class="mx-2 daily-hotel-expenses">604</b>元<br>
+                </span>
+                = 共<b id="day5-daily-expenses" class="mx-2 text-danger daily-total-expenses"></b>元
+              </dd>
+            </dl>
+          </div>
+          <p>第五天的行程從嘉義開始，經過斗六與竹山，逐漸接近中部山區。午后，我來到日月潭，環湖騎行，欣賞湖光山色，並入住湖畔的一家民宿。這一天相對輕鬆，讓我能有時間靜靜享受日月潭的美景。總路程至少需要 2 小時 50 分鐘。</p>
+        </div>
+        <div id="day6" class="daily-entry">
+          <h3>Day 6: 日月潭 → 天冷 → 新社 → 臺中</h3>
+          <div class="container">
+            <dl class="row">
+              <dt class="col-sm-3">今日里程數</dt>
+              <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">112</b>km</dd>
+              <dt class="col-sm-3">今晚住在哪裡</dt>
+              <dd class="col-sm-9"><a href="https://maps.app.goo.gl/q5eq4DdSK6FoQ7Z99" target="_blank">草悟道漂鳥青年旅館</a></dd>
+              <dt class="col-sm-3">今天吃了些什麼</dt>
+              <dd class="col-sm-9">
+                <ol id="day6-food-list" class="daily-food-list">
+                  <li>
+                    紐奧良風味烤雞時蔬沙拉餐 $99<br>
+                    日式佛蒙特咖哩雞肉飯 $89<br>
+                    蜜蜂工坊-蜂蜜焙茶歐蕾（i珍食） $27<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/JdP3UBiG5ieZdqSQ6" target="_blank" class="ms-1">7-11百香果門市</a></span>
+                  </li>
+                  <li>
+                    石安牧場溏心蛋飯糰（i珍食） $25<br>
+                    御料小館美式香辣雞丁（i珍食） $32<br>
+                    21plus香草烤雞腿時蔬餐（i珍食） $58<br>
+                    御選黑咖哩雞排烏龍燴麵（i珍食） $71<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/55fYMirf8c47Bpc47" target="_blank" class="ms-1">7-11超億門市</a></span>
+                  </li>
+                  <li>
+                    許慶良觀音拿鐵 $65<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/sQ9QxTVZ7Bzc1Dak9" target="_blank" class="ms-1">大苑子 台中勤美店</a></span>
+                  </li>
+                </ol>
+              </dd>
+              <dt class="col-sm-3">今日總花費</dt>
+              <dd class="col-sm-9">
+                <span id="day6-daily-expenses-list">
+                  餐費<b id="day6-food-expenses" class="mx-2 daily-food-expenses"></b>元<br>
+                  + 交通費<b class="mx-2 daily-transportation-expenses">76</b>元（今日加油的油錢）<br>
+                  + 住宿費<b class="mx-2 daily-hotel-expenses">467</b>元<br>
+                </span>
+                = 共<b id="day6-daily-expenses" class="mx-2 text-danger daily-total-expenses"></b>元
+              </dd>
+            </dl>
+          </div>
+          <p>從日月潭出發，我經過埔里、草屯與員林，沿途探訪了王功漁港，並在鹿港小鎮停留，感受其濃厚的文化氛圍。下午，我抵達臺中市，夜晚在逢甲夜市大快朵頤，為旅程接近尾聲畫上精彩的一筆。全程至少需要 4 小時 26 分鐘。</p>
+        </div>
+        <div id="day7" class="daily-entry">
+          <h3>Day 7: 臺中 → 南港</h3>
+          <div class="container">
+            <dl class="row">
+              <dt class="col-sm-3">今日里程數</dt>
+              <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">186</b>km</dd>
+              <dt class="col-sm-3">今晚住在哪裡</dt>
+              <dd class="col-sm-9">我家</dd>
+              <dt class="col-sm-3">今天吃了些什麼</dt>
+              <dd class="col-sm-9">
+                <ol id="day7-food-list" class="daily-food-list">
+                  <li>
+                    極饗-嘉義風味雞肉飯 $79<br>
+                    真飽涼麵-特選麻醬 $59<br>
+                    統一陽光無加糖高纖豆漿 $25<br>
+                    拿鐵冰咖啡-大 $55<br>
+                    <span class="ms-2">@<a href="https://maps.app.goo.gl/X8UpUjmaYvKYEJb49" target="_blank" class="ms-1">7-11美豐門市</a></span>
+                  </li>
+                </ol>
+              </dd>
+              <dt class="col-sm-3">今日總花費</dt>
+              <dd class="col-sm-9">
+                <span id="day7-daily-expenses-list">
+                  餐費<b id="day7-food-expenses" class="mx-2 daily-food-expenses"></b>元<br>
+                  + 交通費<b class="mx-2 daily-transportation-expenses">188</b>元（今日加油的油錢）<br>
+                  + 住宿費<b class="mx-2 daily-hotel-expenses">0</b>元<br>
+                </span>
+                = 共<b id="day7-daily-expenses" class="mx-2 text-danger daily-total-expenses"></b>元
+              </dd>
+            </dl>
+          </div>
+          <p>最後一天的旅程，我從臺中啟程，經過豐原、苗栗與竹南，回到北部的竹北與新竹。下午，我駛過林口與五股，最終回到南港，完成了整個環島旅程。這一天既充滿回憶，又有一絲不捨，但我對整個旅程的點滴都感到無比感恩。總路程至少需要 6 小時 7 分鐘。</p>
+        </div>
+        <script>
+          // 通用函數：計算每日餐費（從"今天吃了些什麼"中提取金額並計算總和）
+          function calculateDailyFoodExpenses(dayId) {
+            const foodList = document.querySelectorAll(`#${dayId}-food-list li`);
+            let foodExpenses = 0;
+        
+            foodList.forEach((item) => {
+              const match = item.textContent.match(/\$([0-9]+)/g);
+              if (match) {
+                match.forEach((price) => {
+                  foodExpenses += parseInt(price.replace("$", ""), 10); // 將金額轉換成數字並累加
+                });
+              }
+            });
+        
+            // 更新餐費到對應的元素
+            const foodExpensesElement = document.getElementById(`${dayId}-food-expenses`);
+            if (foodExpensesElement) {
+              foodExpensesElement.textContent = foodExpenses.toLocaleString();
+            }
+        
+            return foodExpenses;
+          }
+        
+          // 通用函數：計算每日總花費（從"今日總花費"中提取金額並計算總和）
+          function calculateDailyTotalExpenses(dayId) {
+            const foodExpenses = calculateDailyFoodExpenses(dayId);
+            const transportationExpenses = parseInt(
+              document.querySelector(`#${dayId}-daily-expenses-list .daily-transportation-expenses`).textContent,
+              10
+            );
+            const hotelExpenses = parseInt(
+              document.querySelector(`#${dayId}-daily-expenses-list .daily-hotel-expenses`).textContent,
+              10
+            );
+            
+            const otherExpenses = parseInt(
+              document.querySelector(`#${dayId}-daily-expenses-list .daily-other-expenses`)?.textContent || "0",
+              10
+            );
+            
+            const totalExpenses = foodExpenses + transportationExpenses + hotelExpenses + otherExpenses;
+
+            // 更新總花費到對應的元素
+            const totalExpensesElement = document.getElementById(`${dayId}-daily-expenses`);
+            if (totalExpensesElement) {
+              totalExpensesElement.textContent = totalExpenses.toLocaleString();
+            }
+          }
+        
+          // 初始化每日花費計算（針對每一天呼叫）
+          function initializeExpensesCalculation(dayIds) {
+            dayIds.forEach((dayId) => {
+              calculateDailyTotalExpenses(dayId);
+            });
+          }
+        
+          // 定義所有需要處理的每日 ID
+          const dayIds = ["day1", "day2", "day3", "day4", "day5", "day6", "day7"];
+          initializeExpensesCalculation(dayIds);
+        </script>        
+      </section>
+
+      <!-- 總地圖 
+      <section>
+        <div id="main-map"></div>
+        <script>
+          function mainMap() {
+            // 環島路線資料
+            const route = [
+              { day: "Day1", stops: ["台灣中油 南港站", "rvspt新台五路", "rvspt暖暖源遠路", "7-11源遠門市", "rvspt瑞芳物流共和國", "萊爾富瑞芳瑞濱店", "三貂角極東公園", "北宜蛋之家", "rvspt北宜公路", "rvspt頭城台2線", "rvspt台2線台7線路口", "台灣中油 蘇澳站", "台灣雙醬咖哩蘇澳店", "rvspt台9線蘇澳東澳段", "7-11金玉門市", "rvspt台9線南澳和平段", "台泥DAKA園區", "rvspt下清水橋-北端"] }, // , "花蓮北吉光輕旅"
+              { day: "Day1後", stops: ["rvspt下清水橋-南端", "花蓮北吉光輕旅"] },
+              { day: "Day2", stops: ["花蓮北吉光輕旅", "台灣中油 南埔站", "rvspt台9線木瓜溪橋", "rvspt台9線舊線萬榮段1", "7-11萬榮門市", "林田山林業文化園區", "rvspt台9線舊線萬榮段2", "東里車站", "東里舊站", "rvspt池上市區", "初來橋", "台灣中油 海端站", "rvspt初鹿台9線", "rvspt台9線台11乙線路口", "途中．台東國際青年旅舍"] },
+              { day: "Day3", stops: ["途中．台東國際青年旅舍", "台東飛機巷", "台灣中油 加賀站", "rvspt太麻里台9線", "太麻里平交道", "多良廢站", "大武之心南迴驛站", "台26線南田端", "台灣中油 山海關站", "南迴改攝影點", "7-11南北棧門市", "萊爾富枋山加祿村店", "內埔鄉水門", "台24線起點", "rvspt高雄中正一路", "高雄旅聚居青年旅舍"] },
+              { day: "Day4", stops: ["高雄旅聚居青年旅舍", "rvspt高雄三多一路", "台24線起點", "三地門中山公園", "7-11頭目門市", "rvspt市道185號三地門茂林段", "7-11茂林門市", "rvspt茂林市區", "7-11荖濃門市", "台灣中油 甲仙站", "7-11楠西門市", "rvspt市道175號市道174號路口", "rvspt市道174號市道165號路口", "rvspt市道165號六甲東山段", "7-11鈺善門市", "7-11中埔門市", "rvspt嘉義吳鳳北路光彩街路口", "仲青行旅嘉義館LIGHT HOSTEL"] },
+              { day: "Day5", stops: ["仲青行旅嘉義館LIGHT HOSTEL", "夯仔內火雞肉飯", "7-11錚多門市", "rvspt台1線大林斗南段", "rvspt台1丁線斗南斗六段", "台灣中油 斗六南環路站", "rvspt縣道141號彰雲大橋", "車埕車站", "信義鄉地利村", "伊達邵", "日月潭Dreamy Nomads Hostel"] },
+              { day: "Day6", stops: ["日月潭Dreamy Nomads Hostel", "日月潭龍鳳宮", "台灣中油 埔里中山路站", "臺灣地理中心碑", "7-11中心園門市", "rvspt台21線埔里國姓段", "7-11百香果門市", "7-11耘晨門市", "rvspt東勢東關路八段底", "7-11天星門市", "rvspt臺中忠明路", "草悟道漂鳥青年旅館"] },
+              { day: "Day7", stops: ["草悟道漂鳥青年旅館", "rvspt臺中三民路二段", "國立臺中科技大學", "台灣中油 北屯站", "7-11美豐門市", "rvspt台13線三義銅鑼段", "rvspt台13線銅鑼苗栗段", "7-11為公門市", "rvspt台13線頭屋造橋段", "7-11隆華門市", "rvspt新竹中華路二段", "台灣中油 新豐站", "rvspt台31線湖口新屋段", "rvspt台31線新屋蘆竹段", "蘆竹仁愛路攝影點", "rvspt林口文化北路仁愛路路口", "7-11粉寮門市", "rvspt五股水碓二路", "憲兵訓練中心", "rvspt五股成泰路蓬萊路路口", "rvspt新莊新北大道四段", "rvspt三重新北大道一段", "rvspt台北大橋", "rvspt民權大橋", "rvspt成功橋", "台灣中油 南港站"] }
+            ];
+          
+            // 各地點的經緯度資料
+            const locations = {
+              "台灣中油 南港站": [25.055515694010285, 121.6113700632797],
+              "7-11源遠門市": [25.09939920717083, 121.7583160432616],
+              "萊爾富瑞芳瑞濱店": [25.12070844697876, 121.8223105798968],
+              "三貂角極東公園": [25.011514578181842, 122.00287185409938],
+              "北宜蛋之家": [24.838755910739717, 121.79201933747079],
+              "台灣中油 蘇澳站": [24.596084172861172, 121.84706095517775],
+              "台灣雙醬咖哩蘇澳店": [24.59589151243851, 121.84579980469823],
+              "7-11金玉門市": [24.463900160386487, 121.7978404422048],
+              "台泥DAKA園區": [24.30080632233968, 121.75175887272232],
+              "花蓮北吉光輕旅": [23.98859335366532, 121.59926043391668],
+              "台灣中油 南埔站": [23.964243925328592, 121.58984648994961],
+              "7-11萬榮門市": [23.715390265085773, 121.4096211454788],
+              "林田山林業文化園區": [23.71816845518004, 121.39940893622766],
+              "東里車站": [23.272754283445565, 121.30466104157304],
+              "東里舊站": [23.270140639081358, 121.30597128180129],
+              "初來橋": [23.122907052379, 121.166819686189],
+              "台灣中油 海端站": [23.096726514754895, 121.17602821529228],
+              "途中．台東國際青年旅舍": [22.79743652586007, 121.1241256331921],
+              "台東飛機巷": [22.77744087235797, 121.1704052613135],
+              "台灣中油 加賀站": [22.710574603245533, 121.06768113775335],
+              "太麻里平交道": [22.62145762122411, 121.00669867798777],
+              "多良廢站": [22.507274664991336, 120.9585097753728],
+              "大武之心南迴驛站": [22.33786198004519, 120.89431940077515],
+              "台26線南田端": [22.252289995377673, 120.89374572942255],
+              "台灣中油 山海關站": [22.294530977196963, 120.88709306472872],
+              "南迴改攝影點": [22.26847014570805, 120.85500159960007],
+              "7-11南北棧門市": [22.243732360300996, 120.66443611290751],
+              "萊爾富枋山加祿村店": [22.330198587388036, 120.62037193636459],
+              "內埔鄉水門": [22.709144762570286, 120.64510954950418],
+              "台24線起點": [22.66535680309279, 120.47872755242365],
+              "高雄旅聚居青年旅舍": [22.631714996965567, 120.30134440513342],
+              "三地門中山公園": [22.715835060377227, 120.65526630928949],
+              "7-11頭目門市": [22.714012293090427, 120.65264156284114],
+              "7-11茂林門市": [22.88027473703134, 120.64985492969441],
+              "7-11荖濃門市": [23.072802127083428, 120.67298758283602],
+              "台灣中油 甲仙站": [23.076622786221073, 120.58210390377344],
+              "7-11楠西門市": [23.15844555745206, 120.48951619728516],
+              "7-11鈺善門市": [23.364754420395023, 120.42552436830968],
+              "7-11中埔門市": [23.45198188486941, 120.46054969155844],
+              "仲青行旅嘉義館LIGHT HOSTEL": [23.47776091199921, 120.44401996453398],
+              "夯仔內火雞肉飯": [23.47564725070322, 120.45837143704851],
+              "7-11錚多門市": [23.578641732340504, 120.43949340329051],
+              "台灣中油 斗六南環路站": [23.712552714556217, 120.55708852444307],
+              "車埕車站": [23.83268381359789, 120.86574753735188],
+              "信義鄉地利村": [23.793364720040586, 120.94372432407702],
+              "伊達邵": [23.848096368035602, 120.93111461343179],
+              "日月潭Dreamy Nomads Hostel": [23.866096112501474, 120.90973497400851],
+              "日月潭龍鳳宮": [23.86715819773423, 120.90560763256484],
+              "台灣中油 埔里中山路站": [23.969069720616282, 120.97226602372069],
+              "臺灣地理中心碑": [23.97416064337439, 120.97986233766058],
+              "7-11中心園門市": [23.974310720033273, 120.98024501543834],
+              "7-11百香果門市": [24.03783989267276, 120.92561350998918],
+              "7-11耘晨門市": [24.227897269232454, 120.8373463139923],
+              "7-11天星門市": [24.192410744597286, 120.74684489460016],
+              "草悟道漂鳥青年旅館": [24.15083503507478, 120.66050526502107],
+              "國立臺中科技大學": [24.149905265328464, 120.68402366601583],
+              "台灣中油 北屯站": [24.1798152777169, 120.70118665701918],
+              "7-11美豐門市": [24.329689204884875, 120.72948664430199],
+              "7-11為公門市": [24.573299401580705, 120.83706692281868],
+              "7-11隆華門市": [24.786794040490832, 120.9247609089733],
+              "台灣中油 新豐站": [24.872956110387193, 120.99999547018159],
+              "蘆竹仁愛路攝影點": [25.055271176701286, 121.31055391108],
+              "7-11粉寮門市": [25.086577594206688, 121.40331309098774],
+              "憲兵訓練中心": [25.075473678151948, 121.43477533271978],
+  
+              // 路徑修正點
+              "rvspt新台五路": [25.068586303064496, 121.682417135116],
+              "rvspt暖暖源遠路": [25.10575001973621, 121.7354059150861],
+              "rvspt瑞芳物流共和國": [25.10692612783804, 121.77259877207781],
+              "rvspt北宜公路": [24.841455095452986, 121.79022815874079],
+              "rvspt頭城台2線": [24.853896212021162, 121.8233073589171],
+              "rvspt台2線台7線路口": [24.735621490322476, 121.81825418125088],
+              "rvspt台9線蘇澳東澳段": [24.530440504213686, 121.85793908075972],
+              "rvspt台9線南澳和平段": [24.35171809583795, 121.77565968926197],
+              "rvspt下清水橋-北端": [24.216505307114414, 121.68749325269602],
+              "rvspt下清水橋-南端": [24.21576166625, 121.68688170903947],
+              "rvspt台9線木瓜溪橋": [23.931547365269513, 121.53867096872416],
+              "rvspt台9線舊線萬榮段1": [23.71386264337309, 121.42169853225525],
+              "rvspt台9線舊線萬榮段2": [23.709839772735418, 121.41947591740292],
+              "rvspt池上市區": [23.12183776275271, 121.21777057139037],
+              "rvspt初鹿台9線": [22.855591826706718, 121.0922959504634],
+              "rvspt台9線台11乙線路口": [22.777243027614745, 121.12669738293953],
+              "rvspt太麻里台9線": [22.61616698065691, 121.00847625772224],
+              "rvspt高雄中正一路": [22.626507683501657, 120.337068207866],
+              "rvspt高雄三多一路": [22.624667060464034, 120.34271127424837],
+              "rvspt市道185號三地門茂林段": [22.76945689938885, 120.64401752769513],
+              "rvspt茂林市區": [22.885394465555787, 120.66353775799477],
+              "rvspt市道175號市道174號路口": [23.234446688440034, 120.47388458520327],
+              "rvspt市道174號市道165號路口": [23.23322916612976, 120.35396360729365],
+              "rvspt市道165號六甲東山段": [23.290174659186242, 120.38323553349014],
+              "rvspt嘉義吳鳳北路光彩街路口": [23.47855870875286, 120.45331395386096],
+              "rvspt台1線大林斗南段": [23.64589089343551, 120.4707783200062],
+              "rvspt台1丁線斗南斗六段": [23.68435081871705, 120.48938938003916],
+              "rvspt縣道141號彰雲大橋": [23.784401979983546, 120.63586493086727],
+              "rvspt台21線埔里國姓段": [23.995538037293695, 120.9706991665683],
+              "rvspt東勢東關路八段底": [24.276216815451594, 120.81652058013218],
+              "rvspt臺中忠明路": [24.162937875023946, 120.66568431719482],
+              "rvspt臺中三民路二段": [24.14298240441751, 120.68002597503406],
+              "rvspt台13線三義銅鑼段": [24.451497816651774, 120.78056253056079],
+              "rvspt台13線銅鑼苗栗段": [24.53588545510332, 120.80787703552532],
+              "rvspt台13線頭屋造橋段": [24.59829209099044, 120.88468971602191],
+              "rvspt新竹中華路二段": [24.800717181776456, 120.96943779447996],
+              "rvspt台31線湖口新屋段": [24.911463798899344, 121.08863731885597],
+              "rvspt台31線新屋蘆竹段": [25.027061505469884, 121.2291923335297],
+              "rvspt林口文化北路仁愛路路口": [25.08063488408607, 121.36878079377898],
+              "rvspt五股水碓二路": [25.0729746418043, 121.42963164296359],
+              "rvspt五股成泰路蓬萊路路口": [25.079278084808205, 121.43617746145004],
+              "rvspt新莊新北大道四段": [25.058506875827344, 121.44546609485657],
+              "rvspt三重新北大道一段": [25.06135437450383, 121.4877351862914],
+              "rvspt民權大橋": [25.06440512884863, 121.57122271140318],
+              "rvspt台北大橋": [25.063603420474994, 121.50678829545856],
+              "rvspt成功橋": [25.059146999188325, 121.59198518113527],
+            };
+          
+            // 初始化地圖
+            const map = L.map('main-map').setView([23.5, 121], 7);
+          
+            // 添加地圖圖層
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '© OpenStreetMap',
+              maxZoom: 18
+            }).addTo(map);
+          
+            // 使用 Routing Machine 繪製路線
+            route.forEach(day => {
+              const waypoints = day.stops.map(stop => L.latLng(...locations[stop]));
+              L.Routing.control({
+                waypoints: waypoints,
+                routeWhileDragging: false,
+                draggableWaypoints: false,
+                addWaypoints: false,
+                lineOptions: {
+                  styles: [{ color: '#000000', weight: 3 }]
+                }
+              }).addTo(map);
+            });
+
+            // 先移除所有icon（因為繪製路徑時會自動繪出所有點，包含一般點與修正點）
+            document.querySelectorAll(".leaflet-marker-icon, .leaflet-marker-shadow").forEach(icon => icon.remove());
+          
+            // 再繪製出一般點
+            Object.entries(locations).forEach(([name, coords]) => {
+              // 檢查是否是修正點
+              if (name.startsWith("rvspt")) return; // 忽略修正點
+  
+              // 添加地點的標記
+              const marker = L.marker(coords).addTo(map);
+  
+              // 綁定 Tooltip，顯示地點名稱
+              marker.bindTooltip(name, {
+                permanent: false, // 非永久顯示（滑鼠移開就消失）
+                direction: 'top', // Tooltip 顯示在標記上方
+                offset: [0, -10], // 向上偏移
+                className: 'custom-tooltip' // 可選：為 Tooltip 添加樣式
+              });
+            });
+  
+            // 自動縮放到包含所有路線的範圍
+            const allStops = Object.values(locations).map(([lat, lng]) => L.latLng(lat, lng));
+            map.fitBounds(L.latLngBounds(allStops));
+  
+            // 使用內建的.divIcon可以創建一個自定義的divIcon，並設置其樣式
+            const startingPointIcon = L.divIcon({
+              className: '',
+              html: '<div id="starting-point"></div>',
+              iconSize: [20, 20], // 圖標大小
+              iconAnchor: [10, 10] // 圖標的錨點
+            });
+  
+            L.marker(locations["台灣中油 南港站"], { icon: startingPointIcon }).addTo(map);
+          };
+
+          mainMap();
+        </script>
+      </section> -->
+  
+      <!-- Visualization Section -->
+      <section class="container-fluid">
+        <h2>統計</h2>
+        <script>
+          // 將html裡面的資料作整理
+          function data() {
+            const days = document.querySelectorAll(".daily-entry"); // 選取所有的每日資料
+            const dailyData = [];
+  
+            days.forEach((day) => {
+              const dayID = day.id; // 取得Day ID
+              const dayTitle = day.querySelector("h3")?.textContent || "未知旅程"; // 取得行程標題
+  
+              // 提取花費相關數據
+              const foodExpenses = parseInt(
+                day.querySelector(`#${dayID}-food-expenses`)?.textContent || "0", 10
+              );
+              const transportationExpenses = parseInt(
+                day.querySelector(`#${dayID}-daily-expenses-list .daily-transportation-expenses`)?.textContent || "0", 10
+              );
+              const hotelExpenses = parseInt(
+                day.querySelector(`#${dayID}-daily-expenses-list .daily-hotel-expenses`)?.textContent || "0", 10
+              );
+              const otherExpenses = parseInt(
+                day.querySelector(`#${dayID}-daily-expenses-list .daily-other-expenses`)?.textContent || "0", 10
+              );
+  
+              dailyData.push({
+                day: dayTitle,
+                foodExpenses,
+                transportationExpenses,
+                hotelExpenses,
+                otherExpenses
+              });
+            });
+  
+            return dailyData;
+          };
+          console.log(data());
+        </script>
+        <div class="row">
+          <div id="total-expenses-piechart" class="col-md-6"></div>
+          <div class="col-md-6">
+            <h3>本次花費</h3>
+            <hr>
+            <div class="container">
+              <dl class="row">
+                <dt class="col-6">餐費</dt><dd class="col-5 text-end"><span id="total-food-expense" class="mx-1"></span>元</dd>
+                <dt class="col-6">交通費（油錢）</dt><dd class="col-5 text-end"><span id="total-transportation-expense" class="mx-1"></span>元</dd>
+                <dt class="col-6">住宿費</dt><dd class="col-5 text-end"><span id="total-hotel-expense" class="mx-1"></span>元</dd>
+                <dt class="col-6">其他（洗衣費）</dt><dd class="col-5 text-end"><span id="total-other-expense" class="mx-1"></span>元</dd>
+                <hr>
+                <dt class="col-6">合計（單位：新台幣）</dt><dd class="col-5 text-end">共<b id="total-expense" class="mx-1 text-danger"></b>元</dd>
+              </dl>
+            </div>
+            <script>
+              function totalExpenses() {
+                const dailyData = data();
+
+                const expenseCategories = [
+                  { id: "total-food-expense", key: "foodExpenses" },
+                  { id: "total-transportation-expense", key: "transportationExpenses" },
+                  { id: "total-hotel-expense", key: "hotelExpenses" },
+                  { id: "total-other-expense", key: "otherExpenses" }
+                ];  // key是在整理html資料後，data()裡面資料的key
+
+                // 計算並更新每個類別的總花費
+                let totalExpense = 0;
+
+                expenseCategories.forEach(({ id, key }) => {
+                  const categoryTotal = dailyData.reduce((acc, curr) => acc + curr[key], 0);
+                  document.getElementById(id).innerHTML = categoryTotal.toLocaleString();
+                  totalExpense += categoryTotal; // 累加到總花費
+                });
+
+                // 更新總花費
+                document.getElementById("total-expense").innerHTML = totalExpense.toLocaleString();
+              };
+              totalExpenses();
+            </script>
+          </div>
+        </div>
+        <script>
+          // 繪製總支出的圓餅圖
+          function totalExpensesPieChart() {
+            const width = parseInt(d3.select("#total-expenses-piechart").style("width"));
+            const height = 400;
+            const margin = 40;
+
+            // 呼叫data()獲取資料
+            const dailyData = data();
+
+            const svgData = [
+              { item: "餐費", expense: d3.sum(dailyData.map(d => d.foodExpenses)) },
+              { item: "交通費", expense: d3.sum(dailyData.map(d => d.transportationExpenses)) },
+              { item: "住宿費", expense: d3.sum(dailyData.map(d => d.hotelExpenses)) },
+              { item: "其他", expense: d3.sum(dailyData.map(d => d.otherExpenses)) }
+            ];
+          
+            const svg = d3.select("#total-expenses-piechart")
+                          .append("svg")
+                          .attr("width", width)
+                          .attr("height", height);
+          
+            // 建立圓餅圖的群組元素'g'，用來容納圓餅圖的切片
+            svg.append("g")
+               .attr("id", "total-expenses-piechart-slices")
+               .attr("transform", `translate(${width / 2}, ${height / 2})`);
+          
+            // 設定顏色比例尺，從'd3.schemeSet2'配色方案中選取顏色
+            const color = d3.scaleOrdinal().range(d3.schemeSet2);
+          
+            // 設定圓餅圖的半徑
+            const radius = Math.min(width, height) / 2 - margin;
+          
+            // 設定圓餅圖的生成器，指定根據'expense'屬性來生成圖表
+            const pieChartGenerator = d3.pie().value((d) => d.expense);
+          
+            // 設定每個圓餅圖切片的弧度生成器，定義內半徑和外半徑
+            const arc = d3.arc()
+                          .innerRadius(0)  // 設定內半徑為0（實心圓）
+                          .outerRadius(radius)  // 設定外半徑為計算出的半徑值
+                          .padAngle(0);  // 設定每個切片之間的間隔角度為0
+          
+            // 設定外弧，用於放置標籤或其他用途
+            const outerArc = d3.arc()
+                               .outerRadius(radius)
+                               .innerRadius(radius - 10);
+          
+            // 使用圓餅圖生成器將資料轉換為可以繪製的形式
+            const pieChartData = pieChartGenerator(svgData);
+          
+            // 在群組元素中綁定資料並生成'path'元素，代表圓餅圖的每一塊
+            const expensesChart = svg.select("#total-expenses-piechart-slices")
+                                     .selectAll("path")
+                                     .data(pieChartData)
+                                     .join("path")
+                                     .attr("d", arc)  // 根據生成的弧形路徑繪製圓餅圖
+                                     .attr("class", "total-expenses-piechart-arc")  // 設定弧形們的class
+                                     .attr("fill", color)  // 根據資料設定填充顏色
+                                     .attr("stroke", "#ffffff")  // 設定弧形的邊框顏色為白色
+                                     .attr("stroke-width", "3px")  // 設定邊框寬度為3像素
+                                     .style("opacity", 1);  // 設定每個切片的透明度為1（不透明）
+        
+            
+            // 加上每個區塊的數字標示，計算百分比並設定標籤文字
+            const totalExpenses = d3.sum(svgData, (d) => d.expense);  // 計算總支出金額
+            svgData.forEach((i) => {  // 透過一個forEach迴圈，計算每項支出佔總額的百分比
+              i.percentage = Math.round((i.expense /totalExpenses) * 100);  // 在原始data新增一個名為'percentage'的新屬性，儲存百分比
+            });
+
+
+          
+            // 綁定標籤資料，生成'text'元素並設定位置、文字內容、樣式
+            const labels = d3.select("#total-expenses-piechart-slices")
+                             .selectAll("text")
+                             .data(pieChartData)  // 需使用d3.pie()處理後的資料，因為原始資料沒有角度資訊
+                             .join("text")
+                             .attr("class", "total-expenses-piechart-labels")
+                             .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
+                             .text((d) => d.data.item + " " + d.data.percentage + "%")  // 'd.data'是d3.pie()處理後的資料裡所包含的原始資料部分
+                             .style("text-anchor", "middle")
+                             .style("font-size", 16)
+                             .style("fill", "black");
+          
+            
+            // 設定滑鼠互動事件，當滑鼠移到圓餅圖的切片上時，切片會放大並產生陰影
+            d3.selectAll(".total-expenses-piechart-arc")
+              .style("cursor", "pointer")
+              .on("mouseover", (e, d) => {  // 當滑鼠移到切片上時觸發
+                d3.select(e.target)
+                  .transition()
+                  .duration(500)
+                  .style("transform", "scale(1.1)");  // 將切片放大至1.1倍
+        
+                d3.selectAll(".total-expenses-piechart-labels")
+                  .filter((labelData) => labelData.index === d.index)  // 選取對應的標籤
+                  .transition()
+                  .duration(500)
+                  .style("font-size", "24px");
+              })
+              .on("mousemove", (d) => {
+                d3.select(d.target)
+                  .style("filter", "drop-shadow(2px 4px 6px #000000)");  // 加上陰影效果
+              })
+              .on("mouseleave", (e, d) => {  // 當滑鼠離開切片時觸發
+                d3.select(e.target)
+                  .transition()
+                  .duration(500)
+                  .style("filter", "drop-shadow(0 0 0 black)")  // 移除陰影效果
+                  .style("transform", "scale(1)");  // 將切片還原到原始大小
+        
+                d3.selectAll(".total-expenses-piechart-labels")
+                  .filter((labelData) => labelData.index === d.index)  // 選取對應的標籤
+                  .transition()
+                  .duration(500)
+                  .style("font-size", "16px");
+              });
+          };
+
+          totalExpensesPieChart();
+        </script>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="col-12">
+      <p>© 2024 我的環島旅程</p>
+    </footer>
+  </body>
+</html>

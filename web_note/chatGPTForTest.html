@@ -1,36 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>圓餅圖範例</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>環島路線地圖</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <style>
+    #map {
+      height: 100vh; /* 地圖高度全螢幕 */
+      margin: 10px;
+    }
+  </style>
 </head>
 <body>
-  <canvas id="pieChart" width="400" height="200"></canvas>
+  <div id="map"></div>
+
+  <!-- 引入 Leaflet.js 和 Leaflet Routing Machine -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
   <script>
-    const ctx = document.getElementById('pieChart').getContext('2d');
-    const pieChart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: ['蘋果', '香蕉', '櫻桃'],
-        datasets: [{
-          label: '水果分佈',
-          data: [10, 20, 30],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)'
-          ],
-          borderWidth: 1
-        }]
-      }
+    // 環島路線資料
+    const route = [
+      { day: "Day1", stops: ["南港", "蘇澳", "花蓮"] },
+      { day: "Day2", stops: ["花蓮", "萬榮", "豐濱", "長濱", "玉里", "富里", "東河", "臺東"] },
+      { day: "Day3", stops: ["臺東", "太麻里", "南田", "霧台", "屏東", "高雄鹽埕"] },
+      { day: "Day4", stops: ["高雄", "屏東", "三地門", "茂林", "甲仙", "玉井", "嘉義"] },
+      { day: "Day5", stops: ["嘉義", "斗六", "竹山", "日月潭"] },
+      { day: "Day6", stops: ["日月潭", "埔里", "草屯", "員林", "王功", "鹿港", "臺中"] },
+      { day: "Day7", stops: ["臺中", "豐原", "后里", "苗栗", "竹南", "新竹", "蘆竹", "林口", "五股", "南港"] }
+    ];
+
+    // 各地點的經緯度資料
+    const locations = {
+      "南港": [25.0545, 121.6174],
+      "蘇澳": [24.5981, 121.8538],
+      "花蓮": [23.9769, 121.6046],
+      "萬榮": [23.7559, 121.4872],
+      "豐濱": [23.6181, 121.5256],
+      "長濱": [23.3493, 121.4384],
+      "玉里": [23.3322, 121.3161],
+      "富里": [23.1826, 121.2967],
+      "東河": [22.9816, 121.3197],
+      "臺東": [22.7649, 121.1450],
+      "太麻里": [22.5916, 120.9923],
+      "南田": [22.3349, 120.8926],
+      "霧台": [22.7359, 120.7295],
+      "屏東": [22.5519, 120.5480],
+      "高雄鹽埕": [22.6202, 120.2877],
+      "高雄": [22.6273, 120.3014],
+      "三地門": [22.7482, 120.6938],
+      "茂林": [22.8947, 120.6911],
+      "甲仙": [23.0935, 120.5935],
+      "玉井": [23.1181, 120.4563],
+      "嘉義": [23.4801, 120.4491],
+      "斗六": [23.7094, 120.5440],
+      "竹山": [23.7581, 120.6797],
+      "日月潭": [23.8553, 120.9176],
+      "埔里": [23.9672, 120.9686],
+      "草屯": [23.9765, 120.8264],
+      "員林": [23.9610, 120.5682],
+      "王功": [24.1841, 120.4589],
+      "鹿港": [24.0565, 120.4316],
+      "臺中": [24.1477, 120.6736],
+      "豐原": [24.2516, 120.7209],
+      "后里": [24.3093, 120.7507],
+      "苗栗": [24.5640, 120.8214],
+      "竹南": [24.6856, 120.8757],
+      "新竹": [24.8138, 120.9675],
+      "蘆竹": [25.0452, 121.2973],
+      "林口": [25.0714, 121.3849],
+      "五股": [25.0806, 121.4505]
+    };
+
+    // 初始化地圖
+    const map = L.map('map').setView([23.5, 121], 7);
+
+    // 添加地圖圖層
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap',
+      maxZoom: 18
+    }).addTo(map);
+
+    // 使用 Routing Machine 繪製路線
+    route.forEach(day => {
+      const waypoints = day.stops.map(stop => L.latLng(...locations[stop]));
+      L.Routing.control({
+        waypoints: waypoints,
+        routeWhileDragging: false,
+        draggableWaypoints: false,
+        addWaypoints: false,
+        lineOptions: {
+          styles: [{ color: 'blue', weight: 4 }]
+        }
+      }).addTo(map);
     });
+
+    // 自動縮放到包含所有路線的範圍
+    const allStops = Object.values(locations).map(([lat, lng]) => L.latLng(lat, lng));
+    map.fitBounds(L.latLngBounds(allStops));
   </script>
 </body>
 </html>

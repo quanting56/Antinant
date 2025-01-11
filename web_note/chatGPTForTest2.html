@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Title -->
+    <title>2025機車環島</title>
+
+    <!-- CSS link -->
+    <link rel="stylesheet" href="../css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+
+    <!-- JS link -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="../js/d3_v7.9.0_min.js"></script>
+    <!-- 引入 Leaflet.js 和 Leaflet Routing Machine -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
+</head>
+<body>
+<section>
+  <div id="svg-container" style="position: fixed; z-index: -1; width: 100%; height: 100%;"></div>
+  <div class="row">
+    <div class="col-6"></div>
+    <div class="col-6" id="map-sections"></div>
+  </div>
+</section>
+<div style="height:200vh;"></div>
+<div style="height:100vh; background:grey;"></div>
+
+
+<script>
+// 定義資料結構
+    const sections = [
+      { id: "section1", x: -10, y: -50, scale: 1, fill: "green", path: "M970,2230L1171,1574.38" },
+      { id: "section2", x: -10, y: -30, scale: 1, fill: "blue", path: "M1171,1584.38L1330,1010" },
+      { id: "section3_1", x: -10, y: 0, scale: 1, fill: "lime", path: "M1330,1010L1540,190L1650,30" },
+      { id: "section3_2", x: -20, y: 0, scale: 1.2, fill: "lime", path: "M1650,30L1820,120L2405,335" },
+      { id: "section3_3", x: -60, y: -4, scale: 1.4, fill: "lime", path: "M2405,335L2990,550L3800,1070" }
+    ];
+    
+    // 建立 SVG 畫布
+    const svg = d3.select("#svg-container")
+      .append("svg")
+      .attr("width", "100%")
+      .attr("height", "200vh")
+      .attr("viewBox", "0 0 7200 4005");
+    
+    // 加入背景圖片
+    svg.append("image")
+      .attr("href", "../assets/temporary_for_p4cssTest_Linpen2019_lg.jpg")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("width", 4800)
+      .attr("height", 2670);
+    
+    // 加入路徑與點
+    const paths = svg.selectAll(".path")
+      .data(sections)
+      .enter()
+      .append("path")
+      .attr("d", d => d.path)
+      .attr("stroke", d => d.fill)
+      .attr("stroke-width", 10)
+      .attr("stroke-opacity", 0)
+      .attr("fill", "none");
+    
+    const dot = svg.append("circle")
+      .attr("r", 20)
+      .attr("fill", "white");
+    
+    // 動態生成右側區塊
+    const mapSections = d3.select("#map-sections");
+    sections.forEach(section => {
+      mapSections.append("div")
+        .attr("class", "maploc")
+        .style("height", "100vh")
+        .style("background", "rgba(0,0,0,0.2)")
+        .html(`<h1 style="width:30vw;background:rgba(255,255,255,0.7);">${section.id}</h1>`);
+    });
+    
+    // 滾動事件處理邏輯
+d3.select(window).on("scroll", () => {
+  const scrolled = document.documentElement.scrollTop || document.body.scrollTop;
+  const winh = window.innerHeight;
+
+  sections.forEach((section, i) => {
+    const thispos = i * winh; // 每個區塊的起始位置
+    const thish = winh; // 每個區塊的高度
+
+    // 如果目前滾動範圍在該區塊內
+    if (scrolled >= thispos - winh / 2 && scrolled < thispos + thish - winh / 2) {
+      // 根據該區塊設定平移與縮放
+      const translateX = section.x + "%";
+      const translateY = section.y + "%";
+      const scale = section.scale;
+
+      // 平移與縮放底圖
+      svg.transition()
+        .duration(500) // 平滑過渡
+        .attr("style", `transform: translate(${translateX}, ${translateY}) scale(${scale});`);
+
+      // 路徑繪製
+      const pathElement = paths.nodes()[i];
+      const length = pathElement.getTotalLength();
+      const scrollpercent = (scrolled - thispos + winh / 2) / thish; // 區塊內滾動比例
+      const draw = length * scrollpercent;
+
+      d3.select(pathElement)
+        .attr("stroke-opacity", 1)
+        .attr("stroke-dasharray", length)
+        .attr("stroke-dashoffset", length - draw);
+
+      // 動態更新點的位置
+      const p = pathElement.getPointAtLength(draw);
+      dot.attr("cx", p.x).attr("cy", p.y);
+    }
+  });
+});
+
+    </script>
+  </body>
+  </html>
