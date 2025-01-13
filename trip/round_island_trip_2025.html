@@ -51,7 +51,7 @@
       }
 
       /* 地圖在網頁上的大小 */
-      #main-map {
+      .map {
         height: 100vh;
         width: 100vw;
         margin: 10px;
@@ -235,10 +235,11 @@
               </figure>
               <p>過了淺藍色塗裝的太魯閣大橋後，台9線新城段是近15公里的類直線路段，然而我騎到此時早已天黑，一人一車在平原段奔跑後，明明已經騎在速限上緣，旁邊的車還是呼嘯而過，有點神奇。晚上六點終於來到今晚的住宿點——北吉光輕旅 Hualien Hostel Bayhouse，check-in後在中山路上覓食，我選擇吃poke作為今日的晚餐。</p>
               <figure class="trip-picture d-flex flex-column align-items-center">
-                <img src="/trip/round_island_trip_2025/picture/IMG_4981修改後.jpg" title="今日晚餐" alt="夏威夷生魚飯">
-                <figcaption>今日晚餐</figcaption>
+                <img src="/trip/round_island_trip_2025/picture/IMG_5002修改後.jpg" title="第一日晚餐" alt="夏威夷生魚飯">
+                <figcaption>第一日晚餐</figcaption>
               </figure>
               <div class="container">
+                <h4 style="font-family: monospace;">&lt;Day1 小檔案&gt;</h4><hr class="mt-0">
                 <dl class="row">
                   <dt class="col-sm-3">今日里程數</dt>
                   <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">230</b>km</dd>
@@ -281,7 +282,7 @@
                   </dd>
                 </dl>
               </div>
-              <div id="day1-map"></div>
+              <div id="day1-map" class="map"></div>
             </div>
     
             <div id="day2" class="daily-entry">
@@ -333,7 +334,9 @@
                 </dl>
               </div>
               <p>第二天，我繼續沿著花東縱谷向南進發，途中經過萬榮鄉的茶園、豐濱鄉的海岸線，以及長濱鄉的小漁村。中午時分，我到達玉里鎮，品嚐了當地著名的粄條。午後，前往東河的都蘭藝術村探索當地文化，最終抵達臺東市，入住市區的旅店。這一天的風景變化多端，從山谷到海邊，每一刻都充滿驚喜。全程至少需要 6 小時 35 分鐘。</p>
+              <div id="day2-map" class="map"></div>
             </div>
+
             <div id="day3" class="daily-entry">
               <h3>Day 3: 臺東 → 下南田 → 內埔 → 高雄</h3>
               <div class="container">
@@ -382,7 +385,9 @@
                 </dl>
               </div>
               <p>從臺東出發，我駛向太麻里，欣賞晨曦中的海岸線，接著繞過南田鄉，來到屏東縣的霧台，探訪魯凱族的傳統文化。下午，我沿台24線進入高屏地區，途經紅門、內埔等鄉鎮，最終抵達高雄鹽埕區，夜晚在六合夜市品嘗當地小吃。這一天的旅程富有挑戰，但也讓我見識到台灣南部的多元風貌。總路程至少需要 7 小時 32 分鐘。</p>
+              <div id="day3-map" class="map"></div>
             </div>
+
             <div id="day4" class="daily-entry">
               <h3>Day 4: 高雄 → 三地門 → 荖濃 → 楠西 → 嘉義</h3>
               <div class="container">
@@ -432,7 +437,9 @@
                 </dl>
               </div>
               <p>第四天，我從高雄出發，經過屏東的三地門與茂林國家風景區，沿途欣賞壯麗的山谷與溪流，並在茂林停留拍照。下午，我穿越玉井的芒果園，品嚐當地的芒果冰，最終抵達嘉義市，感受這座城市的悠閒氣氛。全程至少需要 6 小時 10 分鐘。</p>
+              <div id="day4-map" class="map"></div>
             </div>
+
             <div id="day5" class="daily-entry">
               <h3>Day 5: 嘉義 → 車埕 → 地利 → 日月潭</h3>
               <div class="container">
@@ -490,7 +497,9 @@
                 </dl>
               </div>
               <p>第五天的行程從嘉義開始，經過斗六與竹山，逐漸接近中部山區。午后，我來到日月潭，環湖騎行，欣賞湖光山色，並入住湖畔的一家民宿。這一天相對輕鬆，讓我能有時間靜靜享受日月潭的美景。總路程至少需要 2 小時 50 分鐘。</p>
+              <div id="day5-map" class="map"></div>
             </div>
+
             <div id="day6" class="daily-entry">
               <h3>Day 6: 日月潭 → 天冷 → 新社 → 臺中</h3>
               <div class="container">
@@ -533,7 +542,9 @@
                 </dl>
               </div>
               <p>從日月潭出發，我經過埔里、草屯與員林，沿途探訪了王功漁港，並在鹿港小鎮停留，感受其濃厚的文化氛圍。下午，我抵達臺中市，夜晚在逢甲夜市大快朵頤，為旅程接近尾聲畫上精彩的一筆。全程至少需要 4 小時 26 分鐘。</p>
+              <div id="day6-map" class="map"></div>
             </div>
+
             <div id="day7" class="daily-entry">
               <h3>Day 7: 臺中 → 南港</h3>
               <div class="container">
@@ -566,6 +577,7 @@
                 </dl>
               </div>
               <p>最後一天的旅程，我從臺中啟程，經過豐原、苗栗與竹南，回到北部的竹北與新竹。下午，我駛過林口與五股，最終回到南港，完成了整個環島旅程。這一天既充滿回憶，又有一絲不捨，但我對整個旅程的點滴都感到無比感恩。總路程至少需要 6 小時 7 分鐘。</p>
+              <div id="day7-map" class="map"></div>
             </div>
             <script>
               // 通用函數：計算每日餐費（從"今天吃了些什麼"中提取金額並計算總和）
@@ -632,13 +644,13 @@
     
           <!-- 總地圖 -->
           <section>
-            <div id="main-map"></div>
+            <div id="main-map" class="map"></div>
             <script>
-              function mainMap() {
+              function mapGenerator() {
                 // 環島路線資料
                 const route = [
-                  { day: "Day1", stops: ["台灣中油 南港站", "rvspt新台五路", "rvspt暖暖源遠路", "7-11源遠門市", "rvspt瑞芳物流共和國", "萊爾富瑞芳瑞濱店", "三貂角極東公園", "北宜蛋之家", "rvspt北宜公路", "rvspt頭城台2線", "rvspt台2線台7線路口", "台灣中油 蘇澳站", "台灣雙醬咖哩蘇澳店", "rvspt台9線蘇澳東澳段", "7-11金玉門市", "rvspt台9線南澳和平段", "台泥DAKA園區", "rvspt下清水橋-北端"] }, // , "花蓮北吉光輕旅"
-                  { day: "Day1後", stops: ["rvspt下清水橋-南端", "花蓮北吉光輕旅"] },
+                  { day: "Day1", stops: ["台灣中油 南港站", "rvspt新台五路", "rvspt暖暖源遠路", "7-11源遠門市", "rvspt瑞芳物流共和國", "萊爾富瑞芳瑞濱店", "三貂角極東公園", "北宜蛋之家", "rvspt北宜公路", "rvspt頭城台2線", "rvspt台2線台7線路口", "台灣中油 蘇澳站", "台灣雙醬咖哩蘇澳店", "rvspt台9線蘇澳東澳段", "7-11金玉門市", "rvspt台9線南澳和平段", "台泥DAKA園區", "rvspt下清水橋-北端", "rvspt下清水橋-南端", "花蓮北吉光輕旅"] }, // 
+                  // { day: "Day1後", stops: ["rvspt下清水橋-南端", "花蓮北吉光輕旅"] },
                   { day: "Day2", stops: ["花蓮北吉光輕旅", "台灣中油 南埔站", "rvspt台9線木瓜溪橋", "rvspt台9線舊線萬榮段1", "7-11萬榮門市", "林田山林業文化園區", "rvspt台9線舊線萬榮段2", "東里車站", "東里舊站", "rvspt池上市區", "初來橋", "台灣中油 海端站", "rvspt初鹿台9線", "rvspt台9線台11乙線路口", "途中．台東國際青年旅舍"] },
                   { day: "Day3", stops: ["途中．台東國際青年旅舍", "台東飛機巷", "台灣中油 加賀站", "rvspt太麻里台9線", "太麻里平交道", "多良廢站", "大武之心南迴驛站", "台26線南田端", "台灣中油 山海關站", "南迴改攝影點", "7-11南北棧門市", "萊爾富枋山加祿村店", "內埔鄉水門", "台24線起點", "rvspt高雄中正一路", "高雄旅聚居青年旅舍"] },
                   { day: "Day4", stops: ["高雄旅聚居青年旅舍", "rvspt高雄三多一路", "台24線起點", "三地門中山公園", "7-11頭目門市", "rvspt市道185號三地門茂林段", "7-11茂林門市", "rvspt茂林市區", "7-11荖濃門市", "台灣中油 甲仙站", "7-11楠西門市", "rvspt市道175號市道174號路口", "rvspt市道174號市道165號路口", "rvspt市道165號六甲東山段", "7-11鈺善門市", "7-11中埔門市", "rvspt嘉義吳鳳北路光彩街路口", "仲青行旅嘉義館LIGHT HOSTEL"] },
@@ -763,65 +775,86 @@
                   "rvspt成功橋": [25.059146999188325, 121.59198518113527],
                 };
               
-                // 初始化地圖
-                const map = L.map('main-map').setView([23.5, 121], 7);
-              
-                // 添加地圖圖層
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                  attribution: '© OpenStreetMap',
-                  maxZoom: 18
-                }).addTo(map);
-              
-                // 使用 Routing Machine 繪製路線
-                route.forEach(day => {
-                  const waypoints = day.stops.map(stop => L.latLng(...locations[stop]));
+                function createMap(containerID, stops) {
+                  // 初始化地圖
+                  const map = L.map(containerID).setView([23.5, 121], 7);
+                
+                  // 添加地圖圖層
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 18
+                  }).addTo(map);
+                  
+                  // 將路徑轉換為經緯度
+                  const waypoints = stops.map(stop => L.latLng(...locations[stop]));
+                  
+                  // 使用 Routing Machine 繪製路線
                   L.Routing.control({
                     waypoints: waypoints,
                     routeWhileDragging: false,
                     draggableWaypoints: false,
                     addWaypoints: false,
                     lineOptions: {
-                      styles: [{ color: '#000000', weight: 3 }]
+                      styles: [{ color: '#1a1a1a', weight: 3 }]
                     }
                   }).addTo(map);
-                });
-    
-                // 先移除所有icon（因為繪製路徑時會自動繪出所有點，包含一般點與修正點）
-                document.querySelectorAll(".leaflet-marker-icon, .leaflet-marker-shadow").forEach(icon => icon.remove());
-              
-                // 再繪製出一般點
-                Object.entries(locations).forEach(([name, coords]) => {
-                  // 檢查是否是修正點
-                  if (name.startsWith("rvspt")) return; // 忽略修正點
+
+                  // 自動縮放到路線範圍
+                  map.fitBounds(L.latLngBounds(waypoints));
       
-                  // 添加地點的標記
-                  const marker = L.marker(coords).addTo(map);
-      
-                  // 綁定 Tooltip，顯示地點名稱
-                  marker.bindTooltip(name, {
-                    permanent: false, // 非永久顯示（滑鼠移開就消失）
-                    direction: 'top', // Tooltip 顯示在標記上方
-                    offset: [0, -10], // 向上偏移
-                    className: 'custom-tooltip' // 可選：為 Tooltip 添加樣式
+                  
+                  // 自動縮放到包含該地圖所有路線的範圍
+                  const allStops = Object.values(locations).map(([lat, lng]) => L.latLng(lat, lng));
+                  map.fitBounds(L.latLngBounds(allStops));
+                  
+                  // 使用內建的.divIcon可以創建一個自定義的divIcon，並設置其樣式
+                  const startingPointIcon = L.divIcon({
+                    className: '',
+                    html: '<div id="starting-point"></div>',
+                    iconSize: [20, 20], // 圖標大小
+                    iconAnchor: [10, 10] // 圖標的錨點
                   });
+                  
+                  L.marker(locations["台灣中油 南港站"], { icon: startingPointIcon }).addTo(map);
+                
+                  
+
+                  // 先移除所有icon（因為繪製路徑時會自動繪出所有點，包含一般點與修正點）
+                  document.querySelectorAll(`#${containerID} .leaflet-marker-icon, #${containerID} .leaflet-marker-shadow`).forEach(icon => icon.remove());
+
+                  // 再只繪製該日一般點的標記
+                  stops.forEach(stop => {
+                    // 檢查是否是修正點
+                    if (stop.startsWith("rvspt")) return; // 忽略修正點
+                  
+                    // 取得該地點的經緯度
+                    const coords = locations[stop];
+                    
+                    // 添加地點的標記
+                    const marker = L.marker(coords).addTo(map);
+                  
+                    // 綁定 Tooltip，顯示地點名稱
+                    marker.bindTooltip(stop, {
+                      permanent: false, // 非永久顯示（滑鼠移開就消失）
+                      direction: 'top', // Tooltip 顯示在標記上方
+                      offset: [0, -10], // 向上偏移
+                      className: 'custom-tooltip' // 可選：為 Tooltip 添加樣式
+                    });
+                  });
+                };
+                
+                // 繪製總路線圖
+                const allStops = route.flatMap(day => day.stops);
+                createMap('main-map', allStops);
+                
+                // 使用迴圈繪製分日地圖
+                route.forEach((dayRoute, index) => {
+                  const containerId = `day${index + 1}-map`;
+                  createMap(containerId, dayRoute.stops);
                 });
-      
-                // 自動縮放到包含所有路線的範圍
-                const allStops = Object.values(locations).map(([lat, lng]) => L.latLng(lat, lng));
-                map.fitBounds(L.latLngBounds(allStops));
-      
-                // 使用內建的.divIcon可以創建一個自定義的divIcon，並設置其樣式
-                const startingPointIcon = L.divIcon({
-                  className: '',
-                  html: '<div id="starting-point"></div>',
-                  iconSize: [20, 20], // 圖標大小
-                  iconAnchor: [10, 10] // 圖標的錨點
-                });
-      
-                L.marker(locations["台灣中油 南港站"], { icon: startingPointIcon }).addTo(map);
               };
     
-              // mainMap();
+              mapGenerator();
             </script>
           </section>
       
@@ -863,7 +896,6 @@
       
                 return dailyData;
               };
-              console.log(data());
             </script>
             <div class="row">
               <div id="total-expenses-piechart" class="col-md-6"></div>
