@@ -38,6 +38,18 @@
         padding: 15px;
       }
 
+      .foreword {
+        border-left: 5px solid #c89a88;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 30px;
+        line-height: 2em;
+        font-size: 17px;
+        color: #606060;
+        font-family: "SimSun";
+        letter-spacing: 1px;
+      }
+
       /* 地圖在網頁上的大小 */
       #main-map {
         height: 100vh;
@@ -76,13 +88,32 @@
         top: -1px;
       }
 
+      /* 圖片格式 */
+      .trip-picture img {
+        margin: 10px 0px 10px 0px;
+        width: 100%;
+        border: 1px solid #ffffff;
+        box-shadow: 5px 5px 3px gray;
+        height: auto;
+      }
+
+      .trip-picture > figcaption::before {
+        content: "▲ ";
+      }
+
+      .trip-picture > figcaption {
+        font-family: Serif;
+        margin-bottom: 15px;
+      }
+
       .daily-entry {
-        background-color: #f0f0f0;
+        margin-top: 50px;
       }
 
       .daily-entry p {
         font-family: Serif;
         text-indent: 32px;
+        margin-top: 25px
       }
 
       .daily-entry a,
@@ -108,6 +139,17 @@
         padding-top: 5px;
         padding-bottom: 5px;
       }
+
+      aside h3 {
+        color: #fafafa;
+        font-family: serif;
+      }
+
+      aside p {
+        font-family: 'PingFang TC';
+        color: #eeeeee;
+        font-size: 14px;
+      }
     </style>
   </head>
 
@@ -119,7 +161,7 @@
 
     <div class="container-fluid">
       <div class="row justify-content-center">
-        <main class="col-md-8 col-lg-9">
+        <main class="col-md-7 col-lg-8 col-xxl-7 col-11 ps-4 pe-3">
           <section class="d-flex align-items-center mt-5">
             <a href="../trip.html" target="_blank">
               <img src="../assets/IMG_2073.jpg" title="大頭貼" height="35px" width="auto" class="rounded-circle" style="margin-right: 15px;">
@@ -131,14 +173,71 @@
             <h2>我的七天六夜獨自環島旅程</h2>
           </section>
 
+          <!-- 導言／介紹 -->
           <section>
-            <p>在這次環島旅程中，我以機車走了一場七天六夜的環島之旅，從南港出發，沿著東部海岸，穿越南迴公路、繞經中部山區，最終又回到南港。我記錄了每一天的路線、時間與景點，也拍攝了一些美麗的照片，想要與大家分享。</p>
+            <p style="font-family: SimHei, Serif; text-indent: 32px;">「你各位啊，你給我記住，你們是個團體，要互相督促...。」秋風颯爽的十一月夜晚，我坐在PU廣場旁的板凳上，耳邊迴繞著區隊長的碎碎念，心中卻突然閃過一股熱血的渴望：「<strong>一月的我，何不來場環島獨旅呢？</strong>」這念頭在往後如一縷曙光撕裂了單調的迷彩生活，隨後數週，我利用每日至多僅30分鐘的手機使用時間，以及每週不過37小時的休假自由時間，翻出早在2020年便草擬好的環島計畫，細細修改，準備將之付諸行動。迷彩的日子實在沉悶，彷彿枷鎖般束縛著靈魂，於是，我決定憑著剛獲自由的無盡衝動，以一場機車環島獨旅，洗滌在軍中染上的枯燥與規律，重新擁抱那久違的社會脈動。</p>
+            <p style="font-family: SimHei, Serif; text-indent: 32px;">這趟環島旅程，宛如一場七天六夜的壯麗詩篇，少有的順時針環島、冬季環島，一次滿足。我從南港啟程，迎著東北季風穿過東北角，沿著東海岸蜿蜒而行，穿越充滿山海氣息的南迴公路，繞進綠意盎然的中部山區，最終再度回到起點南港。一路上，我細數每一段旅程的軌跡，記錄下時間、路線與景點，試圖記錄下無數瞬間的美麗光影。那些絕美的風景，那些與風同行的日子，這不僅是一場旅行，更是一場心靈的淬鍊，一場與自由的重逢。</p>
+            <figure class="trip-picture d-flex flex-column align-items-center">
+              <img src="/trip/round_island_trip_2025/picture/IMG_5408.JPG" title="地利村山景" alt="台16線民和地利段山景">
+              <figcaption>地利村山景</figcaption>
+            </figure>
+          </section>
+
+          <!-- 前言 -->
+          <section class="foreword mb-5">
+            在海邊流浪<br>在山裡放空<br>究竟在城市裡汲汲營營的我們<br>所追求的是什麼呢？
           </section>
       
           <!-- diary -->
           <section>
             <div id="day1" class="daily-entry">
-              <h3>Day 1: 南港 → 三貂角 → 蘇澳 → 花蓮</h3>
+              <div class="mb-3">
+                <h3 style="font-family: Papyrus; margin: 0;">Day1 ——</h3>
+                <small class="text-secondary" style="font-family: SimSun;"><i>南港 → 三貂角 → 蘇澳 → 花蓮市區</i></small>
+              </div>
+              <p>旅程的第一天，我從南港車站啟程，沿著台5線騎行，在暖暖轉至台2丁續行至瑞濱，在瑞濱看見無情的海浪濤打在濱海公路旁的消波塊上。沿著台2線續行，陸續經過陰陽海、鼻頭漁港、福隆等著名景點，不一會兒來到三貂角的極東公園，獲得此行意外收穫的極東點（這次環島<span class="mx-1">臺北-宜蘭段</span>本欲走北宜公路，因天候不佳前晚臨時決定改走北部濱海公路）。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_4954修改後.jpg" title="深澳岬角（台2線74.2K處）" alt="瑞濱海邊的深澳岬角">
+                <figcaption>從北部濱海公路看向深澳岬角</figcaption>
+              </figure>
+              <p>北部濱海公路自過了三貂角後，沿途均可見到矗立在太平洋之上的龜山島，東北季風吹拂之下，騎車從東北角一路至烏石鼻有些痛苦，寒風穿進袖口、領口，非常...舒服。到頭城後，先繞至國五頭城交流道附近的<span class="mx-1">北宜蛋之家（將軍茶葉蛋）</span>來碗熱熱的八仙湯，由於內用座位有限，我是在外面的站立座位區喝湯，特別的體驗。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_4959修改後.jpg" title="北宜蛋之家" alt="北宜蛋之家（將軍茶葉蛋）店門口">
+                <figcaption>頭城北宜蛋之家（將軍茶葉蛋）店門口</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_4960修改後.jpg" title="四海八仙湯" alt="內用四海八仙湯">
+                <figcaption>室外內用區的站立位，剛好可以放碗來喝湯</figcaption>
+              </figure>
+              <p>喝完湯繼續上路，我騎回頭城再切回台2線繼續南下，一路經過壯圍鄉、五結鄉，這裡路寬、車不多，偶而會遇見騎公路車的騎士，沒多久蘇澳鎮的路牌就出現了，在蘇澳加完油後，我選擇咖哩飯作為今日午餐。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_4969修改後.jpg" title="特選牛肉泰式綠咖哩飯及雞米花" alt="台灣雙醬咖哩蘇澳店的咖哩飯及雞米花">
+                <figcaption>特選牛肉泰式綠咖哩飯與雞米花</figcaption>
+              </figure>
+              <p>吃完午餐後，進入今天另外的一場重頭戲——蘇花公路。從白米橋開始一路向南的山路，風呼呼地吹著寂寞的機車騎士，由於蘇花改通車後，原蘇花公路的車流少之又少，加上非旅遊旺季的下午兩點半，會在此時進入舊蘇花公路的人更少，一路上所遇見之旅客非常稀少，頂多是呼嘯而過的砂石車等工程車輛。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_4972修改後.jpg" title="蘇花公路起點（台9丁線2K處）" alt="蘇花公路起點／台9丁2K">
+                <figcaption>蘇花公路起點</figcaption>
+              </figure>
+              <p>宜蘭段的舊蘇花公路，無盡的太平洋、高聳如天的斷崖山壁、刺骨錐心的寒風、似乎無限延伸的蜿蜒雙黃線柏油路，加上波波波引擎聲的勁戰四，海、山、風、路、車時常是伴我左右的唯五物件，天地伴我，我卻不能有所停留，我得趕在天黑之前闖出蘇花公路，我可不想夜晚還要獨自一人騎在蘇花山路裡。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_4974修改後.jpg" title="蘇花公路南澳段的山景之一" alt="南澳的山景">
+                <figcaption>常常過個山就沒有飄雨了</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_4973修改後.jpg" title="蘇花公路南澳市區段（台9線124.5K處）" alt="蘇花公路南澳市區段地是乾的">
+                <figcaption>剛剛還在猶豫要不要穿雨衣，結果南澳市區地是乾的</figcaption>
+              </figure>
+              <p>過了和平溪橋後，即進入了花蓮段的蘇花公路，由於去年四月以來的地震加颱風接連肆虐，沿途山崩、落石怵目驚心，騎乘經過凹凸不平的顛頗柏油路，加上一旁被撞爛而再添加的黃黑條紋臨時護欄，皆時時提醒我此地不宜久留，偶遇冒著生命危險在施工的工程人員，我也向其致上感恩的心。花蓮段的車流量明顯增多，除了從蘇花改匯入的車，有許多是往返和平工業區與花蓮市區的大型車輛，儘管我卡在長長的車龍裡，此時的我卻倍感心安，終於不再只有我一人獨自在光線昏暗的蘇花山路行駛著。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_4981修改後.jpg" title="蘇花改南澳和平段和平端（台9線145K處）" alt="蘇花改南澳和平段和平端">
+                <figcaption>蘇花改南澳和平段和平端</figcaption>
+              </figure>
+              <p>過了淺藍色塗裝的太魯閣大橋後，台9線新城段是近15公里的類直線路段，然而我騎到此時早已天黑，一人一車在平原段奔跑後，明明已經騎在速限上緣，旁邊的車還是呼嘯而過，有點神奇。晚上六點終於來到今晚的住宿點——北吉光輕旅 Hualien Hostel Bayhouse，check-in後在中山路上覓食，我選擇吃poke作為今日的晚餐。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_4981修改後.jpg" title="今日晚餐" alt="夏威夷生魚飯">
+                <figcaption>今日晚餐</figcaption>
+              </figure>
               <div class="container">
                 <dl class="row">
                   <dt class="col-sm-3">今日里程數</dt>
@@ -182,8 +281,7 @@
                   </dd>
                 </dl>
               </div>
-              <p>旅程的第一天，我從南港車站啟程，沿著台5線騎行，在暖暖轉至台2丁續行至瑞濱，在瑞濱看見浪濤打在濱海公路的消波塊上。沿著台2線，陸續經過陰陽海、鼻頭漁港、福隆，不一會兒來到三貂角的極東公園，獲得此行意外收穫的極東點（這次環島<span class="mx-1">臺北-宜蘭段</span>本欲走北宜公路，因天候不佳才改走北部濱海公路）。北部濱海公路自過了三貂角後，沿途均可見到矗立在太平洋之上的龜山島，東北季風吹拂之下，騎車從東北角一路至烏石鼻有些痛苦，寒風刺骨難耐，到頭城後，先繞至國五頭城交流道附近的<span class="mx-1">北宜蛋之家（將軍茶葉蛋）</span>來碗熱熱的八仙湯，由於內用座位有限，我是在外面的站立座位區喝湯，特別的體驗。喝完湯繼續上路，從頭城切回台2線繼續南下，一路經過壯圍鄉、五結鄉，沒多久蘇澳鎮的路牌就出現了，在蘇澳我選擇咖哩飯作為今日午餐。</p>
-              <p>吃完午餐後，進入今天另外的一場重頭戲——蘇花公路，從白米橋開始一路向南的山路，風呼呼地吹著寂寞的機車騎士，由於蘇花改通車後，原蘇花公路的車流少之又少，加上非旅遊旺季的下午兩點多，會在此時進入蘇花公路的人更加稀少 隨著火車穿越山洞與稻田，最終抵達花蓮市，並入住當地的一家溫馨民宿。這一天的旅程充滿期待與冒險感，為接下來的旅途揭開序幕。總路程至少需要 4 小時 43 分鐘。</p>
+              <div id="day1-map"></div>
             </div>
     
             <div id="day2" class="daily-entry">
@@ -723,7 +821,7 @@
                 L.marker(locations["台灣中油 南港站"], { icon: startingPointIcon }).addTo(map);
               };
     
-              mainMap();
+              // mainMap();
             </script>
           </section>
       
@@ -931,12 +1029,14 @@
             </script>
           </section>
         </main>
-        <aside class="col-md-4 col-lg-3 col-11 mt-3">
-          <div class="d-flex flex-column justify-content-center" style="background-color: #9a6852; margin: 10px;">
+        <aside class="col-md-4 col-lg-3 col-xxl-2 col-11 mt-3">
+          <div class="d-flex flex-column align-items-center" style="background-color: #9a6852; margin: 10px;">
             <a href="../trip.html" target="_blank" class="mt-5">
               <img src="../assets/facebook_img_2024.jpg" title="大頭貼" height="140px" width="auto" class="rounded-circle">
             </a>
-            <h3>嗨，歡迎來到我的旅遊部落格！</h3>
+            <h3 class="m-4">嗨，歡迎來到我的旅遊部落格！</h3>
+            <p class="mx-4">我是一名熱愛旅遊的攝影師，喜歡在各地旅遊，透過鏡頭記錄世界的美好，捕捉每一刻獨特的光影和情感。</p>
+            <p class="mx-4">除了攝影，我也熱衷於分享旅程中的點點滴滴，透過部落格與社群網站，記錄每一次的發現與成長，我希望藉由自己的作品，讓更多人能夠看見世界的美好。</p>
           </div>
         </aside>
       </div>
