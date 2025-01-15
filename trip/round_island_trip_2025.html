@@ -50,44 +50,6 @@
         letter-spacing: 1px;
       }
 
-      /* 地圖在網頁上的大小 */
-      .map {
-        height: 100vh;
-        width: 100vw;
-        margin: 10px;
-      }
-
-      /* 地圖上方路線資訊欄文字部分 */
-      .leaflet-routing-container {
-        width: 200px;
-        height: auto;
-        max-height: 300px;
-        overflow-y: auto;
-        background-color: rgba(255, 255, 255, 0.8); /* 半透明背景，避免完全遮蓋地圖 */
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 1000;
-        display: none;
-      }
-
-      #starting-point {
-        background-color: #9a6852;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        border: 1.5px solid #0077be;
-        position: relative;
-      }
-
-      #starting-point::after {
-        content: "起";
-        color: #ffffff;
-        position: absolute;
-        left: 2px;
-        top: -1px;
-      }
-
       /* 圖片格式 */
       .trip-picture img {
         margin: 10px 0px 10px 0px;
@@ -138,6 +100,45 @@
       .daily-food-list li {
         padding-top: 5px;
         padding-bottom: 5px;
+      }
+
+      /* 地圖在網頁上的大小 */
+      .map {
+        height: 90vh;
+        width: 80vw;
+        margin: 10px;
+        margin-bottom: 120px;
+      }
+
+      /* 地圖上方路線資訊欄文字部分 */
+      .leaflet-routing-container {
+        width: 200px;
+        height: auto;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: rgba(255, 255, 255, 0.8); /* 半透明背景，避免完全遮蓋地圖 */
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        display: none;
+      }
+
+      #starting-point {
+        background-color: #9a6852;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1.5px solid #0077be;
+        position: relative;
+      }
+
+      #starting-point::after {
+        content: "起";
+        color: #ffffff;
+        position: absolute;
+        left: 2px;
+        top: -1px;
       }
 
       aside h3 {
@@ -191,11 +192,11 @@
           <!-- diary -->
           <section>
             <div id="day1" class="daily-entry">
-              <div class="mb-3">
+              <div class="daily-title mb-3">
                 <h3 style="font-family: Papyrus; margin: 0;">Day1 ——</h3>
                 <small class="text-secondary" style="font-family: SimSun;"><i>南港 → 三貂角 → 蘇澳 → 花蓮市區</i></small>
               </div>
-              <p>旅程的第一天，我從南港車站啟程，沿著台5線騎行，在暖暖轉至台2丁續行至瑞濱，在瑞濱看見無情的海浪濤打在濱海公路旁的消波塊上。沿著台2線續行，陸續經過陰陽海、鼻頭漁港、福隆等著名景點，不一會兒來到三貂角的極東公園，獲得此行意外收穫的極東點（這次環島<span class="mx-1">臺北-宜蘭段</span>本欲走北宜公路，因天候不佳前晚臨時決定改走北部濱海公路）。</p>
+              <p>旅程的第一天，我從南港車站啟程，沿著台5線騎行，在暖暖轉至台2丁線續行至瑞濱，在瑞濱看見無情的海浪拍擊在濱海公路旁的消波塊上。沿著台2線繼續前進，陸續經過陰陽海、鼻頭漁港、福隆等著名景點，不一會兒來到三貂角的極東公園，獲得此行意外收穫的臺灣本島極東點（這次環島<span class="mx-1">臺北-宜蘭段</span>本欲走北宜公路，因天候不佳前晚臨時決定改走北部濱海公路）。</p>
               <figure class="trip-picture d-flex flex-column align-items-center">
                 <img src="/trip/round_island_trip_2025/picture/IMG_4954修改後.jpg" title="深澳岬角（台2線74.2K處）" alt="瑞濱海邊的深澳岬角">
                 <figcaption>從北部濱海公路看向深澳岬角</figcaption>
@@ -239,7 +240,7 @@
                 <figcaption>第一日晚餐</figcaption>
               </figure>
               <div class="container">
-                <h4 style="font-family: monospace;">&lt;Day1 小檔案&gt;</h4><hr class="mt-0">
+                <h4 style="font-family: monospace;">- Day1 小檔案 -</h4><hr class="mt-0">
                 <dl class="row">
                   <dt class="col-sm-3">今日里程數</dt>
                   <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">230</b>km</dd>
@@ -286,8 +287,61 @@
             </div>
     
             <div id="day2" class="daily-entry">
-              <h3>Day 2: 花蓮 → 林田山 → 臺東</h3>
+              <div class="mb-3">
+                <h3 style="font-family: Papyrus; margin: 0;">Day2 ——</h3>
+                <small class="text-secondary" style="font-family: SimSun;"><i>花蓮市區 → 林田山 → 臺東市區</i></small>
+              </div>
+              <p>第二天一早，享用完簡單的早餐後，我回到民宿整理行囊。約莫在10:30，我沿著花東縱谷向南啟程，途中我轉入鄉道花50號（即原台16線東段）進入萬榮市區，起初只是想來找尋台16線的殘存痕跡，然而在7-11解決午餐後，我順道進去林田山林業文化園區參觀，這才發現這片林業遺址是值得駐足整個下午參觀的林業園區。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5016修改後.jpg" title="第二日早餐" alt="蛋餅、鐵板麵、紅茶">
+                <figcaption>第二天的早餐</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5024修改後.jpg" title="背包客棧旁的橘貓" alt="引擎蓋上的橘貓">
+                <figcaption>背包客棧旁的貓</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5027修改後.jpg" title="從花蓮市區上空飛過的F16戰機" alt="花蓮市區上空飛過的F16戰機">
+                <figcaption>從花蓮市區上空飛過的F16戰機</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5033修改後.jpg" title="林田山林業文化園區入口" alt="林田山林業文化園區入口">
+                <figcaption>林田山林業文化園區的入口</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5041修改後.jpg" title="1967年林田山林場模型" alt="1967年林田山林場模型">
+                <figcaption>1967年林田山林場模型</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5043修改後.jpg" title="林田山員工宿舍" alt="林田山員工宿舍現況">
+                <figcaption>林田山員工宿舍，現在尚住有30餘戶</figcaption>
+              </figure>
+              <p>告別林田山，我再次踏上花東縱谷公路，下一站來到臺鐵東里舊站，由於臺鐵改線，這裡如今是安東鐵路自行車道的南端端點，原本舊月台上的水泥候車棚，在2022年的918地震倒塌後拆除，現在只剩下寂靜的島式月台了。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5054修改後.jpg" title="花東縱谷公路怎麼也搞同向分隔島加禁行機車" alt="花東縱谷公路的同向分隔島加禁行機車">
+                <figcaption>花東縱谷怎麼也有同向分隔島加禁行機車</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5059修改後.jpg" title="少了水泥候車棚的東里舊站" alt="東里舊站現況">
+                <figcaption>少了水泥候車棚的東里舊站</figcaption>
+              </figure>
+              <p>繼續沿著公路南行，到池上後我改行台20乙線前往初來橋，從海端鄉走了一小段南部橫貫公路才再回到台9線。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5070修改後.jpg" title="初來橋" alt="初來橋">
+                <figcaption>出來喬<sub style="font-family: monospace;">(X)</sub> 初來橋<sub style="font-family: monospace;">(O)</sub></figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/IMG_5071修改後.jpg" title="台20線與台20乙線路口" alt="台20線與台20乙線路口">
+                <figcaption>南部橫貫公路路口，距臺南市區約200公里</figcaption>
+              </figure>
+              <p>在車流稀少的公路上騎車是一件舒服的事，然而天色漸漸昏暗，我心中暗叫不妙。到鹿野時，夜幕已降臨，我跟在前車的紅色尾燈前進，隨著越接近臺東市區，路上的車越來越多。台9線進入臺東市區前，經過了一段茄苳樹構成的綠色隧道，不久後，終於來到今晚的落腳處——途中．台東 On My Way．Taitung。</p>
+              <p>這一天原本的計畫是從台11甲線、台30線、台23線三度橫切海岸山脈，然因天氣不佳而刪除路線，未來有機會再來走訪仍未涉足的海岸山脈風情。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="/trip/round_island_trip_2025/picture/三跨海岸山脈路線.jpg" title="三跨海岸山脈路線" alt="三跨海岸山脈路線">
+                <figcaption>下次再來走這個路線</figcaption>
+              </figure>
               <div class="container">
+                <h4 style="font-family: monospace;">- Day2 小檔案 -</h4><hr class="mt-0">
                 <dl class="row">
                   <dt class="col-sm-3">今日里程數</dt>
                   <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">183</b>km</dd>
@@ -333,13 +387,25 @@
                   </dd>
                 </dl>
               </div>
-              <p>第二天，我繼續沿著花東縱谷向南進發，途中經過萬榮鄉的茶園、豐濱鄉的海岸線，以及長濱鄉的小漁村。中午時分，我到達玉里鎮，品嚐了當地著名的粄條。午後，前往東河的都蘭藝術村探索當地文化，最終抵達臺東市，入住市區的旅店。這一天的風景變化多端，從山谷到海邊，每一刻都充滿驚喜。全程至少需要 6 小時 35 分鐘。</p>
               <div id="day2-map" class="map"></div>
             </div>
 
             <div id="day3" class="daily-entry">
-              <h3>Day 3: 臺東 → 下南田 → 內埔 → 高雄</h3>
+              <div class="mb-3">
+                <h3 style="font-family: Papyrus; margin: 0;">Day3 ——</h3>
+                <small class="text-secondary" style="font-family: SimSun;"><i>臺東市區 → 南迴公路 → 沿山公路 → 內埔 → 高雄市區</i></small>
+              </div>
+              <p>早晨在背包客棧享用完簡易的早餐後，我於10點半左右出發，首先到臺東志航機場看飛機，雖有傳來飛機的轟鳴聲，但可惜未能親眼目睹勇鷹高教機起飛的英姿，稍有遺憾。</p>
+              <p>隨後我正式踏上風光旖旎的南迴公路，開啟一段有著美景相伴的旅程。第一站來到太麻里平交道，這裡因酷似日本動畫《灌籃高手》片頭曲的場景而吸引許多觀光客前往，但因總是有遊客駐足拍照，我稍停一下便繼續前行。接著抵達多良車站——號稱「臺灣最美車站」的廢站，也是南迴鐵路的著名景點，然而如今的它整個臺式觀光化，完全沒有廢站應有的荒涼韻味，我好失望；所幸一輛不常見的普快車正巧駛過，是此行到多良車站旁的額外收穫之一。</p>
+              <p>南迴公路景色壯麗多變，然因車流湍急，多數美景我僅能以雙眼欣賞，未能下車拍照，實在有些可惜。</p>
+              <p>這日午餐我在<span class="mx-1">大武之心南迴驛站</span>解決，它由經營許多國道服務區的南仁湖企業營運，頗有國道服務區的感覺。</p>
+              <p>接著我在達仁轉入台26線南田段，由於屏東境內的路段暫緩建設，所以這段台26線成為盲腸段，短短的五公里路段，不一會兒就來到通車終點，我原以為這段有著南國風情的斷尾公路，人車應該不會太多，結果一到端點，有遊覽車及數輛機車停著，在一旁散落著遊客。台26線的爭議已存在數十載，正反雙方來回之下才出現了這段高規格卻戛然而止的雙線公路，或許我們有生之年它都會是長這個樣子，也是一種妥協的產物吧。</p>
+              <p>折返回台9線時，強勁的東北季風拍打在身上，也激起旁邊的浪濤用力地打在岩灘上，與來程順風時有截然不同的感受。在達仁轉回南迴公路，循著蜿蜒山路穿過中央山脈，中途除了停下來拍了南迴改高架橋外沒有多做停留，直到台1線海豚灣路段才找了間7-11坐下休息、喝了杯咖啡。</p>
+              <p>沿台1線北上，於枋寮轉進縣道185號北上，縣道185號有著沿山公路之稱，乃因其沿著中央山脈所築而來，其時而丘陵山路，時而平原直路，是屏東縣山地鄉之間聯繫的重要公路，這次環島特地來走訪看看，一路經過萬巒鄉、瑪家鄉，在內埔鄉水門村西轉台24線往屏東市區，並在與國道三號立體交叉的長治交流道看見今日的夕陽。</p>
+              <p>在屏東市區沒有停留，我在台1線高屏段迎來今日晚霞，走走停停穿越過許多紅綠燈後，最終抵達高雄美麗島圓環，今日的住宿點——旅聚居青年旅舍，便在美麗島圓環上。check-in後，先去鼓山區吃晚餐，回旅店的途中發現著名的六合夜市就在旁邊，秉持著吃飽不怕被當盤子的心態走進夜市回憶童年，作為今日最後一個行程。</p>
+              <p>這一天的旅徒是我此行覺得最美的一段，南臺灣的公路景色多變，加上藍天白雲的景緻，總是能夠讓人流連忘返。</p>
               <div class="container">
+                <h4 style="font-family: monospace;">- Day3 小檔案 -</h4><hr class="mt-0">
                 <dl class="row">
                   <dt class="col-sm-3">今日里程數</dt>
                   <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">224</b>km</dd>
@@ -384,7 +450,6 @@
                   </dd>
                 </dl>
               </div>
-              <p>從臺東出發，我駛向太麻里，欣賞晨曦中的海岸線，接著繞過南田鄉，來到屏東縣的霧台，探訪魯凱族的傳統文化。下午，我沿台24線進入高屏地區，途經紅門、內埔等鄉鎮，最終抵達高雄鹽埕區，夜晚在六合夜市品嘗當地小吃。這一天的旅程富有挑戰，但也讓我見識到台灣南部的多元風貌。總路程至少需要 7 小時 32 分鐘。</p>
               <div id="day3-map" class="map"></div>
             </div>
 
@@ -817,7 +882,6 @@
                   
                   L.marker(locations["台灣中油 南港站"], { icon: startingPointIcon }).addTo(map);
                 
-                  
 
                   // 先移除所有icon（因為繪製路徑時會自動繪出所有點，包含一般點與修正點）
                   document.querySelectorAll(`#${containerID} .leaflet-marker-icon, #${containerID} .leaflet-marker-shadow`).forEach(icon => icon.remove());
