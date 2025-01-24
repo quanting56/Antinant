@@ -101,9 +101,9 @@ const footerContent = `
         </p>
         <p class="fw-light">
           聯絡方式：LineID @310956585<br>
-          資料最後更新時間：<time datetime="2024-10-13T15:33">2024/10/13 15:33</time>
+          資料最後更新時間：<time datetime="2025-01-25T01:23">2025/01/25 01:23</time>
         </p>
-        <p class="fw-light">&copy; 2024 Copyright</p>
+        <p class="fw-light">&copy; 2025 Copyright</p>
       </div>
       <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">
         <a href="https://www.instagram.com/ting.d_927" class="d-inline-block me-3" target="_blank"><i class="bi bi-instagram"></i></a>

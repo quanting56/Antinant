@@ -1,70 +1,78 @@
 /* Back to Top*/
 #BackToTop a {
-    right: 24px;
-    bottom: 20px;
-    position: fixed;
-    opacity: 0.25;
-    color: chocolate;
-    font-size: 32px;
-    z-index: 99;
+  right: 24px;
+  bottom: 20px;
+  position: fixed;
+  opacity: 0.25;
+  color: chocolate;
+  font-size: 32px;
+  z-index: 99;
 }
 
 #BackToTop a:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 
 /* main */
 main {
-    padding: 40px;
-    font-family: serif;
+  padding: 40px;
+  font-family: serif;
 }
 
-.trip_menu_header {
-    text-decoration: none;
-    color: #000000;
+.trip_menu_header a {
+  text-decoration: none;
+  color: #000000;
 }
 
-.trip_menu_header:hover {
-    text-decoration: none;
-    color: #555555;
+.trip_menu_header a:hover {
+  text-decoration: none;
+  color: #555555;
+}
+
+.trip_menu_header i {
+  font-family: Georgia;
+  color: #aaaaaa;
+  font-size: 18px;
 }
 
 .tripSubtitle {
-    color: gray;
-    padding: 0 0 8px 0;
-    font-size: 14px;
+  color: gray;
+  padding: 0 0 8px 0;
+  font-size: 14px;
 }
 
+
+/* Penghi_trip_2019 */
 #Penghu_trip_2019 p {
-    text-indent: 32px;
+  text-indent: 32px;
 }
 
 #Penghu_trip_2019 img {
-    margin: 16px 5px 8px 5px;
-    width: 100%;
-    border: 1px solid #ffffff;
-    box-shadow: 5px 5px 3px gray;
-    height: auto;
+  margin: 16px 5px 8px 5px;
+  width: 100%;
+  border: 1px solid #ffffff;
+  box-shadow: 5px 5px 3px gray;
+  height: auto;
 }
 
 
 /* footer */
 footer h5 {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 footer p {
-    font-size: 14px;
-    color: #eeeeee;
+  font-size: 14px;
+  color: #eeeeee;
 }
 
 footer a {
-    font-size: 24px;
-    color: #eeeeee;
+  font-size: 24px;
+  color: #eeeeee;
 }
 
 footer a:hover {
-    transform: translateY(-1.5px);
-    transition: transform 0.2s ease-in-out;
+  transform: translateY(-1.5px);
+  transition: transform 0.2s ease-in-out;
 }
