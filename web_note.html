@@ -31,6 +31,9 @@
 
     <!-- Tooltip引用統計學頁面，需以latex渲染數學公式 -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- 引入Vue 3.x -->
+    <script src="https://unpkg.com/vue@3"></script>
   </head>
 
   <body>
@@ -11459,6 +11462,498 @@
 </code></pre>
                       </li>
                     </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vue.js相關筆記 -->
+      <section id="VuejsNote" class="segmentation" style="min-height: 100vh;">
+        <h2 class="bg-warning">Vue.js（Vue 3）筆記</h2>
+        <hr>
+        <div style="padding: 10px;">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-2">
+                <!-- 導覽元件 -->
+                <ul id="VuejsNote_Tab" class="nav nav-pills flex-column">
+                  <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#VuejsStart">開始使用 Vue.js</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#VuejsInstance">Vue.js的實體</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#VuejsDataProcessing">資料加工與邏輯整合</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#VuejsDirectives">Vue.js指令</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#VuejsEvents">Vue.js事件處理</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#VuejsConditionsLists">Vue.js條件判斷與列表渲染</a></li>
+                  <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#VuejsLifecycle">Vue.js元件的生命週期與更新機制</a></li>
+                </ul>
+              </div>
+              <div class="col-md-10">
+                <!-- 標籤頁內容 -->
+                <div id="VuejsNote_TabContent" class="tab-content">
+                  <div id="VuejsStart" class="tab-pane fade show active">
+                    <h3>開始使用 Vue.js</h3>
+                    <hr>
+                    <p>Vue.js 可以透過多種方式使用，依據不同的需求，選擇最適合的方法。（From ChatGPT）</p>
+                    <ul>
+                      <li><h4>使用CDN</h4>
+                        <ol>
+                          <li>直接在HTML的<code class="mx-2">&lt;head&gt;</code>或<code class="mx-2">&lt;body&gt;</code>內引入Vue.js的CDN連結。</li>
+                          <li>在<code class="mx-2">&lt;script&gt;</code>中寫Vue程式碼。</li>
+                        </ol>
+<pre class="mt-3"><code class="html">
+  &lt;script src="https://unpkg.com/vue@3/dist/vue.global.js"&gt;&lt;/script&gt;
+
+</code></pre>
+                        <h5 class="mt-4">- 適用情境 -</h5>
+                        <p>
+                          ✅ 快速開發與測試，不需要額外安裝。<br>
+                          ✅ 適合寫小型專案或學習Vue。<br>
+                          ❌ 不適合正式上線，因為網速影響載入速度。
+                        </p>
+                      </li>
+                      <li class="mt-5"><h4>下載Vue.js本地檔案</h4>
+                        <ol>
+                          <li>下載 Vue.js：
+                            <ul>
+                              <li>官方網站下載：<a href="https://vuejs.org/" target="_blank">https://vuejs.org/</a>。</li>
+                              <li>選擇<code class="mx-2">vue.global.js</code>或<code class="mx-2">vue.global.prod.js</code>（生產環境）。</li>
+                            </ul>
+                          </li>
+                          <li>把檔案放在專案資料夾內，例如<code class="mx-2">/js/vue.global.js</code>。</li>
+                          <li>在HTML內引用。</li>
+                        </ol>
+<pre class="mt-3"><code class="html">
+  &lt;script src="js/vue.global.js"&gt;&lt;/script&gt;
+
+</code></pre>
+<h5 class="mt-4">- 適用情境 -</h5>
+                        <p>
+                          ✅ 適合內部專案或網路受限的環境。<br>
+                          ✅ 不受CDN影響，可以完全掌控Vue版本。<br>
+                          ❌ 需要手動更新Vue.js版本。
+                        </p>
+                      </li>
+                      <li class="mt-5"><h4>使用npm安裝Vue（適合大型專案、前端開發者）</h4>
+                        <ol>
+                          <li>安裝Node.js與npm（如果還沒裝）：
+                            <ul>
+                              <li>官方網站下載：<a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>。</li>
+                              <li>
+                                安裝後，開啟終端機（Terminal / CMD）輸入：
+<pre>
+  node -v
+  npm -v
+</pre>
+                                確認已安裝 Node.js 和 npm。
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            建立專案資料夾並初始化npm
+<pre>
+  mkdir my-vue-app
+  cd my-vue-app
+  npm init -y
+</pre>
+                          </li>
+                          <li>安裝Vue
+<pre>
+  npm install vue
+</pre>
+                          </li>
+                          <li>
+                            在JavaScript檔案（如<code class="mx-2">main.js</code>）中：
+<pre><code class="javascript">
+  import { createApp } from "vue";
+
+  const app = createApp({
+    data() {
+      return { message: "Hello Vue with npm!" };
+    }
+  });
+
+  app.mount("#app");
+
+</code></pre>
+                          </li>
+                        </ol>
+                        <h5 class="mt-4">- 適用情境 -</h5>
+                        <p>
+                          ✅ 適合大型專案，能搭配Vue CLI、Webpack、Vite。<br>
+                          ✅ 支援ES6模組化開發，適合與其他前端工具整合。<br>
+                          ❌ 需要安裝npm，較適合有開發經驗的使用者。
+                        </p>
+                      </li>
+                      <li class="mt-5"><h4>使用Vue CLI建立完整專案</h4>
+                        <p>Vue CLI（Command Line Interface）是Vue官方提供的工具，可以快速建立Vue應用程式。</p>
+                        <ol>
+                          <li>安裝Vue CLI：
+<pre>
+  npm install -g @vue/cli
+</pre>
+                          </li>
+                          <li>建立 Vue 專案：
+<pre>
+  vue create my-vue-project
+</pre>
+                          </li>
+                          <li>進入專案資料夾並啟動伺服器：
+<pre>
+  cd my-vue-project
+  npm run serve
+</pre>
+                          </li>
+                          <li>瀏覽器開啟<code class="mx-2">http://localhost:8080</code>，即可看到Vue頁面。</li>
+                        </ol>
+                        <h5 class="mt-4">- 適用情境 -</h5>
+                        <p>
+                          ✅ 適合正式專案，內建Webpack、熱重載等功能。<br>
+                          ✅ 支援SCSS、TypeScript、ESLint等前端開發工具。<br>
+                          ❌ 需要學習CLI指令，較適合開發團隊。
+                        </p>
+                      </li>
+                      <li class="mt-5"><h4>使用Vite建立Vue專案（比Vue CLI更快）</h4>
+                        <p>Vite是Vue官方推薦的開發工具，比Vue CLI載入更快。</p>
+                        <ol>
+                          <li>安裝Vite：
+<pre>
+  npm create vite@latest my-vite-project --template vue
+</pre>
+                          </li>
+                          <li>進入專案並安裝依賴：
+<pre>
+  cd my-vite-project
+  npm install
+</pre>
+                          </li>
+                          <li>啟動伺服器：
+<pre>
+  npm run dev
+</pre>
+                          </li>
+                          <li>在瀏覽器開啟<code class="mx-2">http://localhost:5173</code>，即可看到Vue頁面。</li>
+                        </ol>
+                        <h5 class="mt-4">- 適用情境 -</h5>
+                        <p>
+                          ✅ 開發速度快，適合Vue 3專案。<br>
+                          ✅ 內建HMR（熱重載），更快速調整程式碼。<br>
+                          ✅ 適合與Tailwind CSS、Pinia、TypeScript搭配。<br>
+                          ❌ 需要學習Vite配置，較適合開發者。
+                        </p>
+                      </li>
+                      <li class="mt-5"><h4>透過CDN使用Vue SFC（單文件元件）</h4>
+                        <p>Vue 3支援單文件元件（Single File Component, SFC），即<code class="mx-2">.vue</code>檔案，但通常需要Webpack或Vite來處理。若不想安裝這些工具，可以使用Vue官方的<code class="mx-2">@vue/compiler-sfc</code>。</p>
+                        <ol>
+                          <li>透過CDN載入Vue：
+<pre><code class="html">
+  &lt;script type="importmap"&gt;
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li>建立Vue SFC（單文件元件）
+<pre><code class="html">
+  &lt;script type="module"&gt;
+    import { createApp } from "vue";
+  
+    const app = createApp({
+      template: `&lt;h1&gt;{{ message }}&lt;/h1&gt;`,
+      data() {
+        return { message: "Hello Vue SFC!" };
+      }
+    });
+  
+    app.mount("#app");
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                        </ol>
+                        <h5 class="mt-4">- 適用情境 -</h5>
+                        <p>
+                          ✅ 不需要安裝npm，但可以使用Vue組件。<br>
+                          ✅ 適合小型專案或學習Vue SFC。<br>
+                          ❌ 瀏覽器需要支援ES模組（較新版本才行）。
+                        </p>
+                      </li>
+                      <li class="mt-5"><h4>結論</h4>
+                        <table border="1" cellpadding="5" cellspacing="0">
+                          <tr>
+                            <th>方法</th>
+                            <th>優點</th>
+                            <th>缺點</th>
+                            <th>適合對象</th>
+                          </tr>
+                          <tr>
+                            <td>CDN</td>
+                            <td>快速、無需安裝</td>
+                            <td>不適合正式專案</td>
+                            <td>初學者、快速測試</td>
+                          </tr>
+                          <tr>
+                            <td>下載本地Vue.js</td>
+                            <td>不受CDN限制</td>
+                            <td>需手動更新</td>
+                            <td>小型專案</td>
+                          </tr>
+                          <tr>
+                            <td>npm安裝Vue</td>
+                            <td>可搭配ES6模組</td>
+                            <td>需安裝npm</td>
+                            <td>前端開發者</td>
+                          </tr>
+                          <tr>
+                            <td>Vue CLI</td>
+                            <td>自動配置Webpack</td>
+                            <td>需學習CLI</td>
+                            <td>正式開發</td>
+                          </tr>
+                          <tr>
+                            <td>Vite</td>
+                            <td>開發速度快</td>
+                            <td>需學習配置</td>
+                            <td>Vue 3專案</td>
+                          </tr>
+                          <tr>
+                            <td>Vue SFC (CDN)</td>
+                            <td>支援Vue組件</td>
+                            <td>瀏覽器支援限制</td>
+                            <td>小型Vue組件開發</td>
+                          </tr>
+                        </table>
+                      </li>
+                    </ul>
+                  </div>
+                  <div id="VuejsInstance" class="tab-pane fade">
+                    <h3>Vue.js的實體</h3>
+                    <hr>
+                    <ul>
+                      <li>
+                        <h4>template模板屬性</h4>
+                        <div id="VuejsTemplate">
+                          <p>這行字會被模板字取代</p>
+                        </div>
+                        <script>
+                          const vmVuejsTemplate = Vue.createApp({
+                            template: `<p><b>{{ greeting }}</b> 好棒棒！</p><input v-model="greeting" placeholder="可輸入文字">`,
+                            data() {
+                              return {
+                                greeting: ""
+                              }
+                            }
+                          }).mount("#VuejsTemplate");
+                        </script>
+                        <div class="mt-3">本段code：
+<pre><code class="html">
+  &lt;div id="VuejsTemplate"&gt;
+    &lt;p&gt;這行字會被模板字取代&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const vmVuejsTemplate = Vue.createApp({
+      template: `&lt;p&gt;&lt;b&gt;{{ greeting }}&lt;/b&gt; 好棒棒！&lt;/p&gt;&lt;input v-model="greeting" placeholder="可輸入文字"&gt;`,
+      data() {
+        return {
+          greeting: ""
+        }
+      }
+    }).mount("#VuejsTemplate");
+  &lt;/script&gt;
+
+</code></pre>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div id="VuejsDataProcessing" class="tab-pane fade">
+                    <h3>資料加工與邏輯整合</h3>
+                    <hr>
+                    <ul>
+                      <li>
+                        <h4>methods方法</h4>
+                        <div id="VuejsMethods">
+                          <p>
+                            <input v-model="price" placeholder="0"> 元/顆蘋果
+                             * <input v-model="quantity" placeholder="0"> 顆蘋果
+                             = {{ subtotal() }} 元
+                          </p>
+                        </div>
+                        <script>
+                          const vmVuejsMethods = Vue.createApp({
+                            data() {
+                              return {
+                                price: "",
+                                quantity: ""
+                              }
+                            },
+                            methods: {
+                              subtotal() {
+                                return this.price * this.quantity;
+                              }
+                            }
+                          }).mount("#VuejsMethods");
+                        </script>
+                        <div class="mt-3">本段code：
+<pre><code class="html">
+  &lt;div id="VuejsMethods"&gt;
+    &lt;p&gt;
+      &lt;input v-model="price" placeholder="0"&gt; 元/顆蘋果
+       * &lt;input v-model="quantity" placeholder="0"&gt; 顆蘋果
+       = {{ subtotal() }} 元
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const vmVuejsMethods = Vue.createApp({
+      data() {
+        return {
+          price: "",
+          quantity: ""
+        }
+      },
+      methods: {
+        subtotal() {
+          return this.price * this.quantity;
+        }
+      }
+    }).mount("#VuejsMethods");
+  &lt;/script&gt;
+
+</code></pre>
+                        </div>
+                      </li>
+                      <li class="mt-5">
+                        <h4>computed計算屬性</h4>
+                        <sup>在這個例子，跟上面只有差在模板裡的subtotal有沒有加'()'</sup>
+                        <div id="VuejsComputed">
+                          <p>
+                            <input v-model="price" placeholder="0"> 元/顆蘋果
+                             * <input v-model="quantity" placeholder="0"> 顆蘋果
+                             = {{ subtotal }} 元
+                          </p>
+                        </div>
+                        <script>
+                          const vmVuejsComputed = Vue.createApp({
+                            data() {
+                              return {
+                                price: "",
+                                quantity: "",
+                              }
+                            },
+                            computed: {
+                              subtotal() {
+                                return this.price * this.quantity;
+                              }
+                            }
+                          }).mount("#VuejsComputed");
+                        </script>
+                        <div class="mt-3">本段code：
+<pre><code class="html">
+  &lt;div id="VuejsComputed"&gt;
+    &lt;p&gt;
+      &lt;input v-model="price" placeholder="0"&gt; 元/顆蘋果
+       * &lt;input v-model="quantity" placeholder="0"&gt; 顆蘋果
+       = {{ subtotal }} 元
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const vmVuejsComputed = Vue.createApp({
+      data() {
+        return {
+          price: "",
+          quantity: "",
+        }
+      },
+      computed: {
+        subtotal() {
+          return this.price * this.quantity;
+        }
+      }
+    }).mount("#VuejsComputed");
+  &lt;/script&gt;
+
+</code></pre>
+                        </div>
+                      </li>
+                      <li class="mt-5">
+                        <h4>methods與computed方法比較</h4>
+                        <ol>
+                          <li class="mb-3">
+                            <h5><code class="me-2">methods</code>（方法）</h5>
+                            <ul>
+                              <li><code class="me-1">methods</code>內的函式<strong class="mx-1">每次呼叫時都會執行，不會快取</strong>結果。</li>
+                              <li>適用於<strong class="mx-1">需要即時執行的操作</strong>，例如事件處理（按鈕點擊）、非同步請求（AJAX）、DOM 操作等。</li>
+                              <li><strong class="me-1">不適合用來依賴數據計算值</strong>，因為每次呼叫時都會重新執行，即使數據沒有變更，可能會造成效能浪費。</li>
+                            </ul>
+                          </li>
+                          <li class="mb-3">
+                            <h5><code class="me-2">computed</code>（計算屬性）</h5>
+                            <ul>
+                              <li><code class="me-1">computed</code>屬性會<strong class="mx-1">基於它所依賴的響應式數據</strong>來自動計算結果，並且<strong class="mx-1">有快取機制（Cache）</strong>。</li>
+                              <li>當<strong class="mx-1">依賴的數據沒有變化</strong>時，<code class="mx-1">computed</code><strong class="me-1">不會重新執行</strong>，而是直接返回上一次的計算結果，提升效能。</li>
+                              <li>適用於<strong class="mx-1">根據既有數據計算新數據的情境</strong>，例如格式化數據、過濾數據、簡單運算等。</li>
+                            </ul>
+                          </li>
+                          <li class="mb-3">
+                            <h5>兩者對比</h5>
+                            <table border="1" cellpadding="5" cellspacing="0">
+                              <thead>
+                                <tr>
+                                  <th></th>
+                                  <th><code>computed</code></th>
+                                  <th><code>methods</code></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td><b>是否快取</b></td>
+                                  <td>✅ 會快取結果</td>
+                                  <td>❌ 不會快取，每次都執行</td>
+                                </tr>
+                                <tr>
+                                  <td><b>何時執行</b></td>
+                                  <td>只有當<strong class="mx-1">依賴的數據變更</strong>時才會重新計算</td>
+                                  <td>每次呼叫時都會執行</td>
+                                </tr>
+                                <tr>
+                                  <td><b>適用情境</b></td>
+                                  <td><strong class="me-1">基於現有數據計算新值</strong>，如：計算屬性、過濾數據、格式化日期</td>
+                                  <td><strong class="me-1">執行操作或處理事件</strong>，如：按鈕點擊、發送API請求、DOM操作</td>
+                                </tr>
+                                <tr>
+                                  <td><b>呼叫方式</b></td>
+                                  <td><code class="me-1">{{ computedProperty }}</code>或<code class="mx-1">this.computedProperty</code><strong class="mx-1">像變數一樣使用</strong></td>
+                                  <td><code class="me-1">{{ method() }}</code>或<code class="mx-1">this.method()</code><strong class="mx-1">像函式一樣調用</strong>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </li>
+                          </li>
+                          <li class="mb-5">
+                            <h5>何時應該用<code class="mx-1">computed</code>，何時用<code class="mx-1">methods</code>？</h5>
+                            <ul>
+                              <li>如果是依賴數據的計算，並且希望有快取機制，應該使用<code class="mx-1">computed</code>。</li>
+                              <li>如果是純函式運算，每次都需要執行（例如事件處理、非同步請求），應該使用<code class="mx-1">methods</code>。</li>
+                            </ul>
+                          </li>
+                        </ol>
+                      </li>
+                    </ul>
+                  </div>
+                  <div id="VuejsDirectives" class="tab-pane fade">
+                    <h3>Vue.js指令</h3>
+                    <hr>
+                    <ul>
+                      <li>
+                        <h4>屬性綁定：v-bind</h4>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>

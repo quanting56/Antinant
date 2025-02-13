@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Title -->
+    <title>阿蛤ㄉ窩 - 網頁練習</title>
+    <link rel="icon" href="favicon/favicon-v1.0.png" type="images/png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap_icons-main/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="css/font_awesome_v6.5.2_all.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate_v4.1.1_min.css">
+    <link rel="stylesheet" href="css/vs2015_min.css">
+    <link rel="stylesheet" href="css/main.css"/>
+
+    <!-- jQuery -->
+    <script src="js/jquery_v3.7.1_min.js"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="js/d3_v7.9.0_min.js"></script>
+    <script src="js/wow_v1.1.3_min.js"></script>
+    <script src="js/highlight_min.js"></script>
+    <script src="js/script.js"></script>
+
+    <!-- 啟用 Highlight.js -->
+    <script>hljs.highlightAll();</script>  
+
+    <!-- Tooltip引用統計學頁面，需以latex渲染數學公式 -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- 引入Vue 3.x -->
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+
+  <body>
+    
+    <div class="mx-3 my-5">
+      <h2>屬性綁定：v-bind</h2>
+      <div id="app6">
+        <p v-bind:id="customId"></p>
+      </div>
+      <script>
+        const vm6 = Vue.createApp({
+          data() {
+            return {
+              customId: "item-id-1"
+            }
+          }
+        }).mount("#app6");
+      </script>
+    </div>
+    <div class="mx-3 my-5">
+      <h2>表單綁定：v-model</h2>
+      <ul>
+        <li>
+          <h3>input文字框</h3>
+          <div id="app7">
+            <input v-model="message7" placeholder="edit me">
+            <p>Message is: {{ message7 }}</p>
+          </div>
+          <script>
+            const vm7 = Vue.createApp({
+              data() {
+                return {
+                  message7: ""
+                }
+              }
+            }).mount("#app7");
+          </script>
+        </li>
+        <li>
+          <h3>textarea文字方塊</h3>
+          <div id="app8">
+            <p><span>Multiline message is:</span> {{ message8 }}</p>
+            <textarea v-model="message8" placeholder="add multiline lines"></textarea>
+          </div>
+          <script>
+            const vm8 = Vue.createApp({
+              data() {
+                return {
+                  message8: ""
+                }
+              }
+            }).mount("#app8");
+          </script>
+        </li>
+        <li>
+          <h3>radio選擇框</h3>
+          <div id="app9">
+            <!-- 要注意下面兩組input對應的都是v-model="picked" -->
+            <div>
+              <input type="radio" id="one" value="1" v-model="picked">
+              <label for="one">One</label>
+            </div>
+            <div>
+              <input type="radio" id="two" value="2" v-model="picked">
+              <label for="two">Two</label>
+            </div>
+            <span>Picked: {{ picked }}</span>
+          </div>
+          <script>
+            const vm = Vue.createApp({
+              data() {
+                return {
+                  picked: 1
+                }
+              }
+            }).mount("#app9");
+          </script>
+        </li>
+        <li>
+          <h3>checkbox選擇框</h3>
+          <div id="app10">
+            <!-- 注意下面input對應的都是v-model="checkedNames" -->
+            <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+            <label for="jack">Jack</label>
+            <input type="checkbox" id="john" value="John" v-model="checkedNames">
+            <label for="john">John</label>
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+            <label for="mike">Mike</label>
+            <input type="checkbox" id="mary" value="Mary" v-model="checkedNames">
+            <label for="mary">Mary</label>
+            <br>
+            <p>Checked names: {{ checkedNames }}</p>
+          </div>
+          <script>
+            const vm10 = Vue.createApp({
+              data() {
+                return {
+                  // 因為是複選的關係，這裡的checkedNames是陣列
+                  checkedNames: []
+                }
+              }
+            }).mount("#app10");
+          </script>
+          <br>
+          <div id="app11">
+            <input type="checkbox" id="checkbox" v-model="isChecked"><br>
+            <label for="checkbox">Status: {{ isChecked }}</label>
+          </div>
+          <script>
+            const vm11 = Vue.createApp({
+              data() {
+                return {
+                  isChecked: false
+                }
+              }
+            }).mount("#app11");
+          </script>
+        </li>
+        <li>
+          <h3>select下拉式選單</h3>
+          <div id="app12">
+            <!-- 注意，v-model要放在select而不是option -->
+            <select v-model="selected">
+              <!-- 第一個選項設定為disabled的好處是可以保證使用者不會送出此預設值 -->
+              <option disabled value="">請選擇</option>
+              <option value="臺北市">臺北市</option>
+              <option value="新北市">新北市</option>
+              <option value="基隆市">基隆市</option>
+            </select>
+            <p>現在選到的行政區是 {{ selected || '未選擇'}}</p>
+          </div>
+          <script>
+            const vm12 = Vue.createApp({
+              data() {
+                return {
+                  selected: ""
+                }
+              }
+            }).mount("#app12");
+          </script>
+        </li>
+      </ul>
+    </div>
+    <div class="mx-3 my-5">
+      <h2>v-model與修飾子</h2>
+      <ul>
+        <li>
+          <h3>.lazy</h3>
+          <div id="app13">
+            <input v-model.lazy="message13" placeholder="edit me">
+            <p>Message is: {{ message13 }}</p>
+          </div>
+          <script>
+            const vm13 = Vue.createApp({
+              data() {
+                return {
+                  message13: ""
+                }
+              }
+            }).mount("#app13");
+          </script>
+        </li>
+        <li>
+          <h3>.number</h3>
+          <div id="app14">
+            <input v-model="message14a"> + <input v-model="message14b"> = {{ stringSum }}<br>
+          </div>
+          <div id="app15">
+            <input v-model.number="message15a"> + <input v-model.number="message15b"> = {{ numberSum }}
+          </div>
+          <script>
+            const vm14 = Vue.createApp({
+              data() {
+                return {
+                  message14a: 0,
+                  message14b: 0
+                }
+              },
+              computed: {
+                stringSum() {
+                  return this.message14a + this.message14b;
+                }
+              }
+            }).mount("#app14");
+
+            const vm15 = Vue.createApp({
+              data() {
+                return {
+                  message15a: 0,
+                  message15b: 0
+                }
+              },
+              computed: {
+                numberSum() {
+                  return this.message15a + this.message15b;
+                }
+              }
+            }).mount("#app15");
+          </script>
+        </li>
+        <li>
+          <h3>.trim</h3>
+          <div id="app16">
+            <textarea v-model.trim="message16"></textarea>
+            <p>產出結果為： <pre>{{ message16 }}</pre></b></p>
+          </div>
+          <script>
+            const vm16 = Vue.createApp({
+              data() {
+                return {
+                  message16: ""
+                }
+              }
+            }).mount("#app16");
+          </script>
+        </li>
+        <li>
+          <h3>v-text與v-html</h3>
+          <div id="app17">
+            <div v-text="text"></div>
+            <div v-html="text"></div>
+          </div>
+          <script>
+            const vm17 = Vue.createApp({
+              data() {
+                return {
+                  text: "<h3>Hello World!</h3>"
+                }
+              }
+            }).mount("#app17");
+          </script>
+        </li>
+        <li>
+          <h3>v-once</h3>
+          <div id="app18">
+            <input v-model="text">
+            <div>{{ text }}</div>
+            <div v-once>{{ text }}</div>
+          </div>
+          <script>
+            const vm18 = Vue.createApp({
+              data() {
+                return {
+                  text: "Hello World"
+                }
+              }
+            }).mount("#app18");
+          </script>
+        </li>
+        <li>
+          <h3>v-pre</h3>
+          <div id="app19">
+            <!-- 加上v-pre後不會解析模板內容，直接顯示{{ text }} -->
+            <div v-pre>{{ text }}</div>
+
+            <!-- 將{{ text }}轉換為text的內容 -->
+            <div>{{ text }}</div>
+          </div>
+          <script>
+            const vm19 = Vue.createApp({
+              data() {
+                return {
+                  text: "v-pre測試內容"
+                }
+              }
+            }).mount("#app19");
+          </script>
+        </li>
+      </ul>
+    </div>
+    <div class="mx-3 my-5">
+      <h2>樣式綁定</h2>
+      <h3>控制class</h3>
+      <div id="app20">
+        <input type="text" v-model.trim="message20" v-bind:class="{ 'error': message20.length > 10 }">
+      </div>
+      <style>
+        .error {
+          border: red solid 1px;
+          color: red;
+        }
+      </style>
+      <script>
+        const vm20 = Vue.createApp({
+          data() {
+            return {
+              message20: ""
+            }
+          }
+        }).mount("#app20");
+      </script>
+      <h3>控制多組class</h3> // 後面的code待理解
+      <div id="app21">
+        <input type="text" v-model.trim="message21" v-bind:class="{ 'active': isActive, 'text-danger': hasError }">
+      </div>
+      <style>
+        .isActive {
+          border: gray dashed 1px;
+          color: blue;
+        }
+        .hasError {
+          border: red solid 1px;
+          color: red;
+        }
+      </style>
+      <script>
+        const vm21 = Vue.createApp({
+          data() {
+            return {
+              message21: "",
+              isActive: false,
+              hasError: false
+            }
+          },
+          methods: function(){
+            if ( this.message21.length <= 5 ) {
+              this.isActive = true;
+              this.hasError = false;
+            } else {
+              this.isActive = false;
+              this.hasError = true;
+            }
+          }
+        }).mount("#app21");
+      </script>
+      <h3>直接操作style屬性</h3>
+      <div id="app22">
+        <input type="text" v-model.trim="message22" placeholder="請勿超過10個字" :style="msgStyle">
+      </div>
+      <script>
+        const vm22 = Vue.createApp({
+          data() {
+            return {
+              message22: ""
+            }
+          },
+          computed: {
+            isValid: function(){}
+            // 待完成
+          }
+        }).mount("#app22");
+      </script>
+    </div>
+  </body>
+</html>

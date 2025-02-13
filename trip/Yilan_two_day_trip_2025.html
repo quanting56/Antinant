@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Title -->
+    <title>清腸道的P人旅行 - 宜蘭篇</title>
+
+    <!-- CSS link -->
+    <link rel="stylesheet" href="../css/bootstrap_5.3.3_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+
+    <!-- JS link -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="../js/bootstrap_5.3.3_js/bootstrap.bundle.min.js"></script>
+    <script src="../js/d3_v7.9.0_min.js"></script>
+    <!-- 引入 Leaflet.js 和 Leaflet Routing Machine -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
+
+    <style>
+      body {
+        background-color: #fafafa;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-image: url("https://quanting56.github.io/Antinant/trip/round_island_trip_2025/picture/IMG_5408修改後.jpg");
+        background-position: center bottom;
+        background-size: cover;
+        /* background-color: #c89a88; */
+        color: #ffffff;
+        padding: 10vh 0;
+        text-align: center;
+      }
+
+      main {
+        padding: 15px;
+      }
+
+      .foreword {
+        border-left: 5px solid #c89a88;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 30px;
+        line-height: 2em;
+        font-size: 17px;
+        color: #606060;
+        font-family: "SimSun";
+        letter-spacing: 1px;
+      }
+
+      /* 圖片格式 */
+      .trip-picture img {
+        margin: 10px 0px 10px 0px;
+        width: 100%;
+        border: 1px solid #ffffff;
+        box-shadow: 5px 5px 3px gray;
+        height: auto;
+      }
+
+      .trip-picture > figcaption::before {
+        content: "▲ ";
+      }
+
+      .trip-picture > figcaption {
+        font-family: Serif;
+        margin-bottom: 15px;
+      }
+
+      .daily-entry {
+        margin-top: 50px;
+      }
+
+      .daily-entry p {
+        font-family: Serif;
+        text-indent: 32px;
+        margin-top: 25px
+      }
+
+      .daily-entry a,
+      .daily-entry a:link,
+      .daily-entry a:visited,
+      .daily-entry a:active {
+        color: #9a6852;
+        -webkit-text-decoration: none;
+        text-decoration: none;
+        border-bottom: 1px solid #d8d8d8;
+      }
+
+      .daily-entry a:hover {
+        border-bottom: 1px solid #9a6852;
+      }
+
+      .daily-entry dt,
+      .daily-entry dd {
+        margin-top: 8px;
+      }
+
+      .daily-food-list li {
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+
+      /* 地圖在網頁上的大小 */
+      .map {
+        height: 90vh;
+        width: 80vw;
+        margin: 10px;
+        margin-bottom: 120px;
+      }
+
+      /* 地圖上方路線資訊欄文字部分 */
+      .leaflet-routing-container {
+        width: 200px;
+        height: auto;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: rgba(255, 255, 255, 0.8); /* 半透明背景，避免完全遮蓋地圖 */
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        display: none;
+      }
+
+      #starting-point {
+        background-color: #9a6852;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1.5px solid #0077be;
+        position: relative;
+      }
+
+      #starting-point::after {
+        content: "起";
+        color: #ffffff;
+        position: absolute;
+        left: 2px;
+        top: -1px;
+      }
+
+      aside h3 {
+        color: #fafafa;
+        font-family: serif;
+      }
+
+      aside p {
+        font-family: 'PingFang TC';
+        color: #eeeeee;
+        font-size: 14px;
+      }
+
+      /* footer */
+      footer {
+        background-color: #175185;
+      }
+  
+      footer h5 {
+        color: #ffffff;
+      }
+  
+      footer p {
+        font-size: 14px;
+        color: #eeeeee;
+      }
+  
+      footer a {
+        font-size: 24px;
+        color: #eeeeee;
+      }
+  
+      footer a:hover {
+        transform: translateY(-1.5px);
+        transition: transform 0.2s ease-in-out;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>阿蛤ㄉ旅遊札記</h1>
+      <p>出發旅行</p>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <main class="col-md-7 col-lg-8 col-xxl-7 col-11 ps-4 pe-3">
+          <section class="d-flex align-items-center mt-5">
+            <a href="../trip.html" target="_blank">
+              <img src="../assets/IMG_2073.jpg" title="大頭貼" height="35px" width="auto" class="rounded-circle" style="margin-right: 15px;">
+            </a>
+            <p style="margin-bottom: 0; font-size: 13px; color: #8c8c8c;">董冠霆 ・ Feb 07 - Feb 08, 2025</p>
+          </section>
+
+          <section class="my-4">
+            <h2>清腸道的P人旅行 - 宜蘭篇</h2>
+            <sup><i class="text-secondary">- 本篇共同演出者｜張瑋宸、黃竣楷、李旻倫</i></sup>
+          </section>
+
+          <!-- 導言／介紹 -->
+          <section>
+            <p style="font-family: SimHei, Serif; text-indent: 32px;">過年前臨時起意，想到黃竣楷過年既然會回臺中，要不我乾脆去臺中找他玩，我想要去東豐鐵馬道騎腳踏車。然而歷經波折，在約了張瑋宸、李旻倫後，臺中行計畫因阿楷2/1不在臺中而被取消，而我們後來又改約2/7（五）-2/8（六），才有了這次的隨意小旅行。</p>
+            <p style="font-family: SimHei, Serif; text-indent: 32px;">從青春痘正式啟程，我們開始了一場漫無目的的旅程，「去哪裡不知道，先出來就對了。」是我們這次旅行的主軸。絕美的風景、與風同行的日子，不是這場旅行的追求，這是一場心靈的淬鍊，一場與自由的重逢，自由到不知道下下個行程在哪裡的放鬆小旅行。歐耶！</p>
+            <figure class="trip-picture d-flex flex-column align-items-center">
+              <img src="round_island_trip_2025/picture/IMG_5408修改後.jpg" title="地利村山景（台16線28.8K處）" alt="台16線民和地利段山景">
+              <figcaption>地利村山景</figcaption>
+            </figure>
+          </section>
+
+          <!-- 前言 -->
+          <section class="foreword mb-5">
+            - 岩壁菸酒生<br>- 疲倦值班醫師<br>- 二周目大四生<br>- 生活掙扎者<br>肥宅・一起・強大
+          </section>
+      
+          <!-- diary -->
+          <section>
+            <div id="day1" class="daily-entry">
+              <div class="daily-title mb-3">
+                <h3 style="font-family: Papyrus; margin: 0;">Day1 ——</h3>
+                <small class="text-secondary" style="font-family: SimSun;"><i>南港 → 三貂角 → 蘇澳 → 花蓮市區</i></small>
+              </div>
+              <p>旅程的第一天，我從南港車站啟程，沿著台5線騎行，在暖暖轉至台2丁線續行至瑞濱，在瑞濱看見無情的海浪拍擊在濱海公路旁的消波塊上。沿著台2線繼續前進，陸續經過陰陽海、鼻頭漁港、福隆等著名景點，不一會兒來到三貂角的極東公園，獲得此行意外收穫的臺灣本島極東點（這次環島<span class="mx-1">臺北-宜蘭段</span>本欲走北宜公路，因天候不佳前晚臨時決定改走北部濱海公路）。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_4954修改後.jpg" title="深澳岬角（台2線74.2K處）" alt="瑞濱海邊的深澳岬角">
+                <figcaption>從北部濱海公路看向深澳岬角</figcaption>
+              </figure>
+              <p>北部濱海公路自過了三貂角後，沿途均可見到矗立在太平洋之上的龜山島，東北季風吹拂之下，騎車從東北角一路至烏石鼻有些痛苦，寒風穿進袖口、領口，非常...舒服。到頭城後，先繞至國五頭城交流道附近的<span class="mx-1">北宜蛋之家（將軍茶葉蛋）</span>來碗熱熱的八仙湯，由於內用座位有限，我是在外面的站立座位區喝湯，特別的體驗。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_4959修改後.jpg" title="北宜蛋之家" alt="北宜蛋之家（將軍茶葉蛋）店門口">
+                <figcaption>頭城北宜蛋之家（將軍茶葉蛋）店門口</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_4960修改後.jpg" title="四海八仙湯" alt="內用四海八仙湯">
+                <figcaption>室外內用區的站立位，剛好可以放碗來喝湯</figcaption>
+              </figure>
+              <p>喝完湯繼續上路，我騎回頭城再切回台2線繼續南下，一路經過壯圍鄉、五結鄉，這裡路寬、車不多，偶而會遇見騎公路車的騎士，沒多久蘇澳鎮的路牌就出現了，在蘇澳加完油後，我選擇咖哩飯作為今日午餐。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_4969修改後.jpg" title="特選牛肉泰式綠咖哩飯及雞米花" alt="台灣雙醬咖哩蘇澳店的咖哩飯及雞米花">
+                <figcaption>特選牛肉泰式綠咖哩飯與雞米花</figcaption>
+              </figure>
+              <p>吃完午餐後，進入今天另外的一場重頭戲——蘇花公路。從白米橋開始一路向南的山路，風呼呼地吹著寂寞的機車騎士，由於蘇花改通車後，原蘇花公路的車流少之又少，加上非旅遊旺季的下午兩點半，會在此時進入舊蘇花公路的人更少，一路上所遇見之旅客非常稀少，頂多是呼嘯而過的砂石車等工程車輛。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_4972修改後.jpg" title="蘇花公路起點（台9丁線2K處）" alt="蘇花公路起點／台9丁2K">
+                <figcaption>蘇花公路起點</figcaption>
+              </figure>
+              <p>宜蘭段的舊蘇花公路，無盡的太平洋、高聳如天的斷崖山壁、刺骨錐心的寒風、似乎無限延伸的蜿蜒雙黃線柏油路，加上波波波引擎聲的勁戰四，海、山、風、路、車時常是伴我左右的唯五物件，天地伴我，我卻不能有所停留，我得趕在天黑之前闖出蘇花公路，我可不想夜晚還要獨自一人騎在蘇花山路裡。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_4974修改後.jpg" title="蘇花公路南澳段的山景之一" alt="南澳的山景">
+                <figcaption>常常過個山就沒有飄雨了</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_4973修改後.jpg" title="蘇花公路南澳市區段（台9線124.5K處）" alt="蘇花公路南澳市區段地是乾的">
+                <figcaption>剛剛還在猶豫要不要穿雨衣，結果南澳市區地是乾的</figcaption>
+              </figure>
+              <p>過了和平溪橋後，即進入了花蓮段的蘇花公路，由於去年四月以來的地震加颱風接連肆虐，沿途山崩、落石怵目驚心，騎乘經過凹凸不平的顛頗柏油路，加上一旁被撞爛而再添加的黃黑條紋臨時護欄，皆時時提醒我此地不宜久留，偶遇冒著生命危險在施工的工程人員，我也向其致上感恩的心。花蓮段的車流量明顯增多，除了從蘇花改匯入的車，有許多是往返和平工業區與花蓮市區的大型車輛，儘管我卡在長長的車龍裡，此時的我卻倍感心安，終於不再只有我一人獨自在光線昏暗的蘇花山路行駛著。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_4981修改後.jpg" title="蘇花改南澳和平段和平端（台9線145K處）" alt="蘇花改南澳和平段和平端">
+                <figcaption>蘇花改南澳和平段和平端</figcaption>
+              </figure>
+              <p>過了淺藍色塗裝的太魯閣大橋後，台9線新城段是近15公里的類直線路段，然而我騎到此時早已天黑，一人一車在平原段奔跑後，明明已經騎在速限上緣，旁邊的車還是呼嘯而過，有點神奇。晚上六點終於來到今晚的住宿點——北吉光輕旅 Hualien Hostel Bayhouse，check-in後在中山路上覓食，我選擇吃poke作為今日的晚餐。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5002修改後.jpg" title="第一日晚餐" alt="夏威夷生魚飯">
+                <figcaption>第一日晚餐</figcaption>
+              </figure>
+              <div class="container">
+                <h4 style="font-family: monospace;">- Day1 小檔案 -</h4><hr class="mt-0">
+                <dl class="row">
+                  <dt class="col-sm-3">今日里程數</dt>
+                  <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">230</b>km</dd>
+                  <dt class="col-sm-3">今晚住在哪裡</dt>
+                  <dd class="col-sm-9"><a href="https://maps.app.goo.gl/cbCVTNRMBbC1gTuz9" target="_blank">花蓮青年旅館．北吉光輕旅 Hualien Hostel Bayhouse</a></dd>
+                  <dt class="col-sm-3">今天吃了些什麼</dt>
+                  <dd class="col-sm-9">
+                    <ol id="day1-food-list" class="daily-food-list">
+                      <li>
+                        四海八仙湯 $100<br>
+                        <span class="ms-2">@<a href="https://maps.app.goo.gl/eVcxhRFWFZEgDGC86" target="_blank" class="ms-1">北宜蛋之家（將軍茶葉蛋）</a></span>
+                      </li>
+                      <li>
+                        特選牛肉泰式綠咖哩飯 $170<br>
+                        雞米花 $50<br>
+                        <span class="ms-2">@<a href="https://maps.app.goo.gl/oKD2Ydvmf18fnKCCA" target="_blank" class="ms-1">台灣雙醬咖哩 蘇澳店</a></span>
+                      </li>
+                      <li>
+                        大熱拿鐵 $55<br>
+                        <span class="ms-2">@<a href="https://maps.app.goo.gl/3guATinN8T2ruqCE9" target="_blank" class="ms-1">7-11金玉門市</a></span>
+                      </li>
+                      <li>
+                        夏威夷生菜飯 $198<br>
+                        <span class="ms-2">@<a href="https://maps.app.goo.gl/BpcewdntYbM1K9C56" target="_blank" class="ms-1">jam kitchen 花蓮中山棧</a></span>
+                      </li>
+                      <li>
+                        蕎麥綠茶 $30<br>
+                        <span class="ms-2">@<a href="https://maps.app.goo.gl/CUDRiU8iNsFhxtnX9" target="_blank" class="ms-1">瓦克茶飲 Walker Tea Shop</a></span>
+                      </li>
+                    </ol>
+                  </dd>
+                  <dt class="col-sm-3">今日總花費</dt>
+                  <dd class="col-sm-9">
+                    <span id="day1-daily-expenses-list">
+                      餐費<b id="day1-food-expenses" class="mx-2"></b>元<br>
+                      + 交通費<b class="mx-2 daily-transportation-expenses">161</b>元（今日加油的油錢）<br>
+                      + 住宿費<b class="mx-2 daily-hotel-expenses">317</b>元<br>
+                    </span>
+                    = 共<b id="day1-daily-expenses" class="mx-2 text-danger daily-total-expenses"></b>元
+                  </dd>
+                </dl>
+              </div>
+              <div id="day1-map" class="map"></div>
+            </div>
+    
+            <div id="day2" class="daily-entry">
+              <div class="mb-3">
+                <h3 style="font-family: Papyrus; margin: 0;">Day2 ——</h3>
+                <small class="text-secondary" style="font-family: SimSun;"><i>花蓮市區 → 林田山 → 臺東市區</i></small>
+              </div>
+              <p>第二天一早，享用完簡單的早餐後，我回到民宿整理行囊。約莫在10:30，我沿著花東縱谷向南啟程，途中我轉入鄉道花50號（即原台16線東段）進入萬榮市區，起初只是想來找尋台16線的殘存痕跡，然而在7-11解決午餐後，我順道進去林田山林業文化園區參觀，這才發現這片林業遺址是值得駐足整個下午參觀的林業園區。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5016修改後.jpg" title="第二日早餐" alt="蛋餅、鐵板麵、紅茶">
+                <figcaption>第二天的早餐</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5024修改後.jpg" title="背包客棧旁的橘貓" alt="引擎蓋上的橘貓">
+                <figcaption>背包客棧旁的貓</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5027修改後.jpg" title="從花蓮市區上空飛過的F16戰機" alt="花蓮市區上空飛過的F16戰機">
+                <figcaption>從花蓮市區上空飛過的F16戰機</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5033修改後.jpg" title="林田山林業文化園區入口" alt="林田山林業文化園區入口">
+                <figcaption>林田山林業文化園區的入口</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5041修改後.jpg" title="1967年林田山林場模型" alt="1967年林田山林場模型">
+                <figcaption>1967年林田山林場模型</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5043修改後.jpg" title="林田山員工宿舍" alt="林田山員工宿舍現況">
+                <figcaption>林田山員工宿舍，現在尚住有30餘戶</figcaption>
+              </figure>
+              <p>告別林田山，我再次踏上花東縱谷公路，下一站來到臺鐵東里舊站，由於臺鐵改線，這裡如今是安東鐵路自行車道的南端端點，原本舊月台上的水泥候車棚，在2022年的918地震倒塌後拆除，現在只剩下寂靜的島式月台了。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5054修改後.jpg" title="花東縱谷公路怎麼也搞同向分隔島加禁行機車" alt="花東縱谷公路的同向分隔島加禁行機車">
+                <figcaption>花東縱谷怎麼也有同向分隔島加禁行機車</figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5059修改後.jpg" title="少了水泥候車棚的東里舊站" alt="東里舊站現況">
+                <figcaption>少了水泥候車棚的東里舊站</figcaption>
+              </figure>
+              <p>繼續沿著公路南行，到池上後我改行台20乙線前往初來橋，從海端鄉走了一小段南部橫貫公路才再回到台9線。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5070修改後.jpg" title="初來橋" alt="初來橋">
+                <figcaption>出來喬<sub style="font-family: monospace;">(X)</sub> 初來橋<sub style="font-family: monospace;">(O)</sub></figcaption>
+              </figure>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/IMG_5071修改後.jpg" title="台20線與台20乙線路口" alt="台20線與台20乙線路口">
+                <figcaption>南部橫貫公路路口，距臺南市區約200公里</figcaption>
+              </figure>
+              <p>在車流稀少的公路上騎車是一件舒服的事，然而天色漸漸昏暗，我心中暗叫不妙。到鹿野時，夜幕已降臨，我跟在前車的紅色尾燈前進，隨著越接近臺東市區，路上的車越來越多。台9線進入臺東市區前，經過了一段茄苳樹構成的綠色隧道，不久後，終於來到今晚的落腳處——途中．台東 On My Way．Taitung。</p>
+              <p>這一天原本的計畫是從台11甲線、台30線、台23線三度橫切海岸山脈，然因天氣不佳而刪除路線，未來有機會再來走訪仍未涉足的海岸山脈風情。</p>
+              <figure class="trip-picture d-flex flex-column align-items-center">
+                <img src="round_island_trip_2025/picture/三跨海岸山脈路線.jpg" title="三跨海岸山脈路線" alt="三跨海岸山脈路線">
+                <figcaption>下次再來走這個路線</figcaption>
+              </figure>
+              <div class="container">
+                <h4 style="font-family: monospace;">- Day2 小檔案 -</h4><hr class="mt-0">
+                <dl class="row">
+                  <dt class="col-sm-3">今日里程數</dt>
+                  <dd class="col-sm-9">大約<b class="mx-2 text-danger daily-riding-distance">183</b>km</dd>
+                  <dt class="col-sm-3">今晚住在哪裡</dt>
+                  <dd class="col-sm-9"><a href="https://maps.app.goo.gl/JyeXfUBF23YkN5rQ6" target="_blank">途中．台東國際青年旅舍 On My Way．Taitung Hostel & Backpacker</a></dd>
+                  <dt class="col-sm-3">今天吃了些什麼</dt>
+                  <dd class="col-sm-9">
+                    <ol id="day2-food-list" class="daily-food-list">
+                      <li>
+                        九層塔蛋河粉皮（類蛋餅） $45<br>
+                        香濃茄汁蘑菇鐵板麵（加半熟蛋、加玉米） $85<br>
+                        人氣紅茶-大杯 $25<br>
+                        <span class="ms-2">@<a href="https://maps.app.goo.gl/S4L2uE7JmRjyLJLd9" target="_blank" class="ms-1">來客早午餐 Like Brunch</a></span>
+                      </li>
+                      <li>
+                        日式辛香豬肉咖哩飯 $89<br>
+                        統一陽光無加糖高纖豆漿（i珍食） $17<br>
+                        關東煮（米血糕、雪白魚豆腐、高麗菜捲、春雨） $64<br>
+                        <span class="ms-2">@<a href="https://maps.app.goo.gl/mTnsBMoSXHfmZSmYA" target="_blank" class="ms-1">7-11萬榮門市</a></span>
+                      </li>
+                      <li>
+                        凱薩沙拉（友善食光） $46<br>
+                        培根蛋餅（友善食光） $35<br>
+                        義式蕃茄蔬菜筆尖麵（友善食光） $63<br>
+                        舒芙蕾布丁（友善食光） $46<br>
+                        經典雙色小泡芙（友善食光） $34<br>
+                        <span class="ms-2">@<a href="https://maps.app.goo.gl/Jp1YUua6X94F4GNR6" target="_blank" class="ms-1">全家便利商店 台東車站店</a></span>
+                      </li>
+                      <li>
+                        綠豆鮮乳大杯 $85<br>
+                        <span class="ms-2">@<a href="https://maps.app.goo.gl/z8g9ZmaAmtstYNBo9" target="_blank" class="ms-1">老東芳青草茶 車站門市</a></span>
+                      </li>
+                    </ol>
+                  </dd>
+                  <dt class="col-sm-3">今日總花費</dt>
+                  <dd class="col-sm-9">
+                    <span id="day2-daily-expenses-list">
+                      餐費<b id="day2-food-expenses" class="mx-2 daily-food-expenses"></b>元<br>
+                      + 交通費<b class="mx-2 daily-transportation-expenses">143</b>元（今日加油的油錢）<br>
+                      + 住宿費<b class="mx-2 daily-hotel-expenses">648</b>元<br>
+                    </span>
+                    = 共<b id="day2-daily-expenses" class="mx-2 text-danger daily-total-expenses"></b>元
+                  </dd>
+                </dl>
+              </div>
+              <div id="day2-map" class="map"></div>
+            </div>
+
+            <script>
+              // 通用函數：計算每日餐費（從"今天吃了些什麼"中提取金額並計算總和）
+              function calculateDailyFoodExpenses(dayId) {
+                const foodList = document.querySelectorAll(`#${dayId}-food-list li`);
+                let foodExpenses = 0;
+            
+                foodList.forEach((item) => {
+                  const match = item.textContent.match(/\$([0-9]+)/g);
+                  if (match) {
+                    match.forEach((price) => {
+                      foodExpenses += parseInt(price.replace("$", ""), 10); // 將金額轉換成數字並累加
+                    });
+                  }
+                });
+            
+                // 更新餐費到對應的元素
+                const foodExpensesElement = document.getElementById(`${dayId}-food-expenses`);
+                if (foodExpensesElement) {
+                  foodExpensesElement.textContent = foodExpenses.toLocaleString();
+                }
+            
+                return foodExpenses;
+              }
+            
+              // 通用函數：計算每日總花費（從"今日總花費"中提取金額並計算總和）
+              function calculateDailyTotalExpenses(dayId) {
+                const foodExpenses = calculateDailyFoodExpenses(dayId);
+                const transportationExpenses = parseInt(
+                  document.querySelector(`#${dayId}-daily-expenses-list .daily-transportation-expenses`).textContent,
+                  10
+                );
+                const hotelExpenses = parseInt(
+                  document.querySelector(`#${dayId}-daily-expenses-list .daily-hotel-expenses`).textContent,
+                  10
+                );
+                
+                const otherExpenses = parseInt(
+                  document.querySelector(`#${dayId}-daily-expenses-list .daily-other-expenses`)?.textContent || "0",
+                  10
+                );
+                
+                const totalExpenses = foodExpenses + transportationExpenses + hotelExpenses + otherExpenses;
+    
+                // 更新總花費到對應的元素
+                const totalExpensesElement = document.getElementById(`${dayId}-daily-expenses`);
+                if (totalExpensesElement) {
+                  totalExpensesElement.textContent = totalExpenses.toLocaleString();
+                }
+              }
+            
+              // 初始化每日花費計算（針對每一天呼叫）
+              function initializeExpensesCalculation(dayIds) {
+                dayIds.forEach((dayId) => {
+                  calculateDailyTotalExpenses(dayId);
+                });
+              }
+            
+              // 定義所有需要處理的每日 ID
+              const dayIds = ["day1", "day2", "day3", "day4", "day5", "day6", "day7"];
+              initializeExpensesCalculation(dayIds);
+            </script>        
+          </section>
+    
+          <!-- 總地圖 -->
+          <section>
+            <h3 style="text-align: center;">- 整段旅程的路線地圖 -</h3>
+            <div id="main-map" class="map"></div>
+            <script>
+              function mapGenerator() {
+                // 環島路線資料
+                const route = [
+                  { day: "Day1", stops: ["全家便利商店 中研店", "rvspt中研院大門口", "rvspt木柵交流道", "青春痘", "福哥石窯雞", "騎馬在隔壁民宿", "羅東夜市", "7-11安農門市", "騎馬在隔壁民宿"] },
+                  { day: "Day2", stops: ["騎馬在隔壁民宿", "中興文化創意園區", "久千代海鮮百匯餐廳", "國立宜蘭高級中學", "久千代海鮮百匯餐廳", "瑋宸老家", "伯朗咖啡館 - 城堡一門市", "麥當勞-宜蘭礁溪餐廳", "rvspt南港系統交流道", "rvspt安坑交流道", "藍調影像器材出租", "rvspt臺北和平籃球館", "青春痘", "rvspt萬芳交流道", "全家便利商店 中研店"] }
+                ];
+              
+                // 各地點的經緯度資料
+                const locations = {
+                  "全家便利商店 中研店": [25.047719734778926, 121.61393752827539],
+                  "青春痘": [25.019267489056514, 121.53162480039497],
+                  "福哥石窯雞": [24.83670033113392, 121.7856146090583],
+                  "騎馬在隔壁民宿": [24.712281229308477, 121.7264017308631],
+                  "羅東夜市": [24.676631900200206, 121.76832898968188],
+                  "7-11安農門市": [24.68706946383879, 121.74000339954911],
+                  "中興文化創意園區": [24.69428830507354, 121.77077154421312],
+                  "久千代海鮮百匯餐廳": [24.7500151665718, 121.74574338017938],
+                  "國立宜蘭高級中學": [24.750817465159034, 121.74183759831982],
+                  "瑋宸老家": [24.80011000418455, 121.80893317415483],
+                  "伯朗咖啡館 - 城堡一門市": [24.884658617557438, 121.83885045271431],
+                  "麥當勞-宜蘭礁溪餐廳": [24.822470498569658, 121.77014535804317],
+                  "藍調影像器材出租": [24.99765060990163, 121.52597944711098],
+                  
+      
+                  // 路徑修正點
+                  "rvspt中研院大門口": [25.0437931643212, 121.61622655108731],
+                  "rvspt木柵交流道": [25.002307909261845, 121.59324467823924],
+                  "rvspt南港系統交流道": [25.035189976816234, 121.62418989598136],
+                  "rvspt安坑交流道": [24.970348154029047, 121.52756976452461],
+                  "rvspt臺北和平籃球館": [25.021154424525736, 121.5450074837307],
+                  "rvspt萬芳交流道": [25.003794173610107, 121.58621139784914],
+                  
+                  
+                };
+              
+                function createMap(containerID, stops) {
+                  // 初始化地圖
+                  const map = L.map(containerID).setView([23.5, 121], 7);
+                
+                  // 添加地圖圖層
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 18
+                  }).addTo(map);
+                  
+                  // 將路徑轉換為經緯度
+                  const waypoints = stops.map(stop => L.latLng(...locations[stop]));
+                  
+                  // 使用 Routing Machine 繪製路線
+                  L.Routing.control({
+                    waypoints: waypoints,
+                    routeWhileDragging: false,
+                    draggableWaypoints: false,
+                    addWaypoints: false,
+                    lineOptions: {
+                      styles: [{ color: '#1a1a1a', weight: 3 }]
+                    }
+                  }).addTo(map);
+
+                  // 自動縮放到路線範圍
+                  map.fitBounds(L.latLngBounds(waypoints));
+      
+                  
+                  // 自動縮放到包含該地圖所有路線的範圍
+                  const allStops = Object.values(locations).map(([lat, lng]) => L.latLng(lat, lng));
+                  map.fitBounds(L.latLngBounds(allStops));
+                  
+                  // 使用內建的.divIcon可以創建一個自定義的divIcon，並設置其樣式
+                  const startingPointIcon = L.divIcon({
+                    className: '',
+                    html: '<div id="starting-point"></div>',
+                    iconSize: [20, 20], // 圖標大小
+                    iconAnchor: [10, 10] // 圖標的錨點
+                  });
+                  
+                  L.marker(locations["全家便利商店 中研店"], { icon: startingPointIcon }).addTo(map);
+                
+
+                  // 先移除所有icon（因為繪製路徑時會自動繪出所有點，包含一般點與修正點）
+                  document.querySelectorAll(`#${containerID} .leaflet-marker-icon, #${containerID} .leaflet-marker-shadow`).forEach(icon => icon.remove());
+
+                  // 再只繪製該日一般點的標記
+                  stops.forEach(stop => {
+                    // 檢查是否是修正點
+                    if (stop.startsWith("rvspt")) return; // 忽略修正點
+                  
+                    // 取得該地點的經緯度
+                    const coords = locations[stop];
+                    
+                    // 添加地點的標記
+                    const marker = L.marker(coords).addTo(map);
+                  
+                    // 綁定 Tooltip，顯示地點名稱
+                    marker.bindTooltip(stop, {
+                      permanent: false, // 非永久顯示（滑鼠移開就消失）
+                      direction: 'top', // Tooltip 顯示在標記上方
+                      offset: [0, -10], // 向上偏移
+                      className: 'custom-tooltip' // 可選：為 Tooltip 添加樣式
+                    });
+                  });
+                };
+                
+                // 繪製總路線圖
+                const allStops = route.flatMap(day => day.stops);
+                createMap('main-map', allStops);
+                
+                // 使用迴圈繪製分日地圖
+                route.forEach((dayRoute, index) => {
+                  const containerId = `day${index + 1}-map`;
+                  createMap(containerId, dayRoute.stops);
+                });
+              };
+    
+              mapGenerator();
+            </script>
+          </section>
+      
+          <!-- Visualization Section -->
+          <section class="container-fluid">
+            <h2>統計</h2>
+            <script>
+              // 將html裡面的資料作整理
+              function data() {
+                const days = document.querySelectorAll(".daily-entry"); // 選取所有的每日資料
+                const dailyData = [];
+      
+                days.forEach((day) => {
+                  const dayID = day.id; // 取得Day ID
+                  const dayTitle = day.querySelector("h3")?.textContent || "未知旅程"; // 取得行程標題
+      
+                  // 提取花費相關數據
+                  const foodExpenses = parseInt(
+                    day.querySelector(`#${dayID}-food-expenses`)?.textContent || "0", 10
+                  );
+                  const transportationExpenses = parseInt(
+                    day.querySelector(`#${dayID}-daily-expenses-list .daily-transportation-expenses`)?.textContent || "0", 10
+                  );
+                  const hotelExpenses = parseInt(
+                    day.querySelector(`#${dayID}-daily-expenses-list .daily-hotel-expenses`)?.textContent || "0", 10
+                  );
+                  const otherExpenses = parseInt(
+                    day.querySelector(`#${dayID}-daily-expenses-list .daily-other-expenses`)?.textContent || "0", 10
+                  );
+      
+                  dailyData.push({
+                    day: dayTitle,
+                    foodExpenses,
+                    transportationExpenses,
+                    hotelExpenses,
+                    otherExpenses
+                  });
+                });
+      
+                return dailyData;
+              };
+            </script>
+            <div class="row">
+              <div id="total-expenses-piechart" class="col-md-6"></div>
+              <div class="col-md-6">
+                <h3>本次花費</h3>
+                <hr>
+                <div class="container">
+                  <dl class="row">
+                    <dt class="col-6">餐費</dt><dd class="col-5 text-end"><span id="total-food-expense" class="mx-1"></span>元</dd>
+                    <dt class="col-6">交通費（油錢）</dt><dd class="col-5 text-end"><span id="total-transportation-expense" class="mx-1"></span>元</dd>
+                    <dt class="col-6">住宿費</dt><dd class="col-5 text-end"><span id="total-hotel-expense" class="mx-1"></span>元</dd>
+                    <dt class="col-6">其他（洗衣費）</dt><dd class="col-5 text-end"><span id="total-other-expense" class="mx-1"></span>元</dd>
+                    <hr>
+                    <dt class="col-6">合計（單位：新台幣）</dt><dd class="col-5 text-end">共<b id="total-expense" class="mx-1 text-danger"></b>元</dd>
+                  </dl>
+                </div>
+                <script>
+                  function totalExpenses() {
+                    const dailyData = data();
+    
+                    const expenseCategories = [
+                      { id: "total-food-expense", key: "foodExpenses" },
+                      { id: "total-transportation-expense", key: "transportationExpenses" },
+                      { id: "total-hotel-expense", key: "hotelExpenses" },
+                      { id: "total-other-expense", key: "otherExpenses" }
+                    ];  // key是在整理html資料後，data()裡面資料的key
+    
+                    // 計算並更新每個類別的總花費
+                    let totalExpense = 0;
+    
+                    expenseCategories.forEach(({ id, key }) => {
+                      const categoryTotal = dailyData.reduce((acc, curr) => acc + curr[key], 0);
+                      document.getElementById(id).innerHTML = categoryTotal.toLocaleString();
+                      totalExpense += categoryTotal; // 累加到總花費
+                    });
+    
+                    // 更新總花費
+                    document.getElementById("total-expense").innerHTML = totalExpense.toLocaleString();
+                  };
+                  totalExpenses();
+                </script>
+              </div>
+            </div>
+            <script>
+              // 繪製總支出的圓餅圖
+              function totalExpensesPieChart() {
+                const width = parseInt(d3.select("#total-expenses-piechart").style("width"));
+                const height = 400;
+                const margin = 40;
+    
+                // 呼叫data()獲取資料
+                const dailyData = data();
+    
+                const svgData = [
+                  { item: "餐費", expense: d3.sum(dailyData.map(d => d.foodExpenses)) },
+                  { item: "交通費", expense: d3.sum(dailyData.map(d => d.transportationExpenses)) },
+                  { item: "住宿費", expense: d3.sum(dailyData.map(d => d.hotelExpenses)) },
+                  { item: "其他", expense: d3.sum(dailyData.map(d => d.otherExpenses)) }
+                ];
+              
+                const svg = d3.select("#total-expenses-piechart")
+                              .append("svg")
+                              .attr("width", width)
+                              .attr("height", height);
+              
+                // 建立圓餅圖的群組元素'g'，用來容納圓餅圖的切片
+                svg.append("g")
+                   .attr("id", "total-expenses-piechart-slices")
+                   .attr("transform", `translate(${width / 2}, ${height / 2})`);
+              
+                // 設定顏色比例尺，從'd3.schemeSet2'配色方案中選取顏色
+                const color = d3.scaleOrdinal().range(d3.schemeSet2);
+              
+                // 設定圓餅圖的半徑
+                const radius = Math.min(width, height) / 2 - margin;
+              
+                // 設定圓餅圖的生成器，指定根據'expense'屬性來生成圖表
+                const pieChartGenerator = d3.pie().value((d) => d.expense);
+              
+                // 設定每個圓餅圖切片的弧度生成器，定義內半徑和外半徑
+                const arc = d3.arc()
+                              .innerRadius(0)  // 設定內半徑為0（實心圓）
+                              .outerRadius(radius)  // 設定外半徑為計算出的半徑值
+                              .padAngle(0);  // 設定每個切片之間的間隔角度為0
+              
+                // 設定外弧，用於放置標籤或其他用途
+                const outerArc = d3.arc()
+                                   .outerRadius(radius)
+                                   .innerRadius(radius - 10);
+              
+                // 使用圓餅圖生成器將資料轉換為可以繪製的形式
+                const pieChartData = pieChartGenerator(svgData);
+              
+                // 在群組元素中綁定資料並生成'path'元素，代表圓餅圖的每一塊
+                const expensesChart = svg.select("#total-expenses-piechart-slices")
+                                         .selectAll("path")
+                                         .data(pieChartData)
+                                         .join("path")
+                                         .attr("d", arc)  // 根據生成的弧形路徑繪製圓餅圖
+                                         .attr("class", "total-expenses-piechart-arc")  // 設定弧形們的class
+                                         .attr("fill", color)  // 根據資料設定填充顏色
+                                         .attr("stroke", "#ffffff")  // 設定弧形的邊框顏色為白色
+                                         .attr("stroke-width", "3px")  // 設定邊框寬度為3像素
+                                         .style("opacity", 1);  // 設定每個切片的透明度為1（不透明）
+            
+                
+                // 加上每個區塊的數字標示，計算百分比並設定標籤文字
+                const totalExpenses = d3.sum(svgData, (d) => d.expense);  // 計算總支出金額
+                svgData.forEach((i) => {  // 透過一個forEach迴圈，計算每項支出佔總額的百分比
+                  i.percentage = Math.round((i.expense /totalExpenses) * 100);  // 在原始data新增一個名為'percentage'的新屬性，儲存百分比
+                });
+    
+    
+              
+                // 綁定標籤資料，生成'text'元素並設定位置、文字內容、樣式
+                const labels = d3.select("#total-expenses-piechart-slices")
+                                 .selectAll("text")
+                                 .data(pieChartData)  // 需使用d3.pie()處理後的資料，因為原始資料沒有角度資訊
+                                 .join("text")
+                                 .attr("class", "total-expenses-piechart-labels")
+                                 .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
+                                 .text((d) => d.data.item + " " + d.data.percentage + "%")  // 'd.data'是d3.pie()處理後的資料裡所包含的原始資料部分
+                                 .style("text-anchor", "middle")
+                                 .style("font-size", 16)
+                                 .style("fill", "black");
+              
+                
+                // 設定滑鼠互動事件，當滑鼠移到圓餅圖的切片上時，切片會放大並產生陰影
+                d3.selectAll(".total-expenses-piechart-arc")
+                  .style("cursor", "pointer")
+                  .on("mouseover", (e, d) => {  // 當滑鼠移到切片上時觸發
+                    d3.select(e.target)
+                      .transition()
+                      .duration(500)
+                      .style("transform", "scale(1.1)");  // 將切片放大至1.1倍
+            
+                    d3.selectAll(".total-expenses-piechart-labels")
+                      .filter((labelData) => labelData.index === d.index)  // 選取對應的標籤
+                      .transition()
+                      .duration(500)
+                      .style("font-size", "24px");
+                  })
+                  .on("mousemove", (d) => {
+                    d3.select(d.target)
+                      .style("filter", "drop-shadow(2px 4px 6px #000000)");  // 加上陰影效果
+                  })
+                  .on("mouseleave", (e, d) => {  // 當滑鼠離開切片時觸發
+                    d3.select(e.target)
+                      .transition()
+                      .duration(500)
+                      .style("filter", "drop-shadow(0 0 0 black)")  // 移除陰影效果
+                      .style("transform", "scale(1)");  // 將切片還原到原始大小
+            
+                    d3.selectAll(".total-expenses-piechart-labels")
+                      .filter((labelData) => labelData.index === d.index)  // 選取對應的標籤
+                      .transition()
+                      .duration(500)
+                      .style("font-size", "16px");
+                  });
+              };
+    
+              totalExpensesPieChart();
+            </script>
+          </section>
+        </main>
+        <aside class="col-md-4 col-lg-3 col-xxl-2 col-11 my-3">
+          <div class="d-flex flex-column align-items-center" style="background-color: #9a6852; margin: 10px;">
+            <a href="../trip.html" target="_blank" class="mt-5">
+              <img src="../assets/facebook_img_2024.jpg" title="大頭貼" height="140px" width="auto" class="rounded-circle">
+            </a>
+            <h3 class="m-4">嗨，歡迎來到我的旅遊部落格！</h3>
+            <p class="mx-4">我是一名熱愛旅遊的攝影師，喜歡在各地旅遊，透過鏡頭記錄世界的美好，捕捉每一刻獨特的光影和情感。</p>
+            <p class="mx-4">除了攝影，我也熱衷於分享旅程中的點點滴滴，透過部落格與社群網站，記錄每一次的發現與成長，我希望藉由自己的作品，讓更多人能夠看見世界的美好。</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container-fluid" style="padding: 25px; padding-left: 35px;">
+      <div class="row">
+        <div class="col-sm-7">
+          <p class="fw-light">
+            內文撰寫｜董冠霆<br>
+            製&emsp;&emsp;圖｜董冠霆<br>
+            網&emsp;&emsp;頁｜董冠霆<br>
+            攝&emsp;&emsp;影｜董冠霆<br>
+          </p>
+          <p class="fw-light">
+            聯絡方式：LineID @310956585<br>
+            資料最後更新時間：<time datetime="2025-02-09T18:08">2025/02/09 18:08</time>
+          </p>
+          <p class="fw-light">&copy; 2025 Copyright</p>
+        </div>
+        <div class="col-sm-5 d-flex justify-content-sm-end align-items-end">
+          <a href="https://www.instagram.com/ting.d_927" class="d-inline-block me-3" target="_blank"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.facebook.com/guanting.dong" class="d-inline-block me-3" target="_blank"><i class="bi bi-facebook"></i></a>
+          <a href="https://line.me/ti/p/fOtvr_KEbv" class="d-inline-block me-5" target="_blank"><i class="bi bi-line"></i></a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
