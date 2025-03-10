@@ -11492,7 +11492,7 @@
               <div class="col-md-10">
                 <!-- 標籤頁內容 -->
                 <div id="VuejsNote_TabContent" class="tab-content">
-                  <div id="VuejsStart" class="tab-pane fade show active">
+                  <div id="VuejsStart" class="tab-pane fade">
                     <h3>開始使用 Vue.js</h3>
                     <hr>
                     <p>Vue.js 可以透過多種方式使用，依據不同的需求，選擇最適合的方法。（From ChatGPT）</p>
@@ -11741,7 +11741,7 @@
                           <p>這行字會被模板字取代</p>
                         </div>
                         <script>
-                          const vmVuejsTemplate = Vue.createApp({
+                          const vmVuejsTemplateVM = Vue.createApp({
                             template: `<p><b>{{ greeting }}</b> 好棒棒！</p><input v-model="greeting" placeholder="可輸入文字">`,
                             data() {
                               return {
@@ -11785,7 +11785,7 @@
                           </p>
                         </div>
                         <script>
-                          const vmVuejsMethods = Vue.createApp({
+                          const vmVuejsMethodsVM = Vue.createApp({
                             data() {
                               return {
                                 price: "",
@@ -11829,7 +11829,7 @@
                       </li>
                       <li class="mt-5">
                         <h4>computed計算屬性</h4>
-                        <sup>在這個例子，跟上面只有差在模板裡的subtotal有沒有加'()'</sup>
+                        <p class="VuejsSubtitle text-muted">- <i>在這個例子，跟上面只有差在模板裡的subtotal有沒有加'()'</i></p>
                         <div id="VuejsComputed">
                           <p>
                             <input v-model="price" placeholder="0"> 元/顆蘋果
@@ -11838,7 +11838,7 @@
                           </p>
                         </div>
                         <script>
-                          const vmVuejsComputed = Vue.createApp({
+                          const vmVuejsComputedVM = Vue.createApp({
                             data() {
                               return {
                                 price: "",
@@ -11946,12 +11946,202 @@
                       </li>
                     </ul>
                   </div>
-                  <div id="VuejsDirectives" class="tab-pane fade">
+                  <div id="VuejsDirectives" class="tab-pane fade show active">
                     <h3>Vue.js指令</h3>
                     <hr>
                     <ul>
                       <li>
                         <h4>屬性綁定：v-bind</h4>
+                        <p class="VuejsSubtitle text-muted">- <i><code>v-bind:id="customId"</code>也可以寫成<code>:id="customId"</code></i></p>
+<pre><code class="html">
+  &lt;div id="vBindId"&gt;
+    &lt;p v-bind:id="customId"&gt;我是vBindId&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    const vm = Vue.createApp({
+      data() {
+        return {
+          customId: "item-id-1"
+        }
+      }
+    }).mount("#vBindId");
+  &lt;/script&gt;
+
+</code></pre>
+                        
+                      </li>
+                      <li>
+                        <h4>表單綁定：v-model</h4>
+                        <ul>
+                          <li>
+                            <h5>input文字框</h5>
+                            <div id="VuejsVModelInput">
+                              <input type="text" v-model="message" placeholder="edit me">
+                              <p>Message is: <b class="ms-2">{{ message }}</b></p>
+                            </div>
+                            <script>
+                              const VuejsVModelInputVM = Vue.createApp({
+                                data() {
+                                  return {
+                                    message: ""
+                                  }
+                                }
+                              }).mount("#VuejsVModelInput");
+                            </script>
+<pre><code class="html">
+  &lt;div id="VuejsVModelInput"&gt;
+    &lt;input type="text" v-model="message" placeholder="edit me"&gt;
+    &lt;p&gt;Message is: &lt;b class="ms-2"&gt;{{ message }}&lt;/b&gt;&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    const VuejsVModelInputVM = Vue.createApp({
+      data() {
+        return {
+          message: ""
+        }
+      }
+    }).mount("#VuejsVModelInput");
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li>
+                            <h5>textarea文字方塊</h5>
+                            <div id="VuejsVModelTextarea">
+                              <textarea v-model="message" placeholder="add multiline lines"></textarea>
+                              <p>Multiline message is: <b class="ms-2">{{ message }}</b></p>
+                            </div>
+                            <script>
+                              const VuejsVModelTextareaVM = Vue.createApp({
+                                data() {
+                                  return {
+                                    message: ""
+                                  }
+                                }
+                              }).mount("#VuejsVModelTextarea");
+                            </script>
+<pre><code class="html">
+  &lt;div id="VuejsVModelTextarea"&gt;
+    &lt;textarea v-model="message" placeholder="add multiline lines"&gt;&lt;/textarea&gt;
+    &lt;p&gt;Multiline message is: &lt;b class="ms-2"&gt;{{ message }}&lt;/b&gt;&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    const VuejsVModelTextareaVM = Vue.createApp({
+      data() {
+        return {
+          message: ""
+        }
+      }
+    }).mount("#VuejsVModelTextarea");
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li>
+                            <h5>radio選擇框</h5>
+                            <div id="VuejsVModelRadio">
+                              <!-- 要注意下面兩組input對應的都是v-model="picked" -->
+                              <div>
+                                <input type="radio" id="one" value="1" v-model="picked">
+                                <label for="one" class="ms-1">One</label>
+                              </div>
+                              <div>
+                                <input type="radio" id="two" value="2" v-model="picked">
+                                <label for="two" class="ms-1">Two</label>
+                              </div>
+                              <span>Picked: {{ picked }}</span>
+                            </div>
+                            <script>
+                              const VuejsVModelRadioVM = Vue.createApp({
+                                data() {
+                                  return {
+                                    picked: ""
+                                  }
+                                }
+                              }).mount("#VuejsVModelRadio");
+                            </script>
+<pre><code class="html">
+  &lt;div id="VuejsVModelRadio"&gt;
+    &lt;!-- 要注意下面兩組input對應的都是v-model="picked" --&gt;
+    &lt;div&gt;
+      &lt;input type="radio" id="one" value="1" v-model="picked"&gt;
+      &lt;label for="one" class="ms-1"&gt;One&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;input type="radio" id="two" value="2" v-model="picked"&gt;
+      &lt;label for="two" class="ms-1"&gt;Two&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;span&gt;Picked: {{ picked }}&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    const VuejsVModelRadioVM = Vue.createApp({
+      data() {
+        return {
+          picked: ""
+        }
+      }
+    }).mount("#VuejsVModelRadio");
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li>
+                            <h5>checkbox選擇框</h5>
+                            <div id="VuejsVModelCheckbox">
+                              <!-- 注意下面input對應的都是v-model="checkedNames" -->
+                              <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+                              <label for="jack">Jack</label>
+                              <input type="checkbox" id="john" value="John" v-model="checkedNames">
+                              <label for="john">John</label>
+                              <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+                              <label for="mike">Mike</label>
+                              <input type="checkbox" id="mary" value="Mary" v-model="checkedNames">
+                              <label for="mary">Mary</label>
+                              <br>
+                              <p>Checked names: {{ checkedNames }}</p>
+                            </div>
+                            <script>
+                              const VuejsVModelCheckbox = Vue.createApp({
+                                data() {
+                                  return {
+                                    // 因為是複選的關係，這裡的checkedNames是陣列
+                                    checkedNames: []
+                                  }
+                                }
+                              }).mount("#VuejsVModelCheckbox");
+                            </script>
+<pre><code class="html">
+  &lt;div id="VuejsVModelCheckbox"&gt;
+    &lt;!-- 注意下面input對應的都是v-model="checkedNames" --&gt;
+    &lt;input type="checkbox" id="jack" value="Jack" v-model="checkedNames"&gt;
+    &lt;label for="jack"&gt;Jack&lt;/label&gt;
+    &lt;input type="checkbox" id="john" value="John" v-model="checkedNames"&gt;
+    &lt;label for="john"&gt;John&lt;/label&gt;
+    &lt;input type="checkbox" id="mike" value="Mike" v-model="checkedNames"&gt;
+    &lt;label for="mike"&gt;Mike&lt;/label&gt;
+    &lt;input type="checkbox" id="mary" value="Mary" v-model="checkedNames"&gt;
+    &lt;label for="mary"&gt;Mary&lt;/label&gt;
+    &lt;br&gt;
+    &lt;p&gt;Checked names: {{ checkedNames }}&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const VuejsVModelCheckbox = Vue.createApp({
+      data() {
+        return {
+          // 因為是複選的關係，這裡的checkedNames是陣列
+          checkedNames: []
+        }
+      }
+    }).mount("#VuejsVModelCheckbox");
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                        </ul>
                       </li>
                     </ul>
                   </div>
