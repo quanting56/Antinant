@@ -38,68 +38,11 @@
 
   <body>
     
-    <div class="mx-3 my-5">
-      <h2>表單綁定：v-model</h2>
-      <ul>
-        <li>
-          <div id="app11">
-            <input type="checkbox" id="checkbox" v-model="isChecked"><br>
-            <label for="checkbox">Status: {{ isChecked }}</label>
-          </div>
-          <script>
-            const vm11 = Vue.createApp({
-              data() {
-                return {
-                  isChecked: false
-                }
-              }
-            }).mount("#app11");
-          </script>
-        </li>
-        <li>
-          <h3>select下拉式選單</h3>
-          <div id="app12">
-            <!-- 注意，v-model要放在select而不是option -->
-            <select v-model="selected">
-              <!-- 第一個選項設定為disabled的好處是可以保證使用者不會送出此預設值 -->
-              <option disabled value="">請選擇</option>
-              <option value="臺北市">臺北市</option>
-              <option value="新北市">新北市</option>
-              <option value="基隆市">基隆市</option>
-            </select>
-            <p>現在選到的行政區是 {{ selected || '未選擇'}}</p>
-          </div>
-          <script>
-            const vm12 = Vue.createApp({
-              data() {
-                return {
-                  selected: ""
-                }
-              }
-            }).mount("#app12");
-          </script>
-        </li>
-      </ul>
-    </div>
+    <button onclick="window.scrollTo(0, document.body.scrollHeight)" style="position: fixed; right: 10px; bottom: 10px; z-index: 99;">按我到最下面</button>
+
     <div class="mx-3 my-5">
       <h2>v-model與修飾子</h2>
       <ul>
-        <li>
-          <h3>.lazy</h3>
-          <div id="app13">
-            <input v-model.lazy="message13" placeholder="edit me">
-            <p>Message is: {{ message13 }}</p>
-          </div>
-          <script>
-            const vm13 = Vue.createApp({
-              data() {
-                return {
-                  message13: ""
-                }
-              }
-            }).mount("#app13");
-          </script>
-        </li>
         <li>
           <h3>.number</h3>
           <div id="app14">
@@ -154,6 +97,11 @@
             }).mount("#app16");
           </script>
         </li>
+      </ul>
+    </div>
+    <div class="mx-3 my-5">
+      <h2>模板綁定</h2>
+      <ul>
         <li>
           <h3>v-text與v-html</h3>
           <div id="app17">
@@ -769,6 +717,7 @@
     <div class="mx-3 my-5">
       <h2>Props資料類型的驗證</h2>
       <div id="app42">
+        <input type="text" v-model="msg" placeholder="請輸入msg內容">
         <p>外層的msg：{{ msg }}</p>
 
         <h3>單純的資料傳遞</h3>
@@ -778,13 +727,16 @@
         <assign-type-component :props-number="msg"></assign-type-component>
 
         <h3>加上<code>required: true</code>，若沒有props，Vue會在開發模式下顯示警告</h3>
-        <required-assign-type-component :props-number="requiredMsg"></required-assign-type-component>
+        <required-assign-type-component></required-assign-type-component>
+
+        <h3>替props指定預設值</h3>
+        <set-props-default-component :props-number="msg || undefined"></set-props-default-component>
       </div>
       <script>
         const vm42 = Vue.createApp({
           data() {
             return {
-              msg: 1233211234567
+              msg: ""
             }
           }
         });
@@ -806,21 +758,1281 @@
               type: [Number, String]  // 若只需要一個type，可寫作'type: Number'
             }
           }
-        })
+        });
 
         vm42.component("required-assign-type-component", {
           template: `
-            <div>{{ propsNumber }}</div>
+            <div>接受到的msg：{{ propsNumber }}</div>
           `,
           props: {
             "propsNumber": {
-              required: true  // 這裡還沒處理好，現在還沒達到要的效果
+              // required: true  // 先註解掉，不然一直報錯很煩
             }
           }
-        })
+        });
+
+        vm42.component("set-props-default-component", {
+          template: `
+            <div>這次轉帳的金額（若未輸入則顯示為0）： <b>{{ propsNumber }}</b> 元</div>
+          `,
+          props: {
+            "propsNumber": {
+              default: 0
+
+              // 可以是陣列
+              // default: [1,2,3]
+              
+              // 也可以是物件的預設內容
+              // default: {
+              //   msg: "Hello Vue3.0!"
+              // }
+            }
+          }
+        });
 
         vm42.mount("#app42");
       </script>
     </div>
+    <div class="mx-3 my-5">
+      <h3>自訂props驗證規則</h3>
+      <small>只會在主控台跳警告通知，不會報錯</small>
+      <div id="app43">
+        <input type="text" v-model="msg" placeholder="請輸入 0 ~ 100">
+        <p>輸入的值為{{ msg }}</p>
+        <validator-component :props-number="Number(msg) || undefined"></validator-component>
+      </div>
+      <script>
+        const vm43 = Vue.createApp({
+          data() {
+            return {
+              msg: ""
+            }
+          }
+        });
+
+        vm43.component("validator-component", {
+          template: `
+            <div>指定type並加入驗證後，收到的msg：{{ propsNumber }}</div>
+          `,
+          props: {
+            propsNumber: {
+              type: Number,
+              required: true,
+              default: 0,
+              validator: value => value >= 0 && value <= 100
+            }
+          }
+        });
+
+        vm43.mount("#app43");
+      </script>
+    </div>
+    <div class="mx-3 my-5">
+      <h3>以物件作為props傳遞</h3>
+      <div id="app44">
+        <ul v-for="book in books" :key="book.id">
+          <input type="text" v-model="book.name"> <sub class="text-muted">&lt;- 這行是拿來測試單向資訊流</sub>
+          <li>書名：{{ book.name }}</li>
+          <li>作者：{{ book.author }}</li>
+          <li>出版日期：{{ book.publishedAt }}</li>
+        </ul>
+        <my-component
+          v-for="book in books"
+          :name="book.name"
+          :author="book.author"
+          :published-at="book.publishedAt"></my-component>
+        <!-- 上面<my-component>也可以寫成以下這樣，Vue.js會自動解構 -->
+        <!-- <my-component
+          v-for="book in books"
+          v-bind="book"></my-component> -->
+      </div>
+      <script>
+        const vm44 = Vue.createApp({
+          data() {
+            return {
+              books: [
+                {
+                  id: "a00001",
+                  name: "D3.js資料視覺化實用攻略：完整掌握Web開發技術，繪製互動式圖表不求人",
+                  author: "金筠婷",
+                  publishedAt: "2023/06/16"
+                },
+                {
+                  id: "a00002",
+                  name: "重新認識Vue.js：008天絕對看不完的Vue.js 3指南",
+                  author: "許國政",
+                  publishedAt: "2021/02/09"
+                }
+              ]
+            }
+          }
+        });
+
+        vm44.component("my-component", {
+          props: ["name", "author", "publishedAt"],
+          data() {  // 在本地建立一份data，以避免更改props
+            return {
+              localName: this.name,
+              localAuthor: this.author,
+              localPublishedAt: this.publishedAt
+            };
+          },
+          template: `
+            <div>
+              <div>書名：<input type="text" v-model="localName"></div>
+              <div>作者：<input type="text" v-model="localAuthor"></div>
+              <div>出版日期：<input type="text" v-model="localPublishedAt"></div>
+            </div>
+          `
+        });
+
+        vm44.mount("#app44");
+      </script>
+    </div>
+    <div class="mx-3 my-5">
+      <h3>Props與遞迴元件</h3>
+      <style>
+        #app45 h2:hover {
+          color: lightcoral;
+          cursor: pointer;
+        }
+      </style>
+      <div id="app45">
+        <!-- Magic! -->
+        <menu-component
+          :title="app45Data.name"
+          :child="app45Data.childNodes"></menu-component>
+      </div>
+      <script>
+        const app45Data = {
+          name: '好書推薦',
+          childNodes: [{
+            name: 'Git',
+            url: null,
+            childNodes: [{
+              name: '為你自己學 Git',
+              url: 'https://www.tenlong.com.tw/products/9789864342662'
+            }]
+          },
+          {
+            name: '前端開發',
+            url: null,
+            childNodes: [{
+              name: '金魚都能懂的 CSS 選取器',
+              url: 'https://www.tenlong.com.tw/products/9789864344994'
+            },
+            {
+              name: '0 陷阱！0 誤解！8 天重新認識 JavaScript！',
+              url: 'https://www.tenlong.com.tw/products/9789864344130'
+            },
+            {
+              name: '讓 TypeScript 成為你全端開發的 ACE！',
+              url: 'https://www.tenlong.com.tw/products/9789864344895'
+            },
+            ]
+          },
+          {
+            name: 'IoT',
+            url: null,
+            childNodes: [{
+              name: 'IoT沒那麼難！新手用 JavaScript 入門做自己的玩具！',
+              url: 'https://www.tenlong.com.tw/products/9789864345328'
+            }]
+          },
+          {
+            name: 'Chatbot',
+            url: null,
+            childNodes: [{
+              name: '人人可作卡米狗：從零打造自己的 LINE 聊天機器人',
+              url: 'https://www.tenlong.com.tw/products/9789864342938'
+            }]
+          }]
+        };
+
+        const vm45 = Vue.createApp({
+          data() {
+            return {
+              app45Data
+            }
+          }
+        });
+
+        vm45.component("menu-component", {
+          name: `MenuComponent`,
+          props: {
+            title: String,
+            url: String,
+            child: {
+              type: Array,
+              default: []
+            }
+          },
+          data() {
+            return {
+              isOpen: false
+            }
+          },
+          template: `
+            <ul>
+              <li>
+                <template v-if="child.length > 0">
+                  <h2
+                    :class="{ 'is-open': isOpen}"
+                    @click="isOpen = !isOpen">{{ title }}</h2>
+                  <menu-component
+                    v-show="isOpen"
+                    v-for="c in child"
+                    :key="c.name"
+                    :title="c.name"
+                    :child="c.childNodes"
+                    :url="c.url"></menu-component>
+                </template>
+                <!-- 下層已經沒有chileNodes了，表示是最後一層，直接渲染連結 -->
+                <a :href="url" target="_blank" v-else>{{ title }}</a>
+              </li>
+            </ul>
+          `
+        });
+
+        vm45.mount("#app45");
+      </script>
+    </div>
+    <div class="mx-3 my-5">
+      <h3>元件與自訂事件</h3>
+      <div style="background-color: antiquewhite;">
+        下列範例code說明：
+        <p>這段代碼繞了一個圈，實現了合法的父子組件數據交互，遵守了Vue的<strong>單向數據流</strong>原則。具體來說，這段代碼的流程是：</p>
+        <ol>
+          <li>
+            <p><strong>父組件的數據流</strong>：</p>
+            <ul>
+              <li>在父組件（<code>app46</code>）中，定義了<code>books</code>陣列作為其數據，這些數據會以<code>props</code>的形式傳遞給子組件<code>my-component</code>。</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>子組件的操作</strong>：</p>
+            <ul>
+              <li>子組件<code>my-component</code>收到父組件傳遞的<code>props</code>，並通過<code>v-model</code> 雙向綁定（<code>bookInfo.name</code>、<code>bookInfo.author</code>和<code>bookInfo.publishedAt</code>）來處理表單輸入。</li>
+              <li>這樣，當用戶在輸入框中修改書籍信息時，<code>bookInfo</code>物件的內容會發生變化。</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>觸發事件通知父組件</strong>：</p>
+            <ul>
+              <li>在<code>my-component</code>中使用<code>watch</code>監聽<code>bookInfo</code>物件的變化，並且設置<code>deep: true</code>，這樣Vue就會深層監聽<code>bookInfo</code>物件內的屬性變化。</li>
+              <li>每當<code>bookInfo</code>中的任一屬性發生改變時，<code>watch</code>會觸發<code>handler</code> 函數，並且這個函數會使用<code>$emit</code>發射一個名為<code>update</code>的自定義事件，將新的<code>bookInfo</code>數據傳遞給父組件。</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>父組件接收事件並更新數據</strong>：</p>
+            <ul>
+              <li>在父組件中，<code>my-component</code>綁定了<code>@update="updateInfo"</code>，即當<code>update</code>事件發生時，會調用<code>updateInfo</code>方法。</li>
+              <li><code>updateInfo</code>方法會接受傳來的<code>val</code>（更新後的書籍數據），然後使用<code>findIndex</code>方法查找對應的書籍並更新<code>books</code>陣列中的數據。</li>
+            </ul>
+          </li>
+        </ol>
+        <h5>這樣做的目的：</h5>
+        <ul>
+          <li><strong>單向數據流</strong>：父組件通過<code>props</code>向子組件傳遞數據，子組件不直接修改父組件的數據，而是通過發射自定義事件告訴父組件更新數據，這符合 Vue 的數據流規範。</li>
+          <li><strong>避免直接修改父數據</strong>：Vue不建議子組件直接修改父組件的數據，這樣會使得數據流變得難以追蹤和維護。通過這種方式（發射事件），可以讓父組件來更新自己的數據，保證數據流的可預測性和一致性。</li>
+        </ul>
+        <h5>總結：</h5>
+        <p>這段代碼遵循了Vue的單向數據流原則，使用了自定義事件(<code>update</code>)來讓子組件向父組件發送更新，從而合法地修改父組件的數據。這樣設計使得應用的數據管理更加清晰且易於維護。</p>
+      </div>
+      <div id="app46">
+        <ul v-for="(book, idx) in books" :key="book.id">
+          <li>{{ book.name }}</li>
+          <li>{{ book.author }}</li>
+          <li>{{ book.publishedAt }}</li>
+        </ul>
+
+        <!-- 直接將v-for物件作為props傳遞 -->
+        <!-- 並監聽自定義事件（此處update為自訂義事件） -->
+        <my-component
+          v-for="(book, idx) in books"
+          :key="idx"
+          v-bind="book"
+          @update="updateInfo"></my-component>
+      </div>
+      <script>
+        const vm46 = Vue.createApp({
+          data() {
+            return {
+              books: [
+                {
+                  id: "a00001",
+                  name: "D3.js資料視覺化實用攻略：完整掌握Web開發技術，繪製互動式圖表不求人",
+                  author: "金筠婷",
+                  publishedAt: "2023/06/16"
+                },
+                {
+                  id: "a00002",
+                  name: "重新認識Vue.js：008天絕對看不完的Vue.js 3指南",
+                  author: "許國政",
+                  publishedAt: "2021/02/09"
+                }
+              ]
+            }
+          },
+          methods: {
+            updateInfo(val) {
+              const idx = this.books.findIndex(d => d.id === val.id);
+              this.books[idx] = val;
+            }
+          }
+        });
+
+        vm46.component("my-component", {
+          template: `
+            <div>
+              <div>書名： <input type="text" v-model="bookInfo.name"></div>
+              <div>作者： <input type="text" v-model="bookInfo.author"></div>
+              <div>出版日期： <input type="text" v-model="bookInfo.publishedAt"></div>
+            </div>
+          `,
+          props: ["id","name", "author", "publishedAt"],
+          data() {
+            return {
+              bookInfo: {
+                id: this.id,
+                name: this.name,
+                author: this.author,
+                publishedAt: this.publishedAt
+              }
+            }
+          },
+          watch: {
+            bookInfo: {
+              // 注意！bookInfo物件必須加上deep: true
+              // Vue才能做物件的深層更新偵測（偵測物件內部所有層次的屬性變化）
+              deep: true,
+              handler(val) {
+                this.$emit("update", val);  // 當watch事件觸發，發射"update"事件
+              }
+            }
+          }
+        })
+
+        vm46.mount("#app46")
+      </script>
+    </div>
+    <div class="mx-3 my-5">
+      <h3>v-model與元件的雙向綁定</h3>
+      <div id="app47">
+        <h4>{{ message }}</h4>
+
+        <!-- 透過v-model來做到父子元件間的「雙向綁定」 -->
+        <custom-input v-model="message"></custom-input>
+        <!-- 上一行實際上等於下一行，為下一行的語法糖 -->
+        <!-- <custom-input :modelValue="message" @update:modelValue="message = $event"></custom-input> -->
+      </div>
+      <script>
+        const vm47 = Vue.createApp({
+          data() {
+            return {
+              message: "Hello World!"
+            }
+          }
+        });
+
+        // 子元件<custom-input>
+        vm47.component("custom-input", {
+          props: ["modelValue"],
+          template: `
+            <input
+              :value="modelValue"
+              @input="$emit('update:modelValue', $event.target.value)">
+          `
+        });
+
+        vm47.mount("#app47");
+      </script>
+    </div>
+    <div class="mx-3 my-5">
+      <h3>跨越層級的傳遞方式（透過provide與inject）</h3>
+      <div id="app48">
+        <input type="text" v-model="msg"><br>
+        父層資料： {{ msg }}
+        <list-component></list-component>
+      </div>
+      <script>
+        const vm48 = Vue.createApp({
+          data() {
+            return {
+              msg: "Hello Vue.js!"
+            };
+          },
+          provide() {
+            // 將this.msg透過provide傳遞出去
+            return {
+              // 只是這樣寫的話，當父層資料更動，子孫元件不會跟著動
+              provideMsg: this.msg,
+
+              // 使用Vue.computed()進行包裝，才會跟著連動
+              provideMsg2: Vue.computed(() => this.msg)
+            };
+          }
+        });
+
+        vm48.component("list-component", {
+          template: `
+            <ul>
+              <li v-for="i in 3">
+                {{ i }}
+                <list-item></list-item>
+              </li>
+            </ul>
+          `,
+          components: {
+            "list-item": {
+              inject: ["provideMsg", "provideMsg2"],
+              template: `
+                <div>provideMsg: {{ provideMsg }}</div>
+                <div>provideMsg2: {{ provideMsg2 }}</div>
+              `
+            }
+          }
+        });
+
+        vm48.mount("#app48");
+      </script>
+    </div>
+    <div class="mx-3 my-5">
+      <h3>動態元件管理</h3>
+      <h4>v-bind:is與動態元件</h4>
+      <div id="app49">
+        <button
+          v-for="tab in tabs"
+          :key="tab"
+          :class="['tab-button', { active: currentTab === tab}]"
+          @click="currentTab = tab">
+          {{ tab }}
+        </button>
+        <component :is="currentTabComponent"></component>
+      </div>
+      <script>
+        const vm49 = Vue.createApp({
+          data() {
+            return {
+              currentTab: "Home",
+              tabs: ["Home", "Posts", "Archive"]
+            };
+          },
+          computed: {
+            currentTabComponent() {
+              return `tab-${ this.currentTab.toLowerCase() }`;
+            }
+          }
+        });
+
+        vm49.component("tab-home", {
+          template: `<div class="demo-tab">Home component</div>`
+        });
+
+        vm49.component("tab-posts", {
+          template: `<div class="demo-tab">Post component</div>`
+        });
+
+        vm49.component("tab-archive", {
+          template: `<div class="demo-tab">Archive component</div>`
+        });
+
+        vm49.mount("#app49");
+      </script>
+      <style>
+        .demo-tab {
+          padding: 10px;
+          border: 1px solid #cccccc;
+          margin-top: -0.5px;
+        }
+
+        .tab-button {
+          padding: 6px 10px;
+          border: 1px solid #cccccc;
+          background: #f0f0f0;
+          margin-bottom: -1px;
+        }
+
+        .tab-button:hover{
+          background: #e4e4e4;
+          color: #0a0a0a
+        }
+
+        .tab-button.active {
+          background: #d8d8d8;
+          color: #0a0a0a
+        }
+      </style>
+      <h4 class="mt-5">&lt;keep-alive&gt;保留元件狀態</h4>
+      <p>
+        有<code>include</code>、<code>exclude</code>、<code>max</code>等屬性可以用。<br>
+        對應的是子元件的name屬性，非子元件的標籤名。
+      </p>
+      <div id="app50">
+        <button
+          v-for="tab in tabs"
+          :key="tab"
+          :class="['tab-button', { active: currentTab === tab}]"
+          @click="currentTab = tab">
+          {{ tab }}
+        </button>
+        <keep-alive>
+          <component :is="currentTabComponent"></component>
+        </keep-alive>
+      </div>
+      <script>
+        const vm50 = Vue.createApp({
+          data() {
+            return {
+              currentTab: "Home",
+              tabs: ["Home", "Posts", "Archive"]
+            };
+          },
+          computed: {
+            currentTabComponent() {
+              return `tab-${ this.currentTab.toLowerCase() }`;
+            }
+          }
+        });
+
+        vm50.component("tab-home", {
+          name: "tab-home",
+          template: `<div class="demo-tab"><input v-model="title"></div>`,
+          data() {
+            return {
+              title: "Home component"
+            };
+          }
+        });
+
+        vm50.component("tab-posts", {
+          name: "tab-posts",
+          template: `<div class="demo-tab"><input v-model="title"></div>`,
+          data() {
+            return {
+              title: "Post component"
+            };
+          }
+        });
+
+        vm50.component("tab-archive", {
+          name: "tab-archive",
+          template: `<div class="demo-tab"><input v-model="title"></div>`,
+          data() {
+            return {
+              title: "Archive component"
+            };
+          }
+        });
+
+        vm50.mount("#app50");
+      </script>
+      <style>
+        .demo-tab {
+          padding: 10px;
+          border: 1px solid #cccccc;
+          margin-top: -0.5px;
+        }
+
+        .tab-button {
+          padding: 6px 10px;
+          border: 1px solid #cccccc;
+          background: #f0f0f0;
+          margin-bottom: -1px;
+        }
+
+        .tab-button:hover{
+          background: #e4e4e4;
+          color: #0a0a0a
+        }
+
+        .tab-button.active {
+          background: #d8d8d8;
+          color: #0a0a0a
+        }
+      </style>
+    </div>
+    <div class="mx-3 my-5">
+      <h4 class="mt-5">非同步元件Async Component</h4>
+      <div id="app51">
+        <async-example></async-example>
+      </div>
+      <script>
+        const vm51 = Vue.createApp({});
+      
+        // 接受Promise建構是生成的新元件
+        const AsyncComp = Vue.defineAsyncComponent(() => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {  // 模擬網路延遲
+              resolve({
+                template: `<div>I am async</div>`
+              });
+            }, 1000);
+          });
+        });
+      
+        vm51.component("async-example", AsyncComp);
+      
+        vm51.mount("#app51");
+      </script>
+    </div>
+    <div class="mx-3 my-5">
+      <h3>編譯作用域與插槽</h3>
+      <h4>插槽（Slots）</h4>
+      <div id="app52">
+        <p>{{ msg }}</p>
+        <custom-component>{{ msg }}</custom-component>
+      </div>
+      <script>
+        const vm52 = Vue.createApp({
+          data() {
+            return {
+              msg: "Parent!"
+            };
+          }
+        });
+
+        vm52.component("custom-component", {
+          template: `
+            <div>
+              Hello {{ msg }}
+              <div>
+                <slot>這是預設內容，若沒有傳資料進來就會出現這段文字。</slot>
+              </div>
+            </div>
+          `,
+          data() {
+            return {
+              msg: "Child!"
+            }
+          }
+        });
+
+        vm52.mount("#app52");
+      </script>
+      <h4 class="mt-4">具名插槽（Named Slots）</h4>
+      <div id="app53">
+        <light-box>
+          <template v-slot:header>
+            <p>我是Header</p>
+          </template>
+
+          <template v-slot:footer>
+            <p>我是Footer</p>
+          </template>
+
+          <div>
+            <a href="#" target="">點我進到內容的超連結</a>
+          </div>
+        </light-box>
+      </div>
+      <script>
+        const vm53 = Vue.createApp({
+          data() {
+            return {
+              msg: "預設文字呼呼嘿嘿"
+            };
+          }
+        });
+
+        vm53.component("light-box", {
+          template: `
+            <div class="lightbox">
+              <div class="modal-mask" :style="modalStyle">
+                <div class="modal-container" @click.self="toggleModal">
+                  <div class="modal-body">
+                    <header>
+                      <slot name="header">Default Header</slot>
+                    </header>
+                    <hr>
+                    <section>
+                      <slot>Default Body</slot>
+                    </section>
+                    <hr>
+                    <footer>
+                      <slot name="footer">Default Footer</slot>
+                    </footer>
+                  </div>
+                </div>
+              </div>
+            
+              <button @click="isShow = true">Click Me</button>
+            </div>
+          `,
+          data() {
+            return {
+              isShow: false
+            };
+          },
+          computed: {
+            modalStyle() {
+              return {
+                "display": this.isShow ? "" : "none"
+              };
+            }
+          },
+          methods: {
+            toggleModal() {
+              this.isShow = !this.isShow;
+            }
+          }
+        });
+
+        vm53.mount("#app53");
+      </script>
+      <style>
+        .lightbox {
+          position: relative;
+          display: table;
+          width: 90%;
+        }
+
+        .modal-mask {
+          position: absolute;
+          display: table-cell;
+          width: 100%;
+          z-index: 20;
+          background-color: rgb(0, 0, 0, 0.5);
+        }
+
+        .modal-container {
+          cursor: pointer;
+          padding-top: 48px;
+          padding-bottom: 48px;
+        }
+
+        .modal-body {
+          cursor: auto;
+          width: 50%;
+          margin: 0 auto;
+          padding: 32px;
+          background-color: #fafafa;
+        }
+      </style>
+      <h4 class="mt-4">動態切換具名插槽</h4>
+      <div id="app54">
+        <label v-for="opt in options">
+          <input type="radio" :value="opt" v-model="dynamic_slot_name">{{ opt }}
+        </label>
+
+        <light-box>
+          <!-- 透過所選的dynamic_slot_name動態切換對應的slot -->
+          <template v-slot:[dynamic_slot_name]>
+            <p>點擊按鈕我就會到那行去</p>
+          </template>
+        </light-box>
+      </div>
+      <script>
+        const vm54 = Vue.createApp({
+          data() {
+            return {
+              options: ["header", "footer", "default"],
+              dynamic_slot_name: "header"
+            };
+          }
+        });
+
+        vm54.component("light-box", {
+          template: `
+            <div class="lightbox">
+              <div class="modal-mask" :style="modalStyle">
+                <div class="modal-container" @click.self="toggleModal">
+                  <div class="modal-body">
+                    <header>
+                      <slot name="header">Default Header</slot>
+                    </header>
+                    <hr>
+                    <section>
+                      <slot>Default Body</slot>
+                    </section>
+                    <hr>
+                    <footer>
+                      <slot name="footer">Default Footer</slot>
+                    </footer>
+                  </div>
+                </div>
+              </div>
+            
+              <button @click="isShow = true">Click Me</button>
+            </div>
+          `,
+          data() {
+            return {
+              isShow: false
+            };
+          },
+          computed: {
+            modalStyle() {
+              return {
+                "display": this.isShow ? "" : "none"
+              };
+            }
+          },
+          methods: {
+            toggleModal() {
+              this.isShow = !this.isShow;
+            }
+          }
+        });
+
+        vm54.mount("#app54");
+      </script>
+      <style>
+        .lightbox {
+          position: relative;
+          display: table;
+          width: 90%;
+        }
+
+        .modal-mask {
+          position: absolute;
+          display: table-cell;
+          width: 100%;
+          z-index: 20;
+          background-color: rgb(0, 0, 0, 0.5);
+        }
+
+        .modal-container {
+          cursor: pointer;
+          padding-top: 48px;
+          padding-bottom: 48px;
+        }
+
+        .modal-body {
+          cursor: auto;
+          width: 50%;
+          margin: 0 auto;
+          padding: 32px;
+          background-color: #fafafa;
+        }
+      </style>
+      <h4 class="mt-4">作用域插槽（Scoped Slots）</h4>
+      <div id="app55">
+        <p>
+          請選擇：
+          <select v-model="lang">
+            <option v-for="n in langOptions" :value="n.val">{{ n.name }}</option>
+          </select>
+        </p>
+
+        <light-box :lang="lang">
+          <template v-slot:content="slotProps">
+            {{ langOptions.find(d => d.val === lang)["name"] }}: {{ slotProps.hello }}
+          </template>
+        </light-box>
+      </div>
+      <script>
+        const vm55 = Vue.createApp({
+          data() {
+            return {
+              langOptions: [
+                {name: "繁體中文", val: "tw"},
+                {name: "英文", val: "en"},
+                {name: "德文", val: "de"}
+              ],
+              lang: "tw"
+            }
+          }
+        });
+
+        vm55.component("light-box", {
+          data() {
+            return {
+              isShow: false,
+              helloString: {
+                "tw": "哈囉世界！",
+                "en": "Hello World!",
+                "de": "Hello Welt!"
+              }
+            };
+          },
+          props: {
+            lang: {
+              type: String,
+              default: "tw"
+            }
+          },
+          template: `
+            <div class="lightbox">
+              <div class="modal-mask" :style="modalStyle">
+                <div class="modal-container" @click.self="toggleModal">
+                  <div class="modal-body">
+                    <slot name="content" v-bind:hello="helloString[lang]"></slot>
+                  </div>
+                </div>
+              </div>
+
+              <button @click="isShow = true">Click Me</button>
+            </div>
+          `,
+          computed: {
+            modalStyle() {
+              return {
+                "display": this.isShow ? "" : "none"
+              };
+            }
+          },
+          methods: {
+            toggleModal() {
+              this.isShow = !this.isShow;
+            }
+          }
+        });
+
+        vm55.mount("#app55");
+      </script>
+      <style>
+        .lightbox {
+          position: relative;
+          display: table;
+          width: 90%;
+        }
+
+        .modal-mask {
+          position: absolute;
+          display: table-cell;
+          width: 100%;
+          z-index: 20;
+          background-color: rgb(0, 0, 0, 0.5);
+        }
+
+        .modal-container {
+          cursor: pointer;
+          padding-top: 48px;
+          padding-bottom: 48px;
+        }
+
+        .modal-body {
+          cursor: auto;
+          width: 50%;
+          margin: 0 auto;
+          padding: 32px;
+          background-color: #fafafa;
+        }
+      </style>
+      <h4 class="mt-4">Teleport</h4>
+      <div id="app56">
+        <p>
+          請選擇：
+          <select v-model="lang">
+            <option v-for="n in langOptions" :value="n.val">{{ n.name }}</option>
+          </select>
+        </p>
+
+        <light-box :lang="lang">
+          <template v-slot:content="slotProps">
+            {{ langOptions.find(d => d.val === lang)["name"] }}: {{ slotProps.hello }}
+          </template>
+        </light-box>
+      </div>
+      <script>
+        const vm56 = Vue.createApp({
+          data() {
+            return {
+              langOptions: [
+                {name: "繁體中文", val: "tw"},
+                {name: "英文", val: "en"},
+                {name: "德文", val: "de"}
+              ],
+              lang: "tw"
+            }
+          }
+        });
+
+        vm56.component("light-box", {
+          data() {
+            return {
+              isShow: false,
+              helloString: {
+                "tw": "哈囉世界！",
+                "en": "Hello World!",
+                "de": "Hello Welt!"
+              }
+            };
+          },
+          props: {
+            lang: {
+              type: String,
+              default: "tw"
+            }
+          },
+          template: `
+            <div class="lightbox">
+              <teleport to="body">
+                <div class="modal-mask" :style="modalStyle">
+                  <div class="modal-container" @click.self="toggleModal">
+                    <div class="modal-body">
+                      <slot name="content" v-bind:hello="helloString[lang]"></slot>
+                    </div>
+                  </div>
+                </div>
+              </teleport>
+
+              <button @click="isShow = true">Click Me</button>
+            </div>
+          `,
+          computed: {
+            modalStyle() {
+              return {
+                "display": this.isShow ? "" : "none"
+              };
+            }
+          },
+          methods: {
+            toggleModal() {
+              this.isShow = !this.isShow;
+            }
+          }
+        });
+
+        vm56.mount("#app56");
+      </script>
+      <style>
+        .lightbox {
+          position: relative;
+          display: table;
+          width: 90%;
+        }
+
+        .modal-mask {
+          position: absolute;
+          display: table-cell;
+          width: 100%;
+          z-index: 20;
+          background-color: rgb(0, 0, 0, 0.5);
+        }
+
+        .modal-container {
+          cursor: pointer;
+          padding-top: 48px;
+          padding-bottom: 48px;
+        }
+
+        .modal-body {
+          cursor: auto;
+          width: 50%;
+          margin: 0 auto;
+          padding: 32px;
+          background-color: #fafafa;
+        }
+      </style>
+    </div>
+    <div class="mx-3 my-5">
+      <h3>&lt;transition漸變與動畫&gt;</h3>
+      <h4>&lt;transition漸變&gt;</h4>
+      <div id="app57">
+        <transition>
+          <!-- 透過v-show來控制顯示或隱藏 -->
+          <div v-show="isShow">Hello Vue!</div>
+        </transition>
+
+        <button @click="isShow = !isShow">Toggle</button>
+      </div>
+      <script>
+        const vm57 = Vue.createApp({
+          data() {
+            return {
+              isShow: true
+            }
+          }
+        }).mount("#app57");
+      </script>
+      <style>
+        .v-enter-active,
+        .v-leave-active {
+          transition: opacity 1s;
+        }
+
+        .v-enter-from,
+        .v-leave-to {
+          opacity: 0;
+        }
+
+        .v-enter-to,
+        .v-leave-from {
+          opacity: 1;
+        }
+      </style>
+      <h4 class="mt-4">替&lt;transition&gt;取名稱</h4>
+      <div id="app58">
+        <!-- slide -->
+        <transition name="slide">
+          <div v-show="slideIsShow">我是slide特效</div>
+        </transition>
+        <button @click="slideIsShow = !slideIsShow">Toggle</button>
+        <br>
+
+        <!-- fade -->
+        <transition name="fade">
+          <div v-show="fadeIsShow">我是fade特效</div>
+        </transition>
+        <button @click="fadeIsShow = !fadeIsShow">Toggle</button>
+      </div>
+      <script>
+        const vm58 = Vue.createApp({
+          data() {
+            return {
+              slideIsShow: true,
+              fadeIsShow: true
+            }
+          }
+        }).mount("#app58");
+      </script>
+      <style>
+        /* <transition name="slide"> */
+        .slide-enter-active,
+        .slide-leave-active {
+          transition: all 0.9s ease;
+        }
+
+        .slide-enter-from {
+          transform: translateX(-100%);
+        }
+
+        .slide-leave-to {
+          transform: translateX(100%);
+        }
+
+        /* <transition name="fade"> */
+        .fade-enter-active,
+        .fade-leave-active {
+          transition: opacity 1s;
+        }
+
+        .fade-enter-from,
+        .fade-leave-to {
+          opacity: 0;
+        }
+
+        .fade-enter-to,
+        .fade-leave-from {
+          opacity: 1;
+        }
+      </style>
+      <h4 class="mt-4">條件與動態切換</h4>
+      <div id="app59">
+        <button @click="modeToggle()">Toggle</button>
+
+        <!-- 用mode="out-in"以先執行離場動畫，再執行進場動畫 -->
+        <transition name="app59-fade" mode="out-in">
+          <div v-if="mode === 'mode-1'">Block 1</div>
+          <div v-else-if="mode === 'mode-2'">Block 2</div>
+          <div v-else>Block 3</div>
+        </transition>
+      </div>
+      <script>
+        const vm59 = Vue.createApp({
+          data() {
+            let modeLists = ["mode-1", "mode-2", "mode-3"];
+            return {
+              modeChoose: modeLists,
+              mode: modeLists[0]
+            }
+          },
+          methods: {
+            modeToggle() {
+              const index = this.modeChoose.indexOf(this.mode);
+              this.mode = this.modeChoose[(index + 1) % this.modeChoose.length];
+            },
+          },
+        }).mount("#app59");
+      </script>
+      <style>
+        .app59-fade-enter-active,
+        .app59-fade-leave-active {
+          transition: opacity 0.5s;
+        }
+
+        .app59-fade-enter-from,
+        .app59-fade-leave-to {
+          opacity: 0;
+        }
+
+        .app59-fade-enter-to,
+        .app59-fade-leave-from {
+          opacity: 1;
+        }
+      </style>
+      <h4 class="mt-4">複數元素／元件的漸變渲染&lt;transition-group&gt;</h4>
+      <div id="app60">
+        <button @click="addListElement()">生成一個隨機數字方塊</button><br>
+        <button @click="shuffle()">給我重新排列</button><br>
+        <button @click="lists.length = 0">通通蛋雕</button>
+
+        <!-- 添增一個tag屬性，此處代表在外層加一層<ul>來包覆 -->
+        <!-- 另外，內層子元素都需要加上key的唯一屬性來確保動畫正常運作 -->
+        <transition-group tag="ul" class="number-list" name="number-list">
+          <li v-for="(item, index) in lists" :key="`${item} - ${index}`" class="number-item">{{ item }}</li>
+        </transition-group>
+      </div>
+      <script>
+        const vm60 = Vue.createApp({
+          data() {
+            return {
+              lists: [1, 2, 3, 4, 5]
+            };
+          },
+          methods: {
+            addListElement() {
+              const randomNumber = Math.ceil(Math.random() * 100);
+              this.lists.push(randomNumber);
+            },
+            shuffle() {
+              this.lists.sort(() => Math.random() - 0.5);
+            }
+          }
+        }).mount("#app60");
+      </script>
+      <style>
+        .number-list {
+          overflow: hidden;
+          padding: 0;
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .number-list li {
+          display: block;
+          float: left;
+          width: 35px;
+          height: 35px;
+          text-align: center;
+          line-height: 35px;
+          background-color: #ff0000;
+          color: #ffffff;
+          margin-right: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .number-list-enter-from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+
+        /* 只有在<transition-group>中才會有v-move可以使用 */
+        .number-list-enter-active,
+        .number-list-leave-active,
+        .number-list-move {
+          transition: opacity 0.7s, transform 0.7s ease;
+        }
+
+        .number-list-enter-to,
+        .number-list-leave-from {
+          opacity: 1;
+          transform: 0;
+        }
+
+        /* 此步是為了要讓元素到同一處消失 */
+        .number-list-leave-active {
+          position: absolute;
+        }
+
+        .number-list-leave-to {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+      </style>
+    </div>
   </body>
 </html>
+

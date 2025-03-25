@@ -12090,7 +12090,7 @@
 </code></pre>
                           </li>
                           <li>
-                            <h5>checkbox選擇框</h5>
+                            <h5>checkbox選擇框（多個選項）</h5>
                             <div id="VuejsVModelCheckbox">
                               <!-- 注意下面input對應的都是v-model="checkedNames" -->
                               <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
@@ -12105,7 +12105,7 @@
                               <p>Checked names: {{ checkedNames }}</p>
                             </div>
                             <script>
-                              const VuejsVModelCheckbox = Vue.createApp({
+                              const VuejsVModelCheckboxVM = Vue.createApp({
                                 data() {
                                   return {
                                     // 因為是複選的關係，這裡的checkedNames是陣列
@@ -12138,6 +12138,132 @@
       }
     }).mount("#VuejsVModelCheckbox");
   &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li>
+                            <h5>checkbox選擇框（單個選項）</h5>
+                            <div id="VuejsVModelCheckboxSingle">
+                              <input type="checkbox" id="VuejsVModelCheckboxSingleCheckbox" v-model="isChecked">
+                              <label for="VuejsVModelCheckboxSingleCheckbox">Status: {{ isChecked }}</label>
+                            </div>
+                            <script>
+                              const VuejsVModelCheckboxSingleVM = Vue.createApp({
+                                data() {
+                                  return {
+                                    isChecked: false
+                                  }
+                                }
+                              }).mount("#VuejsVModelCheckboxSingle");
+                            </script>
+<pre><code class="html">
+  &lt;div id="VuejsVModelCheckboxSingle"&gt;
+    &lt;input type="checkbox" id="VuejsVModelCheckboxSingleCheckbox" v-model="isChecked"&gt;
+    &lt;label for="VuejsVModelCheckboxSingleCheckbox"&gt;Status: {{ isChecked }}&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const VuejsVModelCheckboxSingleVM = Vue.createApp({
+      data() {
+        return {
+          isChecked: false
+        }
+      }
+    }).mount("#VuejsVModelCheckboxSingle");
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li>
+                            <h5>select下拉式選單</h5>
+                            <div id="VuejsVModelSelect">
+                              <!-- 注意，v-model要放在select而不是option -->
+                              <select v-model="selected">
+                                <!-- 第一個選項設定為disabled的好處是可以保證使用者不會送出此預設值 -->
+                                <option disabled value="">請選擇</option>
+                                <option value="臺北市">臺北市</option>
+                                <option value="新北市">新北市</option>
+                                <option value="基隆市">基隆市</option>
+                              </select>
+                              <p>現在選到的行政區是 <b>{{ selected || '未選擇'}}</b></p>
+                            </div>
+                            <script>
+                              const VuejsVModelSelectVM = Vue.createApp({
+                                data() {
+                                  return {
+                                    selected: ""
+                                  }
+                                }
+                              }).mount("#VuejsVModelSelect");
+                            </script>
+<pre><code class="html">
+  &lt;div id="VuejsVModelSelect"&gt;
+    &lt;!-- 注意，v-model要放在select而不是option --&gt;
+    &lt;select v-model="selected"&gt;
+      &lt;!-- 第一個選項設定為disabled的好處是可以保證使用者不會送出此預設值 --&gt;
+      &lt;option disabled value=""&gt;請選擇&lt;/option&gt;
+      &lt;option value="臺北市"&gt;臺北市&lt;/option&gt;
+      &lt;option value="新北市"&gt;新北市&lt;/option&gt;
+      &lt;option value="基隆市"&gt;基隆市&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;p&gt;現在選到的行政區是 &lt;b&gt;{{ selected || '未選擇'}}&lt;/b&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const VuejsVModelSelectVM = Vue.createApp({
+      data() {
+        return {
+          selected: ""
+        }
+      }
+    }).mount("#VuejsVModelSelect");
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <h4>v-model與修飾子</h4>
+                        <ul>
+                          <li>
+                            <h5><code>v-model.lazy</code></h5>
+                            <p class="VuejsSubtitle text-muted">- <i>在<code class="mx-1">v-model</code>後面加上<code class="mx-1">.lazy</code>，會在使用者離開輸入框焦點時，才會更新data內容。</i></p>
+                            <div id="VuejsVModelLazy">
+                              <input v-model.lazy="lazyMessage" placeholder="edit me">
+                              <p>Message is: {{ lazyMessage }}</p>
+                            </div>
+                            <script>
+                              const VuejsVModelLazyVM = Vue.createApp({
+                                data() {
+                                  return {
+                                    lazyMessage: ""
+                                  }
+                                }
+                              }).mount("#VuejsVModelLazy");
+                            </script>
+<pre><code class="html">
+  &lt;div id="VuejsVModelLazy"&gt;
+    &lt;input v-model.lazy="lazyMessage" placeholder="edit me"&gt;
+    &lt;p&gt;Message is: {{ lazyMessage }}&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const VuejsVModelLazyVM = Vue.createApp({
+      data() {
+        return {
+          lazyMessage: ""
+        }
+      }
+    }).mount("#VuejsVModelLazy");
+  &lt;/script&gt;
+
+</code></pre>
+                          </li>
+                          <li>
+                            <h5><code>v-model.number</code></h5>
+                            <!-- 未完成，到這邊 -->
+                            <p class="VuejsSubtitle text-muted">- <s><i>在<code class="mx-1">v-model</code>後面加上<code class="mx-1">.lazy</code>，會在使用者離開輸入框焦點時，才會更新data內容。</i></s></p>
+                            <div></div>
+                            <script></script>
+<pre><code class="html">
 
 </code></pre>
                           </li>
