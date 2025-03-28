@@ -1962,7 +1962,7 @@
         <!-- 添增一個tag屬性，此處代表在外層加一層<ul>來包覆 -->
         <!-- 另外，內層子元素都需要加上key的唯一屬性來確保動畫正常運作 -->
         <transition-group tag="ul" class="number-list" name="number-list">
-          <li v-for="(item, index) in lists" :key="`${item} - ${index}`" class="number-item">{{ item }}</li>
+          <li v-for="item in lists" :key="item" class="number-item">{{ item }}</li>
         </transition-group>
       </div>
       <script>
@@ -1974,7 +1974,11 @@
           },
           methods: {
             addListElement() {
-              const randomNumber = Math.ceil(Math.random() * 100);
+              // 生成新數字，並且是唯一
+              let randomNumber;
+              do {
+                randomNumber = Math.ceil(Math.random() * 100);
+              } while ( this.lists.includes(randomNumber) );
               this.lists.push(randomNumber);
             },
             shuffle() {
@@ -2029,7 +2033,225 @@
 
         .number-list-leave-to {
           opacity: 0;
-          transform: translateY(20px);
+        }
+      </style>
+      <h4 class="mt-3">結合漸變動畫的Hooks函式處理事件</h4>
+      <div id="app61">
+        <button @click="getUserInfo">取得隨機User資訊</button>
+
+        <div class="flexbox-wrapper" :style="{ height: heightControlByVue + 'px'}">
+          <div class="flexbox-body" ref="content">
+            <div class="user-block" v-if="userInfo.name">
+              <h6>{{ userInfo.name }} / @{{ userInfo.username }}</h6>
+        
+              <img src="https://dummyimage.com/200x200/666/fff" alt="dummyimage">
+              <div class="wraps">
+                <p>{{ userInfo.company.name }}</p>
+                <p>{{ userInfo.phone }}</p>
+                <p>{{ userInfo.email }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- hooks event需搭配v-on使用 -->
+          <transition
+            @before-enter="beforeEnter"
+            @before-leave="beforeLeave"
+            name="user-info">
+            <!-- loading圖 -->
+            <div class="loading" v-if="isLoading">
+              載入中...
+              <!-- 在此使用Bootstrap的載入符號 -->
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden"></span>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </div>
+      <script>
+        const vm61 = Vue.createApp({
+          data() {
+            return {
+              heightControlByVue: 0,
+              userInfo: {},
+              isLoading: false
+            };
+          },
+          methods: {
+            getRandomUserIdNumber() {
+              // 隨機從1~10取出一數字作為user ID
+              return Math.ceil(Math.random() * 10);
+            },
+            async getUserInfo() {
+              // 從jsonplaceholder取得隨機假資料
+              this.isLoading = true;
+              this.userInfo = {};  // 清空舊資料
+              const userId = this.getRandomUserIdNumber();
+
+              const res = await fetch("https://jsonplaceholder.typicode.com/users/" + userId)
+                                  .then(response => response.json());
+
+              // 加上setTimeout模擬延遲，避免回傳太快看不到loading
+              window.setTimeout(() => {
+                this.isLoading = false;
+                this.userInfo = res;
+              }, 800);
+            },
+            beforeEnter() {
+              // 開始執行動畫前，將文字區塊的高度歸零
+              this.heightControlByVue = 0;
+            },
+            beforeLeave() {
+              // 取得隨機文字後，為確保資料與畫面同步，加上$nextTick
+              // 並透過getBoundingClientRect()來取得DOM實際高度
+              this.$nextTick(() => {
+                this.heightControlByVue = this.$refs.content.getBoundingClientRect().height;
+              });
+            }
+          }
+        }).mount("#app61");
+      </script>
+      <style>
+        .flexbox-wrapper {
+          position: relative;
+          overflow: hidden;
+          transition: height 1s;
+          min-height: 35px;  /* 缺少這一行會導致Loading的<div>不可見 */
+          height: auto;
+        }
+
+        .user-block {
+          overflow: hidden;
+          background: #eeeeee;
+          padding: 1rem;
+          width: 420px;
+        }
+        
+        .user-block img {
+          width: 100px;
+          height: 100px;
+          float: left;
+          margin: 0.5rem 1rem 0 0;
+        }
+
+        .user-block .wraps {    
+          float: left;
+          margin-top: 0.5rem;
+          margin-left: 0.7rem;
+          font-size: 0.9rem;
+        }
+
+        .loading {
+          display: block;
+          margin: 0 auto;
+          text-align: center;
+        }
+
+        .user-info-enter-active,
+        .user-info-leave-active {
+          transition: opacity 1s;
+        }
+        
+        .user-info-enter-from,
+        .user-info-leave-to {
+          opacity: 0;
+        }
+      </style>
+      <h4 class="mt-4">Vue.js與CSS keyframes影格動畫</h4>
+      <div id="app62">
+        <button @click="activated = true">Shake it!</button>
+        
+        <div id="app62-block" ref="block" :class="{ 'app62-shake': activated }">Block</div>
+      </div>
+      <script>
+        const vm62 = Vue.createApp({
+          data() {
+            return {
+              activated: false
+            };
+          },
+          methods: {
+            reactivated() {
+              this.activated = false;
+            }
+          },
+          mounted() {
+            // 在mounted階段加入animationend事件
+            this.$refs.block.addEventListener("animationend", this.reactivated);
+          },
+          beforeUnmount() {
+            // 記得解除事件
+            this.$refs.block.removeEventListener("animationend", this.reactivated);
+          }
+        }).mount("#app62");
+      </script>
+      <style>
+        .app62-shake {
+          animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+          transform: translate3d(0, 0, 0);
+        }
+
+        @keyframes shake {
+          10%, 90% {
+            transform: translate3d(-1px, 0, 0);
+          }
+
+          20%, 80% {
+            transform: translate3d(2px, 0, 0);
+          }
+
+          30%, 50%, 70% {
+            transform: translate3d(-4px, 0, 0);
+          }
+
+          40%, 60% {
+            transform: translate3d(4px, 0, 0);
+          }
+        }
+      </style>
+      <h4 class="mt-4">與其他CSS工具庫搭配，以Animation.css為例</h4>
+      <div id="app63">
+        <div id="app63-wrap">
+          <button
+            v-for="c in animateClasses"
+            :key="c"
+            @click="activedAnimate(c)">{{ c }}</button>
+        </div>
+
+        <!-- 透過v-bind:class來控制class屬性 -->
+        <div id="app63-block" ref="block" :class="animatedClassName">Block</div>
+      </div>
+      <script>
+        const vm63 = Vue.createApp({
+          data() {
+            return {
+              animateClasses: [
+                'bounce',
+                'rubberBand',
+                'tada',
+                'shakeY',
+                'shakeX'
+              ],
+              animatedClassName: ''
+            };
+          },
+          methods: {
+            activedAnimate(className) {
+              this.animatedClassName = `animate__animated animate__${className}`;
+            }
+          }
+        }).mount("#app63");
+      </script>
+      <style>
+        #app63-block {
+          display: block;
+          width: 120px;
+          height: 80px;
+          line-height: 80px;
+          text-align: center;
+          background-color: #3eaf7c;
+          color: #fff;
         }
       </style>
     </div>
